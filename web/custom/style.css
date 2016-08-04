@@ -15,7 +15,7 @@ header {
   min-height:500px;
 }
 header h1 {
-  font-size:36pt;
+  font-size:40pt;
   margin:0px;
   line-height:1.4em;
 }
@@ -30,9 +30,8 @@ header .content span {
   padding:3px 10px 3px 10px;
 }
 header .content {
-  text-align:center;
   font-family:Kreon,'Times New Roman',times,serif;
-  margin:20vw 0px 0px 0px;
+  margin:25vw -100px 0px -100px;
 }
 header img {
   float:right;

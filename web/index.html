@@ -21,7 +21,9 @@
   <header>
     <div class="container">
       <div class="content">
-        <h1><span>Experiments in Tooling for Data-Driven Storytelling</span></h1>
+				<img src="img/olympic.png" />
+			 	<h1><span>Visualizing Olympic Medalists</span></h1>		
+			 	<h2><span>Experiment in Tooling for Data-Driven Storytelling</span></h2>
       </div>
     </div>
   </header>
@@ -416,21 +418,21 @@ chart.column(all)
 <script src="lib/datamaps.world.min.js"></script>
 
 <!-- Loading Monaco and TheGamma scripts -->
-<script src="node_modules/babel-standalone/babel.js"></script>
-<script src="node_modules/requirejs/require.js"></script>
+<script src="lib/babel.min.js"></script>
+<script src="lib/require.js"></script>
 <script>
 	require.config({
-			baseUrl: 'out',
+			baseUrl: '.',
 			paths: { 
-				'core-js': '../node_modules/core-js/client/core.min', // Only needed when using 'js/main/main'
-			  'fable-core': '../node_modules/fable-core/fable-core.min', // Only needed when using 'js/main/main'
-			  'vs': '../node_modules/monaco-editor/dev/vs' 
+				'core-js': 'lib/dev/core.min', // Only needed when using 'js/main/main'
+			  'fable-core': 'lib/dev/fable-core.min', // Only needed when using 'js/main/main'
+			  'vs': 'lib/vs' 
 			},
 			map: { "*": { "monaco": "vs/editor/editor.main" }}
 	});
 	require(['monaco'], function() {
-		// require(["build/bundle"]);
-		require(["js/main/main"]);
+		require(["ext/thegamma-script"]);
+		//require(["ext/js/main/main"]);
   });
 </script>
 

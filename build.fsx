@@ -28,19 +28,19 @@ Target "build" (fun _ ->
 "clean" ==> "build"
 
 // --------------------------------------------------------------------------------------
-// For local run - just build and run the compiled process
+// For local run - automatically reloads scripts
 // --------------------------------------------------------------------------------------
 
-let startServer () = 
+let startServers () = 
   ExecProcessWithLambdas
     (fun info -> 
-        info.FileName <- System.IO.Path.GetFullPath "bin/olympics-web.exe"
-        info.Arguments <- "port=8899"
+        info.FileName <- System.IO.Path.GetFullPath fsiPath
+        info.Arguments <- "--load:src/debug.fsx"
         info.WorkingDirectory <- __SOURCE_DIRECTORY__)
     TimeSpan.MaxValue false ignore ignore 
 
 Target "start" (fun _ ->
-  async { return startServer() } 
+  async { return startServers() } 
   |> Async.Ignore
   |> Async.Start
 
@@ -48,7 +48,7 @@ Target "start" (fun _ ->
   while not started do
     try
       use wc = new System.Net.WebClient()
-      started <- wc.DownloadString("http://localhost:8899/").Contains("html")
+      started <- wc.DownloadString("http://localhost:8899/") |> String.IsNullOrWhiteSpace |> not
     with _ ->
       System.Threading.Thread.Sleep(1000)
       printfn "Waiting for servers to start...."
@@ -58,7 +58,7 @@ Target "start" (fun _ ->
 
 Target "run" (fun _ ->
   traceImportant "Press any key to stop!"
-  Console.ReadKey() |> ignore
+  Console.ReadLine() |> ignore
 )
 
 "start" ==> "run"

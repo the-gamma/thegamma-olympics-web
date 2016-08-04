@@ -4,3 +4,5 @@ source https://www.nuget.org/api/v2
 nuget FAKE
 nuget Suave
 nuget Suave.DotLiquid
+nuget FSharp.Compiler.Tools
+nuget FSharp.Compiler.Service

@@ -60,7 +60,9 @@
   -->
   <ItemGroup>
     <None Include="paket.references" />
-    <Compile Include="app.fs" />
+    <Compile Include="app.fsx" />
+    <None Include="debug.fsx" />
+    <Compile Include="release.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

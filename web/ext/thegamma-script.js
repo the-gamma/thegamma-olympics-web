@@ -125,7 +125,7 @@
 	
 	      var restTys = _fableCore.List.ofArray([_providers.RestProvider.provideRestType(lookupNamed, "olympics1", services + "olympics", ""), _providers.RestProvider.provideRestType(lookupNamed, "olympics", services + "pivot", "source=" + services + "olympics"), _providers.RestProvider.provideRestType(lookupNamed, "adventure", services + "adventure", ""), _providers.RestProvider.provideRestType(lookupNamed, "world", services + "worldbank", ""), new _providers.ProvidedType("NamedType", ["value", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["seq", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["async", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])])]);
 	
-	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "out/fsprovider/libraries.json"), function (_arg1) {
+	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "ext/libraries.json"), function (_arg1) {
 	        var fsTys = _arg1;
 	
 	        var allTys = _fableCore.List.append(restTys, fsTys);
@@ -482,10 +482,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var1 = showOptionsBtn;
+	      var $var2 = showOptionsBtn;
 	
-	      if ($var1 != null) {
-	        return [$var1];
+	      if ($var2 != null) {
+	        return [$var2];
 	      } else {
 	        return [];
 	      }
