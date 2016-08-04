@@ -420,12 +420,17 @@ chart.column(all)
 <script src="node_modules/requirejs/require.js"></script>
 <script>
 	require.config({
-			baseUrl: 'out/build',
-			paths: { 'vs': '../../node_modules/monaco-editor/dev/vs' },
+			baseUrl: 'out',
+			paths: { 
+				'core-js': '../node_modules/core-js/client/core.min', // Only needed when using 'js/main/main'
+			  'fable-core': '../node_modules/fable-core/fable-core.min', // Only needed when using 'js/main/main'
+			  'vs': '../node_modules/monaco-editor/dev/vs' 
+			},
 			map: { "*": { "monaco": "vs/editor/editor.main" }}
 	});
 	require(['monaco'], function() {
-		require(["bundle"]);
+		// require(["build/bundle"]);
+		require(["js/main/main"]);
   });
 </script>
 
