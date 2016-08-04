@@ -1,0 +1,14 @@
+*.suo
+*.bak
+.ionide.debug
+
+.fake
+.vs
+paket.exe
+paket.targets
+paket-files
+packages
+
+temp
+bin
+obj
