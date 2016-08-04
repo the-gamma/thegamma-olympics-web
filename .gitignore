@@ -9,6 +9,8 @@ paket.targets
 paket-files
 packages
 
+web/ext/js
+
 temp
 bin
 obj
