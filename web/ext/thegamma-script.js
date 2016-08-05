@@ -391,10 +391,11 @@
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
 	
-	    (function (arg00) {
-	      _fableCore.Async.startImmediate(arg00);
-	    })(run(source));
-	
+	    setRunner(parent.dataset["article"], function (unitVar0) {
+	      (function (arg00) {
+	        _fableCore.Async.startImmediate(arg00);
+	      })(run(source));
+	    });
 	    var ed = new _fableCore.Lazy(function (unitVar0) {
 	      var ed = (0, _monaco.createMonacoEditor)(monacoEl.id, source, function (opts) {
 	        opts.fontFamily = "Inconsolata";
@@ -482,10 +483,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var2 = showOptionsBtn;
+	      var $var1 = showOptionsBtn;
 	
-	      if ($var2 != null) {
-	        return [$var2];
+	      if ($var1 != null) {
+	        return [$var1];
 	      } else {
 	        return [];
 	      }
@@ -13304,7 +13305,7 @@
 	          return builder_.TryWith(builder_.Delay(function (unitVar_1) {
 	            return builder_.Bind(chart["data"].data, function (_arg1) {
 	              var dt = _arg1;
-	              drawChart(chart, dt, outputId, blockCallback);
+	              drawChart(chart, dt, outputId);
 	              return builder_.Zero();
 	            });
 	          }), function (_arg2) {

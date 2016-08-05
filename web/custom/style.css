@@ -70,40 +70,24 @@ header img {
 }
 
 /***************************************************************************************************
-  Navigation bar
+  Separator between main text and other articles
 ***************************************************************************************************/
 
-.navbar {
-  font-family:Kreon,'Times New Roman',times,serif;
-  background:#F4C300;
-  z-index:1000;
-  height:38px;
-  min-height:38px;
-  border-style:none;
-  border-radius:0px;
-}
-.navbar-nav>li>a {
-  color:black;
-  font-size:16pt;
-  height:38px;
-  min-height:38px;
-  padding:8px 20px 8px 20px;
-}
-nav .selected {
-  background:#F2F1ED;
-}
-nav .icon-bar {
-  background:red;
+.break {
+  padding:40px 0px 40px 0px;
+  background:#DDD8C5;
+  min-height:300px;
 }
 
-nav.affix {
-  top: 0;
-  width: 100%;
+.break h1 {
+  font-size:20pt;
 }
-nav.affix-top {
-  top: 0;
-  width: 100%;
+
+.break .container {
+  font-family:Kreon,'Times New Roman',times,serif;
+  color:#56544C;
 }
+
 
 /***************************************************************************************************
   Interactive figure styling
@@ -153,6 +137,92 @@ nav.affix-top {
   background-image:url('../img/spinner.png');
 }
 
+
+/***************************************************************************************************
+  Editors for automatically provided options
+***************************************************************************************************/
+
+.ia-editor-panel h3, .ia-editor h3 {
+  font-family:'PT Sans',verdana,sans-serif;
+  font-size:12pt;
+  font-weight:bold;
+  color:#909090;
+  margin:0px;
+}
+.ia-editor-panel p, .ia-editor p {
+  font-size:11pt;
+  color:#808080;
+  margin:0px 0px 20px 0px;
+}				
+.ia-editor-panel, .ia-editor {
+  margin:0px auto 40px auto;
+  padding:0px 20px 0px 20px;
+}
+
+.ia-editor-panel .chosen-container {
+  width:100% !important;
+  line-height:16px;
+}
+.ia-editor-panel .chosen-results li {
+  padding:2px 10px 2px 10px !important;
+}
+.ia-editor-panel .control {
+  max-width:600px;
+  margin:0px auto 20px auto;
+}
+
+.ed-nested .chosen-container {
+  margin-bottom:5px;
+}
+
+
+.ed-list ul, .ed-list li {
+  margin:0px;
+  padding:0px;
+  list-style-type:none;
+  font-size:14px;
+}
+.ed-list li {
+  padding:2px 10px 2px 10px;
+}
+.ed-list button {
+  text-align:right;
+  border-style:none;
+  background:transparent;
+  height:10px;
+  float:right;
+  font-weight:bold;
+  font-size:8pt;
+  color:#808080;
+}
+.ed-list button:disabled {
+  color:#a0a0a0;
+}
+.ed-list .control {
+  border: 1px solid #ccc;
+  padding-top:2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.ed-list .chosen-single span {
+  line-height:16px;
+  color:#c0c0c0;
+}
+.ed-list .chosen-single div {
+  right:8px !important;
+  top:-10px !important;
+}
+.ed-list .chosen-drop {
+  border-top-style:none !important;
+}
+.ed-list .chosen-single {
+  width:100% !important;
+  box-shadow:none !important;
+  border-style:none !important;
+  padding:0px 10px 0px 10px !important;
+  height:20px !important;
+}
+
 /***************************************************************************************************
   ...
 ***************************************************************************************************/
@@ -165,8 +235,11 @@ body {
   overflow-y:scroll;
 }
 
-article .new-content {
+article {
   padding-top:50px;
+}
+article.primary {
+  padding-bottom:50px;  
 }
 article h1 {
   font:300 24pt Kreon,'Times New Roman',times,serif;
@@ -213,7 +286,7 @@ article table td, article table th {
 
 
 /* */
-.olympic-medals .ia-output table img {
+.medals-per-athlete .ia-output table img {
   width:14px;
   height:14px;
   margin:2px;

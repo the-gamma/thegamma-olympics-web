@@ -14,3 +14,4 @@ web/ext/js
 temp
 bin
 obj
+debug.log
