@@ -20,8 +20,6 @@ let asm, debug =
   if System.Reflection.Assembly.GetExecutingAssembly().IsDynamic then __SOURCE_DIRECTORY__, true
   else IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), false
 let root = IO.Path.GetFullPath(asm </> ".." </> "web")
-DotLiquid.setCSharpNamingConvention()
-DotLiquid.setTemplatesDir root 
 
 // --------------------------------------------------------------------------------------
 // Loading content
@@ -89,13 +87,16 @@ let loadPage first =
       let main = Seq.head loaded
       let others = loaded |> Seq.tail
       { debug = debug; mainArticle = main; moreArticles = others }
-
+  
 let docPath f = pathScan "/%s" (fun s ctx -> 
   if loaded |> Seq.exists (fun a -> a.id = s) then f s ctx
   else async.Return None)
 
-let app =
+let app = request (fun _ ->
+  DotLiquid.setTemplatesDir root 
+  DotLiquid.setCSharpNamingConvention()
+
   choose [
     path "/" >=> DotLiquid.page "index.html" (loadPage "")
     docPath (fun main -> DotLiquid.page "index.html" (loadPage main))
-    Files.browse root ]
+    Files.browse root ])
