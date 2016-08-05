@@ -77,7 +77,7 @@
 	    }
 	  }
 	
-	  var services = exports.services = "http://thegamma-services.azurewebsites.net/";
+	  var services = exports.services = "http://127.0.0.1:10042/";
 	
 	  var ProvidedTypes = exports.ProvidedTypes = function ProvidedTypes(lookupNamed, globals) {
 	    _classCallCheck(this, ProvidedTypes);
@@ -483,10 +483,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var1 = showOptionsBtn;
+	      var $var2 = showOptionsBtn;
 	
-	      if ($var1 != null) {
-	        return [$var1];
+	      if ($var2 != null) {
+	        return [$var2];
 	      } else {
 	        return [];
 	      }

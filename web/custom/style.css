@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Inconsolata|Kreon:300,400,700|PT+Sans:400,700,400italic);
+@import url(http://fonts.googleapis.com/css?family=Inconsolata|Kreon:300,400,700|Roboto:400,700,400italic);
 
 /***************************************************************************************************
   Page header (with photo and heading)
@@ -24,15 +24,23 @@ header h2 {
   margin:20px 0px 50px 0px;
   line-height:1.4em;
 }
-header .content span {
+header .content a span {
   color:black;
   background:#F4C300;
   padding:3px 10px 3px 10px;
+}
+header .content a:hover {
+  text-decoration:none;
+}
+header .content a:hover span {
+  background:#FFEC9B;
+  color:black;
 }
 header .content {
   font-family:Kreon,'Times New Roman',times,serif;
   margin:25vw -100px 0px -100px;
 }
+
 header img {
   float:right;
   width:250px;
@@ -70,24 +78,110 @@ header img {
 }
 
 /***************************************************************************************************
-  Separator between main text and other articles
+  Footer & separator between main text and other articles
 ***************************************************************************************************/
 
-.break {
-  padding:40px 0px 40px 0px;
+footer, .break {
   background:#DDD8C5;
-  min-height:300px;
 }
 
+footer {
+  padding:30px 0px 50px 0px;
+}
+footer h1 {
+  font-family:Kreon,'Times New Roman',times,serif;
+  font-size:28pt;
+  margin:0px 0px 20px 0px;
+}
+footer a {
+  text-decoration:underline;
+  color:#636159;
+}
+footer h3 {
+  font-family:Kreon,'Times New Roman',times,serif;
+  font-size:16pt;
+  margin:13px 0px 0px 0px;
+}
+footer .text {
+  padding:0px 20px 0px 20px;
+}
+
+.break {
+  margin:0px 0px 20px 0px;
+  padding:35px 0px 35px 0px;
+}
 .break h1 {
+  font-family:Kreon,'Times New Roman',times,serif;
   font-size:20pt;
 }
 
-.break .container {
-  font-family:Kreon,'Times New Roman',times,serif;
+footer .container, .break .container {
+  font-family:'Roboto',verdana,sans-serif;
+  font-size:11pt;  
   color:#56544C;
 }
 
+footer .btn-success, .container .btn-success {
+  border-color:#BFBBAC;
+  background:#E5E2D7;
+  color:#636159;
+}
+footer .btn-success:hover, footer .btn-success:focus,
+.container .btn-success:hover, .container .btn-success:focus {
+  color:#636159;
+  border-color:#BFBBAC;
+  background:#F5F2E7;
+}
+
+
+/***************************************************************************************************
+  Various forms and boxes
+***************************************************************************************************/
+
+.socialbox {
+  color:#827B66;    
+  margin:0px 0px 20px 0px;
+}
+
+.socialbox h4 {
+  font-family:Kreon,'Times New Roman',times,serif;
+  text-transform:uppercase;
+  margin:30px 0px 20px 0px;
+}
+
+.socialbox h4:first-child {
+  margin-top:0px;
+}
+
+.socialbox p {
+  margin:0px 0px 5px 0px;
+  font-size:11pt;
+}
+
+.socialbox i {
+  font-size:16pt;
+  margin:0px 0px 0px 5px;
+}
+
+.socialbox .sxs { display:none; }
+
+@media only screen and (max-width : 768px) {
+  .socialbox .hxs, .socialbox h4 { display:none; }
+  .socialbox .sxs { display:inline; }
+  .socialbox .share { float:right; }
+  .socialbox { margin-bottom:30px !important; }
+}
+
+.btn-success {
+  border-color:#BFBBAC;
+  background:#DDD8C5;
+  color:black;
+}
+.btn-success:hover, .btn-success:focus {
+  color:black;
+  border-color:#BFBBAC;
+  background:#E5E2D7;
+}
 
 /***************************************************************************************************
   Interactive figure styling
@@ -143,7 +237,7 @@ header img {
 ***************************************************************************************************/
 
 .ia-editor-panel h3, .ia-editor h3 {
-  font-family:'PT Sans',verdana,sans-serif;
+  font-family:'Roboto',verdana,sans-serif;
   font-size:12pt;
   font-weight:bold;
   color:#909090;
@@ -228,7 +322,7 @@ header img {
 ***************************************************************************************************/
 
 body {
-  font-family:'PT Sans',verdana,sans-serif;
+  font-family:'Roboto',verdana,sans-serif;
   font-size:13pt;
   background-color:#F2F1ED;
   overflow-x:hidden;
@@ -238,39 +332,49 @@ body {
 article {
   padding-top:50px;
 }
+.art-margin {
+  padding-top:30px;
+}
 article.primary {
   padding-bottom:50px;  
 }
+
 article h1 {
   font:300 24pt Kreon,'Times New Roman',times,serif;
   margin:0px 0px 20px 0px;
 }
-article h1 span {
-  padding:4px 10px 4px 10px;
-  background:#FFDD35;
-}
-
 article h2 {
-  font:300 22pt Kreon,'Times New Roman',times,serif;
+  font:300 18pt Kreon,'Times New Roman',times,serif;
   margin:0px 0px 20px 0px;
 }
-
 article h3 {
-  font:300 18pt Kreon,'Times New Roman',times,serif;
+  font:400 18pt Kreon,'Times New Roman',times,serif;
   margin:0px 0px 10px 0px;
 }
 
+article h1 span, article h2 span, article h1 a, article h2 a {
+  padding:4px 10px 4px 10px;
+  background:#FFDD35;
+  color:black;
+}
+article h1 a:hover, article h2 a:hover {
+  background:#FFEC9B;
+  color:black;
+  text-decoration:none;
+}
 article p {
   margin:0px 0px 20px 0px;
 }
-
+article li {
+  margin:0px 0px 10px 0px;
+}
+article ul {
+  margin:0px 0px 20px 0px;
+}
 article table td, article table th {
   font-size:11pt;
   color:#505050;
 }
-
-
-
 
 
 

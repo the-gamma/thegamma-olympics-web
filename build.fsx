@@ -81,9 +81,12 @@ Target "deploy" (fun _ ->
   CleanDir (deployroot </> "bin")
   CleanDir (deployroot </> "web")
   CleanDir (deployroot </> "docs")
+  CleanDir (deployroot </> "templates")
   CopyRecursive "bin" (deployroot </> "bin") false |> ignore
   CopyRecursive "web" (deployroot </> "web") false |> ignore
   CopyRecursive "docs" (deployroot </> "docs") false |> ignore
+  CopyRecursive "templates" (deployroot </> "templates") false |> ignore
+  
   let config = File.ReadAllText("web.config").Replace("%DEPLOY_SUBDIRECTORY%", subdir)
   File.WriteAllText(wwwroot </> "web.config", config)
 

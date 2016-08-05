@@ -1,13 +1,13 @@
 <div class="container">
-  <div class="col-lg-2"></div>
-  <div class="col-lg-6">
-    <h1><span>{{ item.heading }}</span></h1>
+  <div class="col-lg-8">
+    <h1><a href="/{{ item.id }}">{{ item.heading }}</a></h1>
     {{ item.before }}
   </div>
   <div class="col-lg-4"></div>
 </div>
+
+{% if item.plaintext == "false" %}
 <div class="container">
-  <div class="col-lg-2"></div>
   <div class="col-lg-10">
     <div class="ia-figure {{ item.id }}" data-article="{{ item.id }}">
       <p class="tools tools-right">
@@ -41,10 +41,12 @@
       </div>
     </div>
   </div>
+  <div class="col-lg-2"></div>
 </div>
+{% endif %}
+
 <div class="container">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
       {{ item.after }}
     </div>
     <div class="col-lg-4"></div>

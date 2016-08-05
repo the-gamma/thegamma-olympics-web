@@ -1,0 +1,54 @@
+{% extends "page.html" %}
+{% block head %}
+  <title>{{ model.mainArticle.heading }} - TheGamma</title>
+{% endblock %}
+
+{% block body %}
+  <article id="{{ model.mainArticle.id }}" class="primary">
+    {% include "primary-article.html" item:model.mainArticle %}
+  </article>
+  <script>registerArticle("{{ model.mainArticle.id }}", true, true);</script>
+
+  <section class="break">
+    <div class="container">
+      <div class="col-md-5 col-lg-5">
+        <p>If you are interested in the project or you would like to collaborate on visualizing
+          interesting data, drop us an email at <a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a>,
+          ping us on Twitter at <a href="https://twitter.com/thegamma_net">@thegamma_net</a>. All source
+          code is available under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>
+          license on <a href="https://github.com/the-gamma">GitHub</a>. 
+        </p>
+      </div>
+      <div class="col-md-4 col-lg-5">
+        <p class="hidden-sm hidden-xs">Get the latest news, we will not spam you!</p>
+        <form action="https://docs.google.com/forms/d/1QhOoo9g6M6WhtZcMxOcURH1pQLpLLVIuTN1omvJLbWA/formResponse" 
+            method="POST" id="ss-form" target="_self" onsubmit="" class="form-inline">
+          <input placeholder="hello@thegamma.net" type="text" name="entry.902762028" value="" 
+            style="width:100%;" class="form-control ss-q-short" id="entry_902762028" dir="auto" aria-label="Email" title="">
+          <input style="margin-top:5px;width:100%;" type="submit" name="submit" class="btn btn-success" value="Sign up" id="ss-submit">
+          <input type="hidden" name="draftResponse" value="[,,&quot;-2799700618843047135&quot;]">
+          <input type="hidden" name="pageHistory" value="0">
+          <input type="hidden" name="fvv" value="0">
+          <input type="hidden" name="fbzx" value="-2799700618843047135">
+        </form>
+      </div>
+      <div class="col-md-3 col-lg-2  hidden-xs hidden-sm" style="text-align:center;">
+        <img src="/img/logo.png" style="width:100px;" />
+      </div>
+    </div>
+  </section>
+  
+  {% for it in model.moreArticles limit:1 %}
+  <article id="{{ it.id }}">
+     {% include "secondary-article.html" item:it %}
+  </article>
+  <script>registerArticle("{{ it.id }}", true, false);</script>
+  {% endfor %}
+  
+  {% for it in model.moreArticles offset:1 %}
+  <article id="{{ it.id }}" style="display:none;">
+    {% include "secondary-article.html" item:it %}
+  </article>
+  <script>registerArticle("{{ it.id }}", false, false);</script>
+  {% endfor %}
+{% endblock %}

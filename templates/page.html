@@ -4,19 +4,20 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
   <meta name=viewport content="width=device-width, initial-scale=1">
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
     integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href="lib/bootstrap.min.css" rel="stylesheet">
   <link href="lib/chosen.min.css" rel="stylesheet">
   <link href="custom/style.css" rel="stylesheet">
   
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <meta name="theme-color" content="#F4C300">  
-  
+  <meta name="theme-color" content="#F4C300">    
   <script type="text/javascript" src="custom/common.js"></script>
+  
+  {% block head %} 
+  {% endblock %}  
 </head>
 <body>
 
@@ -24,46 +25,53 @@
     <div class="container">
       <div class="content">
         <img src="img/olympic.png" />
+        <a href="/">
          <h1><span>Visualizing Olympic Medalists</span></h1>    
          <h2><span>Experiment in Tooling for Data-Driven Storytelling</span></h2>
+       </a>
       </div>
     </div>
   </header>
 
-  <article id="{{ model.mainArticle.id }}" class="primary">
-    {% include "primary.html" item:model.mainArticle %}
-  </article>
-  <script>registerArticle("{{ model.mainArticle.id }}", true, true);</script>
-
-  <section class="break">
+  {% block body %} 
+  {% endblock %}
+  <footer>
     <div class="container">
-      <div class="col-lg-12">
-        <h1>Experiments in Data-Driven Storytelling</h1>
+      <div class="hidden-xs col-sm-4 col-md-3" style="text-align:center;">
+        <h1>The Gamma</h1>        
       </div>
     </div>
     <div class="container">
-      <div class="col-md-6">
-        Some content
+      <div class="col-sm-3 hidden-xs" style="text-align:center;">
+        <img src="/img/logo.png" style="width:100px;" />
       </div>
-      <div class="col-md-6">
-        Some more content
+      <div class="col-sm-5 text">
+        <p>For more information about The Gamma and related projects, follow us
+          at <a href="http://twitter.com/thegamma_net">@thegamma_net</a>. If you want to speak
+          to us, contact <a href="http://tomasp.net">Tomas Petricek</a> at 
+          <a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a>.
+        </p>
+        <p>
+          All source code is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>
+          and is available on <a href="http://github.com/the-gamma">GitHub</a>. If you have an interesting
+          project idea, do get in touch!
+        </p>
+      </div>
+      <div class="col-sm-4 text">
+        <p>To receive the latest news enter your email below. We will not spam you.</p>
+        <form action="https://docs.google.com/forms/d/1QhOoo9g6M6WhtZcMxOcURH1pQLpLLVIuTN1omvJLbWA/formResponse" 
+            method="POST" id="ss-form" target="_self" onsubmit="" class="form-inline">
+          <input placeholder="hello@thegamma.net" type="text" name="entry.902762028" value="" 
+            style="width:100%;" class="form-control ss-q-short" id="entry_902762028" dir="auto" aria-label="Email" title="">
+          <input style="margin-top:5px;width:100%;" type="submit" name="submit" class="btn btn-success" value="Sign up" id="ss-submit">
+          <input type="hidden" name="draftResponse" value="[,,&quot;-2799700618843047135&quot;]">
+          <input type="hidden" name="pageHistory" value="0">
+          <input type="hidden" name="fvv" value="0">
+          <input type="hidden" name="fbzx" value="-2799700618843047135">
+        </form>
       </div>
     </div>    
-  </section>
-  
-  {% for it in model.moreArticles limit:1 %}
-  <article id="{{ it.id }}">
-     {% include "secondary.html" item:it %}
-  </article>
-  <script>registerArticle("{{ it.id }}", true, false);</script>
-  {% endfor %}
-  
-  {% for it in model.moreArticles offset:1 %}
-  <article id="{{ it.id }}" style="display:none;">
-    {% include "secondary.html" item:it %}
-  </article>
-  <script>registerArticle("{{ it.id }}", false, false);</script>
-  {% endfor %}
+  </footer>
    
   <!-- Third-party standard references -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.3/numeral.min.js"></script>
@@ -86,7 +94,7 @@
         baseUrl: '.',
         paths: { 
           {% if model.debug == "true" %}
-            'core-js': 'lib/dev/core.min',           // Debug: only needed when loading 'ext/js/main/main'
+            'core-js': 'lib/dev/core.min',          // Debug: only needed when loading 'ext/js/main/main'
             'fable-core': 'lib/dev/fable-core.min', // Debug: Only needed when loading 'ext/js/main/main'
           {% endif %}
           'vs': 'lib/vs' 

@@ -20,6 +20,7 @@ let asm, debug =
   if System.Reflection.Assembly.GetExecutingAssembly().IsDynamic then __SOURCE_DIRECTORY__, true
   else IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), false
 let root = IO.Path.GetFullPath(asm </> ".." </> "web")
+let templ = IO.Path.GetFullPath(asm </> ".." </> "templates")
 
 // --------------------------------------------------------------------------------------
 // Loading content
@@ -32,9 +33,18 @@ type Article =
     category : string
     before : string
     code : string
-    after : string }
+    after : string
+    plaintext : bool }
 
-type Content = 
+type Category = 
+  { mainArticle : Article
+    moreArticles : seq<Article> }
+
+type Home =
+  { debug : bool
+    categories : seq<Category> }
+
+type Main = 
   { debug : bool 
     mainArticle : Article
     moreArticles : seq<Article> }
@@ -45,9 +55,10 @@ let docs =
     "athlete", "phelps-as-country"
     "country", "top-5-countries"
     "country", "medals-per-country"
-    //"country", "countries-timeline" 
+    ///"country", "countries-timeline" 
+    "data", "about-the-data"
     ]
-
+    
 let split pars =
   let rec after head before code acc = function
     | MarkdownParagraph.HorizontalRule _::ps -> head, before, code, List.rev acc, ps
@@ -55,8 +66,9 @@ let split pars =
     | [] -> head, before, code, List.rev acc, []
   let rec before head acc = function 
     | MarkdownParagraph.CodeBlock(code, _, _)::ps -> after head (List.rev acc) code [] ps
+    | MarkdownParagraph.HorizontalRule _::ps -> head, List.rev acc, null, ps, []
     | p::ps -> before head (p::acc) ps
-    | [] -> failwith "Invalid document: No code block found"
+    | [] -> head, (List.rev acc), null, [], []
   match pars with 
   | MarkdownParagraph.Heading(_, [MarkdownSpan.Literal head])::ps -> before head [] ps
   | _ -> failwith "Invalid document: No heading fond"
@@ -67,11 +79,20 @@ let readArticle i (category, id) =
   let head, before, code, after, alts = split doc.Paragraphs
   let format pars = Markdown.WriteHtml(MarkdownDocument(pars, doc.DefinedLinks))
   { id = id; category = category; code = code; index = i;
+    plaintext = String.IsNullOrEmpty code
     heading = head; before = format before; after = format after }
 
 let loaded = 
   docs 
   |> Seq.mapi readArticle
+  |> (if debug then id else Array.ofSeq >> Seq.ofArray)
+
+let categories = 
+  loaded
+  |> Seq.groupBy (fun a -> a.category)
+  |> Seq.map (fun (_, arts) -> 
+      { Category.mainArticle = Seq.head arts
+        moreArticles = Seq.tail arts })
   |> (if debug then id else Array.ofSeq >> Seq.ofArray)
 
 let loadPage first =
@@ -88,15 +109,30 @@ let loadPage first =
       let others = loaded |> Seq.tail
       { debug = debug; mainArticle = main; moreArticles = others }
   
+let loadHome =
+  { debug = debug; categories = categories }
+
 let docPath f = pathScan "/%s" (fun s ctx -> 
   if loaded |> Seq.exists (fun a -> a.id = s) then f s ctx
   else async.Return None)
 
-let app = request (fun _ ->
-  DotLiquid.setTemplatesDir root 
-  DotLiquid.setCSharpNamingConvention()
+module Filters = 
+  let urlEncode (url:string) =
+    System.Web.HttpUtility.UrlEncode(url)
+  let mailEncode (url:string) =
+    urlEncode(url).Replace("+", "%20")
 
+let inits = Lazy.Create(fun () ->
+  DotLiquid.setTemplatesDir templ 
+  DotLiquid.setCSharpNamingConvention()
+  System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
+  |> Seq.find (fun ty -> ty.Name = "Filters")
+  |> DotLiquid.registerFiltersByType
+)  
+   
+let app = request (fun _ ->
+  inits.Value
   choose [
-    path "/" >=> DotLiquid.page "index.html" (loadPage "")
-    docPath (fun main -> DotLiquid.page "index.html" (loadPage main))
+    path "/" >=> DotLiquid.page "home.html" (loadHome)
+    docPath (fun id -> DotLiquid.page "main.html" (loadPage id))
     Files.browse root ])

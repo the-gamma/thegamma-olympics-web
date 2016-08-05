@@ -1,18 +1,30 @@
 <div class="container">
-  <div class="col-lg-2">
-    <p>Tomas Petricek</p>
-    <p><a href="http://twitter.com/tomaspetricek">@tomaspetricek</a> | <a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a></p>
-    <strong>Share</strong><br />
-    <i class="fa fa-twitter-square"></i>
-    <i class="fa fa-facebook-official"></i>
-    <i class="fa fa-envelope"></i>    
+  <div class="col-sm-3 col-md-2 col-lg-2 socialbox">
+    <h4>Share</h4>
+    <p class="share">
+      <a target="_blank" href="https://twitter.com/intent/tweet?url={{ "http://rio2016.thegamma.net" | urlEncode }}&text={{ "Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling via @thegamma_net" | urlEncode }}">
+        <i class="fa fa-twitter-square"></i></a>
+      <a target="_blank" href="https://www.facebook.com/sharer.php?u={{ "http://rio2016.thegamma.net" | urlEncode }}">
+        <i class="fa fa-facebook-official"></i></a>
+      <a href="http://www.reddit.com/submit?url={{ "http://rio2016.thegamma.net" | urlEncode }}&title={{ "Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling" | urlEncode }}">
+        <i class="fa fa-reddit-square"></i></a>
+      <a href="mailto:?subject={{ "Visualizing Olympic Medalists" | mailEncode }}&body={{ "Experiment in Tooling for Data-Driven Storytelling: http://rio2016.thegamma.net" | mailEncode }}">
+        <i class="fa fa-envelope"></i></a>
+    </p>
+
+    <h4>Author</h4>
+    <p class="info">Tomas Petricek<span class="sxs">, <a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></span></p>
+    <p class="hxs"><a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></p>
+    <p class="hxs"><a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a></p>        
   </div>
-  <div class="col-lg-6">
-    <h1><span>{{ item.heading }}</span></h1>
+  <div class="col-sm-9 col-md-8 col-lg-7">
+    <h1><a href="/{{ item.id }}">{{ item.heading }}</a></h1>
     {{ item.before }}
   </div>
   <div class="col-lg-4"></div>
 </div>
+
+{% if item.plaintext == "false" %}
 <div class="container">
   <div class="col-lg-2"></div>
   <div class="col-lg-10">
@@ -49,6 +61,8 @@
     </div>
   </div>
 </div>
+{% endif %}
+
 <div class="container">
     <div class="col-lg-2"></div>
     <div class="col-lg-8">

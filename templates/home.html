@@ -1,0 +1,129 @@
+{% extends "page.html" %}
+{% block head %}
+  <title>Visualizing Olympic Medalists - TheGamma</title>
+
+  <meta name="description" content="Visualizations of Olympic medalists of all time, top countries and other interesting facts, built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations." />
+  <meta name="keywords" content="Rio 2016, Olympic medals, Visualization, Interactive Graphics, Data Journalism" />  
+  <meta name="author" content="Tomas Petricek" />
+  <meta name="application-name" content="The Gamma" />
+  <meta name="copyright" content="The Gamma" />
+  
+  <meta property="og:title" content="Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://rio2016.thegamma.net" />
+  <meta property="og:image" content="http://rio2016.thegamma.net/img/card.jpg" />
+  <meta property="og:description" content="Visualizations of Olympic medalists of all time, top countries and other interesting facts, built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations." />
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@thegamma_net">
+  <meta name="twitter:creator" content="@tomaspetricek">  
+  <meta name="twitter:title" content="Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling" />
+  <meta name="twitter:image" content="http://rio2016.thegamma.net/img/card.jpg" />
+  <meta name="twitter:description" content="Visualizations of Olympic medalists of all time, top countries and other interesting facts, built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations." />
+{% endblock %}
+
+{% block body %}
+  <article class="primary">
+    <div class="container">
+      <div class="col-sm-3 col-md-2 col-lg-2 socialbox">
+        <h4>Share</h4>
+        <p class="share">
+          <a target="_blank" href="https://twitter.com/intent/tweet?url={{ "http://rio2016.thegamma.net" | urlEncode }}&text={{ "Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling via @thegamma_net" | urlEncode }}">
+            <i class="fa fa-twitter-square"></i></a>
+          <a target="_blank" href="https://www.facebook.com/sharer.php?u={{ "http://rio2016.thegamma.net" | urlEncode }}">
+            <i class="fa fa-facebook-official"></i></a>
+          <a href="http://www.reddit.com/submit?url={{ "http://rio2016.thegamma.net" | urlEncode }}&title={{ "Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling" | urlEncode }}">
+            <i class="fa fa-reddit-square"></i></a>
+          <a href="mailto:?subject={{ "Visualizing Olympic Medalists" | mailEncode }}&body={{ "Experiment in Tooling for Data-Driven Storytelling: http://rio2016.thegamma.net" | mailEncode }}">
+            <i class="fa fa-envelope"></i></a>
+        </p>
+
+        <h4>Author</h4>
+        <p class="info">Tomas Petricek<span class="sxs">, <a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></span></p>
+        <p class="hxs"><a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></p>
+        <p class="hxs"><a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a></p>        
+        
+        <h4>Sources</h4>
+        <p class="hxs"><a href="/about-the-data">about the data</a></p>
+        <p class="hxs"><a href="https://github.com/the-gamma/thegamma-olympics-web/tree/master/docs">source code</a></p>
+        <p class="hxs"><a href="https://github.com/the-gamma/thegamma-services/blob/master/src/olympics/medals-expanded.csv">raw data (csv)</a></p>
+        
+      </div>
+      <div class="col-sm-9 col-md-8 col-lg-7">
+        <p>
+          The Gamma is a reserch project that aims to make it easier to create open data-driven 
+          articles that are linked directly to the data source. Open means both that you can see 
+          how an article is created (as in open source software) and that you can further improve 
+          it (open as in Wikipedia). This makes the articles:
+        </p>
+        <ul>
+          <li>Transparent and accountable &mdash;
+            As a reader, you can review how data is used and find out when data is used in a misleading way.</li>
+          <li>Reproducible &mdash;
+            You can run the data analysis again on your own and verify that it produces the same result.</li>
+          <li>Interactive and collaborative &mdash;
+            You can adapt the article to explore different aspects of the data that the authors might have missed.</li>
+        </ul>
+        <p>
+          This web site is an early prototype of how such open data-driven articles might look like.
+          It shows a number of interactive visualizations built around the Olympic medals data set,
+          partly inspired by the nice work of <a href="https://www.theguardian.com/sport/series/london-2012-olympics-data">The 
+          Guardian around London 2012 Olympics</a>. Could we make data-driven storytelling easy enough 
+          that it does not require a dedicated team of professionals?
+        </p>
+        
+        <p>
+          Every article on this page includes <a href="https://github.com/the-gamma/thegamma-olympics-web/tree/master/docs">source
+          code</a> that you can run to reproduce the visualziation. You can edit the code, change
+          parameters and run the code in your browser to reproduce the results or explore other 
+          interesting facts.
+        </p>
+      </div>
+      <div class="col-md-2 col-lg-3"></div>
+    </div>
+  </article>
+
+  <section class="break">
+    <div class="container">
+      <div class="col-md-3 col-lg-2  hidden-xs hidden-sm" style="text-align:center;">
+        <img src="/img/logo.png" style="width:100px;" />
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <p>If you are interested in the project or you would like to collaborate on visualizing
+          interesting data, drop us an email at <a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a>,
+          ping us on Twitter at <a href="https://twitter.com/thegamma_net">@thegamma_net</a>. All source
+          code is available under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>
+          license on <a href="https://github.com/the-gamma">GitHub</a>. 
+        </p>
+      </div>
+      <div class="col-md-4">
+        <p class="hidden-sm hidden-xs">Get the latest news, we will not spam you!</p>
+        <form action="https://docs.google.com/forms/d/1QhOoo9g6M6WhtZcMxOcURH1pQLpLLVIuTN1omvJLbWA/formResponse" 
+            method="POST" id="ss-form" target="_self" onsubmit="" class="form-inline">
+          <input placeholder="hello@thegamma.net" type="text" name="entry.902762028" value="" 
+            style="width:100%;" class="form-control ss-q-short" id="entry_902762028" dir="auto" aria-label="Email" title="">
+          <input style="margin-top:5px;width:100%;" type="submit" name="submit" class="btn btn-success" value="Sign up" id="ss-submit">
+          <input type="hidden" name="draftResponse" value="[,,&quot;-2799700618843047135&quot;]">
+          <input type="hidden" name="pageHistory" value="0">
+          <input type="hidden" name="fvv" value="0">
+          <input type="hidden" name="fbzx" value="-2799700618843047135">
+        </form>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+  </section>
+  
+  {% for cat in model.categories %}
+  <article id="{{ cat.mainArticle.id }}" class="primary">
+    {% include "home-article.html" item:cat.mainArticle %}
+    <div class="container art-margin">
+      {% for art in cat.moreArticles %}
+      <div class="col-lg-6">
+        <h2><a href="/{{ art.id }}">{{ art.heading }}</a></h2>
+        {{ art.before }}
+      </div>      
+      {% endfor %}
+    </div>
+  </article>
+  {% endfor %}
+{% endblock %}

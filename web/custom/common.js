@@ -62,13 +62,16 @@ function setCurrentSection(top) {
     if (dist < selDist) { selDist = dist; selId = sections[i]; }
   }
   var newSection = selId == primaryArticle ? originalLocation : ("/" + selId);
+  if (currentSection == "") currentSection = newSection;
   if (newSection != currentSection) {
     currentSection = newSection;
-    history.pushState({}, newSection, newSection)
+    history.replaceState({}, newSection, newSection);
   }
 }
 
 window.onscroll = function() {
+  if (sections.length == 0) return;
+  
   var body = document.body, html = document.documentElement;
   var height = -window.innerHeight + 
     Math.max(body.scrollHeight, body.offsetHeight, 
@@ -76,5 +79,5 @@ window.onscroll = function() {
   var top = document.body.scrollTop;    
 
   setCurrentSection(top);
-  if (height - top < 50) displayNext(); 
+  if (height - top < 200) displayNext(); 
 }

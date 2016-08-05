@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="col-lg-2"></div>
+  <div class="col-lg-6">
+    <h1><a href="/{{ item.id }}">{{ item.heading }}</a></h1>
+    {{ item.before }}
+  </div>
+  <div class="col-lg-4"></div>
+</div>
+
+{% if item.plaintext == "false" %}
+<div class="container">
+  <div class="col-lg-2"></div>
+  <div class="col-lg-10">
+    <div class="ia-figure {{ item.id }}" data-article="{{ item.id }}">
+      <p class="tools tools-right">
+        <a class="ia-show-options" href="javascript:;"><i class="fa fa-pencil-square-o"></i> options</a>
+        <a class="ia-show-source" href="javascript:;"><i class="fa fa-code"></i> source</a>
+      </p>
+      <p class="tools tools-left">
+        <a class="ia-run" href="javascript:;"><i class="fa fa-refresh"></i> refresh</a>
+      </p>
+      <script class="ia-source" type="text/thegamma">{{ item.code }}</script>
+      <div class="ia-options" style="display:none">
+        <div class="loading">
+          <p>Loading content, please wait...</p>
+          <div class="spinner" id="sp{{ item.id }}a"></div>
+          <script>startSpinning('sp{{ item.id }}a');</script>
+        </div>
+      </div>
+      <div class="ia-editor" style="display:none">
+        <h3>Edit source</h3>
+        <p>The following is the source code behind the visualization. You can change it and hit 'refresh' to run your new version.
+          When you type <code>.</code> after a name or a quoted name, you will get hint with possible options to choose from!</p>
+        <div id="ed{{ item.id }}" class="ia-monaco"></div>
+      </div>
+      <div class="ia-errors"></div>
+      <div id="out{{ item.id }}" class="ia-output">
+        <div class="loading">
+          <p>Loading content, please wait...</p>
+          <div class="spinner" id="sp{{ item.id }}b"></div>
+          <script>startSpinning('sp{{ item.id }}b');</script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-6">
+      {{ item.after }}
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+</div>
