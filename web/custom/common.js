@@ -18,7 +18,53 @@ function startSpinning(id) {
 }
 
 // ----------------------------------------------------------------------------------------
-// Loading spinner
+// Logging user events
+// ----------------------------------------------------------------------------------------
+
+function guid(){
+  var d = new Date().getTime();
+  if (window.performance && typeof window.performance.now === "function") d += performance.now();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (d + Math.random()*16)%16 | 0;
+      d = Math.floor(d/16);
+      return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+  });
+}
+
+var ssid = guid();
+var logStarted = false;
+var pendingEvents = [];
+var logTimer = -1;
+
+function writeLog() {
+  logTimer = -1;
+  if (pendingEvents.length > 0) 
+    $.ajax({ type: 'POST', url: "http://thegamma-logs.azurewebsites.net/log/olympics",
+      data:pendingEvents.join("\n"), dataType: "text", success:function(r) { } });
+  pendingEvents = [];
+}
+
+function logEvent(category, evt, article, data) {
+  if (!logStarted) return;
+  var usrid = document.cookie.replace(/(?:(?:^|.*;\s*)coeffusrid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  if (usrid == "") {
+    usrid = guid();
+    document.cookie = "coeffusrid=" + usrid;
+  }
+  var logObj =
+    { "user":usrid, "session":ssid,
+      "time":(new Date()).toISOString(),
+      "url":window.location.toString(),
+      "article":article,
+      "category":category, "event":evt, "data": data };
+  
+  pendingEvents.push(JSON.stringify(logObj));
+  if (logTimer != 1) clearTimeout(logTimer);
+  logTimer = setTimeout(writeLog, 4000);  
+}
+
+// ----------------------------------------------------------------------------------------
+// Displaying content & URL hacking
 // ----------------------------------------------------------------------------------------
 
 var sections = [];
@@ -46,6 +92,7 @@ function setRunner(article, f) {
 function displayNext() {
   if (hiddenArticles.length > 0) {
     document.getElementById(hiddenArticles[0]).style.display = "block";
+    logEvent("navigation", "dislay", hiddenArticles[0]);
     var f = loaders[hiddenArticles[0]];
     if (f) f();
     hiddenArticles = hiddenArticles.slice(1);
@@ -65,6 +112,7 @@ function setCurrentSection(top) {
   if (currentSection == "") currentSection = newSection;
   if (newSection != currentSection) {
     currentSection = newSection;
+    logEvent("navigation", "scroll", newSection);
     history.replaceState({}, newSection, newSection);
   }
 }
