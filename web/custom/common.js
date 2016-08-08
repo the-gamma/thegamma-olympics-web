@@ -64,6 +64,67 @@ function logEvent(category, evt, article, data) {
 }
 
 // ----------------------------------------------------------------------------------------
+// Sharing of snippets
+// ----------------------------------------------------------------------------------------
+
+var sharedCode = "";
+var sharedCompiled = "";
+
+function cannotShareSnippet() {
+  $("#cannot-share-dialog").modal("show");
+}
+
+function shareSnippet(code, compiled) {
+  sharedCode = code;
+  sharedCompiled = compiled;
+
+  document.getElementById("submit-title").value = "";
+  document.getElementById("submit-author").value = "";
+  document.getElementById("submit-info").value = "";
+  document.getElementById("submit-twitter").value = "";
+  $("#modal-share").css("display", "block");
+  $("#modal-done").css("display", "none");
+  $("#submit-error").css('visibility', 'hidden');
+
+  $("#share-dialog").modal("show");
+}
+
+// Validate title, author and info values. If everything is good,
+// send /share request to the server, wait & display confirmation
+function saveAndShare()
+{
+  // Validate that all values have been set
+  var title = document.getElementById("submit-title").value;
+  var author = document.getElementById("submit-author").value;
+  var twitter = document.getElementById("submit-twitter").value;
+  var info = document.getElementById("submit-info").value;
+  if (title == "" || author == "" || info == "")
+  {
+    $("#submit-error").css('visibility', 'visible');
+    return;
+  }
+
+  // Send data using AJAX to the server
+  var data = {
+    "title": title, "author": author, "twitter": twitter,
+    "description": info, "code": sharedCode, "compiled": sharedCompiled
+  };
+  
+  $.ajax({
+    //url: "http://localhost:8897/olympics", data: JSON.stringify(data),
+    url: "http://thegamma-snippets.azurewebsites.net/olympics", data: JSON.stringify(data),
+    contentType: "application/json", type: "POST", dataType: "JSON"
+  }).done(function (res) {
+    // Display the confirmation window with links
+    var link = "/shared/" + res + "/" + title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")
+    document.getElementById("result-url").value = "http://rio2016.thegamma.net" + link;
+    document.getElementById("result-link").href = link;
+    $("#modal-share").css("display", "none");
+    $("#modal-done").css("display", "block");
+  });
+}
+
+// ----------------------------------------------------------------------------------------
 // Displaying content & URL hacking
 // ----------------------------------------------------------------------------------------
 

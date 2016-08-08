@@ -46,17 +46,17 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3), __webpack_require__(10), __webpack_require__(5), __webpack_require__(14), __webpack_require__(12), __webpack_require__(15), __webpack_require__(23), __webpack_require__(13), __webpack_require__(25)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3), __webpack_require__(10), __webpack_require__(5), __webpack_require__(14), __webpack_require__(12), __webpack_require__(15), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(22), __webpack_require__(23), __webpack_require__(13), __webpack_require__(25)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
-	    factory(exports, require("../thegamma/extensions"), require("fable-core"), require("../thegamma/typechecker"), require("../thegamma/providers"), require("../thegamma/ast"), require("../gui/html"), require("../thegamma/services"), require("../thegamma/codegen"), require("../thegamma/monaco"), require("../thegamma/editors"), require("core-js"));
+	    factory(exports, require("../thegamma/extensions"), require("fable-core"), require("../thegamma/typechecker"), require("../thegamma/providers"), require("../thegamma/ast"), require("../gui/html"), require("../thegamma/services"), require("../thegamma/codegen"), require("../libraries/series"), require("../thegamma/restruntime"), require("../libraries/google/charts"), require("../libraries/tables"), require("../thegamma/monaco"), require("../thegamma/editors"), require("core-js"));
 	  } else {
 	    var mod = {
 	      exports: {}
 	    };
-	    factory(mod.exports, global.extensions, global.fableCore, global.typechecker, global.providers, global.ast, global.html, global.services, global.codegen, global.monaco, global.editors, global.coreJs);
+	    factory(mod.exports, global.extensions, global.fableCore, global.typechecker, global.providers, global.ast, global.html, global.services, global.codegen, global.series, global.restruntime, global.charts, global.tables, global.monaco, global.editors, global.coreJs);
 	    global.main = mod.exports;
 	  }
-	})(this, function (exports, _extensions, _fableCore, _typechecker, _providers, _ast, _html, _services, _codegen, _monaco, _editors) {
+	})(this, function (exports, _extensions, _fableCore, _typechecker, _providers, _ast, _html, _services, _codegen, _series, _restruntime, _charts, _tables, _monaco, _editors) {
 	  "use strict";
 	
 	  Object.defineProperty(exports, "__esModule", {
@@ -125,7 +125,7 @@
 	
 	      var restTys = _fableCore.List.ofArray([_providers.RestProvider.provideRestType(lookupNamed, "olympics1", services + "olympics", ""), _providers.RestProvider.provideRestType(lookupNamed, "olympics", services + "pivot", "source=" + services + "olympics"), _providers.RestProvider.provideRestType(lookupNamed, "adventure", services + "adventure", ""), _providers.RestProvider.provideRestType(lookupNamed, "world", services + "worldbank", ""), new _providers.ProvidedType("NamedType", ["value", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["seq", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["async", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])])]);
 	
-	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "ext/libraries.json"), function (_arg1) {
+	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "/ext/libraries.json"), function (_arg1) {
 	        var fsTys = _arg1;
 	
 	        var allTys = _fableCore.List.append(restTys, fsTys);
@@ -328,6 +328,23 @@
 	      };
 	    }(), parent).innerText, "both");
 	
+	    var compiled = function () {
+	      var $var16 = tryFindChildElement(function () {
+	        var cls = "ia-compiled";
+	        return function (el) {
+	          return withClass(cls, el);
+	        };
+	      }(), parent);
+	
+	      if ($var16 != null) {
+	        return function (el) {
+	          return _fableCore.String.trim(el.innerText, "both");
+	        }($var16);
+	      } else {
+	        return $var16;
+	      }
+	    }();
+	
 	    var outputId = findChildElement(function () {
 	      var cls = "ia-output";
 	      return function (el) {
@@ -336,6 +353,12 @@
 	    }(), parent).id;
 	    var runBtn = findChildElement(function () {
 	      var cls = "ia-run";
+	      return function (el) {
+	        return withClass(cls, el);
+	      };
+	    }(), parent);
+	    var shareBtn = findChildElement(function () {
+	      var cls = "ia-share";
 	      return function (el) {
 	        return withClass(cls, el);
 	      };
@@ -393,15 +416,62 @@
 	        return builder_.Delay(function (unitVar) {
 	          _extensions.Log.event("compiler", "run", article, text);
 	
-	          return builder_.Bind(checkingService.TypeCheck(text), function (_arg1) {
-	            var prog = _arg1;
-	            return builder_.Bind(_extensions.Async.map(function (cmd) {
-	              return callShowMethod(outputId, cmd);
-	            }, prog.Body), function (_arg2) {
-	              var newBody = _arg2;
-	              var prog_1 = new _ast.Program(newBody, prog.Range);
-	              return builder_.ReturnFrom((0, _codegen.compileAndRun)(globalExprs, text, prog_1));
+	          return builder_.Bind(function (builder__1) {
+	            return builder__1.Delay(function (unitVar_1) {
+	              var $target1 = function () {
+	                return builder__1.Bind(checkingService.TypeCheck(text), function (_arg1) {
+	                  var prog = _arg1[1];
+	                  return builder__1.Bind(_extensions.Async.map(function (cmd) {
+	                    return callShowMethod(outputId, cmd);
+	                  }, prog.Body), function (_arg2) {
+	                    var newBody = _arg2;
+	                    var prog_1 = new _ast.Program(newBody, prog.Range);
+	                    return builder__1.ReturnFrom((0, _codegen.compileAndRun)(globalExprs, text, prog_1));
+	                  });
+	                });
+	              };
+	
+	              if (compiled != null) {
+	                if (function () {
+	                  var compiled_1 = compiled;
+	                  return text === source;
+	                }()) {
+	                  var compiled_1 = compiled;
+	                  return builder__1.Return(compiled_1);
+	                } else {
+	                  return $target1();
+	                }
+	              } else {
+	                return $target1();
+	              }
 	            });
+	          }(_fableCore.defaultAsyncBuilder), function (_arg3) {
+	            var code = _arg3;
+	
+	            var s = _series.series.create(function (builder__1) {
+	              return builder__1.Delay(function (unitVar_1) {
+	                return builder__1.Return([]);
+	              });
+	            }(_fableCore.defaultAsyncBuilder), "", "", "");
+	
+	            new _restruntime.RuntimeContext("lol", "", "troll");
+	
+	            (function (c) {
+	              return function (s_1) {
+	                return (0, _restruntime.trimLeft)(c, s_1);
+	              };
+	            });
+	
+	            (function (arg00) {
+	              return _charts.chart.bar(arg00);
+	            });
+	
+	            _tables.table.create(s);
+	
+	            _series.series.values(new Int32Array([1]));
+	
+	            eval(code);
+	            return builder_.Zero();
 	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
@@ -472,6 +542,18 @@
 	    var optionsVisible = false;
 	    var editorVisible = false;
 	
+	    var showOrHideActions = function (unitVar0) {
+	      var vis = (optionsVisible ? true : editorVisible) ? "inline" : "none";
+	      var modf = getText() !== source;
+	      runBtn.style.display = vis;
+	
+	      if (modf) {
+	        shareBtn.style.display = "inline";
+	      } else {
+	        shareBtn.style.display = vis;
+	      }
+	    };
+	
 	    _fableCore.Seq.iterate(function (btn) {
 	      _fableCore.Observable.add(function (eds) {
 	        (function (dom) {
@@ -495,6 +577,7 @@
 	
 	      btn.onclick = function (_arg2) {
 	        optionsVisible = !optionsVisible;
+	        showOrHideActions();
 	
 	        if (optionsVisible) {
 	          optionsEl.style.display = "block";
@@ -511,10 +594,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var1 = showOptionsBtn;
+	      var $var17 = showOptionsBtn;
 	
-	      if ($var1 != null) {
-	        return [$var1];
+	      if ($var17 != null) {
+	        return [$var17];
 	      } else {
 	        return [];
 	      }
@@ -522,8 +605,7 @@
 	
 	    showCodeBtn.onclick = function (_arg3) {
 	      editorVisible = !editorVisible;
-	
-	      _extensions.Log.event("gui", "editor", article, editorVisible);
+	      showOrHideActions();
 	
 	      if (editorVisible) {
 	        editorEl.style.display = "block";
@@ -531,9 +613,47 @@
 	        editorEl.style.display = "none";
 	      }
 	
+	      _extensions.Log.event("gui", "editor", article, editorVisible);
+	
 	      if (editorVisible) {
 	        ed.value;
 	      }
+	
+	      return null;
+	    };
+	
+	    shareBtn.onclick = function (e) {
+	      var text = getText();
+	
+	      _extensions.Log.event("gui", "share", article, text);
+	
+	      (function (arg00) {
+	        _fableCore.Async.startImmediate(arg00);
+	      })(function (builder_) {
+	        return builder_.Delay(function (unitVar) {
+	          return builder_.Bind(checkingService.TypeCheck(text), function (_arg7) {
+	            var prog = _arg7[1];
+	            var ok = _arg7[0];
+	            return builder_.Bind(_extensions.Async.map(function (cmd) {
+	              return callShowMethod(outputId, cmd);
+	            }, prog.Body), function (_arg8) {
+	              var newBody = _arg8;
+	              var prog_1 = new _ast.Program(newBody, prog.Range);
+	              return builder_.Bind((0, _codegen.compileAndRun)(globalExprs, text, prog_1), function (_arg9) {
+	                var compiled_1 = _arg9;
+	
+	                if (!ok) {
+	                  cannotShareSnippet();
+	                  return builder_.Zero();
+	                } else {
+	                  shareSnippet(text, compiled_1);
+	                  return builder_.Zero();
+	                }
+	              });
+	            });
+	          });
+	        });
+	      }(_fableCore.defaultAsyncBuilder));
 	
 	      return null;
 	    };
@@ -6109,8 +6229,8 @@
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var47, $var48) {
-	          return folder($var47)($var48);
+	        return _fableCore.Seq.fold(function ($var8, $var9) {
+	          return folder($var8)($var9);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6319,9 +6439,9 @@
 	            var e = matchValue.Fields[1];
 	
 	            var varTy = function () {
-	              var $var49 = ctxTyp;
+	              var $var10 = ctxTyp;
 	
-	              if ($var49 != null) {
+	              if ($var10 != null) {
 	                return function (_arg1) {
 	                  var $target1 = function () {
 	                    return null;
@@ -6341,9 +6461,9 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var49);
+	                }($var10);
 	              } else {
-	                return $var49;
+	                return $var10;
 	              }
 	            }();
 	
@@ -6492,14 +6612,14 @@
 	                  return [Array.from(_fableCore.List.map(function (arg) {
 	                    return arg.Value;
 	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var50 = arg.Name;
+	                    var $var11 = arg.Name;
 	
-	                    if ($var50 != null) {
+	                    if ($var11 != null) {
 	                      return function (n) {
 	                        return [n.Name, arg.Value];
-	                      }($var50);
+	                      }($var11);
 	                    } else {
-	                      return $var50;
+	                      return $var11;
 	                    }
 	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
@@ -6772,11 +6892,11 @@
 	
 	  function mapExprRanges(f, expr) {
 	    var matchValue = expr.Expr;
-	    var activePatternResult75944 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult4200 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	    if (activePatternResult75944.Case === "Choice2Of2") {
-	      var es = activePatternResult75944.Fields[0][0];
-	      var ns = activePatternResult75944.Fields[0][1];
+	    if (activePatternResult4200.Case === "Choice2Of2") {
+	      var es = activePatternResult4200.Fields[0][0];
+	      var ns = activePatternResult4200.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -8610,9 +8730,9 @@
 	      }
 	    }
 	  }))));
-	  var patternInput_46_1 = (0, _parsec.slot)();
-	  var expressionSetter = exports.expressionSetter = patternInput_46_1[0];
-	  var expression = exports.expression = patternInput_46_1[1];
+	  var patternInput_46 = (0, _parsec.slot)();
+	  var expressionSetter = exports.expressionSetter = patternInput_46[0];
+	  var expression = exports.expression = patternInput_46[1];
 	  var argument = exports.argument = (0, _parsec.op_LessBarGreater)((0, _parsec.map)(function (tupledArg) {
 	    var name = tupledArg[0];
 	    var expr = tupledArg[1];
@@ -8705,8 +8825,8 @@
 	        };
 	
 	        return function (list) {
-	          return _fableCore.Seq.fold(function ($var18, $var19) {
-	            return folder($var18)($var19);
+	          return _fableCore.Seq.fold(function ($var6, $var7) {
+	            return folder($var6)($var7);
 	          }, inst, list);
 	        };
 	      }()(chain);
@@ -9576,38 +9696,40 @@
 	    };
 	
 	    var addTraceCall = $exports.addTraceCall = function addTraceCall(inst, trace) {
-	      var mem = new _babelast.Expression("MemberExpression", [inst, new _babelast.Expression("IdentifierExpression", ["addTrace", null]), false, null]);
-	      return new _babelast.Expression("CallExpression", [mem, _fableCore.List.ofArray([trace]), null]);
+	      return _fableCore.Seq.isEmpty(trace) ? inst : function () {
+	        var trace_1 = new _babelast.Expression("StringLiteral", [_fableCore.String.concat("&", trace), null]);
+	        var mem = new _babelast.Expression("MemberExpression", [inst, new _babelast.Expression("IdentifierExpression", ["addTrace", null]), false, null]);
+	        return new _babelast.Expression("CallExpression", [mem, _fableCore.List.ofArray([trace_1]), null]);
+	      }();
 	    };
 	
 	    var propAccess = $exports.propAccess = function propAccess(trace) {
-	      var trace_1 = new _babelast.Expression("StringLiteral", [_fableCore.String.concat("&", trace), null]);
 	      return new _ast.Emitter(function (tupledArg) {
 	        var inst = tupledArg[0];
 	        var _args = tupledArg[1];
-	        return addTraceCall(inst, trace_1);
+	        return addTraceCall(inst, trace);
 	      });
 	    };
 	
 	    var methCall = $exports.methCall = function methCall(trace) {
-	      var trace_1 = new _babelast.Expression("StringLiteral", [_fableCore.String.concat("&", trace), null]);
 	      return new _ast.Emitter(function (tupledArg) {
 	        var inst = tupledArg[0];
 	        var args = tupledArg[1];
-	        var withTrace = addTraceCall(inst, trace_1);
+	        var withTrace = addTraceCall(inst, trace);
 	        return function () {
 	          var folder = function (inst_1) {
 	            return function (tupledArg_1) {
 	              var name = tupledArg_1[0];
 	              var value = tupledArg_1[1];
-	              var trace_2 = new _babelast.Expression("BinaryExpression", [new _babelast.BinaryOperator("BinaryPlus", []), new _babelast.Expression("StringLiteral", [name + "=", null]), value, null]);
-	              return addTraceCall(inst_1, trace_2);
+	              var trace_1 = new _babelast.Expression("BinaryExpression", [new _babelast.BinaryOperator("BinaryPlus", []), new _babelast.Expression("StringLiteral", [name + "=", null]), value, null]);
+	              var mem = new _babelast.Expression("MemberExpression", [inst_1, new _babelast.Expression("IdentifierExpression", ["addTrace", null]), false, null]);
+	              return new _babelast.Expression("CallExpression", [mem, _fableCore.List.ofArray([trace_1]), null]);
 	            };
 	          };
 	
 	          return function (source) {
-	            return _fableCore.Seq.fold(function ($var11, $var12) {
-	              return folder($var11)($var12);
+	            return _fableCore.Seq.fold(function ($var26, $var27) {
+	              return folder($var26)($var27);
 	            }, withTrace, source);
 	          };
 	        }()(args);
@@ -9773,14 +9895,14 @@
 	              var Typeargs = new _fableCore.List();
 	              return new _ast.ObjectType(members.map(function (m) {
 	                var schema = function () {
-	                  var $var13 = m.schema;
+	                  var $var28 = m.schema;
 	
-	                  if ($var13 != null) {
+	                  if ($var28 != null) {
 	                    return function (s) {
 	                      return new _ast.Schema(s["@type"], s);
-	                    }($var13);
+	                    }($var28);
 	                  } else {
-	                    return $var13;
+	                    return $var28;
 	                  }
 	                }();
 	
@@ -10543,7 +10665,7 @@
 	            _extensions.Log.event("options", "update", _this2.article, text);
 	
 	            return builder_.Bind(_this2.checker(text), function (_arg1) {
-	              var prg = _arg1;
+	              var prg = _arg1[1];
 	
 	              _extensions.Log.trace("service", "Collecting editors");
 	
@@ -10664,15 +10786,16 @@
 	
 	                              _this3.errorsReported.Trigger([code, errors]);
 	
-	                              repl.reply(result);
-	                              return builder_.ReturnFrom(loop(code)(result));
+	                              var result_1 = [errors.tail == null, result];
+	                              repl.reply(result_1);
+	                              return builder_.ReturnFrom(loop(code)(result_1));
 	                            });
 	                          }), function (_arg7) {
 	                            var e = _arg7;
 	
 	                            _extensions.Log.exn("service", "Type checking failed: %O", e);
 	
-	                            repl.reply(_this3.emptyProg());
+	                            repl.reply([false, _this3.emptyProg()]);
 	                            return builder_.ReturnFrom(loop(lastCode)(lastResult));
 	                          });
 	                        });
@@ -10710,7 +10833,7 @@
 	          };
 	        };
 	
-	        return loop("")(_this3.emptyProg());
+	        return loop("")([false, _this3.emptyProg()]);
 	      });
 	    }
 	
@@ -11038,12 +11161,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult76552 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult4808 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult76552.Case === "Choice1Of2") {
+	                if (activePatternResult4808.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult76552.Fields[0][0];
+	                  var es = activePatternResult4808.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11077,16 +11200,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var51 = ed;
+	                var $var15 = ed;
 	
-	                if ($var51 != null) {
+	                if ($var15 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var51);
+	                  }($var15);
 	                } else {
-	                  return $var51;
+	                  return $var15;
 	                }
 	              }());
 	            });
@@ -11173,10 +11296,10 @@
 	                            }, Array.from(_fableCore.Seq.truncate(5, catMembers))), function (_arg6) {
 	                              var nestedMembers = _arg6;
 	
-	                              if (dominant(_fableCore.Seq.collect(function ($var52) {
-	                                return $var52[1][0];
-	                              }, nestedMembers), _fableCore.Seq.collect(function ($var53) {
-	                                return $var53[1][1];
+	                              if (dominant(_fableCore.Seq.collect(function ($var16) {
+	                                return $var16[1][0];
+	                              }, nestedMembers), _fableCore.Seq.collect(function ($var17) {
+	                                return $var17[1][1];
 	                              }, nestedMembers))) {
 	                                var props = nestedMembers.map(function (tupledArg) {
 	                                  var p = tupledArg[0];
@@ -11681,19 +11804,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var54 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var18 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var54 != null) {
+	          if ($var18 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var54);
+	            }($var18);
 	          } else {
-	            return $var54;
+	            return $var18;
 	          }
 	        }();
 	
@@ -12070,17 +12193,17 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(11), __webpack_require__(1), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(22)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(11), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
-	        factory(exports, require("fable-core"), require("./babel/babelast"), require("./extensions"), require("../libraries/series"), require("./restruntime"), require("../libraries/google/charts"), require("../libraries/tables"));
+	        factory(exports, require("fable-core"), require("./babel/babelast"), require("./extensions"));
 	    } else {
 	        var mod = {
 	            exports: {}
 	        };
-	        factory(mod.exports, global.fableCore, global.babelast, global.extensions, global.series, global.restruntime, global.charts, global.tables);
+	        factory(mod.exports, global.fableCore, global.babelast, global.extensions);
 	        global.codegen = mod.exports;
 	    }
-	})(this, function (exports, _fableCore, _babelast, _extensions, _series, _restruntime, _charts, _tables) {
+	})(this, function (exports, _fableCore, _babelast, _extensions) {
 	    "use strict";
 	
 	    Object.defineProperty(exports, "__esModule", {
@@ -12464,30 +12587,7 @@
 	
 	                            _extensions.Log.trace("codegen", "Evaluating: %O", code);
 	
-	                            var s = _series.series.create(function (builder__1) {
-	                                return builder__1.Delay(function (unitVar_2) {
-	                                    return builder__1.Return([]);
-	                                });
-	                            }(_fableCore.defaultAsyncBuilder), "", "", "");
-	
-	                            new _restruntime.RuntimeContext("lol", "", "troll");
-	
-	                            (function (c) {
-	                                return function (s_1) {
-	                                    return (0, _restruntime.trimLeft)(c, s_1);
-	                                };
-	                            });
-	
-	                            (function (arg00) {
-	                                return _charts.chart.bar(arg00);
-	                            });
-	
-	                            _tables.table.create(s);
-	
-	                            _series.series.values(new Int32Array([1]));
-	
-	                            eval(code.code);
-	                            return builder_.Zero();
+	                            return builder_.Return(code.code);
 	                        });
 	                    });
 	                }), function (_arg3) {
@@ -12495,7 +12595,7 @@
 	
 	                    _extensions.Log.exn("codegen", "Evaluating code failed: %O", e);
 	
-	                    return builder_.Zero();
+	                    return builder_.Return("");
 	                });
 	            });
 	        }(_fableCore.defaultAsyncBuilder);
@@ -15844,8 +15944,8 @@
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var57, $var58) {
-	                                return folder($var57)($var58);
+	                              return _fableCore.Seq.fold(function ($var21, $var22) {
+	                                return folder($var21)($var22);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {

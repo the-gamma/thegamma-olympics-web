@@ -87,6 +87,7 @@ footer, .break {
 
 footer {
   padding:30px 0px 50px 0px;
+  margin-top:50px;
 }
 footer h1 {
   font-family:Kreon,'Times New Roman',times,serif;
@@ -209,6 +210,9 @@ footer .btn-success:hover, footer .btn-success:focus,
 .ia-figure .tools-right a {
   margin-left:10px;
 }
+.ia-figure .tools-left a {
+  margin-right:10px;
+}
 
 .ia-figure .loading {
   padding:60px 0px 80px 0px;
@@ -330,13 +334,11 @@ body {
 }
 
 article {
-  padding-top:50px;
+  padding-top:40px;
 }
-.art-margin {
-  padding-top:30px;
-}
+
 article.primary {
-  padding-bottom:50px;  
+  padding-bottom:40px;  
 }
 
 article h1 {
@@ -385,12 +387,38 @@ article table td, article table th {
 
 
 
-
+#share-dialog .modal-dialog {
+  width:700px;
+}
+#submit-error {
+  color:#c31515;
+  position:relative;
+  left:20px;
+  visibility:hidden;
+  font-size:12pt;
+}
+.modal-content {
+  border-radius:0px;
+  background:#F2F1ED;
+}
+.modal-dialog h4 {
+  font-family:Kreon,'Times New Roman',times,serif;
+}
+.modal-body h3 {
+  font-size:15pt;
+  margin:5px 0px 15px 0px;
+}
+.modal-body .btn-primary {
+  margin-left:0px;
+}
+.modal-body .btn {
+  width:120px;
+}
 
 
 
 /* */
-.medals-per-athlete .ia-output table img {
+.ia-output table img {
   width:14px;
   height:14px;
   margin:2px;

@@ -17,9 +17,13 @@
         <a class="ia-show-source" href="javascript:;"><i class="fa fa-code"></i> source</a>
       </p>
       <p class="tools tools-left">
-        <a class="ia-run" href="javascript:;"><i class="fa fa-refresh"></i> refresh</a>
+        <a class="ia-share" href="javascript:;" style="display:none"><i class="fa fa-share-alt"></i> share</a>
+        <a class="ia-run" href="javascript:;" style="display:none"><i class="fa fa-refresh"></i> refresh</a>
       </p>
       <script class="ia-source" type="text/thegamma">{{ item.code }}</script>
+      {% if item.compiled != "" %}
+      <script class="ia-compiled" type="text/thegamma-compiled">{{ item.compiled }}</script>
+      {% endif %}
       <div class="ia-options" style="display:none">
         <div class="loading">
           <p>Loading content, please wait...</p>
