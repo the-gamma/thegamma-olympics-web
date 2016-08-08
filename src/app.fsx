@@ -54,24 +54,21 @@ type Main =
 
 let docs = 
   [ "athlete", "medals-per-athlete"
-    "athlete", "athlete-drill-down"    
-    "athlete", "phelps-as-country"
+    "phelps", "phelps-as-country"
+    "phelps", "athlete-drill-down"    
+    "phelps", "athlete-break-down"
     // "country", "top-5-countries"
     // "country", "medals-per-country"
     // "country", "countries-timeline" 
     "data", "about-the-data" ]
     
 let split pars =
-  let rec after head before code acc = function
-    | MarkdownParagraph.HorizontalRule _::ps -> head, before, code, List.rev acc, ps
-    | p::ps -> after head before code (p::acc) ps
-    | [] -> head, before, code, List.rev acc, []
   let rec before head acc = function 
-    | MarkdownParagraph.CodeBlock(code, _, _)::MarkdownParagraph.CodeBlock(compiled, _, _)::ps -> after head (List.rev acc) (code, compiled) [] ps
-    | MarkdownParagraph.CodeBlock(code, _, _)::ps -> after head (List.rev acc) (code, "") [] ps
-    | MarkdownParagraph.HorizontalRule _::ps -> head, List.rev acc, ("", ""), ps, []
+    | MarkdownParagraph.CodeBlock(code, _, _)::MarkdownParagraph.CodeBlock(compiled, _, _)::ps -> head, List.rev acc, (code, compiled), ps
+    | MarkdownParagraph.CodeBlock(code, _, _)::ps -> head, List.rev acc, (code, ""), ps
+    | MarkdownParagraph.HorizontalRule _::ps -> head, List.rev acc, ("", ""), ps
     | p::ps -> before head (p::acc) ps
-    | [] -> head, (List.rev acc), (null, null), [], []
+    | [] -> head, List.rev acc, ("", ""), []
   match pars with 
   | MarkdownParagraph.Heading(_, [MarkdownSpan.Literal head])::ps -> before head [] ps
   | _ -> failwith "Invalid document: No heading fond"
@@ -79,7 +76,7 @@ let split pars =
 let readArticle i (category, id) = 
   let file = root </> "../docs" </> id + ".md"
   let doc = Markdown.Parse(IO.File.ReadAllText(file))
-  let head, before, (code, compiled), after, alts = split doc.Paragraphs
+  let head, before, (code, compiled), after = split doc.Paragraphs
   let format pars = Markdown.WriteHtml(MarkdownDocument(pars, doc.DefinedLinks))
   { id = id; category = category; code = code; index = i;
     plaintext = String.IsNullOrEmpty code; compiled = compiled;
@@ -177,6 +174,8 @@ let docPath f = pathScan "/%s" (fun s ctx ->
   else async.Return None)
 
 module Filters = 
+  let idEncode (id:string) = 
+    id.Replace('/', '-')
   let urlEncode (url:string) =
     System.Web.HttpUtility.UrlEncode(url)
   let mailEncode (url:string) =

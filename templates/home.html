@@ -20,6 +20,37 @@
   <meta name="twitter:title" content="Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling" />
   <meta name="twitter:image" content="http://rio2016.thegamma.net/img/card.jpg" />
   <meta name="twitter:description" content="Visualizations of Olympic medalists of all time, top countries and other interesting facts, built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations." />
+  
+  <script type="application/ld+json">
+  {
+  	"@context": "http:\/\/schema.org",
+  	"@type": "NewsArticle",
+  	"name": "Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling",
+  	"headline": "Visualizing Olympic Medalists: Experiment in Tooling for Data-Driven Storytelling",
+  	"description": "Visualizations of Olympic medalists of all time, top countries and other interesting facts, built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations.",
+  	"url": "http://rio2016.thegamma.net",
+  	"author": {
+  		"@type": "Person",
+  		"name": "Tomas Petricek",
+  		"url": "http://tomasp.net",
+  		"sameAs": ["http://twitter.com/tomaspetricek"]
+  	},
+  	"creator": ["Tomas Petricek"],
+  	"dateCreated": "2016-08-08T00:00:00+00:00",
+  	"datePublished": "2016-08-08T10:00:00+00:00",
+  	"image": "http://rio2016.thegamma.net/img/rio.jpg",
+  	"thumbnailUrl": "http://rio2016.thegamma.net/img/card.jpg",
+  	"keywords": ["olympic", "games", "rio", "2016", "data", "medals"],
+  	"inLanguage": "en-us",
+  	"publisher": {
+  		"@type": "Organization",
+  		"name": "The Gamma",
+  		"logo": "http://rio2016.thegamma.net/img/logo.png",
+  		"sameAs": ["http://twitter.com/thegamma_net"],
+  		"url": "http://thegamma.net"
+  	}
+  }  
+  </script>
 {% endblock %}
 
 {% block body %}
@@ -116,9 +147,9 @@
   {% for cat in model.categories %}
   <article id="{{ cat.mainArticle.id }}" class="primary">
     {% include "home-article.html" item:cat.mainArticle %}
-    <div class="container art-margin">
+    <div class="container">
       {% for art in cat.moreArticles %}
-      <div class="col-lg-6">
+      <div class="col-lg-6 art-margin">
         <h2><a href="/{{ art.id }}">{{ art.heading }}</a></h2>
         {{ art.before }}
       </div>      

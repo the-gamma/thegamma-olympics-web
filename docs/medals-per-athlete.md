@@ -1,18 +1,19 @@
-Individual Medalists of All Time
-================================
+All Time Olympic Medals Table
+=============================
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
-officia deserunt mollit anim id est laborum.
+Everyone who has been following Olympic Games in London 2012 or Rio 2016 knows that the person with
+the largest number of medals of all time is [Michael Phelps](https://en.wikipedia.org/wiki/Michael_Phelps),
+but do you know who is the second and third? As you can see in the following table, the second
+person (for summer Olympic games) is [Larisa Latynina](https://en.wikipedia.org/wiki/Larisa_Latynina) 
+who won 9 gold medals for Soviet Union between 1956 and 1964 and the third is Finnish runner
+[Paavo Nurmi](https://en.wikipedia.org/wiki/Paavo_Nurmi), also with 9 gold medals from 1920s.
 
 ```
 let data =
   olympics.data
     .'group data'.'by Athlete'
       .'sum Gold'.'sum Silver'.'sum Bronze'
-      .'concatenate values of Country'.then
+      .'concatenate values of Team'.then
     .'sort data'
       .'by Gold descending'.'and by Silver descending'
       .'and by Bronze descending'.then
@@ -34,7 +35,7 @@ table.create(data)
 
 var data = _series.series.ordinal(_restruntime.convertSequence(function (v) {
   return v;
-}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Athlete/concat-vals/Country/sum/Bronze/sum/Silver/sum/Gold/key/then/sort/Bronze/desc/Silver/desc/Gold/desc/then/page/pgid-0/take").getValue("/pivot/data")), "key", "value", "");
+}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Athlete/concat-vals/Team/sum/Bronze/sum/Silver/sum/Gold/key/then/sort/Bronze/desc/Silver/desc/Gold/desc/then/page/pgid-0/take").getValue("/pivot/data")), "key", "value", "");
 
 _tables.table.create(data).hideColumns(["Gold", "Silver", "Bronze"]).addColumn("Medals", function (v) {
   return _series.series.range(1, Number(v.Gold)).map(function (i) {
@@ -47,12 +48,23 @@ _tables.table.create(data).hideColumns(["Gold", "Silver", "Bronze"]).addColumn("
 }).set("", false).show("outmedals-per-athlete");
 ```
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
-officia deserunt mollit anim id est laborum.
+The table shows the most important facts, but there is a lot more information that you can get from
+the data if you change options of the visualization or if you change the source code that generates
+it. Here is a couple of simple things you can try on your own:
 
-----------------------------------------------------------------------------------------------------
-
-Alternatives
+ - Find out where each athlete competed — To do this, click on the "options" button. This analyzes
+   the visualization and automatically lets you change some parameters. In the "Group by athlete"
+   table, you can add aggregated attributes for the table. Add "concatenate values of Games"
+   and drop "concatenate values of Teams".
+   
+ - Who is the least lucky athlete — Counting gold medals is easy, but who has the largest number of
+   bronze and silver medals? To find out, remove all items from "Sort the data" in "options" and
+   specify your own criteria. Choose "by Bronze descending" to find the person with most bronze
+   medals!
+ 
+ - Look at medals from London 2012 only — You can find this in an [alternative version of the 
+   visualization](/shared/5/top-medalists-of-london-2012), but to do this on your own, click on 
+   "source" and change the second line from  `olympics.data` to `olympics.'by game'.'London (2012)'.data`.
+   This filters the data to only medals from London 2012. As you type `olympics.`, the editor
+   will let you specify other filters too. You can, for example, look at [specific 
+   teams](/shared/4/czech-and-slovak-medalists-of-all-time) rather than specific games.

@@ -28,7 +28,7 @@
 <div class="container">
   <div class="col-lg-2"></div>
   <div class="col-lg-10">
-    <div class="ia-figure {{ item.id }}" data-article="{{ item.id }}">
+    <div class="ia-figure {{ item.id | idEncode }}" data-article="{{ item.id | idEncode}}">
       <p class="tools tools-right">
         <a class="ia-show-options" href="javascript:;"><i class="fa fa-pencil-square-o"></i> options</a>
         <a class="ia-show-source" href="javascript:;"><i class="fa fa-code"></i> source</a>
@@ -44,22 +44,22 @@
       <div class="ia-options" style="display:none">
         <div class="loading">
           <p>Loading content, please wait...</p>
-          <div class="spinner" id="sp{{ item.id }}a"></div>
-          <script>startSpinning('sp{{ item.id }}a');</script>
+          <div class="spinner" id="sp{{ item.id | idEncode }}a"></div>
+          <script>startSpinning('sp{{ item.id | idEncode }}a');</script>
         </div>
       </div>
       <div class="ia-editor" style="display:none">
         <h3>Edit source</h3>
         <p>The following is the source code behind the visualization. You can change it and hit 'refresh' to run your new version.
           When you type <code>.</code> after a name or a quoted name, you will get hint with possible options to choose from!</p>
-        <div id="ed{{ item.id }}" class="ia-monaco"></div>
+        <div id="ed{{ item.id | idEncode }}" class="ia-monaco"></div>
       </div>
       <div class="ia-errors"></div>
-      <div id="out{{ item.id }}" class="ia-output">
+      <div id="out{{ item.id | idEncode }}" class="ia-output">
         <div class="loading">
           <p>Loading content, please wait...</p>
-          <div class="spinner" id="sp{{ item.id }}b"></div>
-          <script>startSpinning('sp{{ item.id }}b');</script>
+          <div class="spinner" id="sp{{ item.id | idEncode }}b"></div>
+          <script>startSpinning('sp{{ item.id | idEncode }}b');</script>
         </div>
       </div>
     </div>

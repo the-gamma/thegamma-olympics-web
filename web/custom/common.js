@@ -105,6 +105,8 @@ function saveAndShare()
   }
 
   // Send data using AJAX to the server
+  var outId = "shared/" + res + "/" + title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")
+  sharedCompiled = sharedCompiled.replace("output-id-placeholder", outId.replace(/\//g,"-"))
   var data = {
     "title": title, "author": author, "twitter": twitter,
     "description": info, "code": sharedCode, "compiled": sharedCompiled
@@ -116,7 +118,7 @@ function saveAndShare()
     contentType: "application/json", type: "POST", dataType: "JSON"
   }).done(function (res) {
     // Display the confirmation window with links
-    var link = "/shared/" + res + "/" + title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")
+    var link = "/" + outId;
     document.getElementById("result-url").value = "http://rio2016.thegamma.net" + link;
     document.getElementById("result-link").href = link;
     $("#modal-share").css("display", "none");
