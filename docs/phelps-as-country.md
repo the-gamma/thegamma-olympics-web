@@ -20,7 +20,7 @@ let phelps =
     .'group data'.'by Athlete'.'sum Gold'.then
     .'get series'.'with key Athlete'.'and value Gold'
 
-chart.columns([data, phelps], ["#F4C300","#3CB3EA"]).legend("",0,"none","")
+chart.columns([data, phelps], ["#F4C300","#3CB3EA"]).legend(position="none")
 ```
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 

@@ -395,3 +395,15 @@ article table td, article table th {
   height:14px;
   margin:2px;
 }
+/*
+.docs-text {
+  text-overflow:clip !important;
+  white-space:pre !important; 
+}
+.docs {
+  max-height:100% !important;
+}
+.monaco-list-row {
+  height:100% !important;
+}
+*/

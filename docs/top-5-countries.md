@@ -24,6 +24,12 @@ let medals =
      .realign([1896 to 2012 by 4], 0))
 
 chart.lines(medals)
+  .hAxis(format="")
+  .vAxis(viewWindowMode="maximized")
+  .set(colors=["#0085C7","#CC454E","#27884C","#F4C300","#B5B5B5"],
+       curveType="function",
+       title="Medal Count of Top 5 Countries Over Time")
+  .titleTextStyle(fontName="Roboto", bold=false, fontSize=17)
 ```
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
