@@ -1,12 +1,56 @@
 {% extends "page.html" %}
 {% block head %}
   <title>{{ model.mainArticle.heading }} - TheGamma</title>
+  
+  <meta name="description" content="{{ model.mainArticle.heading }}" />
+  <meta name="keywords" content="Rio 2016, Olympic medals, Visualization, Interactive Graphics, Data Journalism" />  
+  <meta name="author" content="Tomas Petricek" />
+  <meta name="application-name" content="The Gamma" />
+  <meta name="copyright" content="The Gamma" />
+  
+  <meta property="og:title" content="{{ model.mainArticle.heading }}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://rio2016.thegamma.net/{{ model.mainArticle.id }}" />
+  <meta property="og:image" content="http://rio2016.thegamma.net/img/card.jpg" />
+  <meta property="og:description" content="The article has been built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations." />
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@thegamma_net">
+  <meta name="twitter:title" content="{{ model.mainArticle.heading }}" />
+  <meta name="twitter:image" content="http://rio2016.thegamma.net/img/card.jpg" />
+  <meta name="twitter:description" content="The article has been built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations." />
+  
+  <script type="application/ld+json">
+  {
+  	"@context": "http:\/\/schema.org",
+  	"@type": "NewsArticle",
+  	"name": "{{ model.mainArticle.heading }}",
+  	"headline": "{{ model.mainArticle.heading }}",
+  	"description": "The article has been built using The Gamma project, which makes it easier to build reproducible, open and interactive data visualizations.",
+  	"url": "http://rio2016.thegamma.net/{{ model.mainArticle.id }}",
+  	"dateCreated": "2016-08-08T00:00:00+00:00",
+  	"datePublished": "2016-08-08T10:00:00+00:00",
+  	"image": "http://rio2016.thegamma.net/img/rio.jpg",
+  	"thumbnailUrl": "http://rio2016.thegamma.net/img/card.jpg",
+  	"keywords": ["olympic", "games", "rio", "2016", "data", "medals"],
+  	"inLanguage": "en-us",
+  	"publisher": {
+  		"@type": "Organization",
+  		"name": "The Gamma",
+  		"logo": "http://rio2016.thegamma.net/img/logo.png",
+  		"sameAs": ["http://twitter.com/thegamma_net"],
+  		"url": "http://thegamma.net"
+  	}
+  }  
+  </script>  
 {% endblock %}
 
 {% block body %}
-  <article id="{{ model.mainArticle.id }}" class="primary">
+  <article id="{{ model.mainArticle.id | idEncode }}" class="primary">
     {% include "primary-article.html" item:model.mainArticle %}
   </article>
+  
+  
   <script>registerArticle("{{ model.mainArticle.id }}", true, true);</script>
 
   <section class="break">
@@ -39,14 +83,14 @@
   </section>
   
   {% for it in model.moreArticles limit:1 %}
-  <article id="{{ it.id }}">
+  <article id="{{ it.id | idEncode }}">
      {% include "secondary-article.html" item:it %}
   </article>
   <script>registerArticle("{{ it.id }}", true, false);</script>
   {% endfor %}
   
   {% for it in model.moreArticles offset:1 %}
-  <article id="{{ it.id }}" style="display:none;">
+  <article id="{{ it.id | idEncode }}" style="display:none;">
     {% include "secondary-article.html" item:it %}
   </article>
   <script>registerArticle("{{ it.id }}", false, false);</script>
