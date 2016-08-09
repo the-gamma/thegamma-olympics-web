@@ -12,7 +12,7 @@ google.setOnLoadCallback(function () {
   for (var i = 0; i < chartsToDraw.length; i++) chartsToDraw[i]();
   chartsToDraw = undefined;
 });
-
+  
 function drawChart(f) {
   drawChartOnLoad(function() {
     f(function (info) {
