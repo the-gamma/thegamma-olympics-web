@@ -13,11 +13,13 @@ google.setOnLoadCallback(function () {
   chartsToDraw = undefined;
 });
 
-function drawChart(chart, data, id) {
+function drawChart(f) {
   drawChartOnLoad(function() {
-    var ctor = eval("(function(a) { return new google.visualization." + chart.typeName + " (a); })");
-    var ch = ctor(document.getElementById(id));
-    if (chart.options.height == undefined) chart.options.height = 400;
-    ch.draw(data, chart.options);
+    f(function ([chart, data, id]) {
+      var ctor = eval("(function(a) { return new google.visualization." + chart.typeName + " (a); })");
+      var ch = ctor(document.getElementById(id));
+      if (chart.options.height == undefined) chart.options.height = 400;
+      ch.draw(data, chart.options);
+    });
   });
 }
