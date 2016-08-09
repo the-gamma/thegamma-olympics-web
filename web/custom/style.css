@@ -213,6 +213,9 @@ footer .btn-success:hover, footer .btn-success:focus,
 .ia-figure .tools-left a {
   margin-right:10px;
 }
+@media only screen and (max-width : 480px) {
+  .ia-figure .tools-left a span { display:none; }
+}
 
 .ia-figure .loading {
   padding:60px 0px 80px 0px;
@@ -312,6 +315,9 @@ footer .btn-success:hover, footer .btn-success:focus,
   width:100% !important;
   line-height:16px;
 }
+.ia-editor-panel select {
+  width:100% !important;
+}
 .ia-editor-panel .chosen-results li {
   padding:2px 10px 2px 10px !important;
 }
@@ -370,6 +376,9 @@ footer .btn-success:hover, footer .btn-success:focus,
   border-style:none !important;
   padding:0px 10px 0px 10px !important;
   height:20px !important;
+}
+.ed-list select {
+  border-style:none;
 }
 
 /***************************************************************************************************
@@ -441,6 +450,12 @@ article table td, article table th {
 #share-dialog .modal-dialog {
   width:700px;
 }
+@media only screen and (max-width : 768px) {
+  #share-dialog .modal-dialog {
+    width:90%;
+  }
+}
+
 #share-dialog .social {
   margin-left:20px;
   font-size:20pt;

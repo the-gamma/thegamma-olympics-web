@@ -30,12 +30,12 @@
   <div class="col-lg-10">
     <div class="ia-figure {{ item.id | idEncode }}" data-article="{{ item.id | idEncode}}">
       <p class="tools tools-right">
-        <a class="ia-show-options" href="javascript:;"><i class="fa fa-pencil-square-o"></i> options</a>
-        <a class="ia-show-source" href="javascript:;"><i class="fa fa-code"></i> source</a>
+        <a class="ia-show-options" href="javascript:;"><i class="fa fa-pencil-square-o"></i> <span>options</span></a>
+        <a class="ia-show-source" href="javascript:;"><i class="fa fa-code"></i> <span>source</span></a>
       </p>
       <p class="tools tools-left">
-        <a class="ia-share" href="javascript:;" style="display:none"><i class="fa fa-share-alt"></i> share</a>
-        <a class="ia-run" href="javascript:;" style="display:none"><i class="fa fa-refresh"></i> refresh</a>
+        <a class="ia-share" href="javascript:;" style="display:none"><i class="fa fa-share-alt"></i> <span>share</span></a>
+        <a class="ia-run" href="javascript:;" style="display:none"><i class="fa fa-refresh"></i> <span>refresh</span></a>
       </p>
       <script class="ia-source" type="text/thegamma">{{ item.code }}</script>
       {% if item.compiled != "" %}
