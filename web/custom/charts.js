@@ -15,7 +15,10 @@ google.setOnLoadCallback(function () {
 
 function drawChart(f) {
   drawChartOnLoad(function() {
-    f(function ([chart, data, id]) {
+    f(function (info) {
+      var chart = info[0];
+      var data = info[1];
+      var id = info[2];
       var ctor = eval("(function(a) { return new google.visualization." + chart.typeName + " (a); })");
       var ch = ctor(document.getElementById(id));
       if (chart.options.height == undefined) chart.options.height = 400;
