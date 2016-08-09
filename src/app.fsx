@@ -37,6 +37,8 @@ type Article =
     code : string
     compiled : string
     after : string
+    author : string
+    twitter : string
     plaintext : bool }
 
 type Category = 
@@ -78,7 +80,7 @@ let readArticle i (category, id) =
   let doc = Markdown.Parse(IO.File.ReadAllText(file))
   let head, before, (code, compiled), after = split doc.Paragraphs
   let format pars = Markdown.WriteHtml(MarkdownDocument(pars, doc.DefinedLinks))
-  { id = id; category = category; code = code; index = i;
+  { id = id; category = category; code = code; index = i; author = ""; twitter = ""
     plaintext = String.IsNullOrEmpty code; compiled = compiled;
     heading = head; before = format before; after = format after }
 
@@ -154,6 +156,7 @@ let loadShared json idOpt =
         let outid = sprintf "outshared-%d-%s" snip.id (titleToUrl snip.title)
         { id = sprintf "shared/%d/%s" snip.id (titleToUrl snip.title); 
           index = i; heading = snip.title; category = "shared"; compiled = snip.compiled.Replace("output-id-placeholder", outid);
+          author = snip.author; twitter = snip.twitter.TrimStart('@');
           before = info; code = snip.code; after = ""; plaintext = false })
 
   let first = sorted |> Seq.head

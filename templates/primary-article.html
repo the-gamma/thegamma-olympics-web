@@ -13,9 +13,18 @@
     </p>
 
     <h4>Author</h4>
-    <p class="info">Tomas Petricek<span class="sxs">, <a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></span></p>
-    <p class="hxs"><a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></p>
-    <p class="hxs"><a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a></p>        
+    {% if item.author != "" %}
+      {% if item.twitter != "" %}     
+        <p class="info">{{ item.author }}<span class="sxs">, <a href="http://twitter.com/{{ item.twitter }}">@{{ item.twitter }}</a></span></p>
+        <p class="hxs"><a href="http://twitter.com/{{ item.twitter }}">@{{ item.twitter }}</a></p>      
+      {% else %}
+        <p class="info">{{ item.author }}</p>
+      {% endif %}
+    {% else %}
+      <p class="info">Tomas Petricek<span class="sxs">, <a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></span></p>
+      <p class="hxs"><a href="http://twitter.com/tomaspetricek">@tomaspetricek</a></p>
+      <p class="hxs"><a href="mailto:tomas@tomasp.net">tomas@tomasp.net</a></p>        
+    {% endif %}
   </div>
   <div class="col-sm-9 col-md-8 col-lg-7">
     <h1><a href="/{{ item.id }}">{{ item.heading }}</a></h1>

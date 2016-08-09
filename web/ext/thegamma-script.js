@@ -88,7 +88,11 @@
 	
 	  _fableCore.Util.setInterfaces(ProvidedTypes.prototype, ["FSharpRecord"], "Main.ProvidedTypes");
 	
-	  var types = exports.types = (0, _extensions.Async$2EStartAsFuture$2EStatic)(function (builder_) {
+	  var types = exports.types = function (arg00) {
+	    return function (arg10) {
+	      return (0, _extensions.Async$2EStartAsFuture$2EStatic)(arg00, arg10);
+	    };
+	  }("types")(function (builder_) {
 	    return builder_.Delay(function (unitVar) {
 	      var named = _fableCore.Map.create(null, new _fableCore.GenericComparer(function (x, y) {
 	        return x < y ? -1 : x > y ? 1 : 0;
@@ -156,7 +160,12 @@
 	      });
 	    });
 	  }(_fableCore.defaultAsyncBuilder));
-	  var globalTypes = exports.globalTypes = (0, _extensions.Async$2EStartAsFuture$2EStatic)(function (builder_) {
+	
+	  var globalTypes = exports.globalTypes = function (arg00) {
+	    return function (arg10) {
+	      return (0, _extensions.Async$2EStartAsFuture$2EStatic)(arg00, arg10);
+	    };
+	  }("global types")(function (builder_) {
 	    return builder_.Delay(function (unitVar) {
 	      return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(types), function (_arg1) {
 	        var ty = _arg1;
@@ -168,7 +177,12 @@
 	      });
 	    });
 	  }(_fableCore.defaultAsyncBuilder));
-	  var globalExprs = exports.globalExprs = (0, _extensions.Async$2EStartAsFuture$2EStatic)(function (builder_) {
+	
+	  var globalExprs = exports.globalExprs = function (arg00) {
+	    return function (arg10) {
+	      return (0, _extensions.Async$2EStartAsFuture$2EStatic)(arg00, arg10);
+	    };
+	  }("global exps")(function (builder_) {
 	    return builder_.Delay(function (unitVar) {
 	      return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(types), function (_arg1) {
 	        var ty = _arg1;
@@ -345,19 +359,19 @@
 	    }(), parent).innerText, "both");
 	
 	    var compiled = function () {
-	      var $var1 = tryFindChildElement(function () {
+	      var $var3 = tryFindChildElement(function () {
 	        var cls = "ia-compiled";
 	        return function (el) {
 	          return withClass(cls, el);
 	        };
 	      }(), parent);
 	
-	      if ($var1 != null) {
+	      if ($var3 != null) {
 	        return function (el) {
 	          return _fableCore.String.trim(el.innerText, "both");
-	        }($var1);
+	        }($var3);
 	      } else {
-	        return $var1;
+	        return $var3;
 	      }
 	    }();
 	
@@ -616,10 +630,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var2 = showOptionsBtn;
+	      var $var4 = showOptionsBtn;
 	
-	      if ($var2 != null) {
-	        return [$var2];
+	      if ($var4 != null) {
+	        return [$var4];
 	      } else {
 	        return [];
 	      }
@@ -749,7 +763,7 @@
 	  Object.defineProperty(exports, "__esModule", {
 	    value: true
 	  });
-	  exports.Async = exports.Async$2EStartAsFuture$2EStatic = exports.Async$2EAsFuture$2EStatic = exports.Async$2EAwaitFuture$2EStatic = exports.Http = exports.Log = exports.enabledCategories = undefined;
+	  exports.Async = exports.Async$2EStartAsFuture$2EStatic = exports.Async$2EAsFuture$2EStatic = exports.Async$2EFuture$2EStatic = exports.Async$2EAwaitFuture$2EStatic = exports.Http = exports.Log = exports.enabledCategories = undefined;
 	  exports.isLocalHost = isLocalHost;
 	
 	  function _defineProperty(obj, key, value) {
@@ -797,7 +811,7 @@
 	
 	  var enabledCategories = exports.enabledCategories = !isLocalHost() ? _fableCore.Set.create(new _fableCore.List(), new _fableCore.GenericComparer(function (x, y) {
 	    return x < y ? -1 : x > y ? 1 : 0;
-	  })) : _fableCore.Set.create(_fableCore.List.ofArray(["COMPLETIONS", "EDITORS", "TYPECHECKER", "SERVICE", "CODEGEN"]), new _fableCore.GenericComparer(function (x, y) {
+	  })) : _fableCore.Set.create(_fableCore.List.ofArray(["SYSTEM", "COMPLETIONS", "EDITORS", "TYPECHECKER", "SERVICE", "CODEGEN"]), new _fableCore.GenericComparer(function (x, y) {
 	    return x < y ? -1 : x > y ? 1 : 0;
 	  }));
 	
@@ -947,7 +961,7 @@
 	
 	  exports.Async$2EAwaitFuture$2EStatic = Async_AwaitFuture_Static;
 	
-	  function Async_AsFuture_Static(op, start) {
+	  function Async_Future_Static(n, op, start) {
 	    var _ref;
 	
 	    var res = new _fableCore.Choice("Choice1Of3", [null]);
@@ -970,6 +984,7 @@
 	
 	    var ensureStarted = function (unitVar0) {
 	      if (!running) {
+	        Log.trace("system", "Starting future '%s'....", n);
 	        running = true;
 	
 	        (function (arg00) {
@@ -984,7 +999,7 @@
 	              });
 	            }), function (_arg2) {
 	              var e = _arg2;
-	              Log.exn("future", "Evaluating future failed: %O", e);
+	              Log.exn("system", "Evaluating future failed: %O", e);
 	              res = new _fableCore.Choice("Choice3Of3", [e]);
 	              return builder_.Zero();
 	            }), builder_.Delay(function (unitVar_1) {
@@ -999,7 +1014,7 @@
 	      }
 	    };
 	
-	    if (_fableCore.Util.equals(start, true)) {
+	    if (start === true) {
 	      ensureStarted();
 	    }
 	
@@ -1009,16 +1024,64 @@
 	    }), _ref;
 	  }
 	
+	  exports.Async$2EFuture$2EStatic = Async_Future_Static;
+	
+	  function Async_AsFuture_Static(n, op) {
+	    return function (arg00) {
+	      return function (arg10) {
+	        return function (arg20) {
+	          return Async_Future_Static(arg00, arg10, arg20);
+	        };
+	      };
+	    }(n)(op)(false);
+	  }
+	
 	  exports.Async$2EAsFuture$2EStatic = Async_AsFuture_Static;
 	
-	  function Async_StartAsFuture_Static(op) {
-	    return Async_AsFuture_Static(op, true);
+	  function Async_StartAsFuture_Static(n, op) {
+	    return function (arg00) {
+	      return function (arg10) {
+	        return function (arg20) {
+	          return Async_Future_Static(arg00, arg10, arg20);
+	        };
+	      };
+	    }(n)(op)(true);
 	  }
 	
 	  exports.Async$2EStartAsFuture$2EStatic = Async_StartAsFuture_Static;
 	
 	  var Async = exports.Async = function ($exports) {
 	    var _Array = $exports.Array = function ($exports) {
+	      var Parallel = $exports.Parallel = function ($exports) {
+	        var map = $exports.map = function map(f, ar) {
+	          return function (builder_) {
+	            return builder_.Delay(function (unitVar) {
+	              var res = new Array(ar.length);
+	
+	              var work = _fableCore.Async.parallel(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
+	                return _fableCore.Seq.map(function (i) {
+	                  return function (builder__1) {
+	                    return builder__1.Delay(function (unitVar_2) {
+	                      return builder__1.Bind(f(ar[i]), function (_arg1) {
+	                        var v = _arg1;
+	                        res[i] = v;
+	                        return builder__1.Zero();
+	                      });
+	                    });
+	                  }(_fableCore.defaultAsyncBuilder);
+	                }, _fableCore.Seq.range(0, ar.length - 1));
+	              })));
+	
+	              return builder_.Bind(work, function (_arg2) {
+	                return builder_.Return(res);
+	              });
+	            });
+	          }(_fableCore.defaultAsyncBuilder);
+	        };
+	
+	        return $exports;
+	      }({});
+	
 	      var map = $exports.map = function map(f, ar) {
 	        return function (builder_) {
 	          return builder_.Delay(function (unitVar) {
@@ -6254,8 +6317,8 @@
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var8, $var9) {
-	          return folder($var8)($var9);
+	        return _fableCore.Seq.fold(function ($var80, $var81) {
+	          return folder($var80)($var81);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6464,9 +6527,9 @@
 	            var e = matchValue.Fields[1];
 	
 	            var varTy = function () {
-	              var $var10 = ctxTyp;
+	              var $var82 = ctxTyp;
 	
-	              if ($var10 != null) {
+	              if ($var82 != null) {
 	                return function (_arg1) {
 	                  var $target1 = function () {
 	                    return null;
@@ -6486,9 +6549,9 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var10);
+	                }($var82);
 	              } else {
-	                return $var10;
+	                return $var82;
 	              }
 	            }();
 	
@@ -6637,14 +6700,14 @@
 	                  return [Array.from(_fableCore.List.map(function (arg) {
 	                    return arg.Value;
 	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var11 = arg.Name;
+	                    var $var83 = arg.Name;
 	
-	                    if ($var11 != null) {
+	                    if ($var83 != null) {
 	                      return function (n) {
 	                        return [n.Name, arg.Value];
-	                      }($var11);
+	                      }($var83);
 	                    } else {
-	                      return $var11;
+	                      return $var83;
 	                    }
 	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
@@ -6917,11 +6980,11 @@
 	
 	  function mapExprRanges(f, expr) {
 	    var matchValue = expr.Expr;
-	    var activePatternResult4222 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult102010 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	    if (activePatternResult4222.Case === "Choice2Of2") {
-	      var es = activePatternResult4222.Fields[0][0];
-	      var ns = activePatternResult4222.Fields[0][1];
+	    if (activePatternResult102010.Case === "Choice2Of2") {
+	      var es = activePatternResult102010.Fields[0][0];
+	      var ns = activePatternResult102010.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -9374,8 +9437,10 @@
 	
 	      var importProvidedType = function (exp) {
 	        return function (arg00) {
-	          return (0, _extensions.Async$2EAsFuture$2EStatic)(arg00);
-	        }(function (builder_) {
+	          return function (arg10) {
+	            return (0, _extensions.Async$2EAsFuture$2EStatic)(arg00, arg10);
+	          };
+	        }(exp.name)(function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            var mems = Array.from(_fableCore.Seq.choose(function (m) {
 	              return m.kind === "method" ? function () {
@@ -9753,8 +9818,8 @@
 	          };
 	
 	          return function (source) {
-	            return _fableCore.Seq.fold(function ($var12, $var13) {
-	              return folder($var12)($var13);
+	            return _fableCore.Seq.fold(function ($var84, $var85) {
+	              return folder($var84)($var85);
 	            }, withTrace, source);
 	          };
 	        }()(args);
@@ -9911,72 +9976,87 @@
 	      }
 	    };
 	
+	    var restTypeCache = $exports.restTypeCache = new Map();
+	
 	    var createRestType = $exports.createRestType = function createRestType(lookupNamed, root, cookies, url) {
-	      var future = function (builder_) {
-	        return builder_.Delay(function (unitVar) {
-	          return builder_.Bind(load(concatUrl(root, url), cookies), function (_arg1) {
-	            var members = _arg1;
-	            return builder_.Return(new _ast.Type("Object", [function () {
-	              var Typeargs = new _fableCore.List();
-	              return new _ast.ObjectType(members.map(function (m) {
-	                var schema = function () {
-	                  var $var14 = m.schema;
-	
-	                  if ($var14 != null) {
-	                    return function (s) {
-	                      return new _ast.Schema(s["@type"], s);
-	                    }($var14);
-	                  } else {
-	                    return $var14;
-	                  }
-	                }();
-	
-	                var matchValue = m.returns.kind;
-	
-	                if (matchValue === "nested") {
-	                  var returns = m.returns;
-	                  var retTyp = createRestType(lookupNamed, root, cookies, returns.endpoint);
-	                  var matchValue_1 = m.parameters;
-	
-	                  if (matchValue_1 == null) {
-	                    return new _ast.Member("Property", [m.name, retTyp, schema, parseDoc(m.documentation), propAccess(m.trace)]);
-	                  } else {
-	                    var parameters = matchValue_1;
-	
-	                    var args = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
-	                      return _fableCore.Seq.map(function (p) {
-	                        return [p.name, false, new _ast.Type("Primitive", [mapParamType(p.type)])];
-	                      }, parameters);
-	                    }));
-	
-	                    var argNames = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
-	                      return _fableCore.Seq.map(function (p) {
-	                        return p.name;
-	                      }, parameters);
-	                    }));
-	
-	                    return new _ast.Member("Method", [m.name, new _fableCore.List(), args, retTyp, parseDoc(m.documentation), methCall(m.trace)]);
-	                  }
-	                } else {
-	                  if (matchValue === "primitive") {
-	                    var returns = m.returns;
-	                    var ty = fromRawType(returns.type);
-	                    var patternInput = getTypeAndEmitter(lookupNamed, ty);
-	                    var typ = patternInput[0];
-	                    var parser = patternInput[1];
-	                    return new _ast.Member("Property", [m.name, typ, schema, parseDoc(m.documentation), dataCall(parser, m.trace, returns.endpoint)]);
-	                  } else {
-	                    throw "?";
-	                  }
-	                }
-	              }), Typeargs);
-	            }()]));
-	          });
-	        });
-	      }(_fableCore.defaultAsyncBuilder);
-	
 	      var guid = concatUrl(root, url);
-	      return new _ast.Type("Delayed", [guid, (0, _extensions.Async$2EAsFuture$2EStatic)(future)]);
+	      var matchValue = restTypeCache.has(guid) ? [true, restTypeCache.get(guid)] : [false, null];
+	
+	      if (matchValue[0]) {
+	        var res = matchValue[1];
+	        return res;
+	      } else {
+	        var future = function (builder_) {
+	          return builder_.Delay(function (unitVar) {
+	            return builder_.Bind(load(concatUrl(root, url), cookies), function (_arg1) {
+	              var members = _arg1;
+	              return builder_.Return(new _ast.Type("Object", [function () {
+	                var Typeargs = new _fableCore.List();
+	                return new _ast.ObjectType(members.map(function (m) {
+	                  var schema = function () {
+	                    var $var86 = m.schema;
+	
+	                    if ($var86 != null) {
+	                      return function (s) {
+	                        return new _ast.Schema(s["@type"], s);
+	                      }($var86);
+	                    } else {
+	                      return $var86;
+	                    }
+	                  }();
+	
+	                  var matchValue_1 = m.returns.kind;
+	
+	                  if (matchValue_1 === "nested") {
+	                    var returns = m.returns;
+	                    var retTyp = createRestType(lookupNamed, root, cookies, returns.endpoint);
+	                    var matchValue_2 = m.parameters;
+	
+	                    if (matchValue_2 == null) {
+	                      return new _ast.Member("Property", [m.name, retTyp, schema, parseDoc(m.documentation), propAccess(m.trace)]);
+	                    } else {
+	                      var parameters = matchValue_2;
+	
+	                      var args = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
+	                        return _fableCore.Seq.map(function (p) {
+	                          return [p.name, false, new _ast.Type("Primitive", [mapParamType(p.type)])];
+	                        }, parameters);
+	                      }));
+	
+	                      var argNames = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
+	                        return _fableCore.Seq.map(function (p) {
+	                          return p.name;
+	                        }, parameters);
+	                      }));
+	
+	                      return new _ast.Member("Method", [m.name, new _fableCore.List(), args, retTyp, parseDoc(m.documentation), methCall(m.trace)]);
+	                    }
+	                  } else {
+	                    if (matchValue_1 === "primitive") {
+	                      var returns = m.returns;
+	                      var ty = fromRawType(returns.type);
+	                      var patternInput = getTypeAndEmitter(lookupNamed, ty);
+	                      var typ = patternInput[0];
+	                      var parser = patternInput[1];
+	                      return new _ast.Member("Property", [m.name, typ, schema, parseDoc(m.documentation), dataCall(parser, m.trace, returns.endpoint)]);
+	                    } else {
+	                      throw "?";
+	                    }
+	                  }
+	                }), Typeargs);
+	              }()]));
+	            });
+	          });
+	        }(_fableCore.defaultAsyncBuilder);
+	
+	        var ty = new _ast.Type("Delayed", [guid, function (arg00) {
+	          return function (arg10) {
+	            return (0, _extensions.Async$2EAsFuture$2EStatic)(arg00, arg10);
+	          };
+	        }(guid)(future)]);
+	        restTypeCache.set(guid, ty);
+	        return ty;
+	      }
 	    };
 	
 	    var provideRestType = $exports.provideRestType = function provideRestType(lookupNamed, name, root, cookies) {
@@ -11413,34 +11493,30 @@
 	  }
 	
 	  function filterProperties(f, members) {
-	    return function (builder_) {
-	      return builder_.Delay(function (unitVar) {
-	        var filtered = Array.from(_fableCore.Seq.choose(function (_arg1) {
-	          var $target1 = function () {
-	            return null;
-	          };
+	    var filtered = Array.from(_fableCore.Seq.choose(function (_arg1) {
+	      var $target1 = function () {
+	        return null;
+	      };
 	
-	          if (_arg1.Case === "Property") {
-	            if (function () {
-	              var t = _arg1.Fields[1];
-	              var s = _arg1.Fields[2];
-	              var n = _arg1.Fields[0];
-	              return f([n, s, t]);
-	            }()) {
-	              var n = _arg1.Fields[0];
-	              var s = _arg1.Fields[2];
-	              var t = _arg1.Fields[1];
-	              return new Property("Property", [n, s, t]);
-	            } else {
-	              return $target1();
-	            }
-	          } else {
-	            return $target1();
-	          }
-	        }, members));
-	        return builder_.Return(filtered);
-	      });
-	    }(_fableCore.defaultAsyncBuilder);
+	      if (_arg1.Case === "Property") {
+	        if (function () {
+	          var t = _arg1.Fields[1];
+	          var s = _arg1.Fields[2];
+	          var n = _arg1.Fields[0];
+	          return f([n, s, t]);
+	        }()) {
+	          var n = _arg1.Fields[0];
+	          var s = _arg1.Fields[2];
+	          var t = _arg1.Fields[1];
+	          return new Property("Property", [n, s, t]);
+	        } else {
+	          return $target1();
+	        }
+	      } else {
+	        return $target1();
+	      }
+	    }, members));
+	    return filtered;
 	  }
 	
 	  function dominant(all, subset) {
@@ -11470,30 +11546,30 @@
 	            if (matchValue[0] != null) {
 	              var propSchema = matchValue[0];
 	              var propTyp = matchValue[1];
-	              return builder_.Bind(filterProperties(function (_arg2) {
-	                return _arg2[1] != null ? function () {
-	                  var t = _arg2[2];
-	                  var s = _arg2[1];
+	              {
+	                var alts = filterProperties(function (_arg2) {
+	                  return _arg2[1] != null ? function () {
+	                    var t = _arg2[2];
+	                    var s = _arg2[1];
 	
-	                  if (s.Type === propSchema.Type) {
-	                    if (!equalTyp) {
-	                      return true;
+	                    if (s.Type === propSchema.Type) {
+	                      if (!equalTyp) {
+	                        return true;
+	                      } else {
+	                        return (0, _typechecker.typesEqual)(t, propTyp);
+	                      }
 	                    } else {
-	                      return (0, _typechecker.typesEqual)(t, propTyp);
+	                      return false;
 	                    }
-	                  } else {
-	                    return false;
-	                  }
-	                }() : false;
-	              }, members), function (_arg3) {
-	                var alts = _arg3;
+	                  }() : false;
+	                }, members);
 	
 	                if (dominant(members, alts)) {
 	                  return builder_.Return([name, alts]);
 	                } else {
 	                  return builder_.Return();
 	                }
-	              });
+	              }
 	            } else {
 	              return $target1();
 	            }
@@ -11542,12 +11618,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult23697 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult102614 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult23697.Case === "Choice1Of2") {
+	                if (activePatternResult102614.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult23697.Fields[0][0];
+	                  var es = activePatternResult102614.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11581,16 +11657,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var21 = ed;
+	                var $var87 = ed;
 	
-	                if ($var21 != null) {
+	                if ($var87 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var21);
+	                  }($var87);
 	                } else {
-	                  return $var21;
+	                  return $var87;
 	                }
 	              }());
 	            });
@@ -11656,7 +11732,7 @@
 	                                  return builder__1.Delay(function (unitVar_1) {
 	                                    return builder__1.Bind(getMembers(t), function (_arg3) {
 	                                      var members = _arg3;
-	                                      return builder__1.Bind(filterProperties(function (_arg4) {
+	                                      var filtered = filterProperties(function (_arg4) {
 	                                        return _arg4[1] != null ? function () {
 	                                          var t_1 = _arg4[2];
 	                                          var s = _arg4[1];
@@ -11668,30 +11744,28 @@
 	                                            return false;
 	                                          }
 	                                        }() : false;
-	                                      }, members), function (_arg5) {
-	                                        var filtered = _arg5;
-	                                        return builder__1.Return([p, [members, filtered]]);
-	                                      });
+	                                      }, members);
+	                                      return builder__1.Return([p, [members, filtered]]);
 	                                    });
 	                                  });
 	                                }(_fableCore.defaultAsyncBuilder);
 	                              }, trunc(catMembers));
 	                            };
 	
-	                            return builder_.Bind(nestedMembers(function ($var22) {
-	                              return Array.from(_fableCore.Seq.truncate(5, $var22));
-	                            }), function (_arg6) {
-	                              var checkMembers = _arg6;
+	                            return builder_.Bind(nestedMembers(function ($var88) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var88));
+	                            }), function (_arg5) {
+	                              var checkMembers = _arg5;
 	
-	                              if (dominant(_fableCore.Seq.collect(function ($var23) {
-	                                return $var23[1][0];
-	                              }, checkMembers), _fableCore.Seq.collect(function ($var24) {
-	                                return $var24[1][1];
+	                              if (dominant(_fableCore.Seq.collect(function ($var89) {
+	                                return $var89[1][0];
+	                              }, checkMembers), _fableCore.Seq.collect(function ($var90) {
+	                                return $var90[1][1];
 	                              }, checkMembers))) {
 	                                return builder_.Bind(nestedMembers(function (x) {
 	                                  return x;
-	                                }), function (_arg7) {
-	                                  var allMembers = _arg7;
+	                                }), function (_arg6) {
+	                                  var allMembers = _arg6;
 	                                  var props = allMembers.map(function (tupledArg) {
 	                                    var p = tupledArg[0];
 	                                    var _arg2_1 = tupledArg[1];
@@ -11878,7 +11952,7 @@
 	                  var adds = patternInput[0];
 	                  return builder_.Bind(getMembers(lastTy), function (_arg2) {
 	                    var members = _arg2;
-	                    return builder_.Bind(filterProperties(function (_arg3) {
+	                    var availableAdds = filterProperties(function (_arg3) {
 	                      var $target1_1 = function () {
 	                        return false;
 	                      };
@@ -11900,10 +11974,8 @@
 	                      } else {
 	                        return $target1_1();
 	                      }
-	                    }, members), function (_arg4) {
-	                      var availableAdds = _arg4;
-	                      return builder_.Return(new Editor("CreateList", [catDoc, caName, Array.from(adds), availableAdds]));
-	                    });
+	                    }, members);
+	                    return builder_.Return(new Editor("CreateList", [catDoc, caName, Array.from(adds), availableAdds]));
 	                  });
 	                }
 	              } else {
@@ -12196,19 +12268,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var25 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var91 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var25 != null) {
+	          if ($var91 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var25);
+	            }($var91);
 	          } else {
-	            return $var25;
+	            return $var91;
 	          }
 	        }();
 	
@@ -12249,7 +12321,7 @@
 	          return function (arg1) {
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
-	        }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("data-placeholder", "Choose an item..."), (0, _html.op_EqualsBangGreater)("change", function (el) {
+	        }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("data-placeholder", "choose an item..."), (0, _html.op_EqualsBangGreater)("change", function (el) {
 	          return function (e) {
 	            var name2_1 = el.value;
 	            setValue("nested")(name2_1)(replaceTwoNamesWithValues(origText, n1, n2, name1, name2_1));
@@ -15654,8 +15726,8 @@
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var19, $var20) {
-	                                return folder($var19)($var20);
+	                              return _fableCore.Seq.fold(function ($var92, $var93) {
+	                                return folder($var92)($var93);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {
