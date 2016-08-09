@@ -105,22 +105,25 @@ function saveAndShare()
   }
 
   // Send data using AJAX to the server
-  var outId = "shared/" + res + "/" + title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")
-  sharedCompiled = sharedCompiled.replace("output-id-placeholder", outId.replace(/\//g,"-"))
   var data = {
     "title": title, "author": author, "twitter": twitter,
     "description": info, "code": sharedCode, "compiled": sharedCompiled
   };
   
   $.ajax({
-    //url: "http://localhost:8897/olympics", data: JSON.stringify(data),
     url: "http://thegamma-snippets.azurewebsites.net/olympics", data: JSON.stringify(data),
     contentType: "application/json", type: "POST", dataType: "JSON"
   }).done(function (res) {
     // Display the confirmation window with links
-    var link = "/" + outId;
-    document.getElementById("result-url").value = "http://rio2016.thegamma.net" + link;
+    var link = "/shared/" + res + "/" + title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");    
+    var ut = encodeURIComponent(title);
+    var ul = encodeURIComponent("http://rio2016.thegamma.net" + link);
+    document.getElementById("share-lnk-tw").href = "https://twitter.com/intent/tweet?url=" + ul + "&text=" + ut;
+    document.getElementById("share-lnk-fb").href = "https://www.facebook.com/sharer.php?u=" + ul;
+    document.getElementById("share-lnk-rd").href = "http://www.reddit.com/submit?url=" + ul + "&title=" + ut;
+    document.getElementById("share-lnk-em").href = "mailto:?subject=" + ut + "&body=" + ul; 
     document.getElementById("result-link").href = link;
+    document.getElementById("result-link").innerText = title;
     $("#modal-share").css("display", "none");
     $("#modal-done").css("display", "block");
   });

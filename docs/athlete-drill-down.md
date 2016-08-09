@@ -1,11 +1,10 @@
 All Medals of Michael Phelps
 ============================
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
-officia deserunt mollit anim id est laborum.
+Until Rio 2016, Michael Phelps got 22 medals including 18 gold ones. This makes you wonder if he
+can remember all the medals he got. To make his life easier, we can easily generate a table with 
+all the medals. To do this, we use `'by athlete'` and filter all the Olympic medals to look only
+at Michael Phelps and then we display the result in a table.
 
 ```
 let data =
@@ -31,12 +30,12 @@ var data = _series.series.ordinal(_restruntime.convertSequence(function (v) {
 _tables.table.create(data).set(null, false).show("outathlete-drill-down");
 ```
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
-officia deserunt mollit anim id est laborum.
+If you want to change the athlete, you can modify the source code and type `.` after `'by athlete'`
+on the second line. You can also do the same in "options" by picking a country and then choosing
+an athlete.
 
-----------------------------------------------------------------------------------------------------
-
-Alternatives
+For a more complicated modification, you can change the code to use grouping (similarly to the 
+visualizations counting medals per athlete) to find out that Michael Phelps medals from 8 different 
+disciplines, 3 of them being relay events and the remaining 5 being individual. This can by done
+by using `'group data'.'by Event' after getting the data. The visualization [Medals by Event and 
+Games](shared/7/medals-by-event-and-games) shows the result.

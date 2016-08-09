@@ -441,6 +441,13 @@ article table td, article table th {
 #share-dialog .modal-dialog {
   width:700px;
 }
+#share-dialog .social {
+  margin-left:20px;
+  font-size:20pt;
+}
+#share-dialog .social i {
+  margin-right:6px;
+}
 #submit-error {
   color:#c31515;
   position:relative;

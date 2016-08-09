@@ -345,19 +345,19 @@
 	    }(), parent).innerText, "both");
 	
 	    var compiled = function () {
-	      var $var9 = tryFindChildElement(function () {
+	      var $var1 = tryFindChildElement(function () {
 	        var cls = "ia-compiled";
 	        return function (el) {
 	          return withClass(cls, el);
 	        };
 	      }(), parent);
 	
-	      if ($var9 != null) {
+	      if ($var1 != null) {
 	        return function (el) {
 	          return _fableCore.String.trim(el.innerText, "both");
-	        }($var9);
+	        }($var1);
 	      } else {
-	        return $var9;
+	        return $var1;
 	      }
 	    }();
 	
@@ -616,10 +616,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var10 = showOptionsBtn;
+	      var $var2 = showOptionsBtn;
 	
-	      if ($var10 != null) {
-	        return [$var10];
+	      if ($var2 != null) {
+	        return [$var2];
 	      } else {
 	        return [];
 	      }
@@ -6254,8 +6254,8 @@
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var31, $var32) {
-	          return folder($var31)($var32);
+	        return _fableCore.Seq.fold(function ($var8, $var9) {
+	          return folder($var8)($var9);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6464,9 +6464,9 @@
 	            var e = matchValue.Fields[1];
 	
 	            var varTy = function () {
-	              var $var33 = ctxTyp;
+	              var $var10 = ctxTyp;
 	
-	              if ($var33 != null) {
+	              if ($var10 != null) {
 	                return function (_arg1) {
 	                  var $target1 = function () {
 	                    return null;
@@ -6486,9 +6486,9 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var33);
+	                }($var10);
 	              } else {
-	                return $var33;
+	                return $var10;
 	              }
 	            }();
 	
@@ -6637,14 +6637,14 @@
 	                  return [Array.from(_fableCore.List.map(function (arg) {
 	                    return arg.Value;
 	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var34 = arg.Name;
+	                    var $var11 = arg.Name;
 	
-	                    if ($var34 != null) {
+	                    if ($var11 != null) {
 	                      return function (n) {
 	                        return [n.Name, arg.Value];
-	                      }($var34);
+	                      }($var11);
 	                    } else {
-	                      return $var34;
+	                      return $var11;
 	                    }
 	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
@@ -6917,11 +6917,11 @@
 	
 	  function mapExprRanges(f, expr) {
 	    var matchValue = expr.Expr;
-	    var activePatternResult37443 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult4222 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	    if (activePatternResult37443.Case === "Choice2Of2") {
-	      var es = activePatternResult37443.Fields[0][0];
-	      var ns = activePatternResult37443.Fields[0][1];
+	    if (activePatternResult4222.Case === "Choice2Of2") {
+	      var es = activePatternResult4222.Fields[0][0];
+	      var ns = activePatternResult4222.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -11542,12 +11542,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult38047 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult23697 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult38047.Case === "Choice1Of2") {
+	                if (activePatternResult23697.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult38047.Fields[0][0];
+	                  var es = activePatternResult23697.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11581,16 +11581,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var35 = ed;
+	                var $var21 = ed;
 	
-	                if ($var35 != null) {
+	                if ($var21 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var35);
+	                  }($var21);
 	                } else {
-	                  return $var35;
+	                  return $var21;
 	                }
 	              }());
 	            });
@@ -11647,48 +11647,59 @@
 	                          {
 	                            _extensions.Log.trace("editors", "collecting %s nested members", catMembers.length);
 	
-	                            return builder_.Bind(_extensions.Async.Array.map(function (_arg1_1) {
-	                              var p = _arg1_1;
-	                              var t = p.Fields[2];
-	                              var n = p.Fields[0];
-	                              return function (builder__1) {
-	                                return builder__1.Delay(function (unitVar_1) {
-	                                  return builder__1.Bind(getMembers(t), function (_arg3) {
-	                                    var members = _arg3;
-	                                    return builder__1.Bind(filterProperties(function (_arg4) {
-	                                      return _arg4[1] != null ? function () {
-	                                        var t_1 = _arg4[2];
-	                                        var s = _arg4[1];
-	                                        var n_1 = _arg4[0];
+	                            var nestedMembers = function (trunc) {
+	                              return _extensions.Async.Array.map(function (_arg1_1) {
+	                                var p = _arg1_1;
+	                                var t = p.Fields[2];
+	                                var n = p.Fields[0];
+	                                return function (builder__1) {
+	                                  return builder__1.Delay(function (unitVar_1) {
+	                                    return builder__1.Bind(getMembers(t), function (_arg3) {
+	                                      var members = _arg3;
+	                                      return builder__1.Bind(filterProperties(function (_arg4) {
+	                                        return _arg4[1] != null ? function () {
+	                                          var t_1 = _arg4[2];
+	                                          var s = _arg4[1];
+	                                          var n_1 = _arg4[0];
 	
-	                                        if (s.Type === valSch.Type) {
-	                                          return (0, _typechecker.typesEqual)(t_1, valTy);
-	                                        } else {
-	                                          return false;
-	                                        }
-	                                      }() : false;
-	                                    }, members), function (_arg5) {
-	                                      var filtered = _arg5;
-	                                      return builder__1.Return([p, [members, filtered]]);
+	                                          if (s.Type === valSch.Type) {
+	                                            return (0, _typechecker.typesEqual)(t_1, valTy);
+	                                          } else {
+	                                            return false;
+	                                          }
+	                                        }() : false;
+	                                      }, members), function (_arg5) {
+	                                        var filtered = _arg5;
+	                                        return builder__1.Return([p, [members, filtered]]);
+	                                      });
 	                                    });
 	                                  });
-	                                });
-	                              }(_fableCore.defaultAsyncBuilder);
-	                            }, Array.from(_fableCore.Seq.truncate(5, catMembers))), function (_arg6) {
-	                              var nestedMembers = _arg6;
+	                                }(_fableCore.defaultAsyncBuilder);
+	                              }, trunc(catMembers));
+	                            };
 	
-	                              if (dominant(_fableCore.Seq.collect(function ($var36) {
-	                                return $var36[1][0];
-	                              }, nestedMembers), _fableCore.Seq.collect(function ($var37) {
-	                                return $var37[1][1];
-	                              }, nestedMembers))) {
-	                                var props = nestedMembers.map(function (tupledArg) {
-	                                  var p = tupledArg[0];
-	                                  var _arg2_1 = tupledArg[1];
-	                                  var filtered = _arg2_1[1];
-	                                  return [p, filtered];
+	                            return builder_.Bind(nestedMembers(function ($var22) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var22));
+	                            }), function (_arg6) {
+	                              var checkMembers = _arg6;
+	
+	                              if (dominant(_fableCore.Seq.collect(function ($var23) {
+	                                return $var23[1][0];
+	                              }, checkMembers), _fableCore.Seq.collect(function ($var24) {
+	                                return $var24[1][1];
+	                              }, checkMembers))) {
+	                                return builder_.Bind(nestedMembers(function (x) {
+	                                  return x;
+	                                }), function (_arg7) {
+	                                  var allMembers = _arg7;
+	                                  var props = allMembers.map(function (tupledArg) {
+	                                    var p = tupledArg[0];
+	                                    var _arg2_1 = tupledArg[1];
+	                                    var filtered = _arg2_1[1];
+	                                    return [p, filtered];
+	                                  });
+	                                  return builder_.Return(new Editor("NestedChoice", [catDoc, valDoc, catName_1, valName_1, props]));
 	                                });
-	                                return builder_.Return(new Editor("NestedChoice", [catDoc, valDoc, catName_1, valName_1, props]));
 	                              } else {
 	                                return builder_.Return();
 	                              }
@@ -12185,19 +12196,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var38 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var25 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var38 != null) {
+	          if ($var25 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var38);
+	            }($var25);
 	          } else {
-	            return $var38;
+	            return $var25;
 	          }
 	        }();
 	
@@ -15643,8 +15654,8 @@
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var39, $var40) {
-	                                return folder($var39)($var40);
+	                              return _fableCore.Seq.fold(function ($var19, $var20) {
+	                                return folder($var19)($var20);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {

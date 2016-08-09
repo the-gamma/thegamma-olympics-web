@@ -91,13 +91,18 @@
                 <p>Here is a link to your visualization so that you can review it and an address
                  that you can copy and share with friends.</p>
                 <ul><li><a href="#" id="result-link">View your created visualization</a></li></ul>
-                <p>Address of your article:</p>
-                <input type="text" class="form-control" id="result-url" value="http://fssnip.net/foo">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-1 col-sm-10">
-                <button class="btn btn-success" data-dismiss="modal" onclick="closeShareDialog();">Close</button>
+                <p>Share your visualization:</p>                
+                <button class="btn btn-success" data-dismiss="modal" onclick="closeShareDialog();" style="float:right;margin-top:30px">Close</button>
+                <p class="social">
+                  <a id="share-lnk-tw" target="_blank" href="#">
+                    <i class="fa fa-twitter-square"></i></a>
+                  <a id="share-lnk-fb" target="_blank" href="#">
+                    <i class="fa fa-facebook-official"></i></a>
+                  <a id="share-lnk-rd" href="#">
+                    <i class="fa fa-reddit-square"></i></a>
+                  <a id="share-lnk-em" href="#">
+                    <i class="fa fa-envelope"></i></a>
+                </p>                
               </div>
             </div>
           </form>

@@ -151,9 +151,9 @@ let loadShared json idOpt =
         let info = Markdown.Parse(snip.description)
         let pars = info.Paragraphs |> List.filter (function MarkdownParagraph.InlineBlock _ -> false | _ -> true)
         let info = Markdown.WriteHtml(MarkdownDocument(pars, info.DefinedLinks))
-
+        let outid = sprintf "outshared-%d-%s" snip.id (titleToUrl snip.title)
         { id = sprintf "shared/%d/%s" snip.id (titleToUrl snip.title); 
-          index = i; heading = snip.title; category = "shared"; compiled = snip.compiled;
+          index = i; heading = snip.title; category = "shared"; compiled = snip.compiled.Replace("output-id-placeholder", outid);
           before = info; code = snip.code; after = ""; plaintext = false })
 
   let first = sorted |> Seq.head
