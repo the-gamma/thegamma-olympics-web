@@ -31,13 +31,13 @@ var data = _series.series.create(_restruntime.convertTupleSequence(function (v) 
   return v;
 }, function (v) {
   return Number(v);
-}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-skip=pgid-0").addTrace("count=" + 47).addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Team/sum/Gold/key/then/sort/Gold/desc/then/page/pgid-0/skip/take/then/series/Team/Gold").getValue("/pivot/data")), "key", "value", "");
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-skip=pgid-0").addTrace("count=" + 47).addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Team/sum/Gold/key/then/sort/Gold/desc/then/page/pgid-0/skip/take/then/series/Team/Gold").getValue("/pivot/data")), "key", "value", "");
 
 var phelps = _series.series.create(_restruntime.convertTupleSequence(function (v) {
   return v;
 }, function (v) {
   return Number(v);
-}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "").addTrace("athlete/noc-3=Michael+Phelps").addTrace("pivot-source=/data").addTrace("pivot-tfs=group/Athlete/sum/Gold/key/then/series/Athlete/Gold").getValue("/pivot/data")), "key", "value", "");
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("athlete/noc-3=Michael+Phelps").addTrace("pivot-source=/data").addTrace("pivot-tfs=group/Athlete/sum/Gold/key/then/series/Athlete/Gold").getValue("/pivot/data")), "key", "value", "");
 
 _charts.chart.columns([data, phelps], ["#F4C300", "#3CB3EA"]).legend(null, null, "none", null).show("outphelps-as-country");
 ```

@@ -24,7 +24,7 @@ var data = _series.series.create(_restruntime.convertTupleSequence(function (v) 
   return v;
 }, function (v) {
   return Number(v);
-}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "").addTrace("athlete/noc-3=Michael+Phelps").addTrace("pivot-source=/data").addTrace("pivot-tfs=group/Games/count-all/key/then/series/Games/count").getValue("/pivot/data")), "key", "value", "");
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("athlete/noc-3=Michael+Phelps").addTrace("pivot-source=/data").addTrace("pivot-tfs=group/Games/count-all/key/then/series/Games/count").getValue("/pivot/data")), "key", "value", "");
 
 _charts.chart.pie(data).set(null, ["#F4C300", "#D16159", "#3CB3EA"], null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null).show("outathlete-break-down");
 ```

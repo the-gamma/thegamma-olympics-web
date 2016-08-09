@@ -35,7 +35,7 @@ table.create(data)
 
 var data = _series.series.ordinal(_restruntime.convertSequence(function (v) {
   return v;
-}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Athlete/concat-vals/Team/sum/Bronze/sum/Silver/sum/Gold/key/then/sort/Bronze/desc/Silver/desc/Gold/desc/then/page/pgid-0/take").getValue("/pivot/data")), "key", "value", "");
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Athlete/concat-vals/Team/sum/Bronze/sum/Silver/sum/Gold/key/then/sort/Bronze/desc/Silver/desc/Gold/desc/then/page/pgid-0/take").getValue("/pivot/data")), "key", "value", "");
 
 _tables.table.create(data).hideColumns(["Gold", "Silver", "Bronze"]).addColumn("Medals", function (v) {
   return _series.series.range(1, Number(v.Gold)).map(function (i) {

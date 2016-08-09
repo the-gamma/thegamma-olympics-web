@@ -22,7 +22,7 @@ table.create(data).set(showKey=false)
 
 var data = _series.series.ordinal(_restruntime.convertSequence(function (v) {
   return v;
-}, new _restruntime.RuntimeContext("http://127.0.0.1:10042/pivot", "source=http://127.0.0.1:10042/olympics", "")
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "")
 .addTrace("athlete/noc-3=Michael+Phelps").addTrace("pivot-source=/data")
 .addTrace("pivot-tfs=drop/Team/Sport/Bronze/Silver/Discipline/Gold/Gender/Athlete")
 .getValue("/pivot/data")), "key", "value", "");
