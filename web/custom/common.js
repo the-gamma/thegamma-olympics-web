@@ -142,8 +142,8 @@ var originalLocation = window.location.pathname;
 
 function registerArticle(id, visible, primary) {
   if (primary) primaryArticle = id;
-  if (!visible) hiddenArticles.push(id);
-  sections.push(id);
+  if (!visible) hiddenArticles.push(id.replace(/\//g,"-"));
+  sections.push(id.replace(/\//g,"-"));
 }
 
 function setRunner(article, f) {
@@ -169,7 +169,7 @@ function setCurrentSection(top) {
   var selDist = Number.MAX_SAFE_INTEGER;
   var selId = "";
   for(var i = 0; i < sections.length; i++) {
-    var el = document.getElementById(sections[i].replace(/\//g,"-"));
+    var el = document.getElementById(sections[i]);
     if (el.offsetTop == 0) continue;
     var dist = Math.abs(top - el.offsetTop);
     if (dist < selDist) { selDist = dist; selId = sections[i]; }
