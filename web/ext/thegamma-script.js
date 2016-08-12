@@ -129,7 +129,11 @@
 	
 	      var restTys = _fableCore.List.ofArray([_providers.RestProvider.provideRestType(lookupNamed, "olympics1", services + "olympics", ""), _providers.RestProvider.provideRestType(lookupNamed, "olympics", services + "pivot", "source=" + services + "olympics"), _providers.RestProvider.provideRestType(lookupNamed, "adventure", services + "adventure", ""), _providers.RestProvider.provideRestType(lookupNamed, "world", services + "worldbank", ""), new _providers.ProvidedType("NamedType", ["value", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["seq", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["async", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])])]);
 	
-	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "/ext/libraries.json"), function (_arg1) {
+	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "/ext/libraries.json?" + String(function () {
+	        var copyOfStruct = _fableCore.Date.now();
+	
+	        return _fableCore.Date.ticks(copyOfStruct);
+	      }())), function (_arg1) {
 	        var fsTys = _arg1;
 	
 	        var allTys = _fableCore.List.append(restTys, fsTys);
@@ -359,19 +363,19 @@
 	    }(), parent).innerText, "both");
 	
 	    var compiled = function () {
-	      var $var1 = tryFindChildElement(function () {
+	      var $var3 = tryFindChildElement(function () {
 	        var cls = "ia-compiled";
 	        return function (el) {
 	          return withClass(cls, el);
 	        };
 	      }(), parent);
 	
-	      if ($var1 != null) {
+	      if ($var3 != null) {
 	        return function (el) {
 	          return _fableCore.String.trim(el.innerText, "both");
-	        }($var1);
+	        }($var3);
 	      } else {
-	        return $var1;
+	        return $var3;
 	      }
 	    }();
 	
@@ -630,10 +634,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var2 = showOptionsBtn;
+	      var $var4 = showOptionsBtn;
 	
-	      if ($var2 != null) {
-	        return [$var2];
+	      if ($var4 != null) {
+	        return [$var4];
 	      } else {
 	        return [];
 	      }
@@ -11618,12 +11622,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult23873 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult4933 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult23873.Case === "Choice1Of2") {
+	                if (activePatternResult4933.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult23873.Fields[0][0];
+	                  var es = activePatternResult4933.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11657,16 +11661,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var22 = ed;
+	                var $var15 = ed;
 	
-	                if ($var22 != null) {
+	                if ($var15 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var22);
+	                  }($var15);
 	                } else {
-	                  return $var22;
+	                  return $var15;
 	                }
 	              }());
 	            });
@@ -11752,15 +11756,15 @@
 	                              }, trunc(catMembers));
 	                            };
 	
-	                            return builder_.Bind(nestedMembers(function ($var23) {
-	                              return Array.from(_fableCore.Seq.truncate(5, $var23));
+	                            return builder_.Bind(nestedMembers(function ($var16) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var16));
 	                            }), function (_arg5) {
 	                              var checkMembers = _arg5;
 	
-	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var24) {
-	                                return $var24[1][0];
-	                              }, checkMembers), _fableCore.Seq.collect(function ($var25) {
-	                                return $var25[1][1];
+	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var17) {
+	                                return $var17[1][0];
+	                              }, checkMembers), _fableCore.Seq.collect(function ($var18) {
+	                                return $var18[1][1];
 	                              }, checkMembers)) : false) {
 	                                return builder_.Bind(nestedMembers(function (x) {
 	                                  return x;
@@ -12268,19 +12272,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var26 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var19 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var26 != null) {
+	          if ($var19 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var26);
+	            }($var19);
 	          } else {
-	            return $var26;
+	            return $var19;
 	          }
 	        }();
 	
