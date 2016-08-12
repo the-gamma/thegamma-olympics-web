@@ -134,6 +134,7 @@ function saveAndShare()
 // ----------------------------------------------------------------------------------------
 
 var sections = [];
+var sectionUrls = [];
 var hiddenArticles = [];
 var loaders = {};
 var primaryArticle = "";
@@ -143,6 +144,7 @@ var originalLocation = window.location.pathname;
 function registerArticle(id, visible, primary) {
   if (primary) primaryArticle = id;
   if (!visible) hiddenArticles.push(id.replace(/\//g,"-"));
+  sectionUrls.push(id);
   sections.push(id.replace(/\//g,"-"));
 }
 
@@ -168,18 +170,19 @@ function displayNext() {
 function setCurrentSection(top) {
   var selDist = Number.MAX_SAFE_INTEGER;
   var selId = "";
+  var selUrl = "";
   for(var i = 0; i < sections.length; i++) {
     var el = document.getElementById(sections[i]);
     if (el.offsetTop == 0) continue;
     var dist = Math.abs(top - el.offsetTop);
-    if (dist < selDist) { selDist = dist; selId = sections[i]; }
+    if (dist < selDist) { selDist = dist; selId = sections[i]; selUrl = sectionUrls[i]; }
   }
   var newSection = selId == primaryArticle ? originalLocation : ("/" + selId);
   if (currentSection == "") currentSection = newSection;
   if (newSection != currentSection) {
     currentSection = newSection;
     logEvent("navigation", "scroll", newSection);
-    history.replaceState({}, newSection, newSection);
+    history.replaceState({}, "/" + selUrl, "/" + selUrl);
   }
 }
 
