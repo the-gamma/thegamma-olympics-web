@@ -20,13 +20,13 @@ table.create(countries).set(showKey=false)
 ```
 
 ```
-""use strict";
+"use strict";
 
 var countries = _series.series.ordinal(_restruntime.convertSequence(function (v) {
   return v;
 }, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-take=pgid-0").addTrace("count=" + 10).addTrace("pivot-tfs=group/Team/sum/Bronze/sum/Silver/sum/Gold/count-all/key/then/sort/count/desc/then/drop/count/then/page/pgid-0/take").getValue("/pivot/data")), "key", "value", "");
 
-_tables.table.create(countries).set(null, false).show("outmedals-per-country");"
+_tables.table.create(countries).set(null, false).show("outmedals-per-country");
 ```
 
 If you want to adapt the table to show different disciplines, you can just use the "options" user
