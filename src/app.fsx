@@ -55,14 +55,14 @@ type Main =
     moreArticles : seq<Article> }
 
 let docs = 
-  [ "athlete", "medals-per-athlete"
+  [ "timeline", "countries-timeline" 
+    "athlete", "medals-per-athlete"
     "country", "top-5-countries"
     "country", "long-distance-medals"
     "country", "medals-per-country"
     "phelps", "phelps-as-country"
     "phelps", "athlete-drill-down"    
-    "phelps", "athlete-break-down"
-    // "country", "countries-timeline" 
+    "phelps", "athlete-break-down"    
     "data", "about-the-data" ]
     
 let split pars =

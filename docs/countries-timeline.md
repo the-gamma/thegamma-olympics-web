@@ -1,92 +1,23 @@
-<div id="container" style="position: relative; width: 100%; height: 300px;"></div>
-<script>
-/*
-var bombMap = new Datamap({
-    element: document.getElementById('container'),
-    scope: 'world',
-    geographyConfig: {
-        popupOnHover: false,
-        highlightOnHover: false
-    },
-    fills: {
-        'USA': '#1f77b4',
-        'RUS': '#9467bd',
-        'PRK': '#ff7f0e',
-        'PRC': '#2ca02c',
-        'IND': '#e377c2',
-        'GBR': '#8c564b',
-        'FRA': '#d62728',
-        'PAK': '#7f7f7f',
-        defaultFill: '#EDDC4E'
-    },
-    data: {
-        'RUS': {fillKey: 'RUS'},
-        'PRK': {fillKey: 'PRK'},
-        'PRC': {fillKey: 'PRC'},
-        'IND': {fillKey: 'IND'},
-        'GBR': {fillKey: 'GBR'},
-        'FRA': {fillKey: 'FRA'},
-        'PAK': {fillKey: 'PAK'},
-        'USA': {fillKey: 'USA'}
-    }
-});
+Foo
+===
 
-     function bombs() { return [{
-        name: 'Joe 4',
-        radius: Math.random() * 100,
-        yield: 400,
-        country: 'USSR',
-        fillKey: 'RUS',
-        significance: 'First fusion weapon test by the USSR (not "staged")',
-        date: '1953-08-12',
-        latitude: 50.07,
-        longitude: 78.43
-      },{
-        name: 'RDS-37',
-        radius: Math.random() * 100,
-        yield: 1600,
-        country: 'USSR',
-        fillKey: 'RUS',
-        significance: 'First "staged" thermonuclear weapon test by the USSR (deployable)',
-        date: '1955-11-22',
-        latitude: 50.07,
-        longitude: 78.43
+```
+let data = 
+  olympics.data
+    .'group data'.'by Year'.'and Team'
+      .'count all'.'sum Gold'.'sum Silver'.'sum Bronze'.then
+      .'sort data'.'by count descending'.then
+    .'get the data'
 
-      },{
-        name: 'Tsar Bomba',
-        radius: Math.random() * 100,
-        yield: 50000,
-        country: 'USSR',
-        fillKey: 'RUS',
-        significance: 'Largest thermonuclear weapon ever tested—scaled down from its initial 100 Mt design by 50%',
-        date: '1961-10-31',
-        latitude: 73.482,
-        longitude: 54.5854
-      }
-    ]; }
+timeline.create(data)
+  .set(fill="#e0e0e0", title="Olympic Medals in %title", 
+    delay=400, overflowDelay = 2000,
+    colors=["#CC454E","#0085C7","#27884C","#F4C300"]) 
+  .using(
+    coordinates = fun x -> geo.lookup(x.Team),
+    time = fun x -> x.Year,
+    size = fun x -> math.add(3, math.pow(x.count, 0.5)),
+    info = fun x -> x.Team)
+```
 
-//draw bubbles for bombs
-bombMap.bubbles(bombs(), {
-    popupTemplate: function (geo, data) {
-            return ['<div class="hoverinfo">' +  data.name,
-            '<br/>Payload: ' +  data.yield + ' kilotons',
-            '<br/>Country: ' +  data.country + '',
-            '<br/>Date: ' +  data.date + '',
-            '</div>'].join('');
-    }
-});
-
-
-setInterval(function() {
-	bombMap.bubbles(bombs(), {
-	    popupTemplate: function (geo, data) {
-	            return ['<div class="hoverinfo">' +  data.name,
-	            '<br/>Payload: ' +  data.yield + ' kilotons',
-	            '<br/>Country: ' +  data.country + '',
-	            '<br/>Date: ' +  data.date + '',
-	            '</div>'].join('');
-	    }
-	});
-}, 5000)
-*/
-</script>
+b

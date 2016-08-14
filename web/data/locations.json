@@ -1,0 +1,1017 @@
+[
+  {
+    "country": "Afghanistan",
+    "coordinates": [
+      33,
+      66
+    ]
+  },
+  {
+    "country": "Netherlands Antilles",
+    "coordinates": [
+      18.075,
+      -63.05833
+    ]
+  },
+  {
+    "country": "Algeria",
+    "coordinates": [
+      28,
+      3
+    ]
+  },
+  {
+    "country": "Australasia",
+    "coordinates": [
+      -25,
+      135
+    ]
+  },
+  {
+    "country": "Argentina",
+    "coordinates": [
+      -34,
+      -64
+    ]
+  },
+  {
+    "country": "Armenia",
+    "coordinates": [
+      40,
+      45
+    ]
+  },
+  {
+    "country": "Australia",
+    "coordinates": [
+      -25,
+      135
+    ]
+  },
+  {
+    "country": "Austria",
+    "coordinates": [
+      47.333333,
+      13.333333
+    ]
+  },
+  {
+    "country": "Azerbaijan",
+    "coordinates": [
+      40.5,
+      47.5
+    ]
+  },
+  {
+    "country": "The Bahamas",
+    "coordinates": [
+      24,
+      -76
+    ]
+  },
+  {
+    "country": "Barbados",
+    "coordinates": [
+      13.166667,
+      -59.533333
+    ]
+  },
+  {
+    "country": "Burundi",
+    "coordinates": [
+      -3.5,
+      30
+    ]
+  },
+  {
+    "country": "Belgium",
+    "coordinates": [
+      50.833333,
+      4
+    ]
+  },
+  {
+    "country": "Bermuda",
+    "coordinates": [
+      32.333333,
+      -64.75
+    ]
+  },
+  {
+    "country": "Belarus",
+    "coordinates": [
+      53,
+      28
+    ]
+  },
+  {
+    "country": "Bohemia",
+    "coordinates": [
+      49.75,
+      15
+    ]
+  },
+  {
+    "country": "Botswana",
+    "coordinates": [
+      -22,
+      24
+    ]
+  },
+  {
+    "country": "Brazil",
+    "coordinates": [
+      -10,
+      -55
+    ]
+  },
+  {
+    "country": "Bahrain",
+    "coordinates": [
+      26,
+      50.5
+    ]
+  },
+  {
+    "country": "Bulgaria",
+    "coordinates": [
+      43,
+      25
+    ]
+  },
+  {
+    "country": "British West Indies",
+    "coordinates": [
+      18.25,
+      -77.5
+    ]
+  },
+  {
+    "country": "Canada",
+    "coordinates": [
+      60,
+      -96
+    ]
+  },
+  {
+    "country": "Chile",
+    "coordinates": [
+      -30,
+      -71
+    ]
+  },
+  {
+    "country": "China",
+    "coordinates": [
+      35,
+      105
+    ]
+  },
+  {
+    "country": "Cote d'Ivoire",
+    "coordinates": [
+      8,
+      -5
+    ]
+  },
+  {
+    "country": "Cameroon",
+    "coordinates": [
+      6,
+      12
+    ]
+  },
+  {
+    "country": "Colombia",
+    "coordinates": [
+      4,
+      -72
+    ]
+  },
+  {
+    "country": "Costa Rica",
+    "coordinates": [
+      10,
+      -84
+    ]
+  },
+  {
+    "country": "Croatia",
+    "coordinates": [
+      45.166667,
+      15.5
+    ]
+  },
+  {
+    "country": "Cuba",
+    "coordinates": [
+      22,
+      -79.5
+    ]
+  },
+  {
+    "country": "Cyprus",
+    "coordinates": [
+      35,
+      33
+    ]
+  },
+  {
+    "country": "Czech Republic",
+    "coordinates": [
+      49.75,
+      15
+    ]
+  },
+  {
+    "country": "Denmark",
+    "coordinates": [
+      56,
+      10
+    ]
+  },
+  {
+    "country": "Djibouti",
+    "coordinates": [
+      11.5,
+      42.5
+    ]
+  },
+  {
+    "country": "Dominican Republic",
+    "coordinates": [
+      19,
+      -70.666667
+    ]
+  },
+  {
+    "country": "Ecuador",
+    "coordinates": [
+      -2,
+      -77.5
+    ]
+  },
+  {
+    "country": "Egypt",
+    "coordinates": [
+      27,
+      30
+    ]
+  },
+  {
+    "country": "Eritrea",
+    "coordinates": [
+      15,
+      39
+    ]
+  },
+  {
+    "country": "Spain",
+    "coordinates": [
+      40,
+      -4
+    ]
+  },
+  {
+    "country": "Estonia",
+    "coordinates": [
+      59,
+      26
+    ]
+  },
+  {
+    "country": "Ethiopia",
+    "coordinates": [
+      8,
+      38
+    ]
+  },
+  {
+    "country": "Unified Team of Germany",
+    "coordinates": [
+      51.5,
+      10.5
+    ]
+  },
+  {
+    "country": "Unified Team",
+    "coordinates": [
+      60,
+      100
+    ]
+  },
+  {
+    "country": "Finland",
+    "coordinates": [
+      64,
+      26
+    ]
+  },
+  {
+    "country": "France",
+    "coordinates": [
+      46,
+      2
+    ]
+  },
+  {
+    "country": "West Germany",
+    "coordinates": [
+      51.5,
+      10.5
+    ]
+  },
+  {
+    "country": "Gabon",
+    "coordinates": [
+      -1,
+      11.75
+    ]
+  },
+  {
+    "country": "United Kingdom (Great Britain)",
+    "coordinates": [
+      54,
+      -4
+    ]
+  },
+  {
+    "country": "East Germany",
+    "coordinates": [
+      51.5,
+      10.5
+    ]
+  },
+  {
+    "country": "Georgia",
+    "coordinates": [
+      41.999981,
+      43.499905
+    ]
+  },
+  {
+    "country": "Germany",
+    "coordinates": [
+      51.5,
+      10.5
+    ]
+  },
+  {
+    "country": "Ghana",
+    "coordinates": [
+      8,
+      -2
+    ]
+  },
+  {
+    "country": "Greece",
+    "coordinates": [
+      39,
+      22
+    ]
+  },
+  {
+    "country": "Grenada",
+    "coordinates": [
+      12.116667,
+      -61.666667
+    ]
+  },
+  {
+    "country": "Guatemala",
+    "coordinates": [
+      15.5,
+      -90.25
+    ]
+  },
+  {
+    "country": "Guyana",
+    "coordinates": [
+      5,
+      -59
+    ]
+  },
+  {
+    "country": "Haiti",
+    "coordinates": [
+      19,
+      -72.416667
+    ]
+  },
+  {
+    "country": "Hong Kong",
+    "coordinates": [
+      22.25,
+      114.166667
+    ]
+  },
+  {
+    "country": "Hungary",
+    "coordinates": [
+      47,
+      20
+    ]
+  },
+  {
+    "country": "Indonesia",
+    "coordinates": [
+      -5,
+      120
+    ]
+  },
+  {
+    "country": "India",
+    "coordinates": [
+      20,
+      77
+    ]
+  },
+  {
+    "country": "Independent Olympic Participants",
+    "coordinates": [
+      44.25,
+      17.833333
+    ]
+  },
+  {
+    "country": "Iran",
+    "coordinates": [
+      32,
+      53
+    ]
+  },
+  {
+    "country": "Ireland",
+    "coordinates": [
+      53,
+      -8
+    ]
+  },
+  {
+    "country": "Iraq",
+    "coordinates": [
+      33,
+      44
+    ]
+  },
+  {
+    "country": "Iceland",
+    "coordinates": [
+      65,
+      -18
+    ]
+  },
+  {
+    "country": "Israel",
+    "coordinates": [
+      31.5,
+      34.75
+    ]
+  },
+  {
+    "country": "Virgin Islands",
+    "coordinates": [
+      18.5,
+      -64.5
+    ]
+  },
+  {
+    "country": "Italy",
+    "coordinates": [
+      42.833333,
+      12.833333
+    ]
+  },
+  {
+    "country": "Jamaica",
+    "coordinates": [
+      18.25,
+      -77.5
+    ]
+  },
+  {
+    "country": "Japan",
+    "coordinates": [
+      36,
+      138
+    ]
+  },
+  {
+    "country": "Kazakhstan",
+    "coordinates": [
+      48,
+      68
+    ]
+  },
+  {
+    "country": "Kenya",
+    "coordinates": [
+      1,
+      38
+    ]
+  },
+  {
+    "country": "Kyrgyzstan",
+    "coordinates": [
+      41,
+      75
+    ]
+  },
+  {
+    "country": "Korea, South",
+    "coordinates": [
+      37,
+      127.5
+    ]
+  },
+  {
+    "country": "Saudi Arabia",
+    "coordinates": [
+      25,
+      45
+    ]
+  },
+  {
+    "country": "Kuwait",
+    "coordinates": [
+      29.5,
+      47.75
+    ]
+  },
+  {
+    "country": "Latvia",
+    "coordinates": [
+      57,
+      25
+    ]
+  },
+  {
+    "country": "Lebanon",
+    "coordinates": [
+      33.833333,
+      35.833333
+    ]
+  },
+  {
+    "country": "Lithuania",
+    "coordinates": [
+      56,
+      24
+    ]
+  },
+  {
+    "country": "Luxembourg",
+    "coordinates": [
+      49.75,
+      6.166667
+    ]
+  },
+  {
+    "country": "Morocco",
+    "coordinates": [
+      32,
+      -5
+    ]
+  },
+  {
+    "country": "Malaysia",
+    "coordinates": [
+      2.5,
+      112.5
+    ]
+  },
+  {
+    "country": "Moldova",
+    "coordinates": [
+      47,
+      29
+    ]
+  },
+  {
+    "country": "Mexico",
+    "coordinates": [
+      23,
+      -102
+    ]
+  },
+  {
+    "country": "Mongolia",
+    "coordinates": [
+      46,
+      105
+    ]
+  },
+  {
+    "country": "Macedonia",
+    "coordinates": [
+      41.833333,
+      22
+    ]
+  },
+  {
+    "country": "Montenegro",
+    "coordinates": [
+      42.5,
+      19.3
+    ]
+  },
+  {
+    "country": "Mozambique",
+    "coordinates": [
+      -18.25,
+      35
+    ]
+  },
+  {
+    "country": "Mauritius",
+    "coordinates": [
+      -20.3,
+      57.583333
+    ]
+  },
+  {
+    "country": "Namibia",
+    "coordinates": [
+      -22,
+      17
+    ]
+  },
+  {
+    "country": "Netherlands",
+    "coordinates": [
+      52.5,
+      5.75
+    ]
+  },
+  {
+    "country": "Nigeria",
+    "coordinates": [
+      10,
+      8
+    ]
+  },
+  {
+    "country": "Niger",
+    "coordinates": [
+      16,
+      8
+    ]
+  },
+  {
+    "country": "Norway",
+    "coordinates": [
+      62,
+      10
+    ]
+  },
+  {
+    "country": "New Zealand",
+    "coordinates": [
+      -42,
+      174
+    ]
+  },
+  {
+    "country": "Pakistan",
+    "coordinates": [
+      30,
+      70
+    ]
+  },
+  {
+    "country": "Panama",
+    "coordinates": [
+      9,
+      -80
+    ]
+  },
+  {
+    "country": "Paraguay",
+    "coordinates": [
+      -22.993333,
+      -57.996389
+    ]
+  },
+  {
+    "country": "Peru",
+    "coordinates": [
+      -10,
+      -76
+    ]
+  },
+  {
+    "country": "Philippines",
+    "coordinates": [
+      13,
+      122
+    ]
+  },
+  {
+    "country": "Poland",
+    "coordinates": [
+      52,
+      20
+    ]
+  },
+  {
+    "country": "Portugal",
+    "coordinates": [
+      39.5,
+      -8
+    ]
+  },
+  {
+    "country": "Korea, North (PDR of Korea)",
+    "coordinates": [
+      40,
+      127
+    ]
+  },
+  {
+    "country": "Puerto Rico",
+    "coordinates": [
+      18.2482882,
+      -66.4998941
+    ]
+  },
+  {
+    "country": "Qatar",
+    "coordinates": [
+      25.5,
+      51.25
+    ]
+  },
+  {
+    "country": "Romania",
+    "coordinates": [
+      46,
+      25
+    ]
+  },
+  {
+    "country": "South Africa",
+    "coordinates": [
+      -30,
+      26
+    ]
+  },
+  {
+    "country": "Russian Empire",
+    "coordinates": [
+      60,
+      100
+    ]
+  },
+  {
+    "country": "Russian Federation",
+    "coordinates": [
+      60,
+      100
+    ]
+  },
+  {
+    "country": "Serbia and Montenegro",
+    "coordinates": [
+      44,
+      21
+    ]
+  },
+  {
+    "country": "Senegal",
+    "coordinates": [
+      14,
+      -14
+    ]
+  },
+  {
+    "country": "Singapore",
+    "coordinates": [
+      1.366667,
+      103.8
+    ]
+  },
+  {
+    "country": "Slovenia",
+    "coordinates": [
+      46.25,
+      15.166667
+    ]
+  },
+  {
+    "country": "Serbia",
+    "coordinates": [
+      44,
+      21
+    ]
+  },
+  {
+    "country": "Sri Lanka",
+    "coordinates": [
+      7,
+      81
+    ]
+  },
+  {
+    "country": "Sudan",
+    "coordinates": [
+      16,
+      30
+    ]
+  },
+  {
+    "country": "Switzerland",
+    "coordinates": [
+      47,
+      8
+    ]
+  },
+  {
+    "country": "Suriname",
+    "coordinates": [
+      4,
+      -56
+    ]
+  },
+  {
+    "country": "Slovakia",
+    "coordinates": [
+      48.666667,
+      19.5
+    ]
+  },
+  {
+    "country": "Sweden",
+    "coordinates": [
+      62,
+      15
+    ]
+  },
+  {
+    "country": "Syria",
+    "coordinates": [
+      35,
+      38
+    ]
+  },
+  {
+    "country": "Tanzania",
+    "coordinates": [
+      -6,
+      35
+    ]
+  },
+  {
+    "country": "Czechoslovakia",
+    "coordinates": [
+      49.75,
+      15
+    ]
+  },
+  {
+    "country": "Tonga",
+    "coordinates": [
+      -20,
+      -175
+    ]
+  },
+  {
+    "country": "Thailand",
+    "coordinates": [
+      15,
+      100
+    ]
+  },
+  {
+    "country": "Tajikistan",
+    "coordinates": [
+      39,
+      71
+    ]
+  },
+  {
+    "country": "Togo",
+    "coordinates": [
+      8,
+      1.166667
+    ]
+  },
+  {
+    "country": "Taiwan (Chinese Taipei)",
+    "coordinates": [
+      24,
+      121
+    ]
+  },
+  {
+    "country": "Trinidad and Tobago",
+    "coordinates": [
+      11,
+      -61
+    ]
+  },
+  {
+    "country": "Tunisia",
+    "coordinates": [
+      34,
+      9
+    ]
+  },
+  {
+    "country": "Turkey",
+    "coordinates": [
+      39.059012,
+      34.911546
+    ]
+  },
+  {
+    "country": "United Arab Emirates",
+    "coordinates": [
+      24,
+      54
+    ]
+  },
+  {
+    "country": "Uganda",
+    "coordinates": [
+      2,
+      33
+    ]
+  },
+  {
+    "country": "Ukraine",
+    "coordinates": [
+      49,
+      32
+    ]
+  },
+  {
+    "country": "Soviet Union",
+    "coordinates": [
+      60,
+      100
+    ]
+  },
+  {
+    "country": "Uruguay",
+    "coordinates": [
+      -33,
+      -56
+    ]
+  },
+  {
+    "country": "United States",
+    "coordinates": [
+      39.828175,
+      -98.5795
+    ]
+  },
+  {
+    "country": "Uzbekistan",
+    "coordinates": [
+      41.707542,
+      63.84911
+    ]
+  },
+  {
+    "country": "Venezuela",
+    "coordinates": [
+      8,
+      -66
+    ]
+  },
+  {
+    "country": "Vietnam",
+    "coordinates": [
+      16.166667,
+      107.833333
+    ]
+  },
+  {
+    "country": "Yugoslavia",
+    "coordinates": [
+      44.25,
+      17.833333
+    ]
+  },
+  {
+    "country": "Zambia",
+    "coordinates": [
+      -15,
+      30
+    ]
+  },
+  {
+    "country": "Zimbabwe",
+    "coordinates": [
+      -19,
+      29
+    ]
+  },
+  {
+    "country": "Mixed Team (1896 to 1904)",
+    "coordinates": [
+      54,
+      -4
+    ]
+  }
+]
