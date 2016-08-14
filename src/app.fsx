@@ -55,7 +55,7 @@ type Main =
     moreArticles : seq<Article> }
 
 let docs = 
-  [ "timeline", "countries-timeline" 
+  [ //"timeline", "countries-timeline" 
     "athlete", "medals-per-athlete"
     "country", "top-5-countries"
     "country", "long-distance-medals"
@@ -82,7 +82,8 @@ let readArticle i (category, id) =
   let head, before, (code, compiled), after = split doc.Paragraphs
   let format pars = Markdown.WriteHtml(MarkdownDocument(pars, doc.DefinedLinks))
   { id = id; category = category; code = code; index = i; author = ""; twitter = ""
-    plaintext = String.IsNullOrEmpty code; compiled = compiled;
+    plaintext = String.IsNullOrEmpty code; 
+    compiled = if debug then compiled.Replace("thegamma-services.azurewebsites.net", "127.0.0.1:10042") else compiled;
     heading = head; before = format before; after = format after }
 
 let loaded = 
