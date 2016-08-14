@@ -55,8 +55,10 @@ type Main =
     moreArticles : seq<Article> }
 
 let docs = 
-  [ //"timeline", "countries-timeline" 
-    "athlete", "medals-per-athlete"
+  [ "athlete", "medals-per-athlete"
+    "timeline", "countries-timeline" 
+    "timeline", "distance-run-timeline" 
+    "timeline", "disciplines-timeline" 
     "country", "top-5-countries"
     "country", "long-distance-medals"
     "country", "medals-per-country"

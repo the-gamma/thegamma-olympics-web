@@ -9,7 +9,7 @@
   height: 8px;
   cursor: pointer;
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  background: #e0e0e0;
+  background: #e8e8e8;
   border-radius: 1px;
   border: 0px solid #010101;
 }
@@ -32,7 +32,7 @@
   height: 8px;
   cursor: pointer;
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  background: #e0e0e0;
+  background: #e8e8e8;
   border-radius: 1px;
   border: 0px solid #010101;
 }
@@ -60,7 +60,7 @@
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
 }
 .map input[type=range]::-ms-fill-upper {
-  background: #e0e0e0;
+  background: #e8e8e8;
   border: 0px solid #010101;
   border-radius: 2px;
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
@@ -76,7 +76,7 @@
   height: 8px;
 }
 .map input[type=range]:focus::-ms-fill-lower {
-  background: #e0e0e0;
+  background: #e8e8e8;
 }
 .map input[type=range]:focus::-ms-fill-upper {
   background: #dddddd;
@@ -91,7 +91,7 @@
   position:relative;
   top:-8px;
   cursor:pointer;
-  color:#e0e0e0;
+  color:#e8e8e8;
 }
 .map input[type=range] { 
   margin-left:30px;

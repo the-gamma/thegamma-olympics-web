@@ -1,5 +1,11 @@
-Foo
-===
+Olympic Medals Timeline
+=======================
+
+How has the geographical distribution of medals in Olympic games changed over the last century?
+In the first Olympic games in 1896, medals were awarded to 11 teams and all were either from 
+Europe or from the United States. The number of teams with medals started growing rapidly after 
+1980 from 36 teams to 85 teams in 2012. The visualization tracks the number of medals awarded to
+different countries over time.
 
 ```
 let data = 
@@ -20,4 +26,17 @@ timeline.create(data)
     info = fun x -> x.Team)
 ```
 
-b
+As the visualization shows, the number of different countries winning medals in the Olympic games
+started growing rapidly after 1980. You can see this visualized [in a separate chart](/disciplines-timeline).
+The visualization above is also easily adapted to show medals in different disciplines. 
+
+ * To see the timeline for a specific discipline, you can go to "options" and select disciplines
+   you want to include in the first control. This lets you choose one or more disciplines.
+   This will make the bubbles smaller - you can make them bigger by changing the `size` function
+   in the code (change 0.5` to a bigger number between `0.5` and `2.0`).
+   
+ * You can also edit the code to show not just specific disciplines, but individual events. For
+   example, to see [medals in long-distance running](/distance-run-timeline). To do this, you 
+   need to change `'by disciplines'.then` on the second line to `'by sport'` and then choose
+   the sports you want to visualize. You can also use this to see only women Olympic medalists
+   by using `olympics.'by gender'.Women.data`.
