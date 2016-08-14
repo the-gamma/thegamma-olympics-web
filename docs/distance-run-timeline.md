@@ -29,6 +29,24 @@ timeline.create(data)
     info = fun x -> x.Team)
 ```
 
+```
+"use strict";
+
+var data = _series.series.ordinal(_restruntime.convertSequence(function (v) {
+  return v;
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("sports/sport-1=marathon+men").addTrace("sports/sport-1=marathon+women").addTrace("sports/sport-1=10000m+men").addTrace("sports/sport-1=10000m+women").addTrace("sports/sport-1=5000m+men").addTrace("sports/sport-1=5000m+women").addTrace("pivot-source=/data").addTrace("pivot-tfs=group/by-Team/by-Year/sum/Bronze/sum/Silver/sum/Gold/count-all/key/then/sort/count/desc").getValue("/pivot/data")), "key", "value", "");
+
+_maps.timeline.create(data).set("#e0e0e0", ["#CC454E", "#0085C7", "#27884C", "#F4C300"], "Long Distance Running Medalists in %title", 400, 2000).using(function (x) {
+  return _maps.geo.lookup(x.Team);
+}, function (x) {
+  return Number(x.Year);
+}, function (x) {
+  return _maps.math.add(5, _maps.math.pow(Number(x.count), 1.5));
+}, function (x) {
+  return x.Team;
+}).show("outdistance-run-timeline");
+```
+
 Are you interested in other sports instead? This visualization is configured to let you easily
 pick other sports in athletics. Just click on "options" and pick short-distance running sports 
 instead! If you want to experiment more, you can change `'by sports'.Athletics` in the source

@@ -19,3 +19,15 @@ chart.area(data)
   .legend(position="none")
   .hAxis(format="")
 ```
+
+```
+"use strict";
+
+var data = _series.series.create(_restruntime.convertTupleSequence(function (v) {
+  return Number(v);
+}, function (v) {
+  return Number(v);
+}, new _restruntime.RuntimeContext("http://thegamma-services.azurewebsites.net/pivot", "source=http://thegamma-services.azurewebsites.net/olympics", "").addTrace("pivot-source=/data").addTrace("pivot-tfs=group/by-Year/count-dist/Team/key/then/series/Year/Team").getValue("/pivot/data")), "key", "value", "").realign(_series.series.rangeBy(1896, 2012, 4), 0);
+
+_charts.chart.area(data).set(null, null, null, null, ["#3CB3EA"], null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null).legend(null, null, "none", null).hAxis(null, null, null, "", null, null, null, null, null, null, null, null, null, null, null, null, null, null).show("outdisciplines-timeline");
+```
