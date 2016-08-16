@@ -6325,8 +6325,8 @@
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var8, $var9) {
-	          return folder($var8)($var9);
+	        return _fableCore.Seq.fold(function ($var33, $var34) {
+	          return folder($var33)($var34);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6535,9 +6535,9 @@
 	            var e = matchValue.Fields[1];
 	
 	            var varTy = function () {
-	              var $var10 = ctxTyp;
+	              var $var35 = ctxTyp;
 	
-	              if ($var10 != null) {
+	              if ($var35 != null) {
 	                return function (_arg1) {
 	                  var $target1 = function () {
 	                    return null;
@@ -6557,9 +6557,9 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var10);
+	                }($var35);
 	              } else {
-	                return $var10;
+	                return $var35;
 	              }
 	            }();
 	
@@ -6617,7 +6617,7 @@
 	                  return [ty, res_1];
 	                }() : function () {
 	                  var ty = tys.head;
-	                  return [ty, addError(_errors.TypeChecker.mismatchingListTypes(expr.Range), res_1)];
+	                  return [new _ast.Type("Any", []), res_1];
 	                }() : [new _ast.Type("Any", []), res_1];
 	                var ty = patternInput[0];
 	                var res_2 = patternInput[1];
@@ -6708,14 +6708,14 @@
 	                  return [Array.from(_fableCore.List.map(function (arg) {
 	                    return arg.Value;
 	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var11 = arg.Name;
+	                    var $var36 = arg.Name;
 	
-	                    if ($var11 != null) {
+	                    if ($var36 != null) {
 	                      return function (n) {
 	                        return [n.Name, arg.Value];
-	                      }($var11);
+	                      }($var36);
 	                    } else {
-	                      return $var11;
+	                      return $var36;
 	                    }
 	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
@@ -6988,11 +6988,11 @@
 	
 	  function mapExprRanges(f, expr) {
 	    var matchValue = expr.Expr;
-	    var activePatternResult4798 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult42574 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	    if (activePatternResult4798.Case === "Choice2Of2") {
-	      var es = activePatternResult4798.Fields[0][0];
-	      var ns = activePatternResult4798.Fields[0][1];
+	    if (activePatternResult42574.Case === "Choice2Of2") {
+	      var es = activePatternResult42574.Fields[0][0];
+	      var ns = activePatternResult42574.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -11635,12 +11635,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult5402 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult43178 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult5402.Case === "Choice1Of2") {
+	                if (activePatternResult43178.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult5402.Fields[0][0];
+	                  var es = activePatternResult43178.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11674,16 +11674,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var15 = ed;
+	                var $var37 = ed;
 	
-	                if ($var15 != null) {
+	                if ($var37 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var15);
+	                  }($var37);
 	                } else {
-	                  return $var15;
+	                  return $var37;
 	                }
 	              }());
 	            });
@@ -11769,15 +11769,15 @@
 	                              }, trunc(catMembers));
 	                            };
 	
-	                            return builder_.Bind(nestedMembers(function ($var16) {
-	                              return Array.from(_fableCore.Seq.truncate(5, $var16));
+	                            return builder_.Bind(nestedMembers(function ($var38) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var38));
 	                            }), function (_arg5) {
 	                              var checkMembers = _arg5;
 	
-	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var17) {
-	                                return $var17[1][0];
-	                              }, checkMembers), _fableCore.Seq.collect(function ($var18) {
-	                                return $var18[1][1];
+	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var39) {
+	                                return $var39[1][0];
+	                              }, checkMembers), _fableCore.Seq.collect(function ($var40) {
+	                                return $var40[1][1];
 	                              }, checkMembers)) : false) {
 	                                return builder_.Bind(nestedMembers(function (x) {
 	                                  return x;
@@ -12320,19 +12320,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var19 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var41 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var19 != null) {
+	          if ($var41 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var19);
+	            }($var41);
 	          } else {
-	            return $var19;
+	            return $var41;
 	          }
 	        }();
 	
@@ -15960,7 +15960,7 @@
 	  _fableCore.Util.setInterfaces(math.prototype, [], "TheGamma.Maps.math");
 	
 	  var timeline = exports.timeline = function () {
-	    function timeline(data, colors, titleTemplate, defaultFill, delay, overflowDelay, infoSelector, locSelector, sizeSelector, timeSelector) {
+	    function timeline(data, colors, titleTemplate, defaultFill, delay, overflowDelay, infoSelector, locSelector, sizeSelector, detailsSelector, timeSelector) {
 	      _classCallCheck(this, timeline);
 	
 	      this.data = data;
@@ -15972,23 +15972,28 @@
 	      this.infoSelector = infoSelector;
 	      this.locSelector = locSelector;
 	      this.sizeSelector = sizeSelector;
+	      this.detailsSelector = detailsSelector;
 	      this.timeSelector = timeSelector;
 	    }
 	
 	    _createClass(timeline, [{
 	      key: "set",
-	      value: function set(fill, colors, title, delay, overflowDelay) {
+	      value: function set(fill, colors, title, delay, overflowDelay, details) {
 	        var colors_1 = colors != null ? colors : this.colors;
 	        var defaultFill = fill != null ? fill : this.defaultFill;
 	        var titleTemplate = title != null ? title : this.titleTemplate;
 	        var delay_1 = delay != null ? delay : this.delay;
+	        var detailsSelector = details != null ? function () {
+	          var d = details;
+	          return d;
+	        }() : this.detailsSelector;
 	        var overflowDelay_1 = overflowDelay != null ? overflowDelay : this.overflowDelay;
-	        return new timeline(this.data, colors_1, titleTemplate, defaultFill, delay_1, overflowDelay_1, this.infoSelector, this.locSelector, this.sizeSelector, this.timeSelector);
+	        return new timeline(this.data, colors_1, titleTemplate, defaultFill, delay_1, overflowDelay_1, this.infoSelector, this.locSelector, this.sizeSelector, detailsSelector, this.timeSelector);
 	      }
 	    }, {
 	      key: "using",
 	      value: function using(coordinates, time, size, info) {
-	        return new timeline(this.data, this.colors, this.titleTemplate, this.defaultFill, this.delay, this.overflowDelay, info, coordinates, size, time);
+	        return new timeline(this.data, this.colors, this.titleTemplate, this.defaultFill, this.delay, this.overflowDelay, info, coordinates, size, this.detailsSelector, time);
 	      }
 	    }, {
 	      key: "show",
@@ -16060,20 +16065,24 @@
 	                if (_fableCore.Util.equals(ct, time)) {
 	                  (function (arg00) {
 	                    res.push(arg00);
-	                  })({
-	                    radius: _this.sizeSelector(v),
-	                    borderWidth: "1px",
-	                    fillKey: _fableCore.String.fsFormat("item%d")(function (x) {
-	                      return x;
-	                    })(color % fills.length),
-	                    info: _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
-	                      return x;
-	                    })(loc[0])(loc[1]), infos) != null ? _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
-	                      return x;
-	                    })(loc[0])(loc[1]), infos) : "",
-	                    latitude: loc[0],
-	                    longitude: loc[1]
-	                  });
+	                  })(_fableCore.Util.createObj(_fableCore.List.append(function () {
+	                    var matchValue = _this.detailsSelector;
+	
+	                    if (matchValue != null) {
+	                      var os = matchValue;
+	                      return _fableCore.List.ofArray([["details", _fableCore.String.concat("", _fableCore.Seq.map(function (value) {
+	                        return _fableCore.Util.toString(value);
+	                      }, os(v)))]]);
+	                    } else {
+	                      return new _fableCore.List();
+	                    }
+	                  }(), _fableCore.List.ofArray([["radius", _this.sizeSelector(v)], ["borderWidth", "1px"], ["fillKey", _fableCore.String.fsFormat("item%d")(function (x) {
+	                    return x;
+	                  })(color % fills.length)], ["info", _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
+	                    return x;
+	                  })(loc[0])(loc[1]), infos) != null ? _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
+	                    return x;
+	                  })(loc[0])(loc[1]), infos) : ""], ["latitude", loc[0]], ["longitude", loc[1]]]))));
 	                }
 	              }
 	
@@ -16103,14 +16112,14 @@
 	                  return x.CompareTo(y);
 	                }));
 	
-	                var data_1 = Array.from(_fableCore.Seq.map2(function ($var8, $var9) {
+	                var data_1 = Array.from(_fableCore.Seq.map2(function ($var62, $var63) {
 	                  return function (tupledArg) {
 	                    var _arg5 = tupledArg[0];
 	                    var v = tupledArg[1];
 	                    return function (locs_1) {
 	                      return [colorLookup.get(_fableCore.List.ofArray(locs_1)), locs_1, v, _this.timeSelector(v)];
 	                    };
-	                  }($var8)($var9);
+	                  }($var62)($var63);
 	                }, data, locs));
 	
 	                var infosLookup = _fableCore.Map.create(_fableCore.Seq.map(function (tupledArg) {
@@ -16153,91 +16162,105 @@
 	                var hi = patternInput[1];
 	                var player = document.getElementById(id + "_player");
 	                var btn = document.getElementById(id + "_btn");
-	                player.min = String(0);
-	                player.value = String(0);
-	                player.max = String(times.length - 1);
+	                return builder_.Combine(times.length === 1 ? function () {
+	                  player.style.display = "none";
+	                  btn.style.display = "none";
+	                  return builder_.Zero();
+	                }() : builder_.Zero(), builder_.Delay(function (unitVar_2) {
+	                  player.min = String(0);
+	                  player.value = String(0);
+	                  player.max = String(times.length - 1);
 	
-	                var render = function (unitVar0) {
-	                  var y = times[Number.parseInt(player.value)];
-	                  var o = objects(data_1)(infosLookup)(y);
-	                  (0, _html.renderTo)(document.getElementById(id + "_title"), function (arg0) {
-	                    return function (arg1) {
-	                      return _html.El.op_Dynamic(arg0, arg1);
-	                    };
-	                  }(_html.h)("h2")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(_fableCore.String.replace(_this.titleTemplate, "%title", String(y)))])));
+	                  var render = function (unitVar0) {
+	                    var y = times[Number.parseInt(player.value)];
+	                    var o = objects(data_1)(infosLookup)(y);
+	                    (0, _html.renderTo)(document.getElementById(id + "_title"), function (arg0) {
+	                      return function (arg1) {
+	                        return _html.El.op_Dynamic(arg0, arg1);
+	                      };
+	                    }(_html.h)("h2")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(_fableCore.String.replace(_this.titleTemplate, "%title", String(y)))])));
 	
-	                  var config = function () {
-	                    var key = function (data_2) {
-	                      return JSON.stringify([data_2["latitude"], data_2["longitude"]]);
-	                    };
+	                    var config = function () {
+	                      var key = function (data_2) {
+	                        return JSON.stringify([data_2["latitude"], data_2["longitude"]]);
+	                      };
 	
-	                    return new BubblesConfig(function (geo_1, data_2) {
-	                      return _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'>%s</div>")(function (x) {
-	                        return x;
-	                      })(data_2["info"]);
-	                    }, key);
-	                  }();
+	                      return new BubblesConfig(function (geo_1, data_2) {
+	                        var matchValue = _this.detailsSelector;
 	
-	                  map.bubbles(o, config);
-	                };
+	                        if (matchValue != null) {
+	                          return _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'><strong>%s</strong><br /> %s </div>")(function (x) {
+	                            return x;
+	                          })(data_2["info"])(data_2["details"]);
+	                        } else {
+	                          return _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'>%s</div>")(function (x) {
+	                            return x;
+	                          })(data_2["info"]);
+	                        }
+	                      }, key);
+	                    }();
 	
-	                var autoPlay = true;
+	                    map.bubbles(o, config);
+	                  };
 	
-	                var startPlay = function (unitVar0) {
-	                  (function (arg00) {
-	                    _fableCore.Async.startImmediate(arg00);
-	                  })(function (builder__1) {
-	                    return builder__1.Delay(function (unitVar_2) {
-	                      return builder__1.While(function (unitVar_3) {
-	                        return autoPlay;
-	                      }, builder__1.Delay(function (unitVar_3) {
-	                        var value = Number.parseInt(player.value);
-	                        render();
-	                        player.value = String(value + 1 === times.length ? 0 : value + 1);
-	                        return builder__1.Bind(_fableCore.Async.sleep(value + 1 === times.length ? _this.overflowDelay : _this.delay), function (_arg31) {
-	                          return builder__1.Return();
-	                        });
-	                      }));
-	                    });
-	                  }(_fableCore.defaultAsyncBuilder));
-	                };
+	                  var autoPlay = true;
 	
-	                player.onchange = function (e) {
-	                  autoPlay = false;
+	                  var startPlay = function (unitVar0) {
+	                    (function (arg00) {
+	                      _fableCore.Async.startImmediate(arg00);
+	                    })(function (builder__1) {
+	                      return builder__1.Delay(function (unitVar_3) {
+	                        return builder__1.While(function (unitVar_4) {
+	                          return autoPlay;
+	                        }, builder__1.Delay(function (unitVar_4) {
+	                          var value = Number.parseInt(player.value);
+	                          render();
+	                          player.value = String(value + 1 === times.length ? 0 : value + 1);
+	                          return builder__1.Bind(_fableCore.Async.sleep(value + 1 === times.length ? _this.overflowDelay : _this.delay), function (_arg31) {
+	                            return builder__1.Return();
+	                          });
+	                        }));
+	                      });
+	                    }(_fableCore.defaultAsyncBuilder));
+	                  };
 	
-	                  (function (dom) {
-	                    (0, _html.renderTo)(btn, dom);
-	                  })(function (arg0) {
-	                    return function (arg1) {
-	                      return _html.El.op_Dynamic(arg0, arg1);
-	                    };
-	                  }(_html.h)("i")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "fa fa-play")]))(new _fableCore.List()));
+	                  player.onchange = function (e) {
+	                    autoPlay = false;
 	
-	                  return render();
-	                };
+	                    (function (dom) {
+	                      (0, _html.renderTo)(btn, dom);
+	                    })(function (arg0) {
+	                      return function (arg1) {
+	                        return _html.El.op_Dynamic(arg0, arg1);
+	                      };
+	                    }(_html.h)("i")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "fa fa-play")]))(new _fableCore.List()));
 	
-	                player.oninput = player.onchange;
+	                    return render();
+	                  };
 	
-	                btn.onclick = function (e) {
-	                  autoPlay = !autoPlay;
+	                  player.oninput = player.onchange;
 	
-	                  (function (dom) {
-	                    (0, _html.renderTo)(btn, dom);
-	                  })(function (arg0) {
-	                    return function (arg1) {
-	                      return _html.El.op_Dynamic(arg0, arg1);
-	                    };
-	                  }(_html.h)("i")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", autoPlay ? "fa fa-pause" : "fa fa-play")]))(new _fableCore.List()));
+	                  btn.onclick = function (e) {
+	                    autoPlay = !autoPlay;
 	
-	                  if (autoPlay) {
-	                    startPlay();
-	                  }
+	                    (function (dom) {
+	                      (0, _html.renderTo)(btn, dom);
+	                    })(function (arg0) {
+	                      return function (arg1) {
+	                        return _html.El.op_Dynamic(arg0, arg1);
+	                      };
+	                    }(_html.h)("i")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", autoPlay ? "fa fa-pause" : "fa fa-play")]))(new _fableCore.List()));
 	
-	                  return null;
-	                };
+	                    if (autoPlay) {
+	                      startPlay();
+	                    }
 	
-	                startPlay();
-	                return builder_.Zero();
+	                    return null;
+	                  };
+	
+	                  startPlay();
+	                  return builder_.Zero();
+	                }));
 	              }));
 	            });
 	          });
@@ -16249,6 +16272,7 @@
 	        var colors = ["red"];
 	        var defaultFill = "blue";
 	        var delay = 750;
+	        var detailsSelector = null;
 	        var overflowDelay = 2000;
 	        var titleTemplate = "%title";
 	
@@ -16266,7 +16290,7 @@
 	
 	        return new timeline(data, colors, titleTemplate, defaultFill, delay, overflowDelay, infoSelector, function (_arg4) {
 	          throw "!";
-	        }, sizeSelector, timeSelector);
+	        }, sizeSelector, detailsSelector, timeSelector);
 	      }
 	    }]);
 
@@ -16556,8 +16580,8 @@
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var32, $var33) {
-	                                return folder($var32)($var33);
+	                              return _fableCore.Seq.fold(function ($var42, $var43) {
+	                                return folder($var42)($var43);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {
