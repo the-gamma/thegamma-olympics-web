@@ -301,6 +301,13 @@
     ]
   },
   {
+    "country": "Fiji",
+    "coordinates": [
+      -18,
+      178
+    ]
+  },
+  {
     "country": "Finland",
     "coordinates": [
       64,
@@ -427,6 +434,13 @@
     ]
   },
   {
+    "country": "Individual Olympic athletes",
+    "coordinates": [
+      29.5,
+      47.75
+    ]
+  },
+  {
     "country": "Independent Olympic Participants",
     "coordinates": [
       44.25,
@@ -522,6 +536,13 @@
     "coordinates": [
       37,
       127.5
+    ]
+  },
+  {
+    "country": "Kosovo",
+    "coordinates": [
+      42.583333,
+      21
     ]
   },
   {
