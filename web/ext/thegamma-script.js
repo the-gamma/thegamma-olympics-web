@@ -502,9 +502,7 @@
 	
 	            _tables.table.create(s);
 	
-	            _maps.timeline.create(s, function (_arg1) {
-	              return new Float64Array([]);
-	            });
+	            _maps.timeline.create(s);
 	
 	            _series.series.values(new Int32Array([1]));
 	
@@ -541,7 +539,7 @@
 	        monacoEl.style.height = String(dim.height) + "px";
 	      };
 	
-	      ed.getModel().onDidChangeContent(function (_arg2) {
+	      ed.getModel().onDidChangeContent(function (_arg1) {
 	        var text = ed.getModel().getValue(1, false);
 	        editorService.UpdateSource(text);
 	        resizeEditor(text);
@@ -619,7 +617,7 @@
 	        }, eds)))));
 	      }, editorService.EditorsUpdated);
 	
-	      btn.onclick = function (_arg3) {
+	      btn.onclick = function (_arg2) {
 	        optionsVisible = !optionsVisible;
 	        showOrHideActions();
 	
@@ -647,7 +645,7 @@
 	      }
 	    }());
 	
-	    showCodeBtn.onclick = function (_arg4) {
+	    showCodeBtn.onclick = function (_arg3) {
 	      editorVisible = !editorVisible;
 	      showOrHideActions();
 	
@@ -6325,8 +6323,8 @@
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var33, $var34) {
-	          return folder($var33)($var34);
+	        return _fableCore.Seq.fold(function ($var8, $var9) {
+	          return folder($var8)($var9);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6535,9 +6533,9 @@
 	            var e = matchValue.Fields[1];
 	
 	            var varTy = function () {
-	              var $var35 = ctxTyp;
+	              var $var10 = ctxTyp;
 	
-	              if ($var35 != null) {
+	              if ($var10 != null) {
 	                return function (_arg1) {
 	                  var $target1 = function () {
 	                    return null;
@@ -6557,9 +6555,9 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var35);
+	                }($var10);
 	              } else {
-	                return $var35;
+	                return $var10;
 	              }
 	            }();
 	
@@ -6708,14 +6706,14 @@
 	                  return [Array.from(_fableCore.List.map(function (arg) {
 	                    return arg.Value;
 	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var36 = arg.Name;
+	                    var $var11 = arg.Name;
 	
-	                    if ($var36 != null) {
+	                    if ($var11 != null) {
 	                      return function (n) {
 	                        return [n.Name, arg.Value];
-	                      }($var36);
+	                      }($var11);
 	                    } else {
-	                      return $var36;
+	                      return $var11;
 	                    }
 	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
@@ -6988,11 +6986,11 @@
 	
 	  function mapExprRanges(f, expr) {
 	    var matchValue = expr.Expr;
-	    var activePatternResult42574 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult4802 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	    if (activePatternResult42574.Case === "Choice2Of2") {
-	      var es = activePatternResult42574.Fields[0][0];
-	      var ns = activePatternResult42574.Fields[0][1];
+	    if (activePatternResult4802.Case === "Choice2Of2") {
+	      var es = activePatternResult4802.Fields[0][0];
+	      var ns = activePatternResult4802.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -11635,12 +11633,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult43178 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult5406 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult43178.Case === "Choice1Of2") {
+	                if (activePatternResult5406.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult43178.Fields[0][0];
+	                  var es = activePatternResult5406.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11674,16 +11672,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var37 = ed;
+	                var $var15 = ed;
 	
-	                if ($var37 != null) {
+	                if ($var15 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var37);
+	                  }($var15);
 	                } else {
-	                  return $var37;
+	                  return $var15;
 	                }
 	              }());
 	            });
@@ -11769,15 +11767,15 @@
 	                              }, trunc(catMembers));
 	                            };
 	
-	                            return builder_.Bind(nestedMembers(function ($var38) {
-	                              return Array.from(_fableCore.Seq.truncate(5, $var38));
+	                            return builder_.Bind(nestedMembers(function ($var16) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var16));
 	                            }), function (_arg5) {
 	                              var checkMembers = _arg5;
 	
-	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var39) {
-	                                return $var39[1][0];
-	                              }, checkMembers), _fableCore.Seq.collect(function ($var40) {
-	                                return $var40[1][1];
+	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var17) {
+	                                return $var17[1][0];
+	                              }, checkMembers), _fableCore.Seq.collect(function ($var18) {
+	                                return $var18[1][1];
 	                              }, checkMembers)) : false) {
 	                                return builder_.Bind(nestedMembers(function (x) {
 	                                  return x;
@@ -12320,19 +12318,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var41 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var19 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var41 != null) {
+	          if ($var19 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var41);
+	            }($var19);
 	          } else {
-	            return $var41;
+	            return $var19;
 	          }
 	        }();
 	
@@ -12713,7 +12711,7 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var1, $var2) {
+	          })(Array.from(_fableCore.Seq.sortWith(function ($var54, $var55) {
 	            return function (tupledArg) {
 	              var k1 = tupledArg[0];
 	              var _arg2 = tupledArg[1];
@@ -12722,7 +12720,7 @@
 	                var _arg1 = tupledArg_1[1];
 	                return k1 < k2 ? -1 : k1 == k2 ? 0 : 1;
 	              };
-	            }($var1)($var2);
+	            }($var54)($var55);
 	          }, arr)));
 	        })(this);
 	      }
@@ -12747,7 +12745,7 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var3, $var4) {
+	          })(Array.from(_fableCore.Seq.sortWith(function ($var56, $var57) {
 	            return function (tupledArg) {
 	              var _arg4 = tupledArg[0];
 	              var v1 = tupledArg[1];
@@ -12756,7 +12754,7 @@
 	                var v2 = tupledArg_1[1];
 	                return v1 < v2 ? -1 : v1 == v2 ? 0 : 1;
 	              };
-	            }($var3)($var4);
+	            }($var56)($var57);
 	          }, arr)));
 	        })(this);
 	      }
@@ -12781,7 +12779,7 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var5, $var6) {
+	          })(Array.from(_fableCore.Seq.sortWith(function ($var58, $var59) {
 	            return function (tupledArg) {
 	              var _arg6 = tupledArg[0];
 	              var v1 = tupledArg[1];
@@ -12790,7 +12788,7 @@
 	                var v2 = tupledArg_1[1];
 	                return f(v1) < f(v2) ? -1 : f(v1) == f(v2) ? 0 : 1;
 	              };
-	            }($var5)($var6);
+	            }($var58)($var59);
 	          }, arr)));
 	        })(this);
 	      }
@@ -12883,6 +12881,34 @@
 	        }())(this);
 	      }
 	    }, {
+	      key: "mapKeys",
+	      value: function mapKeys(f) {
+	        return function (arg00) {
+	          return function (arg10) {
+	            var nd = function (builder_) {
+	              return builder_.Delay(function (unitVar) {
+	                return builder_.Bind(arg10.data, function (_arg1) {
+	                  var vs = _arg1;
+	                  return builder_.Return(arg00(vs));
+	                });
+	              });
+	            }(_fableCore.defaultAsyncBuilder);
+	
+	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
+	          };
+	        }(function () {
+	          var mapping = function (tupledArg) {
+	            var k = tupledArg[0];
+	            var v = tupledArg[1];
+	            return [f(k), v];
+	          };
+	
+	          return function (array) {
+	            return array.map(mapping);
+	          };
+	        }())(this);
+	      }
+	    }, {
 	      key: "mapPairs",
 	      value: function mapPairs(f) {
 	        return function (arg00) {
@@ -12927,10 +12953,10 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var predicate = function ($var7) {
+	          var predicate = function ($var60) {
 	            return f(function (tuple) {
 	              return tuple[1];
-	            }($var7));
+	            }($var60));
 	          };
 	
 	          return function (array) {
@@ -16112,14 +16138,14 @@
 	                  return x.CompareTo(y);
 	                }));
 	
-	                var data_1 = Array.from(_fableCore.Seq.map2(function ($var62, $var63) {
+	                var data_1 = Array.from(_fableCore.Seq.map2(function ($var8, $var9) {
 	                  return function (tupledArg) {
 	                    var _arg5 = tupledArg[0];
 	                    var v = tupledArg[1];
 	                    return function (locs_1) {
 	                      return [colorLookup.get(_fableCore.List.ofArray(locs_1)), locs_1, v, _this.timeSelector(v)];
 	                    };
-	                  }($var62)($var63);
+	                  }($var8)($var9);
 	                }, data, locs));
 	
 	                var infosLookup = _fableCore.Map.create(_fableCore.Seq.map(function (tupledArg) {
@@ -16580,8 +16606,8 @@
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var42, $var43) {
-	                                return folder($var42)($var43);
+	                              return _fableCore.Seq.fold(function ($var20, $var21) {
+	                                return folder($var20)($var21);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {
