@@ -46,17 +46,17 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3), __webpack_require__(10), __webpack_require__(5), __webpack_require__(12), __webpack_require__(13), __webpack_require__(24), __webpack_require__(15), __webpack_require__(16), __webpack_require__(17), __webpack_require__(21), __webpack_require__(22), __webpack_require__(23), __webpack_require__(14), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3), __webpack_require__(10), __webpack_require__(12), __webpack_require__(5), __webpack_require__(13), __webpack_require__(14), __webpack_require__(25), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(22), __webpack_require__(23), __webpack_require__(24), __webpack_require__(15), __webpack_require__(27)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
-	    factory(exports, require("../thegamma/extensions"), require("fable-core"), require("../thegamma/typechecker"), require("../thegamma/providers"), require("../thegamma/ast"), require("../gui/html"), require("../thegamma/services"), require("../thegamma/codegen"), require("../libraries/series"), require("../thegamma/restruntime"), require("../libraries/google/charts"), require("../libraries/tables"), require("../libraries/maps"), require("../thegamma/monaco"), require("../thegamma/editors"), require("core-js"));
+	    factory(exports, require("../thegamma/extensions"), require("fable-core"), require("../thegamma/typechecker"), require("../thegamma/providers"), require("../thegamma/pivot"), require("../thegamma/ast"), require("../gui/html"), require("../thegamma/services"), require("../thegamma/codegen"), require("../libraries/series"), require("../thegamma/restruntime"), require("../libraries/google/charts"), require("../libraries/tables"), require("../libraries/maps"), require("../thegamma/monaco"), require("../thegamma/editors"), require("core-js"));
 	  } else {
 	    var mod = {
 	      exports: {}
 	    };
-	    factory(mod.exports, global.extensions, global.fableCore, global.typechecker, global.providers, global.ast, global.html, global.services, global.codegen, global.series, global.restruntime, global.charts, global.tables, global.maps, global.monaco, global.editors, global.coreJs);
+	    factory(mod.exports, global.extensions, global.fableCore, global.typechecker, global.providers, global.pivot, global.ast, global.html, global.services, global.codegen, global.series, global.restruntime, global.charts, global.tables, global.maps, global.monaco, global.editors, global.coreJs);
 	    global.main = mod.exports;
 	  }
-	})(this, function (exports, _extensions, _fableCore, _typechecker, _providers, _ast, _html, _services, _codegen, _series, _restruntime, _charts, _tables, _maps, _monaco, _editors) {
+	})(this, function (exports, _extensions, _fableCore, _typechecker, _providers, _pivot, _ast, _html, _services, _codegen, _series, _restruntime, _charts, _tables, _maps, _monaco, _editors) {
 	  "use strict";
 	
 	  Object.defineProperty(exports, "__esModule", {
@@ -127,7 +127,7 @@
 	        };
 	      };
 	
-	      var restTys = _fableCore.List.ofArray([_providers.RestProvider.provideRestType(lookupNamed, "olympics1", services + "olympics", ""), _providers.RestProvider.provideRestType(lookupNamed, "olympics", services + "pivot", "source=" + services + "olympics"), _providers.RestProvider.provideRestType(lookupNamed, "adventure", services + "adventure", ""), _providers.RestProvider.provideRestType(lookupNamed, "world", services + "worldbank", ""), new _providers.ProvidedType("NamedType", ["value", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["seq", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["async", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])])]);
+	      var restTys = _fableCore.List.ofArray([_providers.RestProvider.provideRestType(lookupNamed, "olympics1", services + "olympics", ""), _providers.RestProvider.provideRestType(lookupNamed, "olympics", services + "pivot", "source=" + services + "olympics"), _providers.RestProvider.provideRestType(lookupNamed, "smlouvy1", services + "smlouvy", ""), _providers.RestProvider.provideRestType(lookupNamed, "smlouvy2", services + "pivot", "source=" + services + "smlouvy"), _providers.RestProvider.provideRestType(lookupNamed, "adventure", services + "adventure", ""), _providers.RestProvider.provideRestType(lookupNamed, "world", services + "worldbank", ""), (0, _pivot.providePivotType)(services + "pdata/olympics", "olympics2", lookupNamed, _fableCore.List.ofArray([["Games", "string"], ["Year", "num"], ["Sport", "string"], ["Discipline", "string"], ["Athlete", "string"], ["Team", "string"], ["Gender", "string"], ["Event", "string"], ["Medal", "string"], ["Gold", "num"], ["Silver", "num"], ["Bronze", "num"]])), (0, _pivot.providePivotType)(services + "pdata/smlouvy", "smlouvy", lookupNamed, _fableCore.List.ofArray([["Uzavřeno", "string"], ["Publikováno", "string"], ["Hodnota", "num"], ["Chybí hodnota", "string"], ["Subjekt", "string"], ["Útvar", "string"], ["Schválil", "string"], ["Předmět", "string"], ["Odkaz", "string"], ["Platnost", "string"], ["Příjemci", "string"], ["Příjemci (IČO)", "string"]])), new _providers.ProvidedType("NamedType", ["value", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["seq", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])]), new _providers.ProvidedType("NamedType", ["async", _fableCore.List.ofArray(["a"]), new _ast.Type("Any", [])])]);
 	
 	      return builder_.Bind(_providers.FSharpProvider.provideFSharpTypes(lookupNamed, "/ext/libraries.json?" + String(function () {
 	        var copyOfStruct = _fableCore.Date.now();
@@ -363,19 +363,19 @@
 	    }(), parent).innerText, "both");
 	
 	    var compiled = function () {
-	      var $var1 = tryFindChildElement(function () {
+	      var $var9 = tryFindChildElement(function () {
 	        var cls = "ia-compiled";
 	        return function (el) {
 	          return withClass(cls, el);
 	        };
 	      }(), parent);
 	
-	      if ($var1 != null) {
+	      if ($var9 != null) {
 	        return function (el) {
 	          return _fableCore.String.trim(el.innerText, "both");
-	        }($var1);
+	        }($var9);
 	      } else {
-	        return $var1;
+	        return $var9;
 	      }
 	    }();
 	
@@ -636,10 +636,10 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var2 = showOptionsBtn;
+	      var $var10 = showOptionsBtn;
 	
-	      if ($var2 != null) {
-	        return [$var2];
+	      if ($var10 != null) {
+	        return [$var10];
 	      } else {
 	        return [];
 	      }
@@ -817,7 +817,7 @@
 	
 	  var enabledCategories = exports.enabledCategories = !isLocalHost() ? _fableCore.Set.create(new _fableCore.List(), new _fableCore.GenericComparer(function (x, y) {
 	    return x < y ? -1 : x > y ? 1 : 0;
-	  })) : _fableCore.Set.create(_fableCore.List.ofArray(["SYSTEM", "COMPLETIONS", "EDITORS", "TYPECHECKER", "SERVICE", "CODEGEN"]), new _fableCore.GenericComparer(function (x, y) {
+	  })) : _fableCore.Set.create(_fableCore.List.ofArray(["SYSTEM", "COMPLETIONS", "EDITORS", "TYPECHECKER", "SERVICE", "CODEGEN", "RUNTIME"]), new _fableCore.GenericComparer(function (x, y) {
 	    return x < y ? -1 : x > y ? 1 : 0;
 	  }));
 	
@@ -6323,8 +6323,8 @@
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var8, $var9) {
-	          return folder($var8)($var9);
+	        return _fableCore.Seq.fold(function ($var28, $var29) {
+	          return folder($var28)($var29);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6533,9 +6533,9 @@
 	            var e = matchValue.Fields[1];
 	
 	            var varTy = function () {
-	              var $var10 = ctxTyp;
+	              var $var30 = ctxTyp;
 	
-	              if ($var10 != null) {
+	              if ($var30 != null) {
 	                return function (_arg1) {
 	                  var $target1 = function () {
 	                    return null;
@@ -6555,9 +6555,9 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var10);
+	                }($var30);
 	              } else {
-	                return $var10;
+	                return $var30;
 	              }
 	            }();
 	
@@ -6706,14 +6706,14 @@
 	                  return [Array.from(_fableCore.List.map(function (arg) {
 	                    return arg.Value;
 	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var11 = arg.Name;
+	                    var $var31 = arg.Name;
 	
-	                    if ($var11 != null) {
+	                    if ($var31 != null) {
 	                      return function (n) {
 	                        return [n.Name, arg.Value];
-	                      }($var11);
+	                      }($var31);
 	                    } else {
-	                      return $var11;
+	                      return $var31;
 	                    }
 	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
@@ -6986,11 +6986,11 @@
 	
 	  function mapExprRanges(f, expr) {
 	    var matchValue = expr.Expr;
-	    var activePatternResult4802 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult112649 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	    if (activePatternResult4802.Case === "Choice2Of2") {
-	      var es = activePatternResult4802.Fields[0][0];
-	      var ns = activePatternResult4802.Fields[0][1];
+	    if (activePatternResult112649.Case === "Choice2Of2") {
+	      var es = activePatternResult112649.Fields[0][0];
+	      var ns = activePatternResult112649.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -9833,8 +9833,8 @@
 	          };
 	
 	          return function (source) {
-	            return _fableCore.Seq.fold(function ($var12, $var13) {
-	              return folder($var12)($var13);
+	            return _fableCore.Seq.fold(function ($var34, $var35) {
+	              return folder($var34)($var35);
 	            }, withTrace, source);
 	          };
 	        }()(args);
@@ -9994,7 +9994,7 @@
 	    var restTypeCache = $exports.restTypeCache = new Map();
 	
 	    var createRestType = $exports.createRestType = function createRestType(lookupNamed, root, cookies, url) {
-	      var guid = concatUrl(root, url);
+	      var guid = concatUrl(root, url) + cookies;
 	      var matchValue = restTypeCache.has(guid) ? [true, restTypeCache.get(guid)] : [false, null];
 	
 	      if (matchValue[0]) {
@@ -10009,14 +10009,14 @@
 	                var Typeargs = new _fableCore.List();
 	                return new _ast.ObjectType(members.map(function (m) {
 	                  var schema = function () {
-	                    var $var14 = m.schema;
+	                    var $var36 = m.schema;
 	
-	                    if ($var14 != null) {
+	                    if ($var36 != null) {
 	                      return function (s) {
 	                        return new _ast.Schema(s["@type"], s);
-	                      }($var14);
+	                      }($var36);
 	                    } else {
-	                      return $var14;
+	                      return $var36;
 	                    }
 	                  }();
 	
@@ -10612,6 +10612,830 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(5), __webpack_require__(11), __webpack_require__(1), __webpack_require__(10)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== "undefined") {
+	    factory(exports, require("fable-core"), require("./ast"), require("./babel/babelast"), require("./extensions"), require("./providers"));
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, global.fableCore, global.ast, global.babelast, global.extensions, global.providers);
+	    global.pivot = mod.exports;
+	  }
+	})(this, function (exports, _fableCore, _ast, _babelast, _extensions, _providers) {
+	  "use strict";
+	
+	  Object.defineProperty(exports, "__esModule", {
+	    value: true
+	  });
+	  exports.propertyEmitter = exports.Transform = exports.Field = exports.Transformation = exports.Paging = exports.SortDirection = exports.Aggregation = undefined;
+	  exports.withDocs = withDocs;
+	  exports.withSchema = withSchema;
+	  exports.withCreateAction = withCreateAction;
+	  exports.withAddAction = withAddAction;
+	  exports.withThingSchema = withThingSchema;
+	  exports.makeObjectType = makeObjectType;
+	  exports.isNumeric = isNumeric;
+	  exports.isConcatenable = isConcatenable;
+	  exports.ident = ident;
+	  exports.str = str;
+	  exports.arr = arr;
+	  exports.op_Dynamic = op_Dynamic;
+	  exports.op_DivideQmarkDivide = op_DivideQmarkDivide;
+	  exports.op_DivideAtDivide = op_DivideAtDivide;
+	  exports.func = func;
+	  exports.getTypeAndEmitter = getTypeAndEmitter;
+	  exports.makeMethodEmitter = makeMethodEmitter;
+	  exports.makeDataEmitter = makeDataEmitter;
+	  exports.makeProperty = makeProperty;
+	  exports.makeMethod = makeMethod;
+	  exports.makeDataMember = makeDataMember;
+	  exports.handleGetSeriesRequest = handleGetSeriesRequest;
+	  exports.handlePagingRequest = handlePagingRequest;
+	  exports.handleDropRequest = handleDropRequest;
+	  exports.handleSortRequest = handleSortRequest;
+	  exports.aggregationMembers = aggregationMembers;
+	  exports.handleGroupAggRequest = handleGroupAggRequest;
+	  exports.handleGroupRequest = handleGroupRequest;
+	  exports.makePivotTypeImmediate = makePivotTypeImmediate;
+	  exports.makePivotType = makePivotType;
+	  exports.providePivotType = providePivotType;
+	
+	  function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	      throw new TypeError("Cannot call a class as a function");
+	    }
+	  }
+	
+	  var _createClass = function () {
+	    function defineProperties(target, props) {
+	      for (var i = 0; i < props.length; i++) {
+	        var descriptor = props[i];
+	        descriptor.enumerable = descriptor.enumerable || false;
+	        descriptor.configurable = true;
+	        if ("value" in descriptor) descriptor.writable = true;
+	        Object.defineProperty(target, descriptor.key, descriptor);
+	      }
+	    }
+	
+	    return function (Constructor, protoProps, staticProps) {
+	      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	      if (staticProps) defineProperties(Constructor, staticProps);
+	      return Constructor;
+	    };
+	  }();
+	
+	  var Aggregation = exports.Aggregation = function () {
+	    function Aggregation(caseName, fields) {
+	      _classCallCheck(this, Aggregation);
+	
+	      this.Case = caseName;
+	      this.Fields = fields;
+	    }
+	
+	    _createClass(Aggregation, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsUnions(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareUnions(this, other);
+	      }
+	    }]);
+	
+	    return Aggregation;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(Aggregation.prototype, ["FSharpUnion", "System.IEquatable", "System.IComparable"], "TheGamma.TypeProviders.Pivot.Aggregation");
+	
+	  var SortDirection = exports.SortDirection = function () {
+	    function SortDirection(caseName, fields) {
+	      _classCallCheck(this, SortDirection);
+	
+	      this.Case = caseName;
+	      this.Fields = fields;
+	    }
+	
+	    _createClass(SortDirection, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsUnions(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareUnions(this, other);
+	      }
+	    }]);
+	
+	    return SortDirection;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(SortDirection.prototype, ["FSharpUnion", "System.IEquatable", "System.IComparable"], "TheGamma.TypeProviders.Pivot.SortDirection");
+	
+	  var Paging = exports.Paging = function () {
+	    function Paging(caseName, fields) {
+	      _classCallCheck(this, Paging);
+	
+	      this.Case = caseName;
+	      this.Fields = fields;
+	    }
+	
+	    _createClass(Paging, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsUnions(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareUnions(this, other);
+	      }
+	    }]);
+	
+	    return Paging;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(Paging.prototype, ["FSharpUnion", "System.IEquatable", "System.IComparable"], "TheGamma.TypeProviders.Pivot.Paging");
+	
+	  var Transformation = exports.Transformation = function () {
+	    function Transformation(caseName, fields) {
+	      _classCallCheck(this, Transformation);
+	
+	      this.Case = caseName;
+	      this.Fields = fields;
+	    }
+	
+	    _createClass(Transformation, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsUnions(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareUnions(this, other);
+	      }
+	    }]);
+	
+	    return Transformation;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(Transformation.prototype, ["FSharpUnion", "System.IEquatable", "System.IComparable"], "TheGamma.TypeProviders.Pivot.Transformation");
+	
+	  var Field = exports.Field = function () {
+	    function Field(name, type) {
+	      _classCallCheck(this, Field);
+	
+	      this.Name = name;
+	      this.Type = type;
+	    }
+	
+	    _createClass(Field, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsRecords(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareRecords(this, other);
+	      }
+	    }]);
+	
+	    return Field;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(Field.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.TypeProviders.Pivot.Field");
+	
+	  var Transform = exports.Transform = function ($exports) {
+	    var formatAgg = function formatAgg(_arg1) {
+	      return _arg1.Case === "CountAll" ? _fableCore.List.ofArray(["count-all"]) : _arg1.Case === "CountDistinct" ? function () {
+	        var f = _arg1.Fields[0];
+	        return _fableCore.List.ofArray(["count-dist", f]);
+	      }() : _arg1.Case === "ReturnUnique" ? function () {
+	        var f = _arg1.Fields[0];
+	        return _fableCore.List.ofArray(["unique", f]);
+	      }() : _arg1.Case === "ConcatValues" ? function () {
+	        var f = _arg1.Fields[0];
+	        return _fableCore.List.ofArray(["concat-vals", f]);
+	      }() : _arg1.Case === "Sum" ? function () {
+	        var f = _arg1.Fields[0];
+	        return _fableCore.List.ofArray(["sum", f]);
+	      }() : _arg1.Case === "Mean" ? function () {
+	        var f = _arg1.Fields[0];
+	        return _fableCore.List.ofArray(["mean", f]);
+	      }() : _fableCore.List.ofArray(["key"]);
+	    };
+	
+	    var toUrl = $exports.toUrl = function toUrl(transforms) {
+	      return _fableCore.String.concat("/", _fableCore.List.concat(_fableCore.List.mapIndexed(function (i, l) {
+	        return i === 0 ? l : _fableCore.List.ofArray(["then"], l);
+	      }, _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	        return _fableCore.Seq.map(function (t) {
+	          return t.Case === "SortBy" ? function () {
+	            var columns = t.Fields[0];
+	            return _fableCore.List.ofArray(["sort"], _fableCore.List.collect(function (tupledArg) {
+	              var c = tupledArg[0];
+	              var o = tupledArg[1];
+	              return _fableCore.List.ofArray([c, o.Equals(new SortDirection("Ascending", [])) ? "asc" : "desc"]);
+	            }, columns));
+	          }() : t.Case === "GroupBy" ? function () {
+	            var flds = t.Fields[0];
+	            var aggs = t.Fields[1];
+	            return _fableCore.List.ofArray(["group"], _fableCore.List.append(_fableCore.List.map(function (f) {
+	              return "by-" + f;
+	            }, flds), _fableCore.List.collect(function (_arg1) {
+	              return formatAgg(_arg1);
+	            }, aggs)));
+	          }() : t.Case === "Paging" ? function () {
+	            var ops = t.Fields[0];
+	            return _fableCore.List.ofArray(["page"], _fableCore.List.collect(function (_arg1) {
+	              return _arg1.Case === "Skip" ? function () {
+	                var k = _arg1.Fields[0];
+	                return _fableCore.List.ofArray(["skip", k]);
+	              }() : function () {
+	                var k = _arg1.Fields[0];
+	                return _fableCore.List.ofArray(["take", k]);
+	              }();
+	            }, ops));
+	          }() : t.Case === "GetSeries" ? function () {
+	            var v = t.Fields[1];
+	            var k = t.Fields[0];
+	            return _fableCore.List.ofArray(["series", k, v]);
+	          }() : t.Case === "Empty" ? new _fableCore.List() : function () {
+	            var columns = t.Fields[0];
+	            return _fableCore.List.ofArray(["drop"], columns);
+	          }();
+	        }, _fableCore.List.reverse(transforms));
+	      })))));
+	    };
+	
+	    var singleTransformFields = $exports.singleTransformFields = function singleTransformFields(fields, _arg1) {
+	      return _arg1.Case === "SortBy" ? fields : _arg1.Case === "Paging" ? fields : _arg1.Case === "GetSeries" ? function () {
+	        var v = _arg1.Fields[1];
+	        var k = _arg1.Fields[0];
+	        return _fableCore.List.ofArray([_fableCore.Seq.find(function (f) {
+	          return f.Name === k;
+	        }, fields), _fableCore.Seq.find(function (f) {
+	          return f.Name === v;
+	        }, fields)]);
+	      }() : _arg1.Case === "DropColumns" ? function () {
+	        var drop = _arg1.Fields[0];
+	
+	        var dropped = _fableCore.Set.create(drop, new _fableCore.GenericComparer(function (x, y) {
+	          return x < y ? -1 : x > y ? 1 : 0;
+	        }));
+	
+	        return _fableCore.List.filter(function (f) {
+	          return !dropped.has(f.Name);
+	        }, fields);
+	      }() : _arg1.Case === "GroupBy" ? function () {
+	        var flds = _arg1.Fields[0];
+	        var aggs = _arg1.Fields[1];
+	        var oldFields = new Map(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	          return _fableCore.Seq.map(function (f) {
+	            return [f.Name, f];
+	          }, fields);
+	        })));
+	        return _fableCore.List.collect(function (_arg2) {
+	          var $target1 = function (fld) {
+	            return _fableCore.List.ofArray([oldFields.get(fld)]);
+	          };
+	
+	          if (_arg2.Case === "ReturnUnique") {
+	            return $target1(_arg2.Fields[0]);
+	          } else {
+	            if (_arg2.Case === "ConcatValues") {
+	              return $target1(_arg2.Fields[0]);
+	            } else {
+	              if (_arg2.Case === "Sum") {
+	                return $target1(_arg2.Fields[0]);
+	              } else {
+	                if (_arg2.Case === "Mean") {
+	                  var fld = _arg2.Fields[0];
+	                  return _fableCore.List.ofArray([oldFields.get(fld)]);
+	                } else {
+	                  if (_arg2.Case === "CountAll") {
+	                    return _fableCore.List.ofArray([new Field("count", "num")]);
+	                  } else {
+	                    if (_arg2.Case === "CountDistinct") {
+	                      var fld = _arg2.Fields[0];
+	                      return _fableCore.List.ofArray([new Field(oldFields.get(fld).Name, "num")]);
+	                    } else {
+	                      return _fableCore.List.map(function (f) {
+	                        return oldFields.get(f);
+	                      }, flds);
+	                    }
+	                  }
+	                }
+	              }
+	            }
+	          }
+	        }, aggs);
+	      }() : fields;
+	    };
+	
+	    var transformFields = $exports.transformFields = function transformFields(fields, tfs) {
+	      return function () {
+	        var state = _fableCore.Seq.toList(fields);
+	
+	        return function (list) {
+	          return _fableCore.Seq.fold(function (fields_1, _arg1) {
+	            return singleTransformFields(fields_1, _arg1);
+	          }, state, list);
+	        };
+	      }()(tfs);
+	    };
+	
+	    return $exports;
+	  }({});
+	
+	  function withDocs(title, details, membr) {
+	    return membr.Case === "Property" ? function () {
+	      var typ = membr.Fields[1];
+	      var schema = membr.Fields[2];
+	      var n = membr.Fields[0];
+	      var emitter = membr.Fields[4];
+	      return new _ast.Member("Property", [n, typ, schema, new _ast.Documentation("Details", [title, details]), emitter]);
+	    }() : function () {
+	      var typ = membr.Fields[3];
+	      var tya = membr.Fields[1];
+	      var n = membr.Fields[0];
+	      var emitter = membr.Fields[5];
+	      var args = membr.Fields[2];
+	      return new _ast.Member("Method", [n, tya, args, typ, new _ast.Documentation("Details", [title, details]), emitter]);
+	    }();
+	  }
+	
+	  function withSchema(actTyp, fldName, listName, membr) {
+	    return membr.Case === "Property" ? function () {
+	      var typ = membr.Fields[1];
+	      var n = membr.Fields[0];
+	      var emitter = membr.Fields[4];
+	      var docs = membr.Fields[3];
+	      var schema = new _ast.Schema(actTyp, _fableCore.Util.createObj(_fableCore.List.ofArray([["@context", "http://schema.org/"], ["@type", actTyp], [fldName, {
+	        "@type": "ItemList",
+	        name: listName
+	      }]])));
+	      return new _ast.Member("Property", [n, typ, schema, docs, emitter]);
+	    }() : function () {
+	      throw "withSchema: expected property";
+	    }();
+	  }
+	
+	  function withCreateAction(action, membr) {
+	    return membr;
+	  }
+	
+	  function withAddAction(action, membr) {
+	    return membr;
+	  }
+	
+	  function withThingSchema(name, annotation, membr) {
+	    return membr;
+	  }
+	
+	  function makeObjectType(members) {
+	    return new _ast.Type("Object", [new _ast.ObjectType(Array.from(members), new _fableCore.List())]);
+	  }
+	
+	  function isNumeric(fld) {
+	    return fld === "num";
+	  }
+	
+	  function isConcatenable(fld) {
+	    return fld === "string";
+	  }
+	
+	  function ident(s) {
+	    return new _babelast.Expression("IdentifierExpression", [s, null]);
+	  }
+	
+	  function str(v) {
+	    return new _babelast.Expression("StringLiteral", [v, null]);
+	  }
+	
+	  function arr(l) {
+	    return new _babelast.Expression("ArrayExpression", [l, null]);
+	  }
+	
+	  function op_Dynamic(e, s) {
+	    return new _babelast.Expression("MemberExpression", [e, new _babelast.Expression("IdentifierExpression", [s, null]), false, null]);
+	  }
+	
+	  function op_DivideQmarkDivide(e, a) {
+	    return new _babelast.Expression("MemberExpression", [e, a, true, null]);
+	  }
+	
+	  function op_DivideAtDivide(e, args) {
+	    return new _babelast.Expression("CallExpression", [e, args, null]);
+	  }
+	
+	  function func(v, f) {
+	    var body = new _babelast.Statement("BlockStatement", [_fableCore.List.ofArray([new _babelast.Statement("ReturnStatement", [f(ident(v)), null])]), null]);
+	    return new _babelast.Expression("FunctionExpression", [null, _fableCore.List.ofArray([new _babelast.Pattern("IdentifierPattern", [v, null])]), body, false, false, null]);
+	  }
+	
+	  function getTypeAndEmitter(_arg1) {
+	    return _arg1 === "string" ? [new _ast.Type("Primitive", ["string"]), function (x) {
+	      return x;
+	    }] : _arg1 === "num" ? [new _ast.Type("Primitive", ["num"]), function (e) {
+	      return op_DivideAtDivide(ident("Number"), _fableCore.List.ofArray([e]));
+	    }] : function () {
+	      throw "getTypeAndEmitter: Unknown primitive type";
+	    }();
+	  }
+	
+	  var propertyEmitter = exports.propertyEmitter = new _ast.Emitter(function (tupledArg) {
+	    var _this = tupledArg[0];
+	    var _arg1 = tupledArg[1];
+	    return _this;
+	  });
+	
+	  function makeMethodEmitter(callid, pars) {
+	    return new _ast.Emitter(function (tupledArg) {
+	      var _this = tupledArg[0];
+	      var args = tupledArg[1];
+	      var args_1 = arr(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	        return _fableCore.Seq.collect(function (matchValue) {
+	          var v = matchValue[1];
+	          return _fableCore.Seq.singleton(v);
+	        }, args);
+	      })));
+	      return op_DivideAtDivide(op_Dynamic(_this, "addCall"), _fableCore.List.ofArray([str(callid), args_1]));
+	    });
+	  }
+	
+	  function makeDataEmitter(isSeries, tfs) {
+	    return new _ast.Emitter(function (tupledArg) {
+	      var _this = tupledArg[0];
+	      var _arg1 = tupledArg[1];
+	
+	      if (isSeries) {
+	        return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "create"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(_this, "getData"), _fableCore.List.ofArray([str(Transform.toUrl(_fableCore.List.reverse(tfs)))])), str("key"), str("value"), str("")]));
+	      } else {
+	        return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "ordinal"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(_this, "getData"), _fableCore.List.ofArray([str(Transform.toUrl(_fableCore.List.reverse(tfs)))])), str("key"), str("value"), str("")]));
+	      }
+	    });
+	  }
+	
+	  function makeProperty(lookupNamed, fields, name, tfs) {
+	    return new _ast.Member("Property", [name, makePivotType(lookupNamed, fields, tfs), null, new _ast.Documentation("None", []), propertyEmitter]);
+	  }
+	
+	  function makeMethod(lookupNamed, fields, name, tfs, callid, args) {
+	    return new _ast.Member("Method", [name, new _fableCore.List(), _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.collect(function (matchValue) {
+	        var t = matchValue[1];
+	        var n = matchValue[0];
+	        return _fableCore.Seq.singleton([n, false, new _ast.Type("Primitive", [t])]);
+	      }, args);
+	    })), makePivotType(lookupNamed, fields, tfs), new _ast.Documentation("None", []), makeMethodEmitter(callid, args)]);
+	  }
+	
+	  function makeDataMember(lookupNamed, inputFields, name, tfs) {
+	    var fields = Transform.transformFields(inputFields, _fableCore.List.reverse(tfs));
+	
+	    var patternInput = function () {
+	      var $target1 = function () {
+	        var membs = Array.from(fields).map(function (fld) {
+	          var patternInput = getTypeAndEmitter(fld.Type);
+	          var memTy = patternInput[0];
+	          var memConv = patternInput[1];
+	          var emitter = new _ast.Emitter(function (tupledArg) {
+	            var inst = tupledArg[0];
+	            var _arg1 = tupledArg[1];
+	            return memConv(op_DivideQmarkDivide(inst, str(fld.Name)));
+	          });
+	          return new _ast.Member("Property", [fld.Name, memTy, null, new _ast.Documentation("Text", [""]), emitter]);
+	        });
+	        var recTyp = new _ast.Type("Object", [new _ast.ObjectType(membs, new _fableCore.List())]);
+	        return [lookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", ["num"]), recTyp])), false];
+	      };
+	
+	      if (tfs.tail != null) {
+	        if (tfs.head.Case === "GetSeries") {
+	          var $target1_1 = function () {
+	            throw "makeDataMember: Series should have key and value";
+	          };
+	
+	          if (fields.tail != null) {
+	            if (fields.tail.tail != null) {
+	              if (fields.tail.tail.tail == null) {
+	                var kf = fields.head;
+	                var vf = fields.tail.head;
+	                return [lookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", [kf.Type]), new _ast.Type("Primitive", [vf.Type])])), true];
+	              } else {
+	                return $target1_1();
+	              }
+	            } else {
+	              return $target1_1();
+	            }
+	          } else {
+	            return $target1_1();
+	          }
+	        } else {
+	          return $target1();
+	        }
+	      } else {
+	        return $target1();
+	      }
+	    }();
+	
+	    var isSeries = patternInput[1];
+	    var dataTyp = patternInput[0];
+	    return new _ast.Member("Property", [name, dataTyp, null, new _ast.Documentation("None", []), makeDataEmitter(isSeries, tfs)]);
+	  }
+	
+	  function handleGetSeriesRequest(lookupNamed, inputFields, fields, rest, k, v) {
+	    var matchValue = [k, v];
+	
+	    var $target2 = function () {
+	      throw "handleGetSeriesRequest: Should not happen";
+	    };
+	
+	    if (matchValue[0] === "!") {
+	      if (matchValue[1] === "!") {
+	        return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	          return _fableCore.Seq.map(function (field) {
+	            return withThingSchema("ListItem", "series key", withDocs("Get the data", "Here, we select one of the attribute of the data set as the 'key' and one as a 'value'. In the first list, you can choose the key.", makeProperty(lookupNamed, fields, "with key " + field.Name, _fableCore.List.ofArray([new Transformation("GetSeries", [field.Name, "!"])], rest))));
+	          }, fields);
+	        })));
+	      } else {
+	        return $target2();
+	      }
+	    } else {
+	      if (matchValue[1] === "!") {
+	        var k_1 = matchValue[0];
+	        return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	          return _fableCore.Seq.map(function (field) {
+	            return withThingSchema("ListItem", "series value", withDocs("Get the data", "In the second list, choose attribute that you want to use as the value.", makeDataMember(lookupNamed, inputFields, "and value " + field.Name, _fableCore.List.ofArray([new Transformation("GetSeries", [k_1, field.Name])], rest))));
+	          }, fields);
+	        })));
+	      } else {
+	        return $target2();
+	      }
+	    }
+	  }
+	
+	  function handlePagingRequest(lookupNamed, fields, rest, pgid, ops) {
+	    var takeMemb = withDocs("", "Take the specified number of rows and drop the rest", makeMethod(lookupNamed, fields, "take", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("Paging", [_fableCore.List.reverse(_fableCore.List.ofArray([new Paging("Take", [pgid + "-take"])], ops))])], rest), pgid + "-take", _fableCore.List.ofArray([["count", "num"]])));
+	    var skipMemb = withDocs("", "Skip the specified number of rows and keep the rest", makeMethod(lookupNamed, fields, "skip", _fableCore.List.ofArray([new Transformation("Paging", [_fableCore.List.ofArray([new Paging("Skip", [pgid + "-skip"])], ops)])], rest), pgid + "-skip", _fableCore.List.ofArray([["count", "num"]])));
+	    var thenMemb = withDocs("", "Return the data", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("Paging", [_fableCore.List.reverse(ops)])], rest)));
+	    return makeObjectType(function () {
+	      var $target2 = function () {
+	        throw "handlePagingRequest: Shold not happen";
+	      };
+	
+	      if (ops.tail != null) {
+	        if (ops.head.Case === "Skip") {
+	          if (ops.tail.tail == null) {
+	            return _fableCore.List.ofArray([takeMemb, thenMemb]);
+	          } else {
+	            return $target2();
+	          }
+	        } else {
+	          return $target2();
+	        }
+	      } else {
+	        return _fableCore.List.ofArray([skipMemb, takeMemb]);
+	      }
+	    }());
+	  }
+	
+	  function handleDropRequest(lookupNamed, fields, rest, dropped) {
+	    var droppedFields = _fableCore.Set.create(dropped, new _fableCore.GenericComparer(function (x, y) {
+	      return x < y ? -1 : x > y ? 1 : 0;
+	    }));
+	
+	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("DropColumns", [dropped])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
+	        return _fableCore.Seq.collect(function (field) {
+	          return !droppedFields.has(field.Name) ? _fableCore.Seq.singleton(withAddAction("Dropped fields", withDocs("", _fableCore.String.fsFormat("Removes the field '%s' from the returned data set")(function (x) {
+	            return x;
+	          })(field.Name), makeProperty(lookupNamed, fields, "drop " + field.Name, _fableCore.List.ofArray([new Transformation("DropColumns", [_fableCore.List.ofArray([field.Name], dropped)])], rest))))) : _fableCore.Seq.empty();
+	        }, fields);
+	      }));
+	    })));
+	  }
+	
+	  function handleSortRequest(lookupNamed, fields, rest, keys) {
+	    var usedKeys = _fableCore.Set.create(_fableCore.List.map(function (tuple) {
+	      return tuple[0];
+	    }, keys), new _fableCore.GenericComparer(function (x, y) {
+	      return x < y ? -1 : x > y ? 1 : 0;
+	    }));
+	
+	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("SortBy", [keys])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
+	        return _fableCore.Seq.collect(function (field) {
+	          return !usedKeys.has(field.Name) ? function () {
+	            var doc = _fableCore.String.fsFormat("Use the field '%s' as the next sorting keys")(function (x) {
+	              return x;
+	            })(field.Name);
+	
+	            var prefix = keys.Equals(new _fableCore.List()) ? "by " : "and by ";
+	            return _fableCore.Seq.append(_fableCore.Seq.singleton(withAddAction("Fields used for sorting", function () {
+	              var title = "";
+	              return function (membr) {
+	                return withDocs(title, doc, membr);
+	              };
+	            }()(makeProperty(lookupNamed, fields, prefix + field.Name, _fableCore.List.ofArray([new Transformation("SortBy", [_fableCore.List.ofArray([[field.Name, new SortDirection("Ascending", [])]], keys)])], rest))))), _fableCore.Seq.delay(function (unitVar_2) {
+	              return _fableCore.Seq.singleton(withAddAction("Fields used for sorting", function () {
+	                var title = "";
+	                return function (membr) {
+	                  return withDocs(title, doc, membr);
+	                };
+	              }()(makeProperty(lookupNamed, fields, prefix + field.Name + " descending", _fableCore.List.ofArray([new Transformation("SortBy", [_fableCore.List.ofArray([[field.Name, new SortDirection("Descending", [])]], keys)])], rest)))));
+	            }));
+	          }() : _fableCore.Seq.empty();
+	        }, fields);
+	      }));
+	    })));
+	  }
+	
+	  function aggregationMembers(lookupNamed, fields, rest, keys, aggs) {
+	    var containsCountAll = _fableCore.Seq.exists(function () {
+	      var x = new Aggregation("CountAll", []);
+	      return function (y) {
+	        return x.Equals(y);
+	      };
+	    }(), aggs);
+	
+	    var containsField = function (fld) {
+	      return _fableCore.Seq.exists(function (_arg1) {
+	        var $target0 = function (f) {
+	          return f === fld;
+	        };
+	
+	        var $target1 = function () {
+	          return false;
+	        };
+	
+	        if (_arg1.Case === "ReturnUnique") {
+	          return $target0(_arg1.Fields[0]);
+	        } else {
+	          if (_arg1.Case === "ConcatValues") {
+	            return $target0(_arg1.Fields[0]);
+	          } else {
+	            if (_arg1.Case === "Sum") {
+	              return $target0(_arg1.Fields[0]);
+	            } else {
+	              if (_arg1.Case === "Mean") {
+	                return $target0(_arg1.Fields[0]);
+	              } else {
+	                if (_arg1.Case === "CountAll") {
+	                  return $target1();
+	                } else {
+	                  if (_arg1.Case === "GroupKey") {
+	                    return $target1();
+	                  } else {
+	                    return $target0(_arg1.Fields[0]);
+	                  }
+	                }
+	              }
+	            }
+	          }
+	        }
+	      }, aggs);
+	    };
+	
+	    var makeAggMember = function (name) {
+	      return function (agg) {
+	        return function (doc) {
+	          return withAddAction("Aggregation operations", function () {
+	            var title = "";
+	            return function (membr) {
+	              return withDocs(title, doc, membr);
+	            };
+	          }()(makeProperty(lookupNamed, fields, name, _fableCore.List.ofArray([new Transformation("GroupBy", [keys, _fableCore.List.ofArray([agg], aggs)])], rest))));
+	        };
+	      };
+	    };
+	
+	    return _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Get data or perform another transformation", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("GroupBy", [keys, aggs])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
+	        return _fableCore.Seq.append(!containsCountAll ? _fableCore.Seq.singleton(makeAggMember("count all")(new Aggregation("CountAll", []))("Count the number of items in the group")) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_2) {
+	          return _fableCore.Seq.collect(function (fld) {
+	            return !containsField(fld.Name) ? _fableCore.Seq.append(_fableCore.Seq.singleton(makeAggMember("count distinct " + fld.Name)(new Aggregation("CountDistinct", [fld.Name]))("Count the number of distinct values of the field")), _fableCore.Seq.delay(function (unitVar_3) {
+	              return _fableCore.Seq.append(_fableCore.Seq.singleton(makeAggMember("return unique " + fld.Name)(new Aggregation("ReturnUnique", [fld.Name]))("Add the value of the field assuming it is unique in the group")), _fableCore.Seq.delay(function (unitVar_4) {
+	                return _fableCore.Seq.append(isConcatenable(fld.Type) ? _fableCore.Seq.singleton(makeAggMember("concatenate values of " + fld.Name)(new Aggregation("ConcatValues", [fld.Name]))("Concatenate all values of the field")) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_5) {
+	                  return isNumeric(fld.Type) ? _fableCore.Seq.append(_fableCore.Seq.singleton(makeAggMember("average " + fld.Name)(new Aggregation("Mean", [fld.Name]))("Calculate the average value of the field in the group")), _fableCore.Seq.delay(function (unitVar_6) {
+	                    return _fableCore.Seq.singleton(makeAggMember("sum " + fld.Name)(new Aggregation("Sum", [fld.Name]))("Sum the values of the field in the group"));
+	                  })) : _fableCore.Seq.empty();
+	                }));
+	              }));
+	            })) : _fableCore.Seq.empty();
+	          }, fields);
+	        }));
+	      }));
+	    }));
+	  }
+	
+	  function handleGroupAggRequest(lookupNamed, fields, rest, keys, aggs) {
+	    return makeObjectType(aggregationMembers(lookupNamed, fields, rest, keys, aggs));
+	  }
+	
+	  function handleGroupRequest(lookupNamed, fields, rest, keys) {
+	    var prefix = keys.tail == null ? "by " : "and ";
+	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.append(_fableCore.Seq.map(function (field) {
+	        return withCreateAction("Aggregation operations", withDocs(_fableCore.String.fsFormat("Group by %s")(function (x) {
+	          return x;
+	        })(field.Name.toLocaleLowerCase()), "Creates groups based on the value of " + field.Name + " and calculte summary " + "values for each group. You can specify a number of summary calculations in the " + "following list:", makeProperty(lookupNamed, fields, prefix + field.Name, _fableCore.List.ofArray([new Transformation("GroupBy", [_fableCore.List.ofArray([field.Name], keys), new _fableCore.List()])], rest))));
+	      }, fields), _fableCore.Seq.delay(function (unitVar_1) {
+	        return !(keys.tail == null) ? aggregationMembers(lookupNamed, fields, rest, keys, _fableCore.List.ofArray([new Aggregation("GroupKey", [])])) : _fableCore.Seq.empty();
+	      }));
+	    })));
+	  }
+	
+	  function makePivotTypeImmediate(lookupNamed, inputFields, tfs) {
+	    var patternInput = tfs.tail != null ? function () {
+	      var rest = tfs.tail;
+	      var last = tfs.head;
+	      return [last, rest];
+	    }() : [new Transformation("Empty", []), new _fableCore.List()];
+	    var rest = patternInput[1];
+	    var last = patternInput[0];
+	    var fields = Transform.transformFields(inputFields, _fableCore.List.reverse(rest));
+	
+	    if (last.Case === "GetSeries") {
+	      var k = last.Fields[0];
+	      var v = last.Fields[1];
+	      return handleGetSeriesRequest(lookupNamed, inputFields, fields, rest, k, v);
+	    } else {
+	      if (last.Case === "Paging") {
+	        var ops = last.Fields[0];
+	
+	        var pgid = _fableCore.String.fsFormat("pgid-%d")(function (x) {
+	          return x;
+	        })(_fableCore.Seq.sumBy(function (_arg2) {
+	          return _arg2.Case === "Paging" ? 1 : 0;
+	        }, rest));
+	
+	        return handlePagingRequest(lookupNamed, fields, rest, pgid, ops);
+	      } else {
+	        if (last.Case === "SortBy") {
+	          var keys = last.Fields[0];
+	          return handleSortRequest(lookupNamed, fields, rest, keys);
+	        } else {
+	          if (last.Case === "DropColumns") {
+	            var dropped = last.Fields[0];
+	            return handleDropRequest(lookupNamed, fields, rest, dropped);
+	          } else {
+	            if (last.Case === "GroupBy") {
+	              if (last.Fields[1].tail == null) {
+	                var flds = last.Fields[0];
+	                return handleGroupRequest(lookupNamed, fields, rest, flds);
+	              } else {
+	                var aggs = last.Fields[1];
+	                var flds = last.Fields[0];
+	                return handleGroupAggRequest(lookupNamed, fields, rest, flds, aggs);
+	              }
+	            } else {
+	              return makeObjectType(_fableCore.List.ofArray([withDocs("", "Lets you perform pivot table aggregations.", makeProperty(lookupNamed, fields, "group data", _fableCore.List.ofArray([new Transformation("GroupBy", [new _fableCore.List(), new _fableCore.List()])], rest))), withCreateAction("Fields used for sorting", withDocs("Sort the data", "Specify how the data is sorted. You can choose one or more attributes " + "to use for sorting in the following list. Choose 'descending' to sort the values from largest value " + "to smallest value.", makeProperty(lookupNamed, fields, "sort data", _fableCore.List.ofArray([new Transformation("SortBy", [new _fableCore.List()])], rest)))), withCreateAction("Dropped fields", withDocs("Filter returned attributes", "Specify which attributes of the data sets should be returned. " + "By default you'll get all available attributes, but you can drop uninteresting attributes by listing " + "them in the following list:", makeProperty(lookupNamed, fields, "filter columns", _fableCore.List.ofArray([new Transformation("DropColumns", [new _fableCore.List()])], rest)))), withDocs("", "Take a number of rows or skip a number of rows.", makeProperty(lookupNamed, fields, "paging", _fableCore.List.ofArray([new Transformation("Paging", [new _fableCore.List()])], rest))), withDocs("", "Get a single key-value series from the data set.", makeProperty(lookupNamed, fields, "get series", _fableCore.List.ofArray([new Transformation("GetSeries", ["!", "!"])], rest))), withDocs("", "Returns the transformed data", makeDataMember(lookupNamed, inputFields, "get the data", rest))]));
+	            }
+	          }
+	        }
+	      }
+	    }
+	  }
+	
+	  function makePivotType(lookupNamed, fields, tfs) {
+	    return new _ast.Type("Delayed", ["pivot", function (arg00) {
+	      return function (arg10) {
+	        return (0, _extensions.Async$2EAsFuture$2EStatic)(arg00, arg10);
+	      };
+	    }("pivot")(function (builder_) {
+	      return builder_.Delay(function (unitVar) {
+	        return builder_.Return(makePivotTypeImmediate(lookupNamed, fields, tfs));
+	      });
+	    }(_fableCore.defaultAsyncBuilder))]);
+	  }
+	
+	  function providePivotType(root, name, lookupNamed, fields) {
+	    var ctx = op_Dynamic(ident("_restruntime"), "PivotContext");
+	    var typ = makePivotType(lookupNamed, _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.collect(function (matchValue) {
+	        var t = matchValue[1];
+	        var f = matchValue[0];
+	        return _fableCore.Seq.singleton(new Field(f, t));
+	      }, fields);
+	    })), new _fableCore.List());
+	    return new _providers.ProvidedType("GlobalValue", [name, new _babelast.Expression("NewExpression", [ctx, _fableCore.List.ofArray([str(root), new _babelast.Expression("ArrayExpression", [new _fableCore.List(), null])]), null]), typ]);
+	  }
+	});
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
 	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"));
@@ -10873,12 +11697,12 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(14), __webpack_require__(5), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(15), __webpack_require__(5), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"), require("./extensions"), require("./editors"), require("./ast"), require("./typechecker"));
 	  } else {
@@ -11347,12 +12171,12 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(5), __webpack_require__(1), __webpack_require__(3), __webpack_require__(6), __webpack_require__(12)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(5), __webpack_require__(1), __webpack_require__(3), __webpack_require__(6), __webpack_require__(13)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"), require("./ast"), require("./extensions"), require("./typechecker"), require("./astops"), require("../gui/html"));
 	  } else {
@@ -11633,12 +12457,12 @@
 	                  }
 	                });
 	              } else {
-	                var activePatternResult5406 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	                var activePatternResult113509 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
 	
-	                if (activePatternResult5406.Case === "Choice1Of2") {
+	                if (activePatternResult113509.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult5406.Fields[0][0];
+	                  var es = activePatternResult113509.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
 	                    var f_1 = function (st) {
 	                      return function (e) {
@@ -11672,16 +12496,16 @@
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
 	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var15 = ed;
+	                var $var37 = ed;
 	
-	                if ($var15 != null) {
+	                if ($var37 != null) {
 	                  return function (tupledArg) {
 	                    var n = tupledArg[0];
 	                    var p = tupledArg[1];
 	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var15);
+	                  }($var37);
 	                } else {
-	                  return $var15;
+	                  return $var37;
 	                }
 	              }());
 	            });
@@ -11767,15 +12591,15 @@
 	                              }, trunc(catMembers));
 	                            };
 	
-	                            return builder_.Bind(nestedMembers(function ($var16) {
-	                              return Array.from(_fableCore.Seq.truncate(5, $var16));
+	                            return builder_.Bind(nestedMembers(function ($var38) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var38));
 	                            }), function (_arg5) {
 	                              var checkMembers = _arg5;
 	
-	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var17) {
-	                                return $var17[1][0];
-	                              }, checkMembers), _fableCore.Seq.collect(function ($var18) {
-	                                return $var18[1][1];
+	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var39) {
+	                                return $var39[1][0];
+	                              }, checkMembers), _fableCore.Seq.collect(function ($var40) {
+	                                return $var40[1][1];
 	                              }, checkMembers)) : false) {
 	                                return builder_.Bind(nestedMembers(function (x) {
 	                                  return x;
@@ -12318,19 +13142,19 @@
 	        var name2 = tupledArg[1];
 	
 	        var selected = function () {
-	          var $var19 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	          var $var41 = _fableCore.Seq.tryFind(function (tupledArg_1) {
 	            var _arg2 = tupledArg_1[0];
 	            var nested = tupledArg_1[1];
 	            var name = _arg2.Fields[0];
 	            return name === name1;
 	          }, props);
 	
-	          if ($var19 != null) {
+	          if ($var41 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var19);
+	            }($var41);
 	          } else {
-	            return $var19;
+	            return $var41;
 	          }
 	        }();
 	
@@ -12436,7 +13260,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -12711,7 +13535,7 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var54, $var55) {
+	          })(Array.from(_fableCore.Seq.sortWith(function ($var1, $var2) {
 	            return function (tupledArg) {
 	              var k1 = tupledArg[0];
 	              var _arg2 = tupledArg[1];
@@ -12720,7 +13544,7 @@
 	                var _arg1 = tupledArg_1[1];
 	                return k1 < k2 ? -1 : k1 == k2 ? 0 : 1;
 	              };
-	            }($var54)($var55);
+	            }($var1)($var2);
 	          }, arr)));
 	        })(this);
 	      }
@@ -12745,7 +13569,7 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var56, $var57) {
+	          })(Array.from(_fableCore.Seq.sortWith(function ($var3, $var4) {
 	            return function (tupledArg) {
 	              var _arg4 = tupledArg[0];
 	              var v1 = tupledArg[1];
@@ -12754,7 +13578,7 @@
 	                var v2 = tupledArg_1[1];
 	                return v1 < v2 ? -1 : v1 == v2 ? 0 : 1;
 	              };
-	            }($var56)($var57);
+	            }($var3)($var4);
 	          }, arr)));
 	        })(this);
 	      }
@@ -12779,7 +13603,7 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var58, $var59) {
+	          })(Array.from(_fableCore.Seq.sortWith(function ($var5, $var6) {
 	            return function (tupledArg) {
 	              var _arg6 = tupledArg[0];
 	              var v1 = tupledArg[1];
@@ -12788,7 +13612,7 @@
 	                var v2 = tupledArg_1[1];
 	                return f(v1) < f(v2) ? -1 : f(v1) == f(v2) ? 0 : 1;
 	              };
-	            }($var58)($var59);
+	            }($var5)($var6);
 	          }, arr)));
 	        })(this);
 	      }
@@ -12953,10 +13777,10 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var predicate = function ($var60) {
+	          var predicate = function ($var7) {
 	            return f(function (tuple) {
 	              return tuple[1];
-	            }($var60));
+	            }($var7));
 	          };
 	
 	          return function (array) {
@@ -13176,7 +14000,7 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -13197,7 +14021,7 @@
 	  Object.defineProperty(exports, "__esModule", {
 	    value: true
 	  });
-	  exports.RuntimeContext = undefined;
+	  exports.PivotContext = exports.RuntimeContext = undefined;
 	  exports.convertTupleSequence = convertTupleSequence;
 	  exports.convertSequence = convertSequence;
 	  exports.trimLeft = trimLeft;
@@ -13319,21 +14143,78 @@
 	        return this["trace@19"];
 	      }
 	    }]);
-
+	
 	    return RuntimeContext;
 	  }();
-
+	
 	  _fableCore.Util.setInterfaces(RuntimeContext.prototype, [], "TheGamma.TypePovidersRuntime.RuntimeContext");
+	
+	  var PivotContext = exports.PivotContext = function () {
+	    function PivotContext(root, calls) {
+	      _classCallCheck(this, PivotContext);
+	
+	      this.root = root;
+	      this.calls = calls;
+	    }
+	
+	    _createClass(PivotContext, [{
+	      key: "addCall",
+	      value: function addCall(callid, values) {
+	        return new PivotContext(this.root, [[callid, values]].concat(this.calls));
+	      }
+	    }, {
+	      key: "getData",
+	      value: function getData(tfs) {
+	        var _this3 = this;
+	
+	        return function (builder_) {
+	          return builder_.Delay(function (unitVar) {
+	            var url = function () {
+	              var folder = function (tfs_1) {
+	                return function (tupledArg) {
+	                  var id = tupledArg[0];
+	                  var vals = tupledArg[1];
+	
+	                  if (vals.length !== 1) {
+	                    throw "PivotContext.getData: Expected one argument";
+	                  }
+	
+	                  return _fableCore.String.replace(tfs_1, id, _fableCore.Util.toString(vals[0]));
+	                };
+	              };
+	
+	              return function (array) {
+	                return _fableCore.Seq.fold(function ($var46, $var47) {
+	                  return folder($var46)($var47);
+	                }, tfs, array);
+	              };
+	            }()(_this3.calls);
+	
+	            _extensions.Log.trace("runtime", "Pivot: %s", concatUrl(_this3.root, url));
+	
+	            return builder_.Bind(_extensions.Http.Request("GET", concatUrl(_this3.root, url)), function (_arg1) {
+	              var res = _arg1;
+	              return builder_.Return(JSON.parse(res));
+	            });
+	          });
+	        }(_fableCore.defaultAsyncBuilder);
+	      }
+	    }]);
+
+	    return PivotContext;
+	  }();
+
+	  _fableCore.Util.setInterfaces(PivotContext.prototype, [], "TheGamma.TypePovidersRuntime.PivotContext");
 	});
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(18), __webpack_require__(19), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(19), __webpack_require__(20), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("./extensions"), require("./core"), require("fable-core"));
 	  } else {
@@ -13457,19 +14338,19 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(global,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports,__webpack_require__(19),__webpack_require__(20),__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports!=="undefined"){factory(exports,require("./core"),require("./options"),require("fable-core"));}else{var mod={exports:{}};factory(mod.exports,global.core,global.options,global.fableCore);global.extensions=mod.exports;}})(this,function(exports,_core,_options,_fableCore){"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.options=exports.CandlestickChartOptions$2Eget_empty$2EStatic=exports.TimelineOptions$2Eget_empty$2EStatic=exports.TableOptions$2Eget_empty$2EStatic=exports.TreeMapOptions$2Eget_empty$2EStatic=exports.BubbleChartOptions$2Eget_empty$2EStatic=exports.PieChartOptions$2Eget_empty$2EStatic=exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=exports.AnnotationChartOptions$2Eget_empty$2EStatic=exports.AreaChartOptions$2Eget_empty$2EStatic=exports.HistogramOptions$2Eget_empty$2EStatic=exports.BarChartOptions$2Eget_empty$2EStatic=exports.LineChartOptions$2Eget_empty$2EStatic=exports.ColumnChartOptions$2Eget_empty$2EStatic=exports.ScatterChartOptions$2Eget_empty$2EStatic=exports.GeoChartOptions$2Eget_empty$2EStatic=exports.Candlestick=exports.Timeline=exports.Table=exports.TreeMap=exports.Bubble=exports.Pie=exports.SteppedArea=exports.Annotation=exports.Area=exports.Histogram=exports.Bar=exports.Line=exports.Column=exports.Scatter=exports.Geo=undefined;function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var Geo=exports.Geo=function(){function Geo(data,typeName,options){_classCallCheck(this,Geo);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Geo,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,datalessRegionColor,displayMode,enableRegionInteractivity,height,keepAspectRatio,region,markerOpacity,resolution,width){var _this=this;var o=this.options;var newOptions=function(){var inputRecord=_this.options;var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var datalessRegionColor_1=_core.Helpers.right(o,"datalessRegionColor",datalessRegionColor);var displayMode_1=_core.Helpers.right(o,"displayMode",displayMode);var enableRegionInteractivity_1=_core.Helpers.right(o,"enableRegionInteractivity",enableRegionInteractivity);var height_1=_core.Helpers.right(o,"height",height);var keepAspectRatio_1=_core.Helpers.right(o,"keepAspectRatio",keepAspectRatio);var region_1=_core.Helpers.right(o,"region",region);var markerOpacity_1=_core.Helpers.right(o,"markerOpacity",markerOpacity);var resolution_1=_core.Helpers.right(o,"resolution",resolution);var width_1=_core.Helpers.right(o,"width",width);return new _options.GeoChartOptions(backgroundColor_1,inputRecord.colorAxis,datalessRegionColor_1,displayMode_1,enableRegionInteractivity_1,height_1,keepAspectRatio_1,inputRecord.legend,region_1,inputRecord.magnifyingGlass,markerOpacity_1,resolution_1,inputRecord.sizeAxis,inputRecord.tooltip,width_1);}();return new Geo(this.data,this.typeName,newOptions);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var _this2=this;var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var10=values;if($var10!=null){return function(source){return Float64Array.from(source);}($var10);}else{return $var10;}}()),_core.Helpers.right(o,"colors",function(){var $var11=colors;if($var11!=null){return function(source){return Array.from(source);}($var11);}else{return $var11;}}()),_core.Helpers.copy(o,"legend"));var options=function(){var inputRecord=_this2.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,newNested,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this3=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this3.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,newNested,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"magnifyingGlass",value:function magnifyingGlass(enable,zoomFactor){var _this4=this;var o=this.options.magnifyingGlass;var newNested=new _options.GeoChartMagnifyingGlass(_core.Helpers.right(o,"enable",enable),_core.Helpers.right(o,"zoomFactor",zoomFactor));var options=function(){var inputRecord=_this4.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,newNested,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var _this5=this;var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=function(){var inputRecord=_this5.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,newNested,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this6=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this6.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,newNested,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}}]);return Geo;}();_fableCore.Util.setInterfaces(Geo.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Geo");var Scatter=function(){function Scatter(data,typeName,options){_classCallCheck(this,Scatter);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Scatter,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,fontSize,fontName,forceIFrame,height,lineWidth,pointSize,selectionMode,series,theme,title,titlePosition,width){var _this7=this;var o=this.options;var newOptions=function(){var inputRecord=_this7.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var12=colors;if($var12!=null){return function(source){return Array.from(source);}($var12);}else{return $var12;}}());var curveType_1=_core.Helpers.right(o,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var width_1=_core.Helpers.right(o,"width",width);return new _options.ScatterChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,fontSize_1,fontName_1,forceIFrame_1,inputRecord.hAxis,height_1,inputRecord.legend,lineWidth_1,pointSize_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,width_1);}();return new Scatter(this.data,this.typeName,newOptions);}},{key:"trendlines",value:function trendlines(_trendlines){var _this8=this;var o=this.options;var options=function(){var inputRecord=_this8.options;var trendlines_1=_core.Helpers.right(o,"trendlines",function(){var $var13=_trendlines;if($var13!=null){return function(source){return Array.from(source);}($var13);}else{return $var13;}}());return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,trendlines_1,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"animation",value:function animation(duration,easing){var _this9=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this9.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this10=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this10.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this11=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this11.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this12=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var14=actions;if($var14!=null){return function(source){return Array.from(source);}($var14);}else{return $var14;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this12.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this13=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var15=ticks;if($var15!=null){return function(source){return Array.from(source);}($var15);}else{return $var15;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this13.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,newNested,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this14=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this14.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this15=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this15.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this16=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this16.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this17=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var16=ticks;if($var16!=null){return function(source){return Array.from(source);}($var16);}else{return $var16;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this17.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,newNested,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}}]);return Scatter;}();exports.Scatter=Scatter;_fableCore.Util.setInterfaces(Scatter.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Scatter");var Column=exports.Column=function(){function Column(data,typeName,options){_classCallCheck(this,Column);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Column,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this18=this;var o=this.options;var newOptions=function(){var inputRecord=_this18.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var17=colors;if($var17!=null){return function(source){return Array.from(source);}($var17);}else{return $var17;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.ColumnChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,isStacked_1,inputRecord.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Column(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this19=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this19.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this20=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this20.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this21=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this21.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this22=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var18=ticks;if($var18!=null){return function(source){return Array.from(source);}($var18);}else{return $var18;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this22.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this23=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this23.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this24=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this24.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this25=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this25.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this26=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var19=ticks;if($var19!=null){return function(source){return Array.from(source);}($var19);}else{return $var19;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this26.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Column(this.data,this.typeName,options);}}]);return Column;}();_fableCore.Util.setInterfaces(Column.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Column");var Line=exports.Line=function(){function Line(data,typeName,options){_classCallCheck(this,Line);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Line,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this27=this;var o=this.options;var newOptions=function(){var inputRecord=_this27.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var20=colors;if($var20!=null){return function(source){return Array.from(source);}($var20);}else{return $var20;}}());var curveType_1=_core.Helpers.right(o,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.LineChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,inputRecord.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Line(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this28=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this28.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this29=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this29.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this30=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this30.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this31=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var21=actions;if($var21!=null){return function(source){return Array.from(source);}($var21);}else{return $var21;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this31.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this32=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var22=ticks;if($var22!=null){return function(source){return Array.from(source);}($var22);}else{return $var22;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this32.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this33=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this33.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,newNested,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this34=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this34.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this35=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this35.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this36=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var23=ticks;if($var23!=null){return function(source){return Array.from(source);}($var23);}else{return $var23;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this36.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Line(this.data,this.typeName,options);}}]);return Line;}();_fableCore.Util.setInterfaces(Line.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Line");var Bar=exports.Bar=function(){function Bar(data,typeName,options){_classCallCheck(this,Bar);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bar,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,hAxes,height,isStacked,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this37=this;var o=this.options;var newOptions=function(){var inputRecord=_this37.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var24=colors;if($var24!=null){return function(source){return Array.from(source);}($var24);}else{return $var24;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var hAxes_1=_core.Helpers.right(o,"hAxes",hAxes);var height_1=_core.Helpers.right(o,"height",height);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.BarChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,hAxes_1,inputRecord.hAxis,height_1,isStacked_1,inputRecord.legend,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Bar(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this38=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this38.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this39=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this39.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this40=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this40.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this41=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var25=ticks;if($var25!=null){return function(source){return Array.from(source);}($var25);}else{return $var25;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this41.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,newNested,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this42=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this42.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this43=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this43.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this44=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this44.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this45=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var26=ticks;if($var26!=null){return function(source){return Array.from(source);}($var26);}else{return $var26;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this45.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}}]);return Bar;}();_fableCore.Util.setInterfaces(Bar.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bar");var Histogram=exports.Histogram=function(){function Histogram(data,typeName,options){_classCallCheck(this,Histogram);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Histogram,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,orientation,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this46=this;var o=this.options;var newOptions=function(){var inputRecord=_this46.options;var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var27=colors;if($var27!=null){return function(source){return Array.from(source);}($var27);}else{return $var27;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.HistogramOptions(inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,inputRecord.histogram,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,orientation_1,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Histogram(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this47=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this47.options;return new _options.HistogramOptions(newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this48=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this48.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this49=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this49.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this50=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var28=ticks;if($var28!=null){return function(source){return Array.from(source);}($var28);}else{return $var28;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this50.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"histogram",value:function histogram(bucketSize,hideBucketItems,lastBucketPercentile){var _this51=this;var o=this.options.histogram;var newNested=new _options.HistogramHistogram(_core.Helpers.right(o,"bucketSize",bucketSize),_core.Helpers.right(o,"hideBucketItems",hideBucketItems),_core.Helpers.right(o,"lastBucketPercentile",lastBucketPercentile));var options=function(){var inputRecord=_this51.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this52=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this52.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this53=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this53.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this54=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this54.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this55=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var29=ticks;if($var29!=null){return function(source){return Array.from(source);}($var29);}else{return $var29;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this55.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}}]);return Histogram;}();_fableCore.Util.setInterfaces(Histogram.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Histogram");var Area=exports.Area=function(){function Area(data,typeName,options){_classCallCheck(this,Area);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Area,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this56=this;var o=this.options;var newOptions=function(){var inputRecord=_this56.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(o,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var30=colors;if($var30!=null){return function(source){return Array.from(source);}($var30);}else{return $var30;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.AreaChartOptions(aggregationTarget_1,inputRecord.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Area(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this57=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this57.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this58=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this58.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this59=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this59.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this60=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var31=actions;if($var31!=null){return function(source){return Array.from(source);}($var31);}else{return $var31;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this60.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this61=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var32=ticks;if($var32!=null){return function(source){return Array.from(source);}($var32);}else{return $var32;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this61.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this62=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this62.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this63=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this63.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this64=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this64.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this65=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var33=ticks;if($var33!=null){return function(source){return Array.from(source);}($var33);}else{return $var33;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this65.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Area(this.data,this.typeName,options);}}]);return Area;}();_fableCore.Util.setInterfaces(Area.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Area");var Annotation=exports.Annotation=function(){function Annotation(data,typeName,options){_classCallCheck(this,Annotation);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Annotation,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,allValuesSuffix,annotationsWidth,colors,dateFormat,displayAnnotations,displayAnnotationsFilter,displayDateTimeBarSeparator,displayExactValues,displayLegendDots,displayLegendValues,displayRangeSelector,displayZoomButtons,fill,legendPosition,max,min,numberFormats,scaleColumns,scaleFormat,scaleType,thickness,zoomEndTime,zoomStartTime){var _this66=this;var o=this.options;var newOptions=function(){var inputRecord=_this66.options;return new _options.AnnotationChartOptions(_core.Helpers.right(o,"allowHtml",allowHtml),_core.Helpers.right(o,"allValuesSuffix",allValuesSuffix),_core.Helpers.right(o,"annotationsWidth",annotationsWidth),_core.Helpers.right(o,"colors",function(){var $var34=colors;if($var34!=null){return function(source){return Array.from(source);}($var34);}else{return $var34;}}()),_core.Helpers.right(o,"dateFormat",dateFormat),_core.Helpers.right(o,"displayAnnotations",displayAnnotations),_core.Helpers.right(o,"displayAnnotationsFilter",displayAnnotationsFilter),_core.Helpers.right(o,"displayDateTimeBarSeparator",displayDateTimeBarSeparator),_core.Helpers.right(o,"displayExactValues",displayExactValues),_core.Helpers.right(o,"displayLegendDots",displayLegendDots),_core.Helpers.right(o,"displayLegendValues",displayLegendValues),_core.Helpers.right(o,"displayRangeSelector",displayRangeSelector),_core.Helpers.right(o,"displayZoomButtons",displayZoomButtons),_core.Helpers.right(o,"fill",fill),_core.Helpers.right(o,"legendPosition",legendPosition),_core.Helpers.right(o,"max",max),_core.Helpers.right(o,"min",min),_core.Helpers.right(o,"numberFormats",numberFormats),_core.Helpers.right(o,"scaleColumns",function(){var $var35=scaleColumns;if($var35!=null){return function(source){return Float64Array.from(source);}($var35);}else{return $var35;}}()),_core.Helpers.right(o,"scaleFormat",scaleFormat),_core.Helpers.right(o,"scaleType",scaleType),_core.Helpers.right(o,"thickness",thickness),_core.Helpers.right(o,"zoomEndTime",zoomEndTime),_core.Helpers.right(o,"zoomStartTime",zoomStartTime));}();return new Annotation(this.data,this.typeName,newOptions);}}]);return Annotation;}();_fableCore.Util.setInterfaces(Annotation.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Annotation");var SteppedArea=exports.SteppedArea=function(){function SteppedArea(data,typeName,options){_classCallCheck(this,SteppedArea);this.data=data;this.typeName=typeName;this.options=options;}_createClass(SteppedArea,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,connectSteps,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this67=this;var o=this.options;var newOptions=function(){var inputRecord=_this67.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(o,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var36=colors;if($var36!=null){return function(source){return Array.from(source);}($var36);}else{return $var36;}}());var connectSteps_1=_core.Helpers.right(o,"connectSteps",connectSteps);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.SteppedAreaChartOptions(aggregationTarget_1,inputRecord.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,connectSteps_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new SteppedArea(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this68=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this68.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this69=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this69.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this70=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var37=ticks;if($var37!=null){return function(source){return Array.from(source);}($var37);}else{return $var37;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this70.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this71=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this71.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this72=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this72.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this73=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this73.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this74=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var38=ticks;if($var38!=null){return function(source){return Array.from(source);}($var38);}else{return $var38;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this74.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}}]);return SteppedArea;}();_fableCore.Util.setInterfaces(SteppedArea.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.SteppedArea");var Pie=exports.Pie=function(){function Pie(data,typeName,options){_classCallCheck(this,Pie);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Pie,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,colors,enableInteractivity,fontSize,fontName,height,is3D,pieHole,pieSliceBorderColor,pieSliceText,pieStartAngle,reverseCategories,pieResidueSliceColor,pieResidueSliceLabel,slices,sliceVisibilityThreshold,title,width){var _this75=this;var o=this.options;var newOptions=function(){var inputRecord=_this75.options;var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var39=colors;if($var39!=null){return function(source){return Array.from(source);}($var39);}else{return $var39;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var is3D_1=_core.Helpers.right(o,"is3D",is3D);var pieHole_1=_core.Helpers.right(o,"pieHole",pieHole);var pieSliceBorderColor_1=_core.Helpers.right(o,"pieSliceBorderColor",pieSliceBorderColor);var pieSliceText_1=_core.Helpers.right(o,"pieSliceText",pieSliceText);var pieStartAngle_1=_core.Helpers.right(o,"pieStartAngle",pieStartAngle);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var pieResidueSliceColor_1=_core.Helpers.right(o,"pieResidueSliceColor",pieResidueSliceColor);var pieResidueSliceLabel_1=_core.Helpers.right(o,"pieResidueSliceLabel",pieResidueSliceLabel);var slices_1=_core.Helpers.right(o,"slices",slices);var sliceVisibilityThreshold_1=_core.Helpers.right(o,"sliceVisibilityThreshold",sliceVisibilityThreshold);var title_1=_core.Helpers.right(o,"title",title);var width_1=_core.Helpers.right(o,"width",width);return new _options.PieChartOptions(backgroundColor_1,inputRecord.chartArea,colors_1,enableInteractivity_1,fontSize_1,fontName_1,height_1,is3D_1,inputRecord.legend,pieHole_1,pieSliceBorderColor_1,pieSliceText_1,inputRecord.pieSliceTextStyle,pieStartAngle_1,reverseCategories_1,pieResidueSliceColor_1,pieResidueSliceLabel_1,slices_1,sliceVisibilityThreshold_1,title_1,inputRecord.titleTextStyle,inputRecord.tooltip,width_1);}();return new Pie(this.data,this.typeName,newOptions);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this76=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this76.options;return new _options.PieChartOptions(inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this77=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this77.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,newNested,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"pieSliceTextStyle",value:function pieSliceTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this78=this;var o=this.options.pieSliceTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this78.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,newNested,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this79=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this79.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,newNested,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this80=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this80.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,newNested,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}}]);return Pie;}();_fableCore.Util.setInterfaces(Pie.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Pie");var Bubble=exports.Bubble=function(){function Bubble(data,typeName,options){_classCallCheck(this,Bubble);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bubble,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,enableInteractivity,fontSize,fontName,forceIFrame,height,selectionMode,series,sortBubblesBySize,theme,title,titlePosition,width){var _this81=this;var o=this.options;var newOptions=function(){var inputRecord=_this81.options;var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var40=colors;if($var40!=null){return function(source){return Array.from(source);}($var40);}else{return $var40;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var sortBubblesBySize_1=_core.Helpers.right(o,"sortBubblesBySize",sortBubblesBySize);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var width_1=_core.Helpers.right(o,"width",width);return new _options.BubbleChartOptions(inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bubble,inputRecord.chartArea,colors_1,inputRecord.colorAxis,enableInteractivity_1,inputRecord.explorer,fontSize_1,fontName_1,forceIFrame_1,inputRecord.hAxis,height_1,inputRecord.legend,selectionMode_1,series_1,inputRecord.sizeAxis,sortBubblesBySize_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,width_1);}();return new Bubble(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this82=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this82.options;return new _options.BubbleChartOptions(newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"bubble",value:function bubble(opacity,stroke){var _this83=this;var o=this.options.bubble;var newNested=new _options.ChartBubble(_core.Helpers.right(o,"opacity",opacity),_core.Helpers.right(o,"stroke",stroke),_core.Helpers.copy(o,"textStyle"));var options=function(){var inputRecord=_this83.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this84=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this84.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,newNested,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var _this85=this;var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var41=values;if($var41!=null){return function(source){return Float64Array.from(source);}($var41);}else{return $var41;}}()),_core.Helpers.right(o,"colors",function(){var $var42=colors;if($var42!=null){return function(source){return Array.from(source);}($var42);}else{return $var42;}}()),_core.Helpers.copy(o,"legend"));var options=function(){var inputRecord=_this85.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this86=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var43=actions;if($var43!=null){return function(source){return Array.from(source);}($var43);}else{return $var43;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this86.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,newNested,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this87=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var44=ticks;if($var44!=null){return function(source){return Array.from(source);}($var44);}else{return $var44;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this87.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,newNested,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this88=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this88.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var _this89=this;var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=function(){var inputRecord=_this89.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,newNested,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this90=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this90.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this91=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this91.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this92=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var45=ticks;if($var45!=null){return function(source){return Array.from(source);}($var45);}else{return $var45;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this92.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,newNested,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}}]);return Bubble;}();_fableCore.Util.setInterfaces(Bubble.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bubble");var TreeMap=exports.TreeMap=function(){function TreeMap(data,typeName,options){_classCallCheck(this,TreeMap);this.data=data;this.typeName=typeName;this.options=options;}_createClass(TreeMap,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(fontColor,fontFamily,fontSize,forceIFrame,headerColor,headerHeight,headerHighlightColor,hintOpacity,maxColor,maxDepth,maxHighlightColor,maxPostDepth,maxColorValue,midColor,midHighlightColor,minColor,minHighlightColor,minColorValue,showScale,showTooltips,title,useWeightedAverageForAggregation){var _this93=this;var o=this.options;var newOptions=function(){var inputRecord=_this93.options;var fontColor_1=_core.Helpers.right(o,"fontColor",fontColor);var fontFamily_1=_core.Helpers.right(o,"fontFamily",fontFamily);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var headerColor_1=_core.Helpers.right(o,"headerColor",headerColor);var headerHeight_1=_core.Helpers.right(o,"headerHeight",headerHeight);var headerHighlightColor_1=_core.Helpers.right(o,"headerHighlightColor",headerHighlightColor);var hintOpacity_1=_core.Helpers.right(o,"hintOpacity",hintOpacity);var maxColor_1=_core.Helpers.right(o,"maxColor",maxColor);var maxDepth_1=_core.Helpers.right(o,"maxDepth",maxDepth);var maxHighlightColor_1=_core.Helpers.right(o,"maxHighlightColor",maxHighlightColor);var maxPostDepth_1=_core.Helpers.right(o,"maxPostDepth",maxPostDepth);var maxColorValue_1=_core.Helpers.right(o,"maxColorValue",maxColorValue);var midColor_1=_core.Helpers.right(o,"midColor",midColor);var midHighlightColor_1=_core.Helpers.right(o,"midHighlightColor",midHighlightColor);var minColor_1=_core.Helpers.right(o,"minColor",minColor);var minHighlightColor_1=_core.Helpers.right(o,"minHighlightColor",minHighlightColor);var minColorValue_1=_core.Helpers.right(o,"minColorValue",minColorValue);var showScale_1=_core.Helpers.right(o,"showScale",showScale);var showTooltips_1=_core.Helpers.right(o,"showTooltips",showTooltips);var title_1=_core.Helpers.right(o,"title",title);var useWeightedAverageForAggregation_1=_core.Helpers.right(o,"useWeightedAverageForAggregation",useWeightedAverageForAggregation);return new _options.TreeMapOptions(fontColor_1,fontFamily_1,fontSize_1,forceIFrame_1,headerColor_1,headerHeight_1,headerHighlightColor_1,hintOpacity_1,maxColor_1,maxDepth_1,maxHighlightColor_1,maxPostDepth_1,maxColorValue_1,midColor_1,midHighlightColor_1,minColor_1,minHighlightColor_1,minColorValue_1,showScale_1,showTooltips_1,inputRecord.textStyle,title_1,inputRecord.titleTextStyle,useWeightedAverageForAggregation_1);}();return new TreeMap(this.data,this.typeName,newOptions);}},{key:"textStyle",value:function textStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this94=this;var o=this.options.textStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this94.options;return new _options.TreeMapOptions(inputRecord.fontColor,inputRecord.fontFamily,inputRecord.fontSize,inputRecord.forceIFrame,inputRecord.headerColor,inputRecord.headerHeight,inputRecord.headerHighlightColor,inputRecord.hintOpacity,inputRecord.maxColor,inputRecord.maxDepth,inputRecord.maxHighlightColor,inputRecord.maxPostDepth,inputRecord.maxColorValue,inputRecord.midColor,inputRecord.midHighlightColor,inputRecord.minColor,inputRecord.minHighlightColor,inputRecord.minColorValue,inputRecord.showScale,inputRecord.showTooltips,newNested,inputRecord.title,inputRecord.titleTextStyle,inputRecord.useWeightedAverageForAggregation);}();return new TreeMap(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this95=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this95.options;return new _options.TreeMapOptions(inputRecord.fontColor,inputRecord.fontFamily,inputRecord.fontSize,inputRecord.forceIFrame,inputRecord.headerColor,inputRecord.headerHeight,inputRecord.headerHighlightColor,inputRecord.hintOpacity,inputRecord.maxColor,inputRecord.maxDepth,inputRecord.maxHighlightColor,inputRecord.maxPostDepth,inputRecord.maxColorValue,inputRecord.midColor,inputRecord.midHighlightColor,inputRecord.minColor,inputRecord.minHighlightColor,inputRecord.minColorValue,inputRecord.showScale,inputRecord.showTooltips,inputRecord.textStyle,inputRecord.title,newNested,inputRecord.useWeightedAverageForAggregation);}();return new TreeMap(this.data,this.typeName,options);}}]);return TreeMap;}();_fableCore.Util.setInterfaces(TreeMap.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.TreeMap");var Table=exports.Table=function(){function Table(data,typeName,options){_classCallCheck(this,Table);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Table,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,alternatingRowStyle,firstRowNumber,height,page,pageSize,rtlTable,scrollLeftStartPosition,showRowNumber,sort,sortAscending,sortColumn,startPage,width){var _this96=this;var o=this.options;var newOptions=function(){var inputRecord=_this96.options;var allowHtml_1=_core.Helpers.right(o,"allowHtml",allowHtml);var alternatingRowStyle_1=_core.Helpers.right(o,"alternatingRowStyle",alternatingRowStyle);var firstRowNumber_1=_core.Helpers.right(o,"firstRowNumber",firstRowNumber);var height_1=_core.Helpers.right(o,"height",height);var page_1=_core.Helpers.right(o,"page",page);var pageSize_1=_core.Helpers.right(o,"pageSize",pageSize);var rtlTable_1=_core.Helpers.right(o,"rtlTable",rtlTable);var scrollLeftStartPosition_1=_core.Helpers.right(o,"scrollLeftStartPosition",scrollLeftStartPosition);var showRowNumber_1=_core.Helpers.right(o,"showRowNumber",showRowNumber);var sort_1=_core.Helpers.right(o,"sort",sort);var sortAscending_1=_core.Helpers.right(o,"sortAscending",sortAscending);var sortColumn_1=_core.Helpers.right(o,"sortColumn",sortColumn);var startPage_1=_core.Helpers.right(o,"startPage",startPage);var width_1=_core.Helpers.right(o,"width",width);return new _options.TableOptions(allowHtml_1,alternatingRowStyle_1,inputRecord.cssClassName,firstRowNumber_1,height_1,page_1,pageSize_1,rtlTable_1,scrollLeftStartPosition_1,showRowNumber_1,sort_1,sortAscending_1,sortColumn_1,startPage_1,width_1);}();return new Table(this.data,this.typeName,newOptions);}},{key:"cssClassName",value:function cssClassName(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){var _this97=this;var o=this.options.cssClassName;var newNested=new _options.CssClassNames(_core.Helpers.right(o,"headerRow",headerRow),_core.Helpers.right(o,"tableRow",tableRow),_core.Helpers.right(o,"oddTableRow",oddTableRow),_core.Helpers.right(o,"selectedTableRow",selectedTableRow),_core.Helpers.right(o,"hoverTableRow",hoverTableRow),_core.Helpers.right(o,"headerCell",headerCell),_core.Helpers.right(o,"tableCell",tableCell),_core.Helpers.right(o,"rowNumberCell",rowNumberCell));var options=function(){var inputRecord=_this97.options;return new _options.TableOptions(inputRecord.allowHtml,inputRecord.alternatingRowStyle,newNested,inputRecord.firstRowNumber,inputRecord.height,inputRecord.page,inputRecord.pageSize,inputRecord.rtlTable,inputRecord.scrollLeftStartPosition,inputRecord.showRowNumber,inputRecord.sort,inputRecord.sortAscending,inputRecord.sortColumn,inputRecord.startPage,inputRecord.width);}();return new Table(this.data,this.typeName,options);}}]);return Table;}();_fableCore.Util.setInterfaces(Table.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Table");var Timeline=exports.Timeline=function(){function Timeline(data,typeName,options){_classCallCheck(this,Timeline);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Timeline,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(avoidOverlappingGridLines,backgroundColor,colors,enableInteractivity,forceIFrame,height,width){var _this98=this;var o=this.options;var newOptions=function(){var inputRecord=_this98.options;var avoidOverlappingGridLines_1=_core.Helpers.right(o,"avoidOverlappingGridLines",avoidOverlappingGridLines);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var46=colors;if($var46!=null){return function(source){return Array.from(source);}($var46);}else{return $var46;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var width_1=_core.Helpers.right(o,"width",width);return new _options.TimelineOptions(avoidOverlappingGridLines_1,backgroundColor_1,colors_1,enableInteractivity_1,forceIFrame_1,height_1,inputRecord.timeline,width_1);}();return new Timeline(this.data,this.typeName,newOptions);}},{key:"timeline",value:function timeline(colorByRowLabel,groupByRowLabel,showRowLabels,singleColor){var _this99=this;var o=this.options.timeline;var newNested=function(){var colorByRowLabel_1=_core.Helpers.right(o,"colorByRowLabel",colorByRowLabel);var groupByRowLabel_1=_core.Helpers.right(o,"groupByRowLabel",groupByRowLabel);var showRowLabels_1=_core.Helpers.right(o,"showRowLabels",showRowLabels);var singleColor_1=_core.Helpers.right(o,"singleColor",singleColor);return new _options.TimelineTimeline(_core.Helpers.copy(o,"barLabelStyle"),colorByRowLabel_1,groupByRowLabel_1,_core.Helpers.copy(o,"rowLabelStyle"),showRowLabels_1,singleColor_1);}();var options=function(){var inputRecord=_this99.options;return new _options.TimelineOptions(inputRecord.avoidOverlappingGridLines,inputRecord.backgroundColor,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.forceIFrame,inputRecord.height,newNested,inputRecord.width);}();return new Timeline(this.data,this.typeName,options);}}]);return Timeline;}();_fableCore.Util.setInterfaces(Timeline.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Timeline");var Candlestick=exports.Candlestick=function(){function Candlestick(data,typeName,options){_classCallCheck(this,Candlestick);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Candlestick,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,orientation,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this100=this;var o=this.options;var newOptions=function(){var inputRecord=_this100.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var47=colors;if($var47!=null){return function(source){return Array.from(source);}($var47);}else{return $var47;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.CandlestickChartOptions(aggregationTarget_1,inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,inputRecord.legend,orientation_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Candlestick(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this101=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this101.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this102=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this102.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"candlestick",value:function candlestick(hollowIsRising){var _this103=this;var o=this.options.candlestick;var newNested=new _options.CandlestickCandlestick(_core.Helpers.right(o,"hollowIsRising",hollowIsRising),_core.Helpers.copy(o,"fallingColor"),_core.Helpers.copy(o,"risingColor"));var options=function(){var inputRecord=_this103.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this104=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this104.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this105=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var48=ticks;if($var48!=null){return function(source){return Array.from(source);}($var48);}else{return $var48;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this105.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this106=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this106.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this107=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this107.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this108=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this108.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this109=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var49=ticks;if($var49!=null){return function(source){return Array.from(source);}($var49);}else{return $var49;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this109.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}}]);return Candlestick;}();_fableCore.Util.setInterfaces(Candlestick.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Candlestick");function GeoChartOptions_get_empty_Static(){return new _options.GeoChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.GeoChartOptions$2Eget_empty$2EStatic=GeoChartOptions_get_empty_Static;function ScatterChartOptions_get_empty_Static(){return new _options.ScatterChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ScatterChartOptions$2Eget_empty$2EStatic=ScatterChartOptions_get_empty_Static;function ColumnChartOptions_get_empty_Static(){return new _options.ColumnChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ColumnChartOptions$2Eget_empty$2EStatic=ColumnChartOptions_get_empty_Static;function LineChartOptions_get_empty_Static(){return new _options.LineChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.LineChartOptions$2Eget_empty$2EStatic=LineChartOptions_get_empty_Static;function BarChartOptions_get_empty_Static(){return new _options.BarChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BarChartOptions$2Eget_empty$2EStatic=BarChartOptions_get_empty_Static;function HistogramOptions_get_empty_Static(){return new _options.HistogramOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.HistogramOptions$2Eget_empty$2EStatic=HistogramOptions_get_empty_Static;function AreaChartOptions_get_empty_Static(){return new _options.AreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AreaChartOptions$2Eget_empty$2EStatic=AreaChartOptions_get_empty_Static;function AnnotationChartOptions_get_empty_Static(){return new _options.AnnotationChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AnnotationChartOptions$2Eget_empty$2EStatic=AnnotationChartOptions_get_empty_Static;function SteppedAreaChartOptions_get_empty_Static(){return new _options.SteppedAreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=SteppedAreaChartOptions_get_empty_Static;function PieChartOptions_get_empty_Static(){return new _options.PieChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.PieChartOptions$2Eget_empty$2EStatic=PieChartOptions_get_empty_Static;function BubbleChartOptions_get_empty_Static(){return new _options.BubbleChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BubbleChartOptions$2Eget_empty$2EStatic=BubbleChartOptions_get_empty_Static;function TreeMapOptions_get_empty_Static(){return new _options.TreeMapOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TreeMapOptions$2Eget_empty$2EStatic=TreeMapOptions_get_empty_Static;function TableOptions_get_empty_Static(){return new _options.TableOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TableOptions$2Eget_empty$2EStatic=TableOptions_get_empty_Static;function TimelineOptions_get_empty_Static(){return new _options.TimelineOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TimelineOptions$2Eget_empty$2EStatic=TimelineOptions_get_empty_Static;function CandlestickChartOptions_get_empty_Static(){return new _options.CandlestickChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.CandlestickChartOptions$2Eget_empty$2EStatic=CandlestickChartOptions_get_empty_Static;var options=function(){function options(){_classCallCheck(this,options);}_createClass(options,null,[{key:"chartSizeAxis",value:function chartSizeAxis(maxSize,maxValue,minSize,minValue){return new _options.ChartSizeAxis(_core.Helpers.orDefault(maxSize),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minSize),_core.Helpers.orDefault(minValue));}},{key:"chartTextStyle",value:function chartTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){return new _options.ChartTextStyle(_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize),_core.Helpers.orDefault(bold),_core.Helpers.orDefault(italic),_core.Helpers.orDefault(color),_core.Helpers.orDefault(auraColor),_core.Helpers.orDefault(opacity));}},{key:"chartTooltip",value:function chartTooltip(isHtml,showColorCode,textStyle,trigger){return new _options.ChartTooltip(_core.Helpers.orDefault(isHtml),_core.Helpers.orDefault(showColorCode),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(trigger));}},{key:"chartLegend",value:function chartLegend(alignment,maxLines,position,textStyle,numberFormat){return new _options.ChartLegend(_core.Helpers.orDefault(alignment),_core.Helpers.orDefault(maxLines),_core.Helpers.orDefault(position),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(numberFormat));}},{key:"chartColorAxis",value:function chartColorAxis(minValue,maxValue,values,colors,legend){return new _options.ChartColorAxis(_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(function(){var $var50=values;if($var50!=null){return function(source){return Float64Array.from(source);}($var50);}else{return $var50;}}()),_core.Helpers.orDefault(function(){var $var51=colors;if($var51!=null){return function(source){return Array.from(source);}($var51);}else{return $var51;}}()),_core.Helpers.orDefault(legend));}},{key:"geoChartMagnifyingGlass",value:function geoChartMagnifyingGlass(enable,zoomFactor){return new _options.GeoChartMagnifyingGlass(_core.Helpers.orDefault(enable),_core.Helpers.orDefault(zoomFactor));}},{key:"chartBoxStyleGradient",value:function chartBoxStyleGradient(color1,color2,x1,y1,x2,y2,useObjectBoundingBoxUnits){return new _options.ChartBoxStyleGradient(_core.Helpers.orDefault(color1),_core.Helpers.orDefault(color2),_core.Helpers.orDefault(x1),_core.Helpers.orDefault(y1),_core.Helpers.orDefault(x2),_core.Helpers.orDefault(y2),_core.Helpers.orDefault(useObjectBoundingBoxUnits));}},{key:"chartBoxStyle",value:function chartBoxStyle(stroke,strokeWidth,rx,ry,gradient){return new _options.ChartBoxStyle(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(rx),_core.Helpers.orDefault(ry),_core.Helpers.orDefault(gradient));}},{key:"chartAnnotations",value:function chartAnnotations(boxStyle,textStyle){return new _options.ChartAnnotations(_core.Helpers.orDefault(boxStyle),_core.Helpers.orDefault(textStyle));}},{key:"chartCrosshairFocused",value:function chartCrosshairFocused(color,opacity){return new _options.ChartCrosshairFocused(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshairSelected",value:function chartCrosshairSelected(color,opacity){return new _options.ChartCrosshairSelected(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshair",value:function chartCrosshair(color,focused,opacity,orientation,selected,trigger){return new _options.ChartCrosshair(_core.Helpers.orDefault(color),_core.Helpers.orDefault(focused),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(orientation),_core.Helpers.orDefault(selected),_core.Helpers.orDefault(trigger));}},{key:"chartExplorer",value:function chartExplorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){return new _options.ChartExplorer(_core.Helpers.orDefault(function(){var $var52=actions;if($var52!=null){return function(source){return Array.from(source);}($var52);}else{return $var52;}}()),_core.Helpers.orDefault(axis),_core.Helpers.orDefault(keepInBounds),_core.Helpers.orDefault(maxZoomIn),_core.Helpers.orDefault(maxZoomOut),_core.Helpers.orDefault(zoomDelta));}},{key:"chartStroke",value:function chartStroke(stroke,strokeWidth,fill){return new _options.ChartStroke(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(fill));}},{key:"chartArea",value:function chartArea(top,left,width,height){return new _options.ChartArea(_core.Helpers.orDefault(top),_core.Helpers.orDefault(left),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"transitionAnimation",value:function transitionAnimation(duration,easing){return new _options.TransitionAnimation(_core.Helpers.orDefault(duration),_core.Helpers.orDefault(easing));}},{key:"chartGridlines",value:function chartGridlines(color,count){return new _options.ChartGridlines(_core.Helpers.orDefault(color),_core.Helpers.orDefault(count));}},{key:"chartViewWindow",value:function chartViewWindow(max,min){return new _options.ChartViewWindow(_core.Helpers.orDefault(max),_core.Helpers.orDefault(min));}},{key:"chartAxis",value:function chartAxis(baseline,baselineColor,direction,format,gridlines,minorGridlines,logScale,textPosition,textStyle,ticks,title,titleTextStyle,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode,viewWindow){return new _options.ChartAxis(_core.Helpers.orDefault(baseline),_core.Helpers.orDefault(baselineColor),_core.Helpers.orDefault(direction),_core.Helpers.orDefault(format),_core.Helpers.orDefault(gridlines),_core.Helpers.orDefault(minorGridlines),_core.Helpers.orDefault(logScale),_core.Helpers.orDefault(textPosition),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(function(){var $var53=ticks;if($var53!=null){return function(source){return Array.from(source);}($var53);}else{return $var53;}}()),_core.Helpers.orDefault(title),_core.Helpers.orDefault(titleTextStyle),_core.Helpers.orDefault(allowContainerBoundaryTextCufoff),_core.Helpers.orDefault(slantedText),_core.Helpers.orDefault(slantedTextAngle),_core.Helpers.orDefault(maxAlternation),_core.Helpers.orDefault(maxTextLines),_core.Helpers.orDefault(minTextSpacing),_core.Helpers.orDefault(showTextEvery),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(viewWindowMode),_core.Helpers.orDefault(viewWindow));}},{key:"chartBoundingBox",value:function chartBoundingBox(left,top,width,height){return new _options.ChartBoundingBox(_core.Helpers.orDefault(left),_core.Helpers.orDefault(top),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"groupWidth",value:function groupWidth(_groupWidth){return new _options.GroupWidth(_core.Helpers.orDefault(_groupWidth));}},{key:"trendline",value:function trendline(color,lineWidth,labelInLegend,opacity,pointSize,pointsVisible,showR2,type,visibleInLegend){return new _options.Trendline(_core.Helpers.orDefault(color),_core.Helpers.orDefault(lineWidth),_core.Helpers.orDefault(labelInLegend),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(pointSize),_core.Helpers.orDefault(pointsVisible),_core.Helpers.orDefault(showR2),_core.Helpers.orDefault(type),_core.Helpers.orDefault(visibleInLegend));}},{key:"histogramHistogram",value:function histogramHistogram(bucketSize,hideBucketItems,lastBucketPercentile){return new _options.HistogramHistogram(_core.Helpers.orDefault(bucketSize),_core.Helpers.orDefault(hideBucketItems),_core.Helpers.orDefault(lastBucketPercentile));}},{key:"chartBubble",value:function chartBubble(opacity,stroke,textStyle){return new _options.ChartBubble(_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(textStyle));}},{key:"cssClassNames",value:function cssClassNames(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){return new _options.CssClassNames(_core.Helpers.orDefault(headerRow),_core.Helpers.orDefault(tableRow),_core.Helpers.orDefault(oddTableRow),_core.Helpers.orDefault(selectedTableRow),_core.Helpers.orDefault(hoverTableRow),_core.Helpers.orDefault(headerCell),_core.Helpers.orDefault(tableCell),_core.Helpers.orDefault(rowNumberCell));}},{key:"labelStyle",value:function labelStyle(color,fontName,fontSize){return new _options.LabelStyle(_core.Helpers.orDefault(color),_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize));}},{key:"timelineTimeline",value:function timelineTimeline(barLabelStyle,colorByRowLabel,groupByRowLabel,rowLabelStyle,showRowLabels,singleColor){return new _options.TimelineTimeline(_core.Helpers.orDefault(barLabelStyle),_core.Helpers.orDefault(colorByRowLabel),_core.Helpers.orDefault(groupByRowLabel),_core.Helpers.orDefault(rowLabelStyle),_core.Helpers.orDefault(showRowLabels),_core.Helpers.orDefault(singleColor));}},{key:"candlestickCandlestick",value:function candlestickCandlestick(hollowIsRising,fallingColor,risingColor){return new _options.CandlestickCandlestick(_core.Helpers.orDefault(hollowIsRising),_core.Helpers.orDefault(fallingColor),_core.Helpers.orDefault(risingColor));}}]);return options;}();exports.options=options;_fableCore.Util.setInterfaces(options.prototype,[],"TheGamma.GoogleCharts.Extensions.options");});
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(global,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports,__webpack_require__(20),__webpack_require__(21),__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports!=="undefined"){factory(exports,require("./core"),require("./options"),require("fable-core"));}else{var mod={exports:{}};factory(mod.exports,global.core,global.options,global.fableCore);global.extensions=mod.exports;}})(this,function(exports,_core,_options,_fableCore){"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.options=exports.CandlestickChartOptions$2Eget_empty$2EStatic=exports.TimelineOptions$2Eget_empty$2EStatic=exports.TableOptions$2Eget_empty$2EStatic=exports.TreeMapOptions$2Eget_empty$2EStatic=exports.BubbleChartOptions$2Eget_empty$2EStatic=exports.PieChartOptions$2Eget_empty$2EStatic=exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=exports.AnnotationChartOptions$2Eget_empty$2EStatic=exports.AreaChartOptions$2Eget_empty$2EStatic=exports.HistogramOptions$2Eget_empty$2EStatic=exports.BarChartOptions$2Eget_empty$2EStatic=exports.LineChartOptions$2Eget_empty$2EStatic=exports.ColumnChartOptions$2Eget_empty$2EStatic=exports.ScatterChartOptions$2Eget_empty$2EStatic=exports.GeoChartOptions$2Eget_empty$2EStatic=exports.Candlestick=exports.Timeline=exports.Table=exports.TreeMap=exports.Bubble=exports.Pie=exports.SteppedArea=exports.Annotation=exports.Area=exports.Histogram=exports.Bar=exports.Line=exports.Column=exports.Scatter=exports.Geo=undefined;function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var Geo=exports.Geo=function(){function Geo(data,typeName,options){_classCallCheck(this,Geo);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Geo,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,datalessRegionColor,displayMode,enableRegionInteractivity,height,keepAspectRatio,region,markerOpacity,resolution,width){var _this=this;var o=this.options;var newOptions=function(){var inputRecord=_this.options;var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var datalessRegionColor_1=_core.Helpers.right(o,"datalessRegionColor",datalessRegionColor);var displayMode_1=_core.Helpers.right(o,"displayMode",displayMode);var enableRegionInteractivity_1=_core.Helpers.right(o,"enableRegionInteractivity",enableRegionInteractivity);var height_1=_core.Helpers.right(o,"height",height);var keepAspectRatio_1=_core.Helpers.right(o,"keepAspectRatio",keepAspectRatio);var region_1=_core.Helpers.right(o,"region",region);var markerOpacity_1=_core.Helpers.right(o,"markerOpacity",markerOpacity);var resolution_1=_core.Helpers.right(o,"resolution",resolution);var width_1=_core.Helpers.right(o,"width",width);return new _options.GeoChartOptions(backgroundColor_1,inputRecord.colorAxis,datalessRegionColor_1,displayMode_1,enableRegionInteractivity_1,height_1,keepAspectRatio_1,inputRecord.legend,region_1,inputRecord.magnifyingGlass,markerOpacity_1,resolution_1,inputRecord.sizeAxis,inputRecord.tooltip,width_1);}();return new Geo(this.data,this.typeName,newOptions);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var _this2=this;var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var10=values;if($var10!=null){return function(source){return Float64Array.from(source);}($var10);}else{return $var10;}}()),_core.Helpers.right(o,"colors",function(){var $var11=colors;if($var11!=null){return function(source){return Array.from(source);}($var11);}else{return $var11;}}()),_core.Helpers.copy(o,"legend"));var options=function(){var inputRecord=_this2.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,newNested,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this3=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this3.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,newNested,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"magnifyingGlass",value:function magnifyingGlass(enable,zoomFactor){var _this4=this;var o=this.options.magnifyingGlass;var newNested=new _options.GeoChartMagnifyingGlass(_core.Helpers.right(o,"enable",enable),_core.Helpers.right(o,"zoomFactor",zoomFactor));var options=function(){var inputRecord=_this4.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,newNested,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var _this5=this;var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=function(){var inputRecord=_this5.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,newNested,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this6=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this6.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,newNested,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}}]);return Geo;}();_fableCore.Util.setInterfaces(Geo.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Geo");var Scatter=function(){function Scatter(data,typeName,options){_classCallCheck(this,Scatter);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Scatter,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,fontSize,fontName,forceIFrame,height,lineWidth,pointSize,selectionMode,series,theme,title,titlePosition,width){var _this7=this;var o=this.options;var newOptions=function(){var inputRecord=_this7.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var12=colors;if($var12!=null){return function(source){return Array.from(source);}($var12);}else{return $var12;}}());var curveType_1=_core.Helpers.right(o,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var width_1=_core.Helpers.right(o,"width",width);return new _options.ScatterChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,fontSize_1,fontName_1,forceIFrame_1,inputRecord.hAxis,height_1,inputRecord.legend,lineWidth_1,pointSize_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,width_1);}();return new Scatter(this.data,this.typeName,newOptions);}},{key:"trendlines",value:function trendlines(_trendlines){var _this8=this;var o=this.options;var options=function(){var inputRecord=_this8.options;var trendlines_1=_core.Helpers.right(o,"trendlines",function(){var $var13=_trendlines;if($var13!=null){return function(source){return Array.from(source);}($var13);}else{return $var13;}}());return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,trendlines_1,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"animation",value:function animation(duration,easing){var _this9=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this9.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this10=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this10.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this11=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this11.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this12=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var14=actions;if($var14!=null){return function(source){return Array.from(source);}($var14);}else{return $var14;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this12.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this13=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var15=ticks;if($var15!=null){return function(source){return Array.from(source);}($var15);}else{return $var15;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this13.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,newNested,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this14=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this14.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this15=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this15.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this16=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this16.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this17=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var16=ticks;if($var16!=null){return function(source){return Array.from(source);}($var16);}else{return $var16;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this17.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,newNested,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}}]);return Scatter;}();exports.Scatter=Scatter;_fableCore.Util.setInterfaces(Scatter.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Scatter");var Column=exports.Column=function(){function Column(data,typeName,options){_classCallCheck(this,Column);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Column,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this18=this;var o=this.options;var newOptions=function(){var inputRecord=_this18.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var17=colors;if($var17!=null){return function(source){return Array.from(source);}($var17);}else{return $var17;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.ColumnChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,isStacked_1,inputRecord.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Column(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this19=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this19.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this20=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this20.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this21=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this21.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this22=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var18=ticks;if($var18!=null){return function(source){return Array.from(source);}($var18);}else{return $var18;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this22.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this23=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this23.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this24=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this24.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this25=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this25.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this26=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var19=ticks;if($var19!=null){return function(source){return Array.from(source);}($var19);}else{return $var19;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this26.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Column(this.data,this.typeName,options);}}]);return Column;}();_fableCore.Util.setInterfaces(Column.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Column");var Line=exports.Line=function(){function Line(data,typeName,options){_classCallCheck(this,Line);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Line,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this27=this;var o=this.options;var newOptions=function(){var inputRecord=_this27.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var20=colors;if($var20!=null){return function(source){return Array.from(source);}($var20);}else{return $var20;}}());var curveType_1=_core.Helpers.right(o,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.LineChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,inputRecord.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Line(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this28=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this28.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this29=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this29.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this30=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this30.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this31=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var21=actions;if($var21!=null){return function(source){return Array.from(source);}($var21);}else{return $var21;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this31.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this32=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var22=ticks;if($var22!=null){return function(source){return Array.from(source);}($var22);}else{return $var22;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this32.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this33=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this33.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,newNested,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this34=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this34.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this35=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this35.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this36=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var23=ticks;if($var23!=null){return function(source){return Array.from(source);}($var23);}else{return $var23;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this36.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Line(this.data,this.typeName,options);}}]);return Line;}();_fableCore.Util.setInterfaces(Line.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Line");var Bar=exports.Bar=function(){function Bar(data,typeName,options){_classCallCheck(this,Bar);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bar,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,hAxes,height,isStacked,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this37=this;var o=this.options;var newOptions=function(){var inputRecord=_this37.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var24=colors;if($var24!=null){return function(source){return Array.from(source);}($var24);}else{return $var24;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var hAxes_1=_core.Helpers.right(o,"hAxes",hAxes);var height_1=_core.Helpers.right(o,"height",height);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.BarChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,hAxes_1,inputRecord.hAxis,height_1,isStacked_1,inputRecord.legend,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Bar(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this38=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this38.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this39=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this39.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this40=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this40.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this41=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var25=ticks;if($var25!=null){return function(source){return Array.from(source);}($var25);}else{return $var25;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this41.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,newNested,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this42=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this42.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this43=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this43.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this44=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this44.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this45=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var26=ticks;if($var26!=null){return function(source){return Array.from(source);}($var26);}else{return $var26;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this45.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}}]);return Bar;}();_fableCore.Util.setInterfaces(Bar.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bar");var Histogram=exports.Histogram=function(){function Histogram(data,typeName,options){_classCallCheck(this,Histogram);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Histogram,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,orientation,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this46=this;var o=this.options;var newOptions=function(){var inputRecord=_this46.options;var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var27=colors;if($var27!=null){return function(source){return Array.from(source);}($var27);}else{return $var27;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.HistogramOptions(inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,inputRecord.histogram,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,orientation_1,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Histogram(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this47=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this47.options;return new _options.HistogramOptions(newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this48=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this48.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this49=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this49.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this50=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var28=ticks;if($var28!=null){return function(source){return Array.from(source);}($var28);}else{return $var28;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this50.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"histogram",value:function histogram(bucketSize,hideBucketItems,lastBucketPercentile){var _this51=this;var o=this.options.histogram;var newNested=new _options.HistogramHistogram(_core.Helpers.right(o,"bucketSize",bucketSize),_core.Helpers.right(o,"hideBucketItems",hideBucketItems),_core.Helpers.right(o,"lastBucketPercentile",lastBucketPercentile));var options=function(){var inputRecord=_this51.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this52=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this52.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this53=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this53.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this54=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this54.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this55=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var29=ticks;if($var29!=null){return function(source){return Array.from(source);}($var29);}else{return $var29;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this55.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}}]);return Histogram;}();_fableCore.Util.setInterfaces(Histogram.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Histogram");var Area=exports.Area=function(){function Area(data,typeName,options){_classCallCheck(this,Area);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Area,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this56=this;var o=this.options;var newOptions=function(){var inputRecord=_this56.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(o,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var30=colors;if($var30!=null){return function(source){return Array.from(source);}($var30);}else{return $var30;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.AreaChartOptions(aggregationTarget_1,inputRecord.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Area(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this57=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this57.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this58=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this58.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this59=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this59.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this60=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var31=actions;if($var31!=null){return function(source){return Array.from(source);}($var31);}else{return $var31;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this60.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this61=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var32=ticks;if($var32!=null){return function(source){return Array.from(source);}($var32);}else{return $var32;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this61.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this62=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this62.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this63=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this63.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this64=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this64.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this65=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var33=ticks;if($var33!=null){return function(source){return Array.from(source);}($var33);}else{return $var33;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this65.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Area(this.data,this.typeName,options);}}]);return Area;}();_fableCore.Util.setInterfaces(Area.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Area");var Annotation=exports.Annotation=function(){function Annotation(data,typeName,options){_classCallCheck(this,Annotation);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Annotation,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,allValuesSuffix,annotationsWidth,colors,dateFormat,displayAnnotations,displayAnnotationsFilter,displayDateTimeBarSeparator,displayExactValues,displayLegendDots,displayLegendValues,displayRangeSelector,displayZoomButtons,fill,legendPosition,max,min,numberFormats,scaleColumns,scaleFormat,scaleType,thickness,zoomEndTime,zoomStartTime){var _this66=this;var o=this.options;var newOptions=function(){var inputRecord=_this66.options;return new _options.AnnotationChartOptions(_core.Helpers.right(o,"allowHtml",allowHtml),_core.Helpers.right(o,"allValuesSuffix",allValuesSuffix),_core.Helpers.right(o,"annotationsWidth",annotationsWidth),_core.Helpers.right(o,"colors",function(){var $var34=colors;if($var34!=null){return function(source){return Array.from(source);}($var34);}else{return $var34;}}()),_core.Helpers.right(o,"dateFormat",dateFormat),_core.Helpers.right(o,"displayAnnotations",displayAnnotations),_core.Helpers.right(o,"displayAnnotationsFilter",displayAnnotationsFilter),_core.Helpers.right(o,"displayDateTimeBarSeparator",displayDateTimeBarSeparator),_core.Helpers.right(o,"displayExactValues",displayExactValues),_core.Helpers.right(o,"displayLegendDots",displayLegendDots),_core.Helpers.right(o,"displayLegendValues",displayLegendValues),_core.Helpers.right(o,"displayRangeSelector",displayRangeSelector),_core.Helpers.right(o,"displayZoomButtons",displayZoomButtons),_core.Helpers.right(o,"fill",fill),_core.Helpers.right(o,"legendPosition",legendPosition),_core.Helpers.right(o,"max",max),_core.Helpers.right(o,"min",min),_core.Helpers.right(o,"numberFormats",numberFormats),_core.Helpers.right(o,"scaleColumns",function(){var $var35=scaleColumns;if($var35!=null){return function(source){return Float64Array.from(source);}($var35);}else{return $var35;}}()),_core.Helpers.right(o,"scaleFormat",scaleFormat),_core.Helpers.right(o,"scaleType",scaleType),_core.Helpers.right(o,"thickness",thickness),_core.Helpers.right(o,"zoomEndTime",zoomEndTime),_core.Helpers.right(o,"zoomStartTime",zoomStartTime));}();return new Annotation(this.data,this.typeName,newOptions);}}]);return Annotation;}();_fableCore.Util.setInterfaces(Annotation.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Annotation");var SteppedArea=exports.SteppedArea=function(){function SteppedArea(data,typeName,options){_classCallCheck(this,SteppedArea);this.data=data;this.typeName=typeName;this.options=options;}_createClass(SteppedArea,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,connectSteps,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this67=this;var o=this.options;var newOptions=function(){var inputRecord=_this67.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(o,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var36=colors;if($var36!=null){return function(source){return Array.from(source);}($var36);}else{return $var36;}}());var connectSteps_1=_core.Helpers.right(o,"connectSteps",connectSteps);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.SteppedAreaChartOptions(aggregationTarget_1,inputRecord.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,connectSteps_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new SteppedArea(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this68=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this68.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this69=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this69.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this70=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var37=ticks;if($var37!=null){return function(source){return Array.from(source);}($var37);}else{return $var37;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this70.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this71=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this71.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this72=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this72.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this73=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this73.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this74=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var38=ticks;if($var38!=null){return function(source){return Array.from(source);}($var38);}else{return $var38;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this74.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}}]);return SteppedArea;}();_fableCore.Util.setInterfaces(SteppedArea.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.SteppedArea");var Pie=exports.Pie=function(){function Pie(data,typeName,options){_classCallCheck(this,Pie);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Pie,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,colors,enableInteractivity,fontSize,fontName,height,is3D,pieHole,pieSliceBorderColor,pieSliceText,pieStartAngle,reverseCategories,pieResidueSliceColor,pieResidueSliceLabel,slices,sliceVisibilityThreshold,title,width){var _this75=this;var o=this.options;var newOptions=function(){var inputRecord=_this75.options;var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var39=colors;if($var39!=null){return function(source){return Array.from(source);}($var39);}else{return $var39;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var is3D_1=_core.Helpers.right(o,"is3D",is3D);var pieHole_1=_core.Helpers.right(o,"pieHole",pieHole);var pieSliceBorderColor_1=_core.Helpers.right(o,"pieSliceBorderColor",pieSliceBorderColor);var pieSliceText_1=_core.Helpers.right(o,"pieSliceText",pieSliceText);var pieStartAngle_1=_core.Helpers.right(o,"pieStartAngle",pieStartAngle);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var pieResidueSliceColor_1=_core.Helpers.right(o,"pieResidueSliceColor",pieResidueSliceColor);var pieResidueSliceLabel_1=_core.Helpers.right(o,"pieResidueSliceLabel",pieResidueSliceLabel);var slices_1=_core.Helpers.right(o,"slices",slices);var sliceVisibilityThreshold_1=_core.Helpers.right(o,"sliceVisibilityThreshold",sliceVisibilityThreshold);var title_1=_core.Helpers.right(o,"title",title);var width_1=_core.Helpers.right(o,"width",width);return new _options.PieChartOptions(backgroundColor_1,inputRecord.chartArea,colors_1,enableInteractivity_1,fontSize_1,fontName_1,height_1,is3D_1,inputRecord.legend,pieHole_1,pieSliceBorderColor_1,pieSliceText_1,inputRecord.pieSliceTextStyle,pieStartAngle_1,reverseCategories_1,pieResidueSliceColor_1,pieResidueSliceLabel_1,slices_1,sliceVisibilityThreshold_1,title_1,inputRecord.titleTextStyle,inputRecord.tooltip,width_1);}();return new Pie(this.data,this.typeName,newOptions);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this76=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this76.options;return new _options.PieChartOptions(inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this77=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this77.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,newNested,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"pieSliceTextStyle",value:function pieSliceTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this78=this;var o=this.options.pieSliceTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this78.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,newNested,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this79=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this79.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,newNested,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this80=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this80.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,newNested,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}}]);return Pie;}();_fableCore.Util.setInterfaces(Pie.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Pie");var Bubble=exports.Bubble=function(){function Bubble(data,typeName,options){_classCallCheck(this,Bubble);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bubble,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,enableInteractivity,fontSize,fontName,forceIFrame,height,selectionMode,series,sortBubblesBySize,theme,title,titlePosition,width){var _this81=this;var o=this.options;var newOptions=function(){var inputRecord=_this81.options;var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var40=colors;if($var40!=null){return function(source){return Array.from(source);}($var40);}else{return $var40;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var sortBubblesBySize_1=_core.Helpers.right(o,"sortBubblesBySize",sortBubblesBySize);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var width_1=_core.Helpers.right(o,"width",width);return new _options.BubbleChartOptions(inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bubble,inputRecord.chartArea,colors_1,inputRecord.colorAxis,enableInteractivity_1,inputRecord.explorer,fontSize_1,fontName_1,forceIFrame_1,inputRecord.hAxis,height_1,inputRecord.legend,selectionMode_1,series_1,inputRecord.sizeAxis,sortBubblesBySize_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,width_1);}();return new Bubble(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this82=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this82.options;return new _options.BubbleChartOptions(newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"bubble",value:function bubble(opacity,stroke){var _this83=this;var o=this.options.bubble;var newNested=new _options.ChartBubble(_core.Helpers.right(o,"opacity",opacity),_core.Helpers.right(o,"stroke",stroke),_core.Helpers.copy(o,"textStyle"));var options=function(){var inputRecord=_this83.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this84=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this84.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,newNested,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var _this85=this;var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var41=values;if($var41!=null){return function(source){return Float64Array.from(source);}($var41);}else{return $var41;}}()),_core.Helpers.right(o,"colors",function(){var $var42=colors;if($var42!=null){return function(source){return Array.from(source);}($var42);}else{return $var42;}}()),_core.Helpers.copy(o,"legend"));var options=function(){var inputRecord=_this85.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this86=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var43=actions;if($var43!=null){return function(source){return Array.from(source);}($var43);}else{return $var43;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this86.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,newNested,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this87=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var44=ticks;if($var44!=null){return function(source){return Array.from(source);}($var44);}else{return $var44;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this87.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,newNested,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this88=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this88.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var _this89=this;var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=function(){var inputRecord=_this89.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,newNested,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this90=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this90.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this91=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this91.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this92=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var45=ticks;if($var45!=null){return function(source){return Array.from(source);}($var45);}else{return $var45;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this92.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,newNested,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}}]);return Bubble;}();_fableCore.Util.setInterfaces(Bubble.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bubble");var TreeMap=exports.TreeMap=function(){function TreeMap(data,typeName,options){_classCallCheck(this,TreeMap);this.data=data;this.typeName=typeName;this.options=options;}_createClass(TreeMap,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(fontColor,fontFamily,fontSize,forceIFrame,headerColor,headerHeight,headerHighlightColor,hintOpacity,maxColor,maxDepth,maxHighlightColor,maxPostDepth,maxColorValue,midColor,midHighlightColor,minColor,minHighlightColor,minColorValue,showScale,showTooltips,title,useWeightedAverageForAggregation){var _this93=this;var o=this.options;var newOptions=function(){var inputRecord=_this93.options;var fontColor_1=_core.Helpers.right(o,"fontColor",fontColor);var fontFamily_1=_core.Helpers.right(o,"fontFamily",fontFamily);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var headerColor_1=_core.Helpers.right(o,"headerColor",headerColor);var headerHeight_1=_core.Helpers.right(o,"headerHeight",headerHeight);var headerHighlightColor_1=_core.Helpers.right(o,"headerHighlightColor",headerHighlightColor);var hintOpacity_1=_core.Helpers.right(o,"hintOpacity",hintOpacity);var maxColor_1=_core.Helpers.right(o,"maxColor",maxColor);var maxDepth_1=_core.Helpers.right(o,"maxDepth",maxDepth);var maxHighlightColor_1=_core.Helpers.right(o,"maxHighlightColor",maxHighlightColor);var maxPostDepth_1=_core.Helpers.right(o,"maxPostDepth",maxPostDepth);var maxColorValue_1=_core.Helpers.right(o,"maxColorValue",maxColorValue);var midColor_1=_core.Helpers.right(o,"midColor",midColor);var midHighlightColor_1=_core.Helpers.right(o,"midHighlightColor",midHighlightColor);var minColor_1=_core.Helpers.right(o,"minColor",minColor);var minHighlightColor_1=_core.Helpers.right(o,"minHighlightColor",minHighlightColor);var minColorValue_1=_core.Helpers.right(o,"minColorValue",minColorValue);var showScale_1=_core.Helpers.right(o,"showScale",showScale);var showTooltips_1=_core.Helpers.right(o,"showTooltips",showTooltips);var title_1=_core.Helpers.right(o,"title",title);var useWeightedAverageForAggregation_1=_core.Helpers.right(o,"useWeightedAverageForAggregation",useWeightedAverageForAggregation);return new _options.TreeMapOptions(fontColor_1,fontFamily_1,fontSize_1,forceIFrame_1,headerColor_1,headerHeight_1,headerHighlightColor_1,hintOpacity_1,maxColor_1,maxDepth_1,maxHighlightColor_1,maxPostDepth_1,maxColorValue_1,midColor_1,midHighlightColor_1,minColor_1,minHighlightColor_1,minColorValue_1,showScale_1,showTooltips_1,inputRecord.textStyle,title_1,inputRecord.titleTextStyle,useWeightedAverageForAggregation_1);}();return new TreeMap(this.data,this.typeName,newOptions);}},{key:"textStyle",value:function textStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this94=this;var o=this.options.textStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this94.options;return new _options.TreeMapOptions(inputRecord.fontColor,inputRecord.fontFamily,inputRecord.fontSize,inputRecord.forceIFrame,inputRecord.headerColor,inputRecord.headerHeight,inputRecord.headerHighlightColor,inputRecord.hintOpacity,inputRecord.maxColor,inputRecord.maxDepth,inputRecord.maxHighlightColor,inputRecord.maxPostDepth,inputRecord.maxColorValue,inputRecord.midColor,inputRecord.midHighlightColor,inputRecord.minColor,inputRecord.minHighlightColor,inputRecord.minColorValue,inputRecord.showScale,inputRecord.showTooltips,newNested,inputRecord.title,inputRecord.titleTextStyle,inputRecord.useWeightedAverageForAggregation);}();return new TreeMap(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this95=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this95.options;return new _options.TreeMapOptions(inputRecord.fontColor,inputRecord.fontFamily,inputRecord.fontSize,inputRecord.forceIFrame,inputRecord.headerColor,inputRecord.headerHeight,inputRecord.headerHighlightColor,inputRecord.hintOpacity,inputRecord.maxColor,inputRecord.maxDepth,inputRecord.maxHighlightColor,inputRecord.maxPostDepth,inputRecord.maxColorValue,inputRecord.midColor,inputRecord.midHighlightColor,inputRecord.minColor,inputRecord.minHighlightColor,inputRecord.minColorValue,inputRecord.showScale,inputRecord.showTooltips,inputRecord.textStyle,inputRecord.title,newNested,inputRecord.useWeightedAverageForAggregation);}();return new TreeMap(this.data,this.typeName,options);}}]);return TreeMap;}();_fableCore.Util.setInterfaces(TreeMap.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.TreeMap");var Table=exports.Table=function(){function Table(data,typeName,options){_classCallCheck(this,Table);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Table,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,alternatingRowStyle,firstRowNumber,height,page,pageSize,rtlTable,scrollLeftStartPosition,showRowNumber,sort,sortAscending,sortColumn,startPage,width){var _this96=this;var o=this.options;var newOptions=function(){var inputRecord=_this96.options;var allowHtml_1=_core.Helpers.right(o,"allowHtml",allowHtml);var alternatingRowStyle_1=_core.Helpers.right(o,"alternatingRowStyle",alternatingRowStyle);var firstRowNumber_1=_core.Helpers.right(o,"firstRowNumber",firstRowNumber);var height_1=_core.Helpers.right(o,"height",height);var page_1=_core.Helpers.right(o,"page",page);var pageSize_1=_core.Helpers.right(o,"pageSize",pageSize);var rtlTable_1=_core.Helpers.right(o,"rtlTable",rtlTable);var scrollLeftStartPosition_1=_core.Helpers.right(o,"scrollLeftStartPosition",scrollLeftStartPosition);var showRowNumber_1=_core.Helpers.right(o,"showRowNumber",showRowNumber);var sort_1=_core.Helpers.right(o,"sort",sort);var sortAscending_1=_core.Helpers.right(o,"sortAscending",sortAscending);var sortColumn_1=_core.Helpers.right(o,"sortColumn",sortColumn);var startPage_1=_core.Helpers.right(o,"startPage",startPage);var width_1=_core.Helpers.right(o,"width",width);return new _options.TableOptions(allowHtml_1,alternatingRowStyle_1,inputRecord.cssClassName,firstRowNumber_1,height_1,page_1,pageSize_1,rtlTable_1,scrollLeftStartPosition_1,showRowNumber_1,sort_1,sortAscending_1,sortColumn_1,startPage_1,width_1);}();return new Table(this.data,this.typeName,newOptions);}},{key:"cssClassName",value:function cssClassName(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){var _this97=this;var o=this.options.cssClassName;var newNested=new _options.CssClassNames(_core.Helpers.right(o,"headerRow",headerRow),_core.Helpers.right(o,"tableRow",tableRow),_core.Helpers.right(o,"oddTableRow",oddTableRow),_core.Helpers.right(o,"selectedTableRow",selectedTableRow),_core.Helpers.right(o,"hoverTableRow",hoverTableRow),_core.Helpers.right(o,"headerCell",headerCell),_core.Helpers.right(o,"tableCell",tableCell),_core.Helpers.right(o,"rowNumberCell",rowNumberCell));var options=function(){var inputRecord=_this97.options;return new _options.TableOptions(inputRecord.allowHtml,inputRecord.alternatingRowStyle,newNested,inputRecord.firstRowNumber,inputRecord.height,inputRecord.page,inputRecord.pageSize,inputRecord.rtlTable,inputRecord.scrollLeftStartPosition,inputRecord.showRowNumber,inputRecord.sort,inputRecord.sortAscending,inputRecord.sortColumn,inputRecord.startPage,inputRecord.width);}();return new Table(this.data,this.typeName,options);}}]);return Table;}();_fableCore.Util.setInterfaces(Table.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Table");var Timeline=exports.Timeline=function(){function Timeline(data,typeName,options){_classCallCheck(this,Timeline);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Timeline,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(avoidOverlappingGridLines,backgroundColor,colors,enableInteractivity,forceIFrame,height,width){var _this98=this;var o=this.options;var newOptions=function(){var inputRecord=_this98.options;var avoidOverlappingGridLines_1=_core.Helpers.right(o,"avoidOverlappingGridLines",avoidOverlappingGridLines);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var46=colors;if($var46!=null){return function(source){return Array.from(source);}($var46);}else{return $var46;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var width_1=_core.Helpers.right(o,"width",width);return new _options.TimelineOptions(avoidOverlappingGridLines_1,backgroundColor_1,colors_1,enableInteractivity_1,forceIFrame_1,height_1,inputRecord.timeline,width_1);}();return new Timeline(this.data,this.typeName,newOptions);}},{key:"timeline",value:function timeline(colorByRowLabel,groupByRowLabel,showRowLabels,singleColor){var _this99=this;var o=this.options.timeline;var newNested=function(){var colorByRowLabel_1=_core.Helpers.right(o,"colorByRowLabel",colorByRowLabel);var groupByRowLabel_1=_core.Helpers.right(o,"groupByRowLabel",groupByRowLabel);var showRowLabels_1=_core.Helpers.right(o,"showRowLabels",showRowLabels);var singleColor_1=_core.Helpers.right(o,"singleColor",singleColor);return new _options.TimelineTimeline(_core.Helpers.copy(o,"barLabelStyle"),colorByRowLabel_1,groupByRowLabel_1,_core.Helpers.copy(o,"rowLabelStyle"),showRowLabels_1,singleColor_1);}();var options=function(){var inputRecord=_this99.options;return new _options.TimelineOptions(inputRecord.avoidOverlappingGridLines,inputRecord.backgroundColor,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.forceIFrame,inputRecord.height,newNested,inputRecord.width);}();return new Timeline(this.data,this.typeName,options);}}]);return Timeline;}();_fableCore.Util.setInterfaces(Timeline.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Timeline");var Candlestick=exports.Candlestick=function(){function Candlestick(data,typeName,options){_classCallCheck(this,Candlestick);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Candlestick,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,orientation,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this100=this;var o=this.options;var newOptions=function(){var inputRecord=_this100.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var47=colors;if($var47!=null){return function(source){return Array.from(source);}($var47);}else{return $var47;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.CandlestickChartOptions(aggregationTarget_1,inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,inputRecord.legend,orientation_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Candlestick(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this101=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this101.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this102=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this102.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"candlestick",value:function candlestick(hollowIsRising){var _this103=this;var o=this.options.candlestick;var newNested=new _options.CandlestickCandlestick(_core.Helpers.right(o,"hollowIsRising",hollowIsRising),_core.Helpers.copy(o,"fallingColor"),_core.Helpers.copy(o,"risingColor"));var options=function(){var inputRecord=_this103.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this104=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this104.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this105=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var48=ticks;if($var48!=null){return function(source){return Array.from(source);}($var48);}else{return $var48;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this105.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this106=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this106.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this107=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this107.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this108=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this108.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this109=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var49=ticks;if($var49!=null){return function(source){return Array.from(source);}($var49);}else{return $var49;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this109.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}}]);return Candlestick;}();_fableCore.Util.setInterfaces(Candlestick.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Candlestick");function GeoChartOptions_get_empty_Static(){return new _options.GeoChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.GeoChartOptions$2Eget_empty$2EStatic=GeoChartOptions_get_empty_Static;function ScatterChartOptions_get_empty_Static(){return new _options.ScatterChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ScatterChartOptions$2Eget_empty$2EStatic=ScatterChartOptions_get_empty_Static;function ColumnChartOptions_get_empty_Static(){return new _options.ColumnChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ColumnChartOptions$2Eget_empty$2EStatic=ColumnChartOptions_get_empty_Static;function LineChartOptions_get_empty_Static(){return new _options.LineChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.LineChartOptions$2Eget_empty$2EStatic=LineChartOptions_get_empty_Static;function BarChartOptions_get_empty_Static(){return new _options.BarChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BarChartOptions$2Eget_empty$2EStatic=BarChartOptions_get_empty_Static;function HistogramOptions_get_empty_Static(){return new _options.HistogramOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.HistogramOptions$2Eget_empty$2EStatic=HistogramOptions_get_empty_Static;function AreaChartOptions_get_empty_Static(){return new _options.AreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AreaChartOptions$2Eget_empty$2EStatic=AreaChartOptions_get_empty_Static;function AnnotationChartOptions_get_empty_Static(){return new _options.AnnotationChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AnnotationChartOptions$2Eget_empty$2EStatic=AnnotationChartOptions_get_empty_Static;function SteppedAreaChartOptions_get_empty_Static(){return new _options.SteppedAreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=SteppedAreaChartOptions_get_empty_Static;function PieChartOptions_get_empty_Static(){return new _options.PieChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.PieChartOptions$2Eget_empty$2EStatic=PieChartOptions_get_empty_Static;function BubbleChartOptions_get_empty_Static(){return new _options.BubbleChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BubbleChartOptions$2Eget_empty$2EStatic=BubbleChartOptions_get_empty_Static;function TreeMapOptions_get_empty_Static(){return new _options.TreeMapOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TreeMapOptions$2Eget_empty$2EStatic=TreeMapOptions_get_empty_Static;function TableOptions_get_empty_Static(){return new _options.TableOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TableOptions$2Eget_empty$2EStatic=TableOptions_get_empty_Static;function TimelineOptions_get_empty_Static(){return new _options.TimelineOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TimelineOptions$2Eget_empty$2EStatic=TimelineOptions_get_empty_Static;function CandlestickChartOptions_get_empty_Static(){return new _options.CandlestickChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.CandlestickChartOptions$2Eget_empty$2EStatic=CandlestickChartOptions_get_empty_Static;var options=function(){function options(){_classCallCheck(this,options);}_createClass(options,null,[{key:"chartSizeAxis",value:function chartSizeAxis(maxSize,maxValue,minSize,minValue){return new _options.ChartSizeAxis(_core.Helpers.orDefault(maxSize),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minSize),_core.Helpers.orDefault(minValue));}},{key:"chartTextStyle",value:function chartTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){return new _options.ChartTextStyle(_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize),_core.Helpers.orDefault(bold),_core.Helpers.orDefault(italic),_core.Helpers.orDefault(color),_core.Helpers.orDefault(auraColor),_core.Helpers.orDefault(opacity));}},{key:"chartTooltip",value:function chartTooltip(isHtml,showColorCode,textStyle,trigger){return new _options.ChartTooltip(_core.Helpers.orDefault(isHtml),_core.Helpers.orDefault(showColorCode),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(trigger));}},{key:"chartLegend",value:function chartLegend(alignment,maxLines,position,textStyle,numberFormat){return new _options.ChartLegend(_core.Helpers.orDefault(alignment),_core.Helpers.orDefault(maxLines),_core.Helpers.orDefault(position),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(numberFormat));}},{key:"chartColorAxis",value:function chartColorAxis(minValue,maxValue,values,colors,legend){return new _options.ChartColorAxis(_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(function(){var $var50=values;if($var50!=null){return function(source){return Float64Array.from(source);}($var50);}else{return $var50;}}()),_core.Helpers.orDefault(function(){var $var51=colors;if($var51!=null){return function(source){return Array.from(source);}($var51);}else{return $var51;}}()),_core.Helpers.orDefault(legend));}},{key:"geoChartMagnifyingGlass",value:function geoChartMagnifyingGlass(enable,zoomFactor){return new _options.GeoChartMagnifyingGlass(_core.Helpers.orDefault(enable),_core.Helpers.orDefault(zoomFactor));}},{key:"chartBoxStyleGradient",value:function chartBoxStyleGradient(color1,color2,x1,y1,x2,y2,useObjectBoundingBoxUnits){return new _options.ChartBoxStyleGradient(_core.Helpers.orDefault(color1),_core.Helpers.orDefault(color2),_core.Helpers.orDefault(x1),_core.Helpers.orDefault(y1),_core.Helpers.orDefault(x2),_core.Helpers.orDefault(y2),_core.Helpers.orDefault(useObjectBoundingBoxUnits));}},{key:"chartBoxStyle",value:function chartBoxStyle(stroke,strokeWidth,rx,ry,gradient){return new _options.ChartBoxStyle(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(rx),_core.Helpers.orDefault(ry),_core.Helpers.orDefault(gradient));}},{key:"chartAnnotations",value:function chartAnnotations(boxStyle,textStyle){return new _options.ChartAnnotations(_core.Helpers.orDefault(boxStyle),_core.Helpers.orDefault(textStyle));}},{key:"chartCrosshairFocused",value:function chartCrosshairFocused(color,opacity){return new _options.ChartCrosshairFocused(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshairSelected",value:function chartCrosshairSelected(color,opacity){return new _options.ChartCrosshairSelected(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshair",value:function chartCrosshair(color,focused,opacity,orientation,selected,trigger){return new _options.ChartCrosshair(_core.Helpers.orDefault(color),_core.Helpers.orDefault(focused),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(orientation),_core.Helpers.orDefault(selected),_core.Helpers.orDefault(trigger));}},{key:"chartExplorer",value:function chartExplorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){return new _options.ChartExplorer(_core.Helpers.orDefault(function(){var $var52=actions;if($var52!=null){return function(source){return Array.from(source);}($var52);}else{return $var52;}}()),_core.Helpers.orDefault(axis),_core.Helpers.orDefault(keepInBounds),_core.Helpers.orDefault(maxZoomIn),_core.Helpers.orDefault(maxZoomOut),_core.Helpers.orDefault(zoomDelta));}},{key:"chartStroke",value:function chartStroke(stroke,strokeWidth,fill){return new _options.ChartStroke(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(fill));}},{key:"chartArea",value:function chartArea(top,left,width,height){return new _options.ChartArea(_core.Helpers.orDefault(top),_core.Helpers.orDefault(left),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"transitionAnimation",value:function transitionAnimation(duration,easing){return new _options.TransitionAnimation(_core.Helpers.orDefault(duration),_core.Helpers.orDefault(easing));}},{key:"chartGridlines",value:function chartGridlines(color,count){return new _options.ChartGridlines(_core.Helpers.orDefault(color),_core.Helpers.orDefault(count));}},{key:"chartViewWindow",value:function chartViewWindow(max,min){return new _options.ChartViewWindow(_core.Helpers.orDefault(max),_core.Helpers.orDefault(min));}},{key:"chartAxis",value:function chartAxis(baseline,baselineColor,direction,format,gridlines,minorGridlines,logScale,textPosition,textStyle,ticks,title,titleTextStyle,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode,viewWindow){return new _options.ChartAxis(_core.Helpers.orDefault(baseline),_core.Helpers.orDefault(baselineColor),_core.Helpers.orDefault(direction),_core.Helpers.orDefault(format),_core.Helpers.orDefault(gridlines),_core.Helpers.orDefault(minorGridlines),_core.Helpers.orDefault(logScale),_core.Helpers.orDefault(textPosition),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(function(){var $var53=ticks;if($var53!=null){return function(source){return Array.from(source);}($var53);}else{return $var53;}}()),_core.Helpers.orDefault(title),_core.Helpers.orDefault(titleTextStyle),_core.Helpers.orDefault(allowContainerBoundaryTextCufoff),_core.Helpers.orDefault(slantedText),_core.Helpers.orDefault(slantedTextAngle),_core.Helpers.orDefault(maxAlternation),_core.Helpers.orDefault(maxTextLines),_core.Helpers.orDefault(minTextSpacing),_core.Helpers.orDefault(showTextEvery),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(viewWindowMode),_core.Helpers.orDefault(viewWindow));}},{key:"chartBoundingBox",value:function chartBoundingBox(left,top,width,height){return new _options.ChartBoundingBox(_core.Helpers.orDefault(left),_core.Helpers.orDefault(top),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"groupWidth",value:function groupWidth(_groupWidth){return new _options.GroupWidth(_core.Helpers.orDefault(_groupWidth));}},{key:"trendline",value:function trendline(color,lineWidth,labelInLegend,opacity,pointSize,pointsVisible,showR2,type,visibleInLegend){return new _options.Trendline(_core.Helpers.orDefault(color),_core.Helpers.orDefault(lineWidth),_core.Helpers.orDefault(labelInLegend),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(pointSize),_core.Helpers.orDefault(pointsVisible),_core.Helpers.orDefault(showR2),_core.Helpers.orDefault(type),_core.Helpers.orDefault(visibleInLegend));}},{key:"histogramHistogram",value:function histogramHistogram(bucketSize,hideBucketItems,lastBucketPercentile){return new _options.HistogramHistogram(_core.Helpers.orDefault(bucketSize),_core.Helpers.orDefault(hideBucketItems),_core.Helpers.orDefault(lastBucketPercentile));}},{key:"chartBubble",value:function chartBubble(opacity,stroke,textStyle){return new _options.ChartBubble(_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(textStyle));}},{key:"cssClassNames",value:function cssClassNames(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){return new _options.CssClassNames(_core.Helpers.orDefault(headerRow),_core.Helpers.orDefault(tableRow),_core.Helpers.orDefault(oddTableRow),_core.Helpers.orDefault(selectedTableRow),_core.Helpers.orDefault(hoverTableRow),_core.Helpers.orDefault(headerCell),_core.Helpers.orDefault(tableCell),_core.Helpers.orDefault(rowNumberCell));}},{key:"labelStyle",value:function labelStyle(color,fontName,fontSize){return new _options.LabelStyle(_core.Helpers.orDefault(color),_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize));}},{key:"timelineTimeline",value:function timelineTimeline(barLabelStyle,colorByRowLabel,groupByRowLabel,rowLabelStyle,showRowLabels,singleColor){return new _options.TimelineTimeline(_core.Helpers.orDefault(barLabelStyle),_core.Helpers.orDefault(colorByRowLabel),_core.Helpers.orDefault(groupByRowLabel),_core.Helpers.orDefault(rowLabelStyle),_core.Helpers.orDefault(showRowLabels),_core.Helpers.orDefault(singleColor));}},{key:"candlestickCandlestick",value:function candlestickCandlestick(hollowIsRising,fallingColor,risingColor){return new _options.CandlestickCandlestick(_core.Helpers.orDefault(hollowIsRising),_core.Helpers.orDefault(fallingColor),_core.Helpers.orDefault(risingColor));}}]);return options;}();exports.options=options;_fableCore.Util.setInterfaces(options.prototype,[],"TheGamma.GoogleCharts.Extensions.options");});
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(16)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"), require("./../series"));
 	  } else {
@@ -13778,7 +14659,7 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -15239,12 +16120,12 @@
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(12), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(13), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("../gui/html"), require("fable-core"));
 	  } else {
@@ -15566,12 +16447,12 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(12)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(13)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"), require("../gui/html"));
 	  } else {
@@ -16328,12 +17209,12 @@
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1), __webpack_require__(24), __webpack_require__(25)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1), __webpack_require__(25), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"), require("./typechecker"), require("./extensions"), require("./codegen"), require("monaco"));
 	  } else {
@@ -16606,8 +17487,8 @@
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var20, $var21) {
-	                                return folder($var20)($var21);
+	                              return _fableCore.Seq.fold(function ($var42, $var43) {
+	                                return folder($var42)($var43);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {
@@ -16705,7 +17586,7 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -17121,43 +18002,42 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = monaco;
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(27);
-	__webpack_require__(318);
-	__webpack_require__(189);
-	__webpack_require__(320);
-	__webpack_require__(319);
-	__webpack_require__(321);
-	__webpack_require__(322);
-	__webpack_require__(323);
-	__webpack_require__(324);
-	__webpack_require__(325);
-	__webpack_require__(327);
-	__webpack_require__(328);
-	__webpack_require__(329);
-	__webpack_require__(331);
-	__webpack_require__(332);
-	module.exports = __webpack_require__(34);
 
 /***/ },
 /* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(28);
-	__webpack_require__(77);
+	__webpack_require__(319);
+	__webpack_require__(190);
+	__webpack_require__(321);
+	__webpack_require__(320);
+	__webpack_require__(322);
+	__webpack_require__(323);
+	__webpack_require__(324);
+	__webpack_require__(325);
+	__webpack_require__(326);
+	__webpack_require__(328);
+	__webpack_require__(329);
+	__webpack_require__(330);
+	__webpack_require__(332);
+	__webpack_require__(333);
+	module.exports = __webpack_require__(35);
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(29);
 	__webpack_require__(78);
 	__webpack_require__(79);
 	__webpack_require__(80);
-	__webpack_require__(82);
-	__webpack_require__(85);
+	__webpack_require__(81);
+	__webpack_require__(83);
 	__webpack_require__(86);
 	__webpack_require__(87);
 	__webpack_require__(88);
@@ -17166,34 +18046,34 @@
 	__webpack_require__(91);
 	__webpack_require__(92);
 	__webpack_require__(93);
-	__webpack_require__(95);
-	__webpack_require__(97);
-	__webpack_require__(99);
-	__webpack_require__(101);
-	__webpack_require__(104);
+	__webpack_require__(94);
+	__webpack_require__(96);
+	__webpack_require__(98);
+	__webpack_require__(100);
+	__webpack_require__(102);
 	__webpack_require__(105);
 	__webpack_require__(106);
-	__webpack_require__(110);
-	__webpack_require__(112);
-	__webpack_require__(114);
-	__webpack_require__(117);
+	__webpack_require__(107);
+	__webpack_require__(111);
+	__webpack_require__(113);
+	__webpack_require__(115);
 	__webpack_require__(118);
 	__webpack_require__(119);
 	__webpack_require__(120);
-	__webpack_require__(122);
+	__webpack_require__(121);
 	__webpack_require__(123);
 	__webpack_require__(124);
 	__webpack_require__(125);
 	__webpack_require__(126);
 	__webpack_require__(127);
 	__webpack_require__(128);
-	__webpack_require__(130);
+	__webpack_require__(129);
 	__webpack_require__(131);
 	__webpack_require__(132);
-	__webpack_require__(134);
+	__webpack_require__(133);
 	__webpack_require__(135);
 	__webpack_require__(136);
-	__webpack_require__(138);
+	__webpack_require__(137);
 	__webpack_require__(139);
 	__webpack_require__(140);
 	__webpack_require__(141);
@@ -17207,13 +18087,13 @@
 	__webpack_require__(149);
 	__webpack_require__(150);
 	__webpack_require__(151);
-	__webpack_require__(156);
+	__webpack_require__(152);
 	__webpack_require__(157);
-	__webpack_require__(161);
+	__webpack_require__(158);
 	__webpack_require__(162);
 	__webpack_require__(163);
 	__webpack_require__(164);
-	__webpack_require__(166);
+	__webpack_require__(165);
 	__webpack_require__(167);
 	__webpack_require__(168);
 	__webpack_require__(169);
@@ -17230,43 +18110,43 @@
 	__webpack_require__(180);
 	__webpack_require__(181);
 	__webpack_require__(182);
-	__webpack_require__(184);
+	__webpack_require__(183);
 	__webpack_require__(185);
-	__webpack_require__(191);
+	__webpack_require__(186);
 	__webpack_require__(192);
-	__webpack_require__(194);
+	__webpack_require__(193);
 	__webpack_require__(195);
 	__webpack_require__(196);
-	__webpack_require__(200);
+	__webpack_require__(197);
 	__webpack_require__(201);
 	__webpack_require__(202);
 	__webpack_require__(203);
 	__webpack_require__(204);
-	__webpack_require__(206);
+	__webpack_require__(205);
 	__webpack_require__(207);
 	__webpack_require__(208);
 	__webpack_require__(209);
-	__webpack_require__(212);
-	__webpack_require__(214);
+	__webpack_require__(210);
+	__webpack_require__(213);
 	__webpack_require__(215);
 	__webpack_require__(216);
-	__webpack_require__(218);
-	__webpack_require__(220);
-	__webpack_require__(222);
+	__webpack_require__(217);
+	__webpack_require__(219);
+	__webpack_require__(221);
 	__webpack_require__(223);
 	__webpack_require__(224);
-	__webpack_require__(226);
+	__webpack_require__(225);
 	__webpack_require__(227);
 	__webpack_require__(228);
 	__webpack_require__(229);
-	__webpack_require__(236);
-	__webpack_require__(239);
+	__webpack_require__(230);
+	__webpack_require__(237);
 	__webpack_require__(240);
-	__webpack_require__(242);
+	__webpack_require__(241);
 	__webpack_require__(243);
-	__webpack_require__(246);
+	__webpack_require__(244);
 	__webpack_require__(247);
-	__webpack_require__(249);
+	__webpack_require__(248);
 	__webpack_require__(250);
 	__webpack_require__(251);
 	__webpack_require__(252);
@@ -17285,13 +18165,13 @@
 	__webpack_require__(265);
 	__webpack_require__(266);
 	__webpack_require__(267);
-	__webpack_require__(269);
+	__webpack_require__(268);
 	__webpack_require__(270);
 	__webpack_require__(271);
 	__webpack_require__(272);
 	__webpack_require__(273);
 	__webpack_require__(274);
-	__webpack_require__(276);
+	__webpack_require__(275);
 	__webpack_require__(277);
 	__webpack_require__(278);
 	__webpack_require__(279);
@@ -17299,13 +18179,13 @@
 	__webpack_require__(281);
 	__webpack_require__(282);
 	__webpack_require__(283);
-	__webpack_require__(285);
+	__webpack_require__(284);
 	__webpack_require__(286);
-	__webpack_require__(288);
+	__webpack_require__(287);
 	__webpack_require__(289);
 	__webpack_require__(290);
 	__webpack_require__(291);
-	__webpack_require__(294);
+	__webpack_require__(292);
 	__webpack_require__(295);
 	__webpack_require__(296);
 	__webpack_require__(297);
@@ -17313,7 +18193,7 @@
 	__webpack_require__(299);
 	__webpack_require__(300);
 	__webpack_require__(301);
-	__webpack_require__(303);
+	__webpack_require__(302);
 	__webpack_require__(304);
 	__webpack_require__(305);
 	__webpack_require__(306);
@@ -17324,41 +18204,42 @@
 	__webpack_require__(311);
 	__webpack_require__(312);
 	__webpack_require__(313);
-	__webpack_require__(316);
+	__webpack_require__(314);
 	__webpack_require__(317);
-	module.exports = __webpack_require__(34);
+	__webpack_require__(318);
+	module.exports = __webpack_require__(35);
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// ECMAScript 6 symbols shim
-	var global         = __webpack_require__(29)
-	  , has            = __webpack_require__(30)
-	  , DESCRIPTORS    = __webpack_require__(31)
-	  , $export        = __webpack_require__(33)
-	  , redefine       = __webpack_require__(43)
-	  , META           = __webpack_require__(47).KEY
-	  , $fails         = __webpack_require__(32)
-	  , shared         = __webpack_require__(48)
-	  , setToStringTag = __webpack_require__(49)
-	  , uid            = __webpack_require__(44)
-	  , wks            = __webpack_require__(50)
-	  , wksExt         = __webpack_require__(51)
-	  , wksDefine      = __webpack_require__(52)
-	  , keyOf          = __webpack_require__(54)
-	  , enumKeys       = __webpack_require__(67)
-	  , isArray        = __webpack_require__(70)
-	  , anObject       = __webpack_require__(37)
-	  , toIObject      = __webpack_require__(57)
-	  , toPrimitive    = __webpack_require__(41)
-	  , createDesc     = __webpack_require__(42)
-	  , _create        = __webpack_require__(71)
-	  , gOPNExt        = __webpack_require__(74)
-	  , $GOPD          = __webpack_require__(76)
-	  , $DP            = __webpack_require__(36)
-	  , $keys          = __webpack_require__(55)
+	var global         = __webpack_require__(30)
+	  , has            = __webpack_require__(31)
+	  , DESCRIPTORS    = __webpack_require__(32)
+	  , $export        = __webpack_require__(34)
+	  , redefine       = __webpack_require__(44)
+	  , META           = __webpack_require__(48).KEY
+	  , $fails         = __webpack_require__(33)
+	  , shared         = __webpack_require__(49)
+	  , setToStringTag = __webpack_require__(50)
+	  , uid            = __webpack_require__(45)
+	  , wks            = __webpack_require__(51)
+	  , wksExt         = __webpack_require__(52)
+	  , wksDefine      = __webpack_require__(53)
+	  , keyOf          = __webpack_require__(55)
+	  , enumKeys       = __webpack_require__(68)
+	  , isArray        = __webpack_require__(71)
+	  , anObject       = __webpack_require__(38)
+	  , toIObject      = __webpack_require__(58)
+	  , toPrimitive    = __webpack_require__(42)
+	  , createDesc     = __webpack_require__(43)
+	  , _create        = __webpack_require__(72)
+	  , gOPNExt        = __webpack_require__(75)
+	  , $GOPD          = __webpack_require__(77)
+	  , $DP            = __webpack_require__(37)
+	  , $keys          = __webpack_require__(56)
 	  , gOPD           = $GOPD.f
 	  , dP             = $DP.f
 	  , gOPN           = gOPNExt.f
@@ -17481,11 +18362,11 @@
 	
 	  $GOPD.f = $getOwnPropertyDescriptor;
 	  $DP.f   = $defineProperty;
-	  __webpack_require__(75).f = gOPNExt.f = $getOwnPropertyNames;
-	  __webpack_require__(69).f  = $propertyIsEnumerable;
-	  __webpack_require__(68).f = $getOwnPropertySymbols;
+	  __webpack_require__(76).f = gOPNExt.f = $getOwnPropertyNames;
+	  __webpack_require__(70).f  = $propertyIsEnumerable;
+	  __webpack_require__(69).f = $getOwnPropertySymbols;
 	
-	  if(DESCRIPTORS && !__webpack_require__(53)){
+	  if(DESCRIPTORS && !__webpack_require__(54)){
 	    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
 	  }
 	
@@ -17560,7 +18441,7 @@
 	});
 	
 	// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-	$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(35)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+	$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(36)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 	// 19.4.3.5 Symbol.prototype[@@toStringTag]
 	setToStringTag($Symbol, 'Symbol');
 	// 20.2.1.9 Math[@@toStringTag]
@@ -17569,7 +18450,7 @@
 	setToStringTag(global.JSON, 'JSON', true);
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -17578,7 +18459,7 @@
 	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	var hasOwnProperty = {}.hasOwnProperty;
@@ -17587,16 +18468,16 @@
 	};
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Thank's IE8 for his funny defineProperty
-	module.exports = !__webpack_require__(32)(function(){
+	module.exports = !__webpack_require__(33)(function(){
 	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 	});
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = function(exec){
@@ -17608,14 +18489,14 @@
 	};
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global    = __webpack_require__(29)
-	  , core      = __webpack_require__(34)
-	  , hide      = __webpack_require__(35)
-	  , redefine  = __webpack_require__(43)
-	  , ctx       = __webpack_require__(45)
+	var global    = __webpack_require__(30)
+	  , core      = __webpack_require__(35)
+	  , hide      = __webpack_require__(36)
+	  , redefine  = __webpack_require__(44)
+	  , ctx       = __webpack_require__(46)
 	  , PROTOTYPE = 'prototype';
 	
 	var $export = function(type, name, source){
@@ -17656,19 +18537,19 @@
 	module.exports = $export;
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	var core = module.exports = {version: '2.4.0'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var dP         = __webpack_require__(36)
-	  , createDesc = __webpack_require__(42);
-	module.exports = __webpack_require__(31) ? function(object, key, value){
+	var dP         = __webpack_require__(37)
+	  , createDesc = __webpack_require__(43);
+	module.exports = __webpack_require__(32) ? function(object, key, value){
 	  return dP.f(object, key, createDesc(1, value));
 	} : function(object, key, value){
 	  object[key] = value;
@@ -17676,15 +18557,15 @@
 	};
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var anObject       = __webpack_require__(37)
-	  , IE8_DOM_DEFINE = __webpack_require__(39)
-	  , toPrimitive    = __webpack_require__(41)
+	var anObject       = __webpack_require__(38)
+	  , IE8_DOM_DEFINE = __webpack_require__(40)
+	  , toPrimitive    = __webpack_require__(42)
 	  , dP             = Object.defineProperty;
 	
-	exports.f = __webpack_require__(31) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+	exports.f = __webpack_require__(32) ? Object.defineProperty : function defineProperty(O, P, Attributes){
 	  anObject(O);
 	  P = toPrimitive(P, true);
 	  anObject(Attributes);
@@ -17697,17 +18578,17 @@
 	};
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(38);
+	var isObject = __webpack_require__(39);
 	module.exports = function(it){
 	  if(!isObject(it))throw TypeError(it + ' is not an object!');
 	  return it;
 	};
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = function(it){
@@ -17715,19 +18596,19 @@
 	};
 
 /***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = !__webpack_require__(31) && !__webpack_require__(32)(function(){
-	  return Object.defineProperty(__webpack_require__(40)('div'), 'a', {get: function(){ return 7; }}).a != 7;
-	});
-
-/***/ },
 /* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(38)
-	  , document = __webpack_require__(29).document
+	module.exports = !__webpack_require__(32) && !__webpack_require__(33)(function(){
+	  return Object.defineProperty(__webpack_require__(41)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(39)
+	  , document = __webpack_require__(30).document
 	  // in old IE typeof document.createElement is 'object'
 	  , is = isObject(document) && isObject(document.createElement);
 	module.exports = function(it){
@@ -17735,11 +18616,11 @@
 	};
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.1.1 ToPrimitive(input [, PreferredType])
-	var isObject = __webpack_require__(38);
+	var isObject = __webpack_require__(39);
 	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
 	// and the second argument - flag - preferred type is a string
 	module.exports = function(it, S){
@@ -17752,7 +18633,7 @@
 	};
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = function(bitmap, value){
@@ -17765,18 +18646,18 @@
 	};
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global    = __webpack_require__(29)
-	  , hide      = __webpack_require__(35)
-	  , has       = __webpack_require__(30)
-	  , SRC       = __webpack_require__(44)('src')
+	var global    = __webpack_require__(30)
+	  , hide      = __webpack_require__(36)
+	  , has       = __webpack_require__(31)
+	  , SRC       = __webpack_require__(45)('src')
 	  , TO_STRING = 'toString'
 	  , $toString = Function[TO_STRING]
 	  , TPL       = ('' + $toString).split(TO_STRING);
 	
-	__webpack_require__(34).inspectSource = function(it){
+	__webpack_require__(35).inspectSource = function(it){
 	  return $toString.call(it);
 	};
 	
@@ -17802,7 +18683,7 @@
 	});
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	var id = 0
@@ -17812,11 +18693,11 @@
 	};
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// optional / simple context binding
-	var aFunction = __webpack_require__(46);
+	var aFunction = __webpack_require__(47);
 	module.exports = function(fn, that, length){
 	  aFunction(fn);
 	  if(that === undefined)return fn;
@@ -17837,7 +18718,7 @@
 	};
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
 	module.exports = function(it){
@@ -17846,18 +18727,18 @@
 	};
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var META     = __webpack_require__(44)('meta')
-	  , isObject = __webpack_require__(38)
-	  , has      = __webpack_require__(30)
-	  , setDesc  = __webpack_require__(36).f
+	var META     = __webpack_require__(45)('meta')
+	  , isObject = __webpack_require__(39)
+	  , has      = __webpack_require__(31)
+	  , setDesc  = __webpack_require__(37).f
 	  , id       = 0;
 	var isExtensible = Object.isExtensible || function(){
 	  return true;
 	};
-	var FREEZE = !__webpack_require__(32)(function(){
+	var FREEZE = !__webpack_require__(33)(function(){
 	  return isExtensible(Object.preventExtensions({}));
 	});
 	var setMeta = function(it){
@@ -17904,10 +18785,10 @@
 	};
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(29)
+	var global = __webpack_require__(30)
 	  , SHARED = '__core-js_shared__'
 	  , store  = global[SHARED] || (global[SHARED] = {});
 	module.exports = function(key){
@@ -17915,24 +18796,24 @@
 	};
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var def = __webpack_require__(36).f
-	  , has = __webpack_require__(30)
-	  , TAG = __webpack_require__(50)('toStringTag');
+	var def = __webpack_require__(37).f
+	  , has = __webpack_require__(31)
+	  , TAG = __webpack_require__(51)('toStringTag');
 	
 	module.exports = function(it, tag, stat){
 	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 	};
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var store      = __webpack_require__(48)('wks')
-	  , uid        = __webpack_require__(44)
-	  , Symbol     = __webpack_require__(29).Symbol
+	var store      = __webpack_require__(49)('wks')
+	  , uid        = __webpack_require__(45)
+	  , Symbol     = __webpack_require__(30).Symbol
 	  , USE_SYMBOL = typeof Symbol == 'function';
 	
 	var $exports = module.exports = function(name){
@@ -17943,37 +18824,37 @@
 	$exports.store = store;
 
 /***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports.f = __webpack_require__(50);
-
-/***/ },
 /* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global         = __webpack_require__(29)
-	  , core           = __webpack_require__(34)
-	  , LIBRARY        = __webpack_require__(53)
-	  , wksExt         = __webpack_require__(51)
-	  , defineProperty = __webpack_require__(36).f;
+	exports.f = __webpack_require__(51);
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global         = __webpack_require__(30)
+	  , core           = __webpack_require__(35)
+	  , LIBRARY        = __webpack_require__(54)
+	  , wksExt         = __webpack_require__(52)
+	  , defineProperty = __webpack_require__(37).f;
 	module.exports = function(name){
 	  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
 	  if(name.charAt(0) != '_' && !(name in $Symbol))defineProperty($Symbol, name, {value: wksExt.f(name)});
 	};
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports) {
 
 	module.exports = false;
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getKeys   = __webpack_require__(55)
-	  , toIObject = __webpack_require__(57);
+	var getKeys   = __webpack_require__(56)
+	  , toIObject = __webpack_require__(58);
 	module.exports = function(object, el){
 	  var O      = toIObject(object)
 	    , keys   = getKeys(O)
@@ -17984,25 +18865,25 @@
 	};
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-	var $keys       = __webpack_require__(56)
-	  , enumBugKeys = __webpack_require__(66);
+	var $keys       = __webpack_require__(57)
+	  , enumBugKeys = __webpack_require__(67);
 	
 	module.exports = Object.keys || function keys(O){
 	  return $keys(O, enumBugKeys);
 	};
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var has          = __webpack_require__(30)
-	  , toIObject    = __webpack_require__(57)
-	  , arrayIndexOf = __webpack_require__(61)(false)
-	  , IE_PROTO     = __webpack_require__(65)('IE_PROTO');
+	var has          = __webpack_require__(31)
+	  , toIObject    = __webpack_require__(58)
+	  , arrayIndexOf = __webpack_require__(62)(false)
+	  , IE_PROTO     = __webpack_require__(66)('IE_PROTO');
 	
 	module.exports = function(object, names){
 	  var O      = toIObject(object)
@@ -18018,28 +18899,28 @@
 	};
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// to indexed object, toObject with fallback for non-array-like ES3 strings
-	var IObject = __webpack_require__(58)
-	  , defined = __webpack_require__(60);
+	var IObject = __webpack_require__(59)
+	  , defined = __webpack_require__(61);
 	module.exports = function(it){
 	  return IObject(defined(it));
 	};
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// fallback for non-array-like ES3 and non-enumerable old V8 strings
-	var cof = __webpack_require__(59);
+	var cof = __webpack_require__(60);
 	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
 	  return cof(it) == 'String' ? it.split('') : Object(it);
 	};
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -18049,7 +18930,7 @@
 	};
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports) {
 
 	// 7.2.1 RequireObjectCoercible(argument)
@@ -18059,14 +18940,14 @@
 	};
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// false -> Array#indexOf
 	// true  -> Array#includes
-	var toIObject = __webpack_require__(57)
-	  , toLength  = __webpack_require__(62)
-	  , toIndex   = __webpack_require__(64);
+	var toIObject = __webpack_require__(58)
+	  , toLength  = __webpack_require__(63)
+	  , toIndex   = __webpack_require__(65);
 	module.exports = function(IS_INCLUDES){
 	  return function($this, el, fromIndex){
 	    var O      = toIObject($this)
@@ -18085,18 +18966,18 @@
 	};
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.1.15 ToLength
-	var toInteger = __webpack_require__(63)
+	var toInteger = __webpack_require__(64)
 	  , min       = Math.min;
 	module.exports = function(it){
 	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 	};
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports) {
 
 	// 7.1.4 ToInteger
@@ -18107,10 +18988,10 @@
 	};
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toInteger = __webpack_require__(63)
+	var toInteger = __webpack_require__(64)
 	  , max       = Math.max
 	  , min       = Math.min;
 	module.exports = function(index, length){
@@ -18119,17 +19000,17 @@
 	};
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var shared = __webpack_require__(48)('keys')
-	  , uid    = __webpack_require__(44);
+	var shared = __webpack_require__(49)('keys')
+	  , uid    = __webpack_require__(45);
 	module.exports = function(key){
 	  return shared[key] || (shared[key] = uid(key));
 	};
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports) {
 
 	// IE 8- don't enum bug keys
@@ -18138,13 +19019,13 @@
 	).split(',');
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// all enumerable object keys, includes symbols
-	var getKeys = __webpack_require__(55)
-	  , gOPS    = __webpack_require__(68)
-	  , pIE     = __webpack_require__(69);
+	var getKeys = __webpack_require__(56)
+	  , gOPS    = __webpack_require__(69)
+	  , pIE     = __webpack_require__(70);
 	module.exports = function(it){
 	  var result     = getKeys(it)
 	    , getSymbols = gOPS.f;
@@ -18158,49 +19039,49 @@
 	};
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 	exports.f = Object.getOwnPropertySymbols;
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports) {
 
 	exports.f = {}.propertyIsEnumerable;
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.2.2 IsArray(argument)
-	var cof = __webpack_require__(59);
+	var cof = __webpack_require__(60);
 	module.exports = Array.isArray || function isArray(arg){
 	  return cof(arg) == 'Array';
 	};
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-	var anObject    = __webpack_require__(37)
-	  , dPs         = __webpack_require__(72)
-	  , enumBugKeys = __webpack_require__(66)
-	  , IE_PROTO    = __webpack_require__(65)('IE_PROTO')
+	var anObject    = __webpack_require__(38)
+	  , dPs         = __webpack_require__(73)
+	  , enumBugKeys = __webpack_require__(67)
+	  , IE_PROTO    = __webpack_require__(66)('IE_PROTO')
 	  , Empty       = function(){ /* empty */ }
 	  , PROTOTYPE   = 'prototype';
 	
 	// Create object with fake `null` prototype: use iframe Object with cleared prototype
 	var createDict = function(){
 	  // Thrash, waste and sodomy: IE GC bug
-	  var iframe = __webpack_require__(40)('iframe')
+	  var iframe = __webpack_require__(41)('iframe')
 	    , i      = enumBugKeys.length
 	    , lt     = '<'
 	    , gt     = '>'
 	    , iframeDocument;
 	  iframe.style.display = 'none';
-	  __webpack_require__(73).appendChild(iframe);
+	  __webpack_require__(74).appendChild(iframe);
 	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
 	  // createDict = iframe.contentWindow.Object;
 	  // html.removeChild(iframe);
@@ -18227,14 +19108,14 @@
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var dP       = __webpack_require__(36)
-	  , anObject = __webpack_require__(37)
-	  , getKeys  = __webpack_require__(55);
+	var dP       = __webpack_require__(37)
+	  , anObject = __webpack_require__(38)
+	  , getKeys  = __webpack_require__(56);
 	
-	module.exports = __webpack_require__(31) ? Object.defineProperties : function defineProperties(O, Properties){
+	module.exports = __webpack_require__(32) ? Object.defineProperties : function defineProperties(O, Properties){
 	  anObject(O);
 	  var keys   = getKeys(Properties)
 	    , length = keys.length
@@ -18245,18 +19126,18 @@
 	};
 
 /***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(29).document && document.documentElement;
-
-/***/ },
 /* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(30).document && document.documentElement;
+
+/***/ },
+/* 75 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-	var toIObject = __webpack_require__(57)
-	  , gOPN      = __webpack_require__(75).f
+	var toIObject = __webpack_require__(58)
+	  , gOPN      = __webpack_require__(76).f
 	  , toString  = {}.toString;
 	
 	var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -18276,30 +19157,30 @@
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-	var $keys      = __webpack_require__(56)
-	  , hiddenKeys = __webpack_require__(66).concat('length', 'prototype');
+	var $keys      = __webpack_require__(57)
+	  , hiddenKeys = __webpack_require__(67).concat('length', 'prototype');
 	
 	exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
 	  return $keys(O, hiddenKeys);
 	};
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pIE            = __webpack_require__(69)
-	  , createDesc     = __webpack_require__(42)
-	  , toIObject      = __webpack_require__(57)
-	  , toPrimitive    = __webpack_require__(41)
-	  , has            = __webpack_require__(30)
-	  , IE8_DOM_DEFINE = __webpack_require__(39)
+	var pIE            = __webpack_require__(70)
+	  , createDesc     = __webpack_require__(43)
+	  , toIObject      = __webpack_require__(58)
+	  , toPrimitive    = __webpack_require__(42)
+	  , has            = __webpack_require__(31)
+	  , IE8_DOM_DEFINE = __webpack_require__(40)
 	  , gOPD           = Object.getOwnPropertyDescriptor;
 	
-	exports.f = __webpack_require__(31) ? gOPD : function getOwnPropertyDescriptor(O, P){
+	exports.f = __webpack_require__(32) ? gOPD : function getOwnPropertyDescriptor(O, P){
 	  O = toIObject(O);
 	  P = toPrimitive(P, true);
 	  if(IE8_DOM_DEFINE)try {
@@ -18309,51 +19190,51 @@
 	};
 
 /***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $export = __webpack_require__(33)
-	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-	$export($export.S, 'Object', {create: __webpack_require__(71)});
-
-/***/ },
 /* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33);
-	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-	$export($export.S + $export.F * !__webpack_require__(31), 'Object', {defineProperty: __webpack_require__(36).f});
+	var $export = __webpack_require__(34)
+	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+	$export($export.S, 'Object', {create: __webpack_require__(72)});
 
 /***/ },
 /* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33);
-	// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-	$export($export.S + $export.F * !__webpack_require__(31), 'Object', {defineProperties: __webpack_require__(72)});
+	var $export = __webpack_require__(34);
+	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+	$export($export.S + $export.F * !__webpack_require__(32), 'Object', {defineProperty: __webpack_require__(37).f});
 
 /***/ },
 /* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var $export = __webpack_require__(34);
+	// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
+	$export($export.S + $export.F * !__webpack_require__(32), 'Object', {defineProperties: __webpack_require__(73)});
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-	var toIObject                 = __webpack_require__(57)
-	  , $getOwnPropertyDescriptor = __webpack_require__(76).f;
+	var toIObject                 = __webpack_require__(58)
+	  , $getOwnPropertyDescriptor = __webpack_require__(77).f;
 	
-	__webpack_require__(81)('getOwnPropertyDescriptor', function(){
+	__webpack_require__(82)('getOwnPropertyDescriptor', function(){
 	  return function getOwnPropertyDescriptor(it, key){
 	    return $getOwnPropertyDescriptor(toIObject(it), key);
 	  };
 	});
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
-	var $export = __webpack_require__(33)
-	  , core    = __webpack_require__(34)
-	  , fails   = __webpack_require__(32);
+	var $export = __webpack_require__(34)
+	  , core    = __webpack_require__(35)
+	  , fails   = __webpack_require__(33);
 	module.exports = function(KEY, exec){
 	  var fn  = (core.Object || {})[KEY] || Object[KEY]
 	    , exp = {};
@@ -18362,37 +19243,37 @@
 	};
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.9 Object.getPrototypeOf(O)
-	var toObject        = __webpack_require__(83)
-	  , $getPrototypeOf = __webpack_require__(84);
+	var toObject        = __webpack_require__(84)
+	  , $getPrototypeOf = __webpack_require__(85);
 	
-	__webpack_require__(81)('getPrototypeOf', function(){
+	__webpack_require__(82)('getPrototypeOf', function(){
 	  return function getPrototypeOf(it){
 	    return $getPrototypeOf(toObject(it));
 	  };
 	});
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(60);
+	var defined = __webpack_require__(61);
 	module.exports = function(it){
 	  return Object(defined(it));
 	};
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-	var has         = __webpack_require__(30)
-	  , toObject    = __webpack_require__(83)
-	  , IE_PROTO    = __webpack_require__(65)('IE_PROTO')
+	var has         = __webpack_require__(31)
+	  , toObject    = __webpack_require__(84)
+	  , IE_PROTO    = __webpack_require__(66)('IE_PROTO')
 	  , ObjectProto = Object.prototype;
 	
 	module.exports = Object.getPrototypeOf || function(O){
@@ -18404,53 +19285,39 @@
 	};
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.14 Object.keys(O)
-	var toObject = __webpack_require__(83)
-	  , $keys    = __webpack_require__(55);
+	var toObject = __webpack_require__(84)
+	  , $keys    = __webpack_require__(56);
 	
-	__webpack_require__(81)('keys', function(){
+	__webpack_require__(82)('keys', function(){
 	  return function keys(it){
 	    return $keys(toObject(it));
 	  };
 	});
 
 /***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.7 Object.getOwnPropertyNames(O)
-	__webpack_require__(81)('getOwnPropertyNames', function(){
-	  return __webpack_require__(74).f;
-	});
-
-/***/ },
 /* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.5 Object.freeze(O)
-	var isObject = __webpack_require__(38)
-	  , meta     = __webpack_require__(47).onFreeze;
-	
-	__webpack_require__(81)('freeze', function($freeze){
-	  return function freeze(it){
-	    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
-	  };
+	// 19.1.2.7 Object.getOwnPropertyNames(O)
+	__webpack_require__(82)('getOwnPropertyNames', function(){
+	  return __webpack_require__(75).f;
 	});
 
 /***/ },
 /* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.17 Object.seal(O)
-	var isObject = __webpack_require__(38)
-	  , meta     = __webpack_require__(47).onFreeze;
+	// 19.1.2.5 Object.freeze(O)
+	var isObject = __webpack_require__(39)
+	  , meta     = __webpack_require__(48).onFreeze;
 	
-	__webpack_require__(81)('seal', function($seal){
-	  return function seal(it){
-	    return $seal && isObject(it) ? $seal(meta(it)) : it;
+	__webpack_require__(82)('freeze', function($freeze){
+	  return function freeze(it){
+	    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
 	  };
 	});
 
@@ -18458,13 +19325,13 @@
 /* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.15 Object.preventExtensions(O)
-	var isObject = __webpack_require__(38)
-	  , meta     = __webpack_require__(47).onFreeze;
+	// 19.1.2.17 Object.seal(O)
+	var isObject = __webpack_require__(39)
+	  , meta     = __webpack_require__(48).onFreeze;
 	
-	__webpack_require__(81)('preventExtensions', function($preventExtensions){
-	  return function preventExtensions(it){
-	    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
+	__webpack_require__(82)('seal', function($seal){
+	  return function seal(it){
+	    return $seal && isObject(it) ? $seal(meta(it)) : it;
 	  };
 	});
 
@@ -18472,12 +19339,13 @@
 /* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.12 Object.isFrozen(O)
-	var isObject = __webpack_require__(38);
+	// 19.1.2.15 Object.preventExtensions(O)
+	var isObject = __webpack_require__(39)
+	  , meta     = __webpack_require__(48).onFreeze;
 	
-	__webpack_require__(81)('isFrozen', function($isFrozen){
-	  return function isFrozen(it){
-	    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
+	__webpack_require__(82)('preventExtensions', function($preventExtensions){
+	  return function preventExtensions(it){
+	    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
 	  };
 	});
 
@@ -18485,12 +19353,12 @@
 /* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.13 Object.isSealed(O)
-	var isObject = __webpack_require__(38);
+	// 19.1.2.12 Object.isFrozen(O)
+	var isObject = __webpack_require__(39);
 	
-	__webpack_require__(81)('isSealed', function($isSealed){
-	  return function isSealed(it){
-	    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
+	__webpack_require__(82)('isFrozen', function($isFrozen){
+	  return function isFrozen(it){
+	    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
 	  };
 	});
 
@@ -18498,12 +19366,12 @@
 /* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.11 Object.isExtensible(O)
-	var isObject = __webpack_require__(38);
+	// 19.1.2.13 Object.isSealed(O)
+	var isObject = __webpack_require__(39);
 	
-	__webpack_require__(81)('isExtensible', function($isExtensible){
-	  return function isExtensible(it){
-	    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
+	__webpack_require__(82)('isSealed', function($isSealed){
+	  return function isSealed(it){
+	    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
 	  };
 	});
 
@@ -18511,26 +19379,39 @@
 /* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.3.1 Object.assign(target, source)
-	var $export = __webpack_require__(33);
+	// 19.1.2.11 Object.isExtensible(O)
+	var isObject = __webpack_require__(39);
 	
-	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(94)});
+	__webpack_require__(82)('isExtensible', function($isExtensible){
+	  return function isExtensible(it){
+	    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
+	  };
+	});
 
 /***/ },
 /* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(34);
+	
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(95)});
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	// 19.1.2.1 Object.assign(target, source, ...)
-	var getKeys  = __webpack_require__(55)
-	  , gOPS     = __webpack_require__(68)
-	  , pIE      = __webpack_require__(69)
-	  , toObject = __webpack_require__(83)
-	  , IObject  = __webpack_require__(58)
+	var getKeys  = __webpack_require__(56)
+	  , gOPS     = __webpack_require__(69)
+	  , pIE      = __webpack_require__(70)
+	  , toObject = __webpack_require__(84)
+	  , IObject  = __webpack_require__(59)
 	  , $assign  = Object.assign;
 	
 	// should work with symbols and should have deterministic property order (V8 bug)
-	module.exports = !$assign || __webpack_require__(32)(function(){
+	module.exports = !$assign || __webpack_require__(33)(function(){
 	  var A = {}
 	    , B = {}
 	    , S = Symbol()
@@ -18555,15 +19436,15 @@
 	} : $assign;
 
 /***/ },
-/* 95 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.3.10 Object.is(value1, value2)
-	var $export = __webpack_require__(33);
-	$export($export.S, 'Object', {is: __webpack_require__(96)});
+	var $export = __webpack_require__(34);
+	$export($export.S, 'Object', {is: __webpack_require__(97)});
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports) {
 
 	// 7.2.9 SameValue(x, y)
@@ -18572,21 +19453,21 @@
 	};
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.3.19 Object.setPrototypeOf(O, proto)
-	var $export = __webpack_require__(33);
-	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(98).set});
+	var $export = __webpack_require__(34);
+	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(99).set});
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
 	/* eslint-disable no-proto */
-	var isObject = __webpack_require__(38)
-	  , anObject = __webpack_require__(37);
+	var isObject = __webpack_require__(39)
+	  , anObject = __webpack_require__(38);
 	var check = function(O, proto){
 	  anObject(O);
 	  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
@@ -18595,7 +19476,7 @@
 	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
 	    function(test, buggy, set){
 	      try {
-	        set = __webpack_require__(45)(Function.call, __webpack_require__(76).f(Object.prototype, '__proto__').set, 2);
+	        set = __webpack_require__(46)(Function.call, __webpack_require__(77).f(Object.prototype, '__proto__').set, 2);
 	        set(test, []);
 	        buggy = !(test instanceof Array);
 	      } catch(e){ buggy = true; }
@@ -18610,27 +19491,27 @@
 	};
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 19.1.3.6 Object.prototype.toString()
-	var classof = __webpack_require__(100)
+	var classof = __webpack_require__(101)
 	  , test    = {};
-	test[__webpack_require__(50)('toStringTag')] = 'z';
+	test[__webpack_require__(51)('toStringTag')] = 'z';
 	if(test + '' != '[object z]'){
-	  __webpack_require__(43)(Object.prototype, 'toString', function toString(){
+	  __webpack_require__(44)(Object.prototype, 'toString', function toString(){
 	    return '[object ' + classof(this) + ']';
 	  }, true);
 	}
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// getting tag from 19.1.3.6 Object.prototype.toString()
-	var cof = __webpack_require__(59)
-	  , TAG = __webpack_require__(50)('toStringTag')
+	var cof = __webpack_require__(60)
+	  , TAG = __webpack_require__(51)('toStringTag')
 	  // ES3 wrong here
 	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 	
@@ -18653,22 +19534,22 @@
 	};
 
 /***/ },
-/* 101 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
-	var $export = __webpack_require__(33);
-	
-	$export($export.P, 'Function', {bind: __webpack_require__(102)});
-
-/***/ },
 /* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
+	var $export = __webpack_require__(34);
+	
+	$export($export.P, 'Function', {bind: __webpack_require__(103)});
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
-	var aFunction  = __webpack_require__(46)
-	  , isObject   = __webpack_require__(38)
-	  , invoke     = __webpack_require__(103)
+	var aFunction  = __webpack_require__(47)
+	  , isObject   = __webpack_require__(39)
+	  , invoke     = __webpack_require__(104)
 	  , arraySlice = [].slice
 	  , factories  = {};
 	
@@ -18691,7 +19572,7 @@
 	};
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports) {
 
 	// fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -18712,12 +19593,12 @@
 	};
 
 /***/ },
-/* 104 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var dP         = __webpack_require__(36).f
-	  , createDesc = __webpack_require__(42)
-	  , has        = __webpack_require__(30)
+	var dP         = __webpack_require__(37).f
+	  , createDesc = __webpack_require__(43)
+	  , has        = __webpack_require__(31)
 	  , FProto     = Function.prototype
 	  , nameRE     = /^\s*function ([^ (]*)/
 	  , NAME       = 'name';
@@ -18727,7 +19608,7 @@
 	};
 	
 	// 19.2.4.2 name
-	NAME in FProto || __webpack_require__(31) && dP(FProto, NAME, {
+	NAME in FProto || __webpack_require__(32) && dP(FProto, NAME, {
 	  configurable: true,
 	  get: function(){
 	    try {
@@ -18742,16 +19623,16 @@
 	});
 
 /***/ },
-/* 105 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var isObject       = __webpack_require__(38)
-	  , getPrototypeOf = __webpack_require__(84)
-	  , HAS_INSTANCE   = __webpack_require__(50)('hasInstance')
+	var isObject       = __webpack_require__(39)
+	  , getPrototypeOf = __webpack_require__(85)
+	  , HAS_INSTANCE   = __webpack_require__(51)('hasInstance')
 	  , FunctionProto  = Function.prototype;
 	// 19.2.3.6 Function.prototype[@@hasInstance](V)
-	if(!(HAS_INSTANCE in FunctionProto))__webpack_require__(36).f(FunctionProto, HAS_INSTANCE, {value: function(O){
+	if(!(HAS_INSTANCE in FunctionProto))__webpack_require__(37).f(FunctionProto, HAS_INSTANCE, {value: function(O){
 	  if(typeof this != 'function' || !isObject(O))return false;
 	  if(!isObject(this.prototype))return O instanceof this;
 	  // for environment w/o native `@@hasInstance` logic enough `instanceof`, but add this:
@@ -18760,21 +19641,21 @@
 	}});
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export   = __webpack_require__(33)
-	  , $parseInt = __webpack_require__(107);
+	var $export   = __webpack_require__(34)
+	  , $parseInt = __webpack_require__(108);
 	// 18.2.5 parseInt(string, radix)
 	$export($export.G + $export.F * (parseInt != $parseInt), {parseInt: $parseInt});
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $parseInt = __webpack_require__(29).parseInt
-	  , $trim     = __webpack_require__(108).trim
-	  , ws        = __webpack_require__(109)
+	var $parseInt = __webpack_require__(30).parseInt
+	  , $trim     = __webpack_require__(109).trim
+	  , ws        = __webpack_require__(110)
 	  , hex       = /^[\-+]?0[xX]/;
 	
 	module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
@@ -18783,13 +19664,13 @@
 	} : $parseInt;
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33)
-	  , defined = __webpack_require__(60)
-	  , fails   = __webpack_require__(32)
-	  , spaces  = __webpack_require__(109)
+	var $export = __webpack_require__(34)
+	  , defined = __webpack_require__(61)
+	  , fails   = __webpack_require__(33)
+	  , spaces  = __webpack_require__(110)
 	  , space   = '[' + spaces + ']'
 	  , non     = '\u200b\u0085'
 	  , ltrim   = RegExp('^' + space + space + '*')
@@ -18818,55 +19699,55 @@
 	module.exports = exporter;
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports) {
 
 	module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
 	  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export     = __webpack_require__(33)
-	  , $parseFloat = __webpack_require__(111);
+	var $export     = __webpack_require__(34)
+	  , $parseFloat = __webpack_require__(112);
 	// 18.2.4 parseFloat(string)
 	$export($export.G + $export.F * (parseFloat != $parseFloat), {parseFloat: $parseFloat});
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $parseFloat = __webpack_require__(29).parseFloat
-	  , $trim       = __webpack_require__(108).trim;
+	var $parseFloat = __webpack_require__(30).parseFloat
+	  , $trim       = __webpack_require__(109).trim;
 	
-	module.exports = 1 / $parseFloat(__webpack_require__(109) + '-0') !== -Infinity ? function parseFloat(str){
+	module.exports = 1 / $parseFloat(__webpack_require__(110) + '-0') !== -Infinity ? function parseFloat(str){
 	  var string = $trim(String(str), 3)
 	    , result = $parseFloat(string);
 	  return result === 0 && string.charAt(0) == '-' ? -0 : result;
 	} : $parseFloat;
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var global            = __webpack_require__(29)
-	  , has               = __webpack_require__(30)
-	  , cof               = __webpack_require__(59)
-	  , inheritIfRequired = __webpack_require__(113)
-	  , toPrimitive       = __webpack_require__(41)
-	  , fails             = __webpack_require__(32)
-	  , gOPN              = __webpack_require__(75).f
-	  , gOPD              = __webpack_require__(76).f
-	  , dP                = __webpack_require__(36).f
-	  , $trim             = __webpack_require__(108).trim
+	var global            = __webpack_require__(30)
+	  , has               = __webpack_require__(31)
+	  , cof               = __webpack_require__(60)
+	  , inheritIfRequired = __webpack_require__(114)
+	  , toPrimitive       = __webpack_require__(42)
+	  , fails             = __webpack_require__(33)
+	  , gOPN              = __webpack_require__(76).f
+	  , gOPD              = __webpack_require__(77).f
+	  , dP                = __webpack_require__(37).f
+	  , $trim             = __webpack_require__(109).trim
 	  , NUMBER            = 'Number'
 	  , $Number           = global[NUMBER]
 	  , Base              = $Number
 	  , proto             = $Number.prototype
 	  // Opera ~12 has broken Object#toString
-	  , BROKEN_COF        = cof(__webpack_require__(71)(proto)) == NUMBER
+	  , BROKEN_COF        = cof(__webpack_require__(72)(proto)) == NUMBER
 	  , TRIM              = 'trim' in String.prototype;
 	
 	// 7.1.3 ToNumber(argument)
@@ -18904,7 +19785,7 @@
 	      && (BROKEN_COF ? fails(function(){ proto.valueOf.call(that); }) : cof(that) != NUMBER)
 	        ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
 	  };
-	  for(var keys = __webpack_require__(31) ? gOPN(Base) : (
+	  for(var keys = __webpack_require__(32) ? gOPN(Base) : (
 	    // ES3:
 	    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
 	    // ES6 (in case, if modules with ES6 Number statics required before):
@@ -18917,15 +19798,15 @@
 	  }
 	  $Number.prototype = proto;
 	  proto.constructor = $Number;
-	  __webpack_require__(43)(global, NUMBER, $Number);
+	  __webpack_require__(44)(global, NUMBER, $Number);
 	}
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject       = __webpack_require__(38)
-	  , setPrototypeOf = __webpack_require__(98).set;
+	var isObject       = __webpack_require__(39)
+	  , setPrototypeOf = __webpack_require__(99).set;
 	module.exports = function(that, target, C){
 	  var P, S = target.constructor;
 	  if(S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && isObject(P) && setPrototypeOf){
@@ -18934,14 +19815,14 @@
 	};
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export      = __webpack_require__(33)
-	  , toInteger    = __webpack_require__(63)
-	  , aNumberValue = __webpack_require__(115)
-	  , repeat       = __webpack_require__(116)
+	var $export      = __webpack_require__(34)
+	  , toInteger    = __webpack_require__(64)
+	  , aNumberValue = __webpack_require__(116)
+	  , repeat       = __webpack_require__(117)
 	  , $toFixed     = 1..toFixed
 	  , floor        = Math.floor
 	  , data         = [0, 0, 0, 0, 0, 0]
@@ -18997,7 +19878,7 @@
 	  0.9.toFixed(0) !== '1' ||
 	  1.255.toFixed(2) !== '1.25' ||
 	  1000000000000000128..toFixed(0) !== '1000000000000000128'
-	) || !__webpack_require__(32)(function(){
+	) || !__webpack_require__(33)(function(){
 	  // V8 ~ Android 4.3-
 	  $toFixed.call({});
 	})), 'Number', {
@@ -19052,22 +19933,22 @@
 	});
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var cof = __webpack_require__(59);
+	var cof = __webpack_require__(60);
 	module.exports = function(it, msg){
 	  if(typeof it != 'number' && cof(it) != 'Number')throw TypeError(msg);
 	  return +it;
 	};
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var toInteger = __webpack_require__(63)
-	  , defined   = __webpack_require__(60);
+	var toInteger = __webpack_require__(64)
+	  , defined   = __webpack_require__(61);
 	
 	module.exports = function repeat(count){
 	  var str = String(defined(this))
@@ -19079,13 +19960,13 @@
 	};
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export      = __webpack_require__(33)
-	  , $fails       = __webpack_require__(32)
-	  , aNumberValue = __webpack_require__(115)
+	var $export      = __webpack_require__(34)
+	  , $fails       = __webpack_require__(33)
+	  , aNumberValue = __webpack_require__(116)
 	  , $toPrecision = 1..toPrecision;
 	
 	$export($export.P + $export.F * ($fails(function(){
@@ -19102,21 +19983,21 @@
 	});
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.1 Number.EPSILON
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Number', {EPSILON: Math.pow(2, -52)});
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.2 Number.isFinite(number)
-	var $export   = __webpack_require__(33)
-	  , _isFinite = __webpack_require__(29).isFinite;
+	var $export   = __webpack_require__(34)
+	  , _isFinite = __webpack_require__(30).isFinite;
 	
 	$export($export.S, 'Number', {
 	  isFinite: function isFinite(it){
@@ -19125,31 +20006,31 @@
 	});
 
 /***/ },
-/* 120 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 20.1.2.3 Number.isInteger(number)
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Number', {isInteger: __webpack_require__(121)});
-
-/***/ },
 /* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.3 Number.isInteger(number)
-	var isObject = __webpack_require__(38)
+	var $export = __webpack_require__(34);
+	
+	$export($export.S, 'Number', {isInteger: __webpack_require__(122)});
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.3 Number.isInteger(number)
+	var isObject = __webpack_require__(39)
 	  , floor    = Math.floor;
 	module.exports = function isInteger(it){
 	  return !isObject(it) && isFinite(it) && floor(it) === it;
 	};
 
 /***/ },
-/* 122 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.4 Number.isNaN(number)
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Number', {
 	  isNaN: function isNaN(number){
@@ -19158,12 +20039,12 @@
 	});
 
 /***/ },
-/* 123 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.5 Number.isSafeInteger(number)
-	var $export   = __webpack_require__(33)
-	  , isInteger = __webpack_require__(121)
+	var $export   = __webpack_require__(34)
+	  , isInteger = __webpack_require__(122)
 	  , abs       = Math.abs;
 	
 	$export($export.S, 'Number', {
@@ -19173,48 +20054,48 @@
 	});
 
 /***/ },
-/* 124 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 20.1.2.6 Number.MAX_SAFE_INTEGER
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
-
-/***/ },
 /* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 20.1.2.10 Number.MIN_SAFE_INTEGER
-	var $export = __webpack_require__(33);
+	// 20.1.2.6 Number.MAX_SAFE_INTEGER
+	var $export = __webpack_require__(34);
 	
-	$export($export.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
+	$export($export.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
 
 /***/ },
 /* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export     = __webpack_require__(33)
-	  , $parseFloat = __webpack_require__(111);
-	// 20.1.2.12 Number.parseFloat(string)
-	$export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', {parseFloat: $parseFloat});
+	// 20.1.2.10 Number.MIN_SAFE_INTEGER
+	var $export = __webpack_require__(34);
+	
+	$export($export.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
 
 /***/ },
 /* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export   = __webpack_require__(33)
-	  , $parseInt = __webpack_require__(107);
-	// 20.1.2.13 Number.parseInt(string, radix)
-	$export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
+	var $export     = __webpack_require__(34)
+	  , $parseFloat = __webpack_require__(112);
+	// 20.1.2.12 Number.parseFloat(string)
+	$export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', {parseFloat: $parseFloat});
 
 /***/ },
 /* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var $export   = __webpack_require__(34)
+	  , $parseInt = __webpack_require__(108);
+	// 20.1.2.13 Number.parseInt(string, radix)
+	$export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
+
+/***/ },
+/* 129 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// 20.2.2.3 Math.acosh(x)
-	var $export = __webpack_require__(33)
-	  , log1p   = __webpack_require__(129)
+	var $export = __webpack_require__(34)
+	  , log1p   = __webpack_require__(130)
 	  , sqrt    = Math.sqrt
 	  , $acosh  = Math.acosh;
 	
@@ -19232,7 +20113,7 @@
 	});
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports) {
 
 	// 20.2.2.20 Math.log1p(x)
@@ -19241,11 +20122,11 @@
 	};
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.5 Math.asinh(x)
-	var $export = __webpack_require__(33)
+	var $export = __webpack_require__(34)
 	  , $asinh  = Math.asinh;
 	
 	function asinh(x){
@@ -19256,11 +20137,11 @@
 	$export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', {asinh: asinh});
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.7 Math.atanh(x)
-	var $export = __webpack_require__(33)
+	var $export = __webpack_require__(34)
 	  , $atanh  = Math.atanh;
 	
 	// Tor Browser bug: Math.atanh(-0) -> 0 
@@ -19271,12 +20152,12 @@
 	});
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.9 Math.cbrt(x)
-	var $export = __webpack_require__(33)
-	  , sign    = __webpack_require__(133);
+	var $export = __webpack_require__(34)
+	  , sign    = __webpack_require__(134);
 	
 	$export($export.S, 'Math', {
 	  cbrt: function cbrt(x){
@@ -19285,7 +20166,7 @@
 	});
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports) {
 
 	// 20.2.2.28 Math.sign(x)
@@ -19294,11 +20175,11 @@
 	};
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.11 Math.clz32(x)
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  clz32: function clz32(x){
@@ -19307,11 +20188,11 @@
 	});
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.12 Math.cosh(x)
-	var $export = __webpack_require__(33)
+	var $export = __webpack_require__(34)
 	  , exp     = Math.exp;
 	
 	$export($export.S, 'Math', {
@@ -19321,17 +20202,17 @@
 	});
 
 /***/ },
-/* 136 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.14 Math.expm1(x)
-	var $export = __webpack_require__(33)
-	  , $expm1  = __webpack_require__(137);
+	var $export = __webpack_require__(34)
+	  , $expm1  = __webpack_require__(138);
 	
 	$export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', {expm1: $expm1});
 
 /***/ },
-/* 137 */
+/* 138 */
 /***/ function(module, exports) {
 
 	// 20.2.2.14 Math.expm1(x)
@@ -19346,12 +20227,12 @@
 	} : $expm1;
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.16 Math.fround(x)
-	var $export   = __webpack_require__(33)
-	  , sign      = __webpack_require__(133)
+	var $export   = __webpack_require__(34)
+	  , sign      = __webpack_require__(134)
 	  , pow       = Math.pow
 	  , EPSILON   = pow(2, -52)
 	  , EPSILON32 = pow(2, -23)
@@ -19377,11 +20258,11 @@
 	});
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
-	var $export = __webpack_require__(33)
+	var $export = __webpack_require__(34)
 	  , abs     = Math.abs;
 	
 	$export($export.S, 'Math', {
@@ -19407,15 +20288,15 @@
 	});
 
 /***/ },
-/* 140 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.18 Math.imul(x, y)
-	var $export = __webpack_require__(33)
+	var $export = __webpack_require__(34)
 	  , $imul   = Math.imul;
 	
 	// some WebKit versions fails with big numbers, some has wrong arity
-	$export($export.S + $export.F * __webpack_require__(32)(function(){
+	$export($export.S + $export.F * __webpack_require__(33)(function(){
 	  return $imul(0xffffffff, 5) != -5 || $imul.length != 2;
 	}), 'Math', {
 	  imul: function imul(x, y){
@@ -19429,11 +20310,11 @@
 	});
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.21 Math.log10(x)
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  log10: function log10(x){
@@ -19442,20 +20323,20 @@
 	});
 
 /***/ },
-/* 142 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 20.2.2.20 Math.log1p(x)
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Math', {log1p: __webpack_require__(129)});
-
-/***/ },
 /* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 20.2.2.20 Math.log1p(x)
+	var $export = __webpack_require__(34);
+	
+	$export($export.S, 'Math', {log1p: __webpack_require__(130)});
+
+/***/ },
+/* 144 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// 20.2.2.22 Math.log2(x)
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  log2: function log2(x){
@@ -19464,25 +20345,25 @@
 	});
 
 /***/ },
-/* 144 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 20.2.2.28 Math.sign(x)
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Math', {sign: __webpack_require__(133)});
-
-/***/ },
 /* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 20.2.2.28 Math.sign(x)
+	var $export = __webpack_require__(34);
+	
+	$export($export.S, 'Math', {sign: __webpack_require__(134)});
+
+/***/ },
+/* 146 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// 20.2.2.30 Math.sinh(x)
-	var $export = __webpack_require__(33)
-	  , expm1   = __webpack_require__(137)
+	var $export = __webpack_require__(34)
+	  , expm1   = __webpack_require__(138)
 	  , exp     = Math.exp;
 	
 	// V8 near Chromium 38 has a problem with very small numbers
-	$export($export.S + $export.F * __webpack_require__(32)(function(){
+	$export($export.S + $export.F * __webpack_require__(33)(function(){
 	  return !Math.sinh(-2e-17) != -2e-17;
 	}), 'Math', {
 	  sinh: function sinh(x){
@@ -19493,12 +20374,12 @@
 	});
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.33 Math.tanh(x)
-	var $export = __webpack_require__(33)
-	  , expm1   = __webpack_require__(137)
+	var $export = __webpack_require__(34)
+	  , expm1   = __webpack_require__(138)
 	  , exp     = Math.exp;
 	
 	$export($export.S, 'Math', {
@@ -19510,11 +20391,11 @@
 	});
 
 /***/ },
-/* 147 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.34 Math.trunc(x)
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  trunc: function trunc(it){
@@ -19523,11 +20404,11 @@
 	});
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export        = __webpack_require__(33)
-	  , toIndex        = __webpack_require__(64)
+	var $export        = __webpack_require__(34)
+	  , toIndex        = __webpack_require__(65)
 	  , fromCharCode   = String.fromCharCode
 	  , $fromCodePoint = String.fromCodePoint;
 	
@@ -19551,12 +20432,12 @@
 	});
 
 /***/ },
-/* 149 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export   = __webpack_require__(33)
-	  , toIObject = __webpack_require__(57)
-	  , toLength  = __webpack_require__(62);
+	var $export   = __webpack_require__(34)
+	  , toIObject = __webpack_require__(58)
+	  , toLength  = __webpack_require__(63);
 	
 	$export($export.S, 'String', {
 	  // 21.1.2.4 String.raw(callSite, ...substitutions)
@@ -19574,26 +20455,26 @@
 	});
 
 /***/ },
-/* 150 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 21.1.3.25 String.prototype.trim()
-	__webpack_require__(108)('trim', function($trim){
+	__webpack_require__(109)('trim', function($trim){
 	  return function trim(){
 	    return $trim(this, 3);
 	  };
 	});
 
 /***/ },
-/* 151 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $at  = __webpack_require__(152)(true);
+	var $at  = __webpack_require__(153)(true);
 	
 	// 21.1.3.27 String.prototype[@@iterator]()
-	__webpack_require__(153)(String, 'String', function(iterated){
+	__webpack_require__(154)(String, 'String', function(iterated){
 	  this._t = String(iterated); // target
 	  this._i = 0;                // next index
 	// 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -19608,11 +20489,11 @@
 	});
 
 /***/ },
-/* 152 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toInteger = __webpack_require__(63)
-	  , defined   = __webpack_require__(60);
+	var toInteger = __webpack_require__(64)
+	  , defined   = __webpack_require__(61);
 	// true  -> String#at
 	// false -> String#codePointAt
 	module.exports = function(TO_STRING){
@@ -19630,20 +20511,20 @@
 	};
 
 /***/ },
-/* 153 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var LIBRARY        = __webpack_require__(53)
-	  , $export        = __webpack_require__(33)
-	  , redefine       = __webpack_require__(43)
-	  , hide           = __webpack_require__(35)
-	  , has            = __webpack_require__(30)
-	  , Iterators      = __webpack_require__(154)
-	  , $iterCreate    = __webpack_require__(155)
-	  , setToStringTag = __webpack_require__(49)
-	  , getPrototypeOf = __webpack_require__(84)
-	  , ITERATOR       = __webpack_require__(50)('iterator')
+	var LIBRARY        = __webpack_require__(54)
+	  , $export        = __webpack_require__(34)
+	  , redefine       = __webpack_require__(44)
+	  , hide           = __webpack_require__(36)
+	  , has            = __webpack_require__(31)
+	  , Iterators      = __webpack_require__(155)
+	  , $iterCreate    = __webpack_require__(156)
+	  , setToStringTag = __webpack_require__(50)
+	  , getPrototypeOf = __webpack_require__(85)
+	  , ITERATOR       = __webpack_require__(51)('iterator')
 	  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 	  , FF_ITERATOR    = '@@iterator'
 	  , KEYS           = 'keys'
@@ -19705,23 +20586,23 @@
 	};
 
 /***/ },
-/* 154 */
+/* 155 */
 /***/ function(module, exports) {
 
 	module.exports = {};
 
 /***/ },
-/* 155 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var create         = __webpack_require__(71)
-	  , descriptor     = __webpack_require__(42)
-	  , setToStringTag = __webpack_require__(49)
+	var create         = __webpack_require__(72)
+	  , descriptor     = __webpack_require__(43)
+	  , setToStringTag = __webpack_require__(50)
 	  , IteratorPrototype = {};
 	
 	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-	__webpack_require__(35)(IteratorPrototype, __webpack_require__(50)('iterator'), function(){ return this; });
+	__webpack_require__(36)(IteratorPrototype, __webpack_require__(51)('iterator'), function(){ return this; });
 	
 	module.exports = function(Constructor, NAME, next){
 	  Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -19729,12 +20610,12 @@
 	};
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33)
-	  , $at     = __webpack_require__(152)(false);
+	var $export = __webpack_require__(34)
+	  , $at     = __webpack_require__(153)(false);
 	$export($export.P, 'String', {
 	  // 21.1.3.3 String.prototype.codePointAt(pos)
 	  codePointAt: function codePointAt(pos){
@@ -19743,18 +20624,18 @@
 	});
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.1.3.6 String.prototype.endsWith(searchString [, endPosition])
 	'use strict';
-	var $export   = __webpack_require__(33)
-	  , toLength  = __webpack_require__(62)
-	  , context   = __webpack_require__(158)
+	var $export   = __webpack_require__(34)
+	  , toLength  = __webpack_require__(63)
+	  , context   = __webpack_require__(159)
 	  , ENDS_WITH = 'endsWith'
 	  , $endsWith = ''[ENDS_WITH];
 	
-	$export($export.P + $export.F * __webpack_require__(160)(ENDS_WITH), 'String', {
+	$export($export.P + $export.F * __webpack_require__(161)(ENDS_WITH), 'String', {
 	  endsWith: function endsWith(searchString /*, endPosition = @length */){
 	    var that = context(this, searchString, ENDS_WITH)
 	      , endPosition = arguments.length > 1 ? arguments[1] : undefined
@@ -19768,12 +20649,12 @@
 	});
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// helper for String#{startsWith, endsWith, includes}
-	var isRegExp = __webpack_require__(159)
-	  , defined  = __webpack_require__(60);
+	var isRegExp = __webpack_require__(160)
+	  , defined  = __webpack_require__(61);
 	
 	module.exports = function(that, searchString, NAME){
 	  if(isRegExp(searchString))throw TypeError('String#' + NAME + " doesn't accept regex!");
@@ -19781,23 +20662,23 @@
 	};
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.2.8 IsRegExp(argument)
-	var isObject = __webpack_require__(38)
-	  , cof      = __webpack_require__(59)
-	  , MATCH    = __webpack_require__(50)('match');
+	var isObject = __webpack_require__(39)
+	  , cof      = __webpack_require__(60)
+	  , MATCH    = __webpack_require__(51)('match');
 	module.exports = function(it){
 	  var isRegExp;
 	  return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
 	};
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var MATCH = __webpack_require__(50)('match');
+	var MATCH = __webpack_require__(51)('match');
 	module.exports = function(KEY){
 	  var re = /./;
 	  try {
@@ -19811,16 +20692,16 @@
 	};
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.1.3.7 String.prototype.includes(searchString, position = 0)
 	'use strict';
-	var $export  = __webpack_require__(33)
-	  , context  = __webpack_require__(158)
+	var $export  = __webpack_require__(34)
+	  , context  = __webpack_require__(159)
 	  , INCLUDES = 'includes';
 	
-	$export($export.P + $export.F * __webpack_require__(160)(INCLUDES), 'String', {
+	$export($export.P + $export.F * __webpack_require__(161)(INCLUDES), 'String', {
 	  includes: function includes(searchString /*, position = 0 */){
 	    return !!~context(this, searchString, INCLUDES)
 	      .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
@@ -19828,29 +20709,29 @@
 	});
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.P, 'String', {
 	  // 21.1.3.13 String.prototype.repeat(count)
-	  repeat: __webpack_require__(116)
+	  repeat: __webpack_require__(117)
 	});
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.1.3.18 String.prototype.startsWith(searchString [, position ])
 	'use strict';
-	var $export     = __webpack_require__(33)
-	  , toLength    = __webpack_require__(62)
-	  , context     = __webpack_require__(158)
+	var $export     = __webpack_require__(34)
+	  , toLength    = __webpack_require__(63)
+	  , context     = __webpack_require__(159)
 	  , STARTS_WITH = 'startsWith'
 	  , $startsWith = ''[STARTS_WITH];
 	
-	$export($export.P + $export.F * __webpack_require__(160)(STARTS_WITH), 'String', {
+	$export($export.P + $export.F * __webpack_require__(161)(STARTS_WITH), 'String', {
 	  startsWith: function startsWith(searchString /*, position = 0 */){
 	    var that   = context(this, searchString, STARTS_WITH)
 	      , index  = toLength(Math.min(arguments.length > 1 ? arguments[1] : undefined, that.length))
@@ -19862,24 +20743,24 @@
 	});
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.2 String.prototype.anchor(name)
-	__webpack_require__(165)('anchor', function(createHTML){
+	__webpack_require__(166)('anchor', function(createHTML){
 	  return function anchor(name){
 	    return createHTML(this, 'a', 'name', name);
 	  }
 	});
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33)
-	  , fails   = __webpack_require__(32)
-	  , defined = __webpack_require__(60)
+	var $export = __webpack_require__(34)
+	  , fails   = __webpack_require__(33)
+	  , defined = __webpack_require__(61)
 	  , quot    = /"/g;
 	// B.2.3.2.1 CreateHTML(string, tag, attribute, value)
 	var createHTML = function(string, tag, attribute, value) {
@@ -19898,26 +20779,14 @@
 	};
 
 /***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	// B.2.3.3 String.prototype.big()
-	__webpack_require__(165)('big', function(createHTML){
-	  return function big(){
-	    return createHTML(this, 'big', '', '');
-	  }
-	});
-
-/***/ },
 /* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.4 String.prototype.blink()
-	__webpack_require__(165)('blink', function(createHTML){
-	  return function blink(){
-	    return createHTML(this, 'blink', '', '');
+	// B.2.3.3 String.prototype.big()
+	__webpack_require__(166)('big', function(createHTML){
+	  return function big(){
+	    return createHTML(this, 'big', '', '');
 	  }
 	});
 
@@ -19926,10 +20795,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.5 String.prototype.bold()
-	__webpack_require__(165)('bold', function(createHTML){
-	  return function bold(){
-	    return createHTML(this, 'b', '', '');
+	// B.2.3.4 String.prototype.blink()
+	__webpack_require__(166)('blink', function(createHTML){
+	  return function blink(){
+	    return createHTML(this, 'blink', '', '');
 	  }
 	});
 
@@ -19938,10 +20807,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.6 String.prototype.fixed()
-	__webpack_require__(165)('fixed', function(createHTML){
-	  return function fixed(){
-	    return createHTML(this, 'tt', '', '');
+	// B.2.3.5 String.prototype.bold()
+	__webpack_require__(166)('bold', function(createHTML){
+	  return function bold(){
+	    return createHTML(this, 'b', '', '');
 	  }
 	});
 
@@ -19950,10 +20819,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.7 String.prototype.fontcolor(color)
-	__webpack_require__(165)('fontcolor', function(createHTML){
-	  return function fontcolor(color){
-	    return createHTML(this, 'font', 'color', color);
+	// B.2.3.6 String.prototype.fixed()
+	__webpack_require__(166)('fixed', function(createHTML){
+	  return function fixed(){
+	    return createHTML(this, 'tt', '', '');
 	  }
 	});
 
@@ -19962,10 +20831,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.8 String.prototype.fontsize(size)
-	__webpack_require__(165)('fontsize', function(createHTML){
-	  return function fontsize(size){
-	    return createHTML(this, 'font', 'size', size);
+	// B.2.3.7 String.prototype.fontcolor(color)
+	__webpack_require__(166)('fontcolor', function(createHTML){
+	  return function fontcolor(color){
+	    return createHTML(this, 'font', 'color', color);
 	  }
 	});
 
@@ -19974,10 +20843,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.9 String.prototype.italics()
-	__webpack_require__(165)('italics', function(createHTML){
-	  return function italics(){
-	    return createHTML(this, 'i', '', '');
+	// B.2.3.8 String.prototype.fontsize(size)
+	__webpack_require__(166)('fontsize', function(createHTML){
+	  return function fontsize(size){
+	    return createHTML(this, 'font', 'size', size);
 	  }
 	});
 
@@ -19986,10 +20855,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.10 String.prototype.link(url)
-	__webpack_require__(165)('link', function(createHTML){
-	  return function link(url){
-	    return createHTML(this, 'a', 'href', url);
+	// B.2.3.9 String.prototype.italics()
+	__webpack_require__(166)('italics', function(createHTML){
+	  return function italics(){
+	    return createHTML(this, 'i', '', '');
 	  }
 	});
 
@@ -19998,10 +20867,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.11 String.prototype.small()
-	__webpack_require__(165)('small', function(createHTML){
-	  return function small(){
-	    return createHTML(this, 'small', '', '');
+	// B.2.3.10 String.prototype.link(url)
+	__webpack_require__(166)('link', function(createHTML){
+	  return function link(url){
+	    return createHTML(this, 'a', 'href', url);
 	  }
 	});
 
@@ -20010,10 +20879,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.12 String.prototype.strike()
-	__webpack_require__(165)('strike', function(createHTML){
-	  return function strike(){
-	    return createHTML(this, 'strike', '', '');
+	// B.2.3.11 String.prototype.small()
+	__webpack_require__(166)('small', function(createHTML){
+	  return function small(){
+	    return createHTML(this, 'small', '', '');
 	  }
 	});
 
@@ -20022,10 +20891,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.13 String.prototype.sub()
-	__webpack_require__(165)('sub', function(createHTML){
-	  return function sub(){
-	    return createHTML(this, 'sub', '', '');
+	// B.2.3.12 String.prototype.strike()
+	__webpack_require__(166)('strike', function(createHTML){
+	  return function strike(){
+	    return createHTML(this, 'strike', '', '');
 	  }
 	});
 
@@ -20034,10 +20903,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	// B.2.3.14 String.prototype.sup()
-	__webpack_require__(165)('sup', function(createHTML){
-	  return function sup(){
-	    return createHTML(this, 'sup', '', '');
+	// B.2.3.13 String.prototype.sub()
+	__webpack_require__(166)('sub', function(createHTML){
+	  return function sub(){
+	    return createHTML(this, 'sub', '', '');
 	  }
 	});
 
@@ -20045,21 +20914,33 @@
 /* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 20.3.3.1 / 15.9.4.4 Date.now()
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Date', {now: function(){ return new Date().getTime(); }});
+	'use strict';
+	// B.2.3.14 String.prototype.sup()
+	__webpack_require__(166)('sup', function(createHTML){
+	  return function sup(){
+	    return createHTML(this, 'sup', '', '');
+	  }
+	});
 
 /***/ },
 /* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	var $export     = __webpack_require__(33)
-	  , toObject    = __webpack_require__(83)
-	  , toPrimitive = __webpack_require__(41);
+	// 20.3.3.1 / 15.9.4.4 Date.now()
+	var $export = __webpack_require__(34);
 	
-	$export($export.P + $export.F * __webpack_require__(32)(function(){
+	$export($export.S, 'Date', {now: function(){ return new Date().getTime(); }});
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $export     = __webpack_require__(34)
+	  , toObject    = __webpack_require__(84)
+	  , toPrimitive = __webpack_require__(42);
+	
+	$export($export.P + $export.F * __webpack_require__(33)(function(){
 	  return new Date(NaN).toJSON() !== null || Date.prototype.toJSON.call({toISOString: function(){ return 1; }}) !== 1;
 	}), 'Date', {
 	  toJSON: function toJSON(key){
@@ -20070,13 +20951,13 @@
 	});
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
-	var $export = __webpack_require__(33)
-	  , fails   = __webpack_require__(32)
+	var $export = __webpack_require__(34)
+	  , fails   = __webpack_require__(33)
 	  , getTime = Date.prototype.getTime;
 	
 	var lz = function(num){
@@ -20103,7 +20984,7 @@
 	});
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var DateProto    = Date.prototype
@@ -20112,28 +20993,28 @@
 	  , $toString    = DateProto[TO_STRING]
 	  , getTime      = DateProto.getTime;
 	if(new Date(NaN) + '' != INVALID_DATE){
-	  __webpack_require__(43)(DateProto, TO_STRING, function toString(){
+	  __webpack_require__(44)(DateProto, TO_STRING, function toString(){
 	    var value = getTime.call(this);
 	    return value === value ? $toString.call(this) : INVALID_DATE;
 	  });
 	}
 
 /***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var TO_PRIMITIVE = __webpack_require__(50)('toPrimitive')
-	  , proto        = Date.prototype;
-	
-	if(!(TO_PRIMITIVE in proto))__webpack_require__(35)(proto, TO_PRIMITIVE, __webpack_require__(183));
-
-/***/ },
 /* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var TO_PRIMITIVE = __webpack_require__(51)('toPrimitive')
+	  , proto        = Date.prototype;
+	
+	if(!(TO_PRIMITIVE in proto))__webpack_require__(36)(proto, TO_PRIMITIVE, __webpack_require__(184));
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
-	var anObject    = __webpack_require__(37)
-	  , toPrimitive = __webpack_require__(41)
+	var anObject    = __webpack_require__(38)
+	  , toPrimitive = __webpack_require__(42)
 	  , NUMBER      = 'number';
 	
 	module.exports = function(hint){
@@ -20142,29 +21023,29 @@
 	};
 
 /***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Array', {isArray: __webpack_require__(70)});
-
-/***/ },
 /* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	var ctx            = __webpack_require__(45)
-	  , $export        = __webpack_require__(33)
-	  , toObject       = __webpack_require__(83)
-	  , call           = __webpack_require__(186)
-	  , isArrayIter    = __webpack_require__(187)
-	  , toLength       = __webpack_require__(62)
-	  , createProperty = __webpack_require__(188)
-	  , getIterFn      = __webpack_require__(189);
+	// 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
+	var $export = __webpack_require__(34);
 	
-	$export($export.S + $export.F * !__webpack_require__(190)(function(iter){ Array.from(iter); }), 'Array', {
+	$export($export.S, 'Array', {isArray: __webpack_require__(71)});
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var ctx            = __webpack_require__(46)
+	  , $export        = __webpack_require__(34)
+	  , toObject       = __webpack_require__(84)
+	  , call           = __webpack_require__(187)
+	  , isArrayIter    = __webpack_require__(188)
+	  , toLength       = __webpack_require__(63)
+	  , createProperty = __webpack_require__(189)
+	  , getIterFn      = __webpack_require__(190);
+	
+	$export($export.S + $export.F * !__webpack_require__(191)(function(iter){ Array.from(iter); }), 'Array', {
 	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
 	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
 	    var O       = toObject(arrayLike)
@@ -20194,11 +21075,11 @@
 
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// call something on iterator step with safe closing on error
-	var anObject = __webpack_require__(37);
+	var anObject = __webpack_require__(38);
 	module.exports = function(iterator, fn, value, entries){
 	  try {
 	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -20211,12 +21092,12 @@
 	};
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// check on default Array iterator
-	var Iterators  = __webpack_require__(154)
-	  , ITERATOR   = __webpack_require__(50)('iterator')
+	var Iterators  = __webpack_require__(155)
+	  , ITERATOR   = __webpack_require__(51)('iterator')
 	  , ArrayProto = Array.prototype;
 	
 	module.exports = function(it){
@@ -20224,12 +21105,12 @@
 	};
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $defineProperty = __webpack_require__(36)
-	  , createDesc      = __webpack_require__(42);
+	var $defineProperty = __webpack_require__(37)
+	  , createDesc      = __webpack_require__(43);
 	
 	module.exports = function(object, index, value){
 	  if(index in object)$defineProperty.f(object, index, createDesc(0, value));
@@ -20237,23 +21118,23 @@
 	};
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var classof   = __webpack_require__(100)
-	  , ITERATOR  = __webpack_require__(50)('iterator')
-	  , Iterators = __webpack_require__(154);
-	module.exports = __webpack_require__(34).getIteratorMethod = function(it){
+	var classof   = __webpack_require__(101)
+	  , ITERATOR  = __webpack_require__(51)('iterator')
+	  , Iterators = __webpack_require__(155);
+	module.exports = __webpack_require__(35).getIteratorMethod = function(it){
 	  if(it != undefined)return it[ITERATOR]
 	    || it['@@iterator']
 	    || Iterators[classof(it)];
 	};
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ITERATOR     = __webpack_require__(50)('iterator')
+	var ITERATOR     = __webpack_require__(51)('iterator')
 	  , SAFE_CLOSING = false;
 	
 	try {
@@ -20276,15 +21157,15 @@
 	};
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export        = __webpack_require__(33)
-	  , createProperty = __webpack_require__(188);
+	var $export        = __webpack_require__(34)
+	  , createProperty = __webpack_require__(189);
 	
 	// WebKit Array.of isn't generic
-	$export($export.S + $export.F * __webpack_require__(32)(function(){
+	$export($export.S + $export.F * __webpack_require__(33)(function(){
 	  function F(){}
 	  return !(Array.of.call(F) instanceof F);
 	}), 'Array', {
@@ -20300,27 +21181,27 @@
 	});
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 22.1.3.13 Array.prototype.join(separator)
-	var $export   = __webpack_require__(33)
-	  , toIObject = __webpack_require__(57)
+	var $export   = __webpack_require__(34)
+	  , toIObject = __webpack_require__(58)
 	  , arrayJoin = [].join;
 	
 	// fallback for not array-like strings
-	$export($export.P + $export.F * (__webpack_require__(58) != Object || !__webpack_require__(193)(arrayJoin)), 'Array', {
+	$export($export.P + $export.F * (__webpack_require__(59) != Object || !__webpack_require__(194)(arrayJoin)), 'Array', {
 	  join: function join(separator){
 	    return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
 	  }
 	});
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var fails = __webpack_require__(32);
+	var fails = __webpack_require__(33);
 	
 	module.exports = function(method, arg){
 	  return !!method && fails(function(){
@@ -20329,19 +21210,19 @@
 	};
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export    = __webpack_require__(33)
-	  , html       = __webpack_require__(73)
-	  , cof        = __webpack_require__(59)
-	  , toIndex    = __webpack_require__(64)
-	  , toLength   = __webpack_require__(62)
+	var $export    = __webpack_require__(34)
+	  , html       = __webpack_require__(74)
+	  , cof        = __webpack_require__(60)
+	  , toIndex    = __webpack_require__(65)
+	  , toLength   = __webpack_require__(63)
 	  , arraySlice = [].slice;
 	
 	// fallback for not array-like ES3 strings and DOM objects
-	$export($export.P + $export.F * __webpack_require__(32)(function(){
+	$export($export.P + $export.F * __webpack_require__(33)(function(){
 	  if(html)arraySlice.call(html);
 	}), 'Array', {
 	  slice: function slice(begin, end){
@@ -20362,14 +21243,14 @@
 	});
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export   = __webpack_require__(33)
-	  , aFunction = __webpack_require__(46)
-	  , toObject  = __webpack_require__(83)
-	  , fails     = __webpack_require__(32)
+	var $export   = __webpack_require__(34)
+	  , aFunction = __webpack_require__(47)
+	  , toObject  = __webpack_require__(84)
+	  , fails     = __webpack_require__(33)
 	  , $sort     = [].sort
 	  , test      = [1, 2, 3];
 	
@@ -20380,7 +21261,7 @@
 	  // V8 bug
 	  test.sort(null);
 	  // Old WebKit
-	}) || !__webpack_require__(193)($sort)), 'Array', {
+	}) || !__webpack_require__(194)($sort)), 'Array', {
 	  // 22.1.3.25 Array.prototype.sort(comparefn)
 	  sort: function sort(comparefn){
 	    return comparefn === undefined
@@ -20390,13 +21271,13 @@
 	});
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export  = __webpack_require__(33)
-	  , $forEach = __webpack_require__(197)(0)
-	  , STRICT   = __webpack_require__(193)([].forEach, true);
+	var $export  = __webpack_require__(34)
+	  , $forEach = __webpack_require__(198)(0)
+	  , STRICT   = __webpack_require__(194)([].forEach, true);
 	
 	$export($export.P + $export.F * !STRICT, 'Array', {
 	  // 22.1.3.10 / 15.4.4.18 Array.prototype.forEach(callbackfn [, thisArg])
@@ -20406,7 +21287,7 @@
 	});
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 0 -> Array#forEach
@@ -20416,11 +21297,11 @@
 	// 4 -> Array#every
 	// 5 -> Array#find
 	// 6 -> Array#findIndex
-	var ctx      = __webpack_require__(45)
-	  , IObject  = __webpack_require__(58)
-	  , toObject = __webpack_require__(83)
-	  , toLength = __webpack_require__(62)
-	  , asc      = __webpack_require__(198);
+	var ctx      = __webpack_require__(46)
+	  , IObject  = __webpack_require__(59)
+	  , toObject = __webpack_require__(84)
+	  , toLength = __webpack_require__(63)
+	  , asc      = __webpack_require__(199);
 	module.exports = function(TYPE, $create){
 	  var IS_MAP        = TYPE == 1
 	    , IS_FILTER     = TYPE == 2
@@ -20455,23 +21336,23 @@
 	};
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-	var speciesConstructor = __webpack_require__(199);
+	var speciesConstructor = __webpack_require__(200);
 	
 	module.exports = function(original, length){
 	  return new (speciesConstructor(original))(length);
 	};
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(38)
-	  , isArray  = __webpack_require__(70)
-	  , SPECIES  = __webpack_require__(50)('species');
+	var isObject = __webpack_require__(39)
+	  , isArray  = __webpack_require__(71)
+	  , SPECIES  = __webpack_require__(51)('species');
 	
 	module.exports = function(original){
 	  var C;
@@ -20487,32 +21368,17 @@
 	};
 
 /***/ },
-/* 200 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var $export = __webpack_require__(33)
-	  , $map    = __webpack_require__(197)(1);
-	
-	$export($export.P + $export.F * !__webpack_require__(193)([].map, true), 'Array', {
-	  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
-	  map: function map(callbackfn /* , thisArg */){
-	    return $map(this, callbackfn, arguments[1]);
-	  }
-	});
-
-/***/ },
 /* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33)
-	  , $filter = __webpack_require__(197)(2);
+	var $export = __webpack_require__(34)
+	  , $map    = __webpack_require__(198)(1);
 	
-	$export($export.P + $export.F * !__webpack_require__(193)([].filter, true), 'Array', {
-	  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
-	  filter: function filter(callbackfn /* , thisArg */){
-	    return $filter(this, callbackfn, arguments[1]);
+	$export($export.P + $export.F * !__webpack_require__(194)([].map, true), 'Array', {
+	  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
+	  map: function map(callbackfn /* , thisArg */){
+	    return $map(this, callbackfn, arguments[1]);
 	  }
 	});
 
@@ -20521,13 +21387,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33)
-	  , $some   = __webpack_require__(197)(3);
+	var $export = __webpack_require__(34)
+	  , $filter = __webpack_require__(198)(2);
 	
-	$export($export.P + $export.F * !__webpack_require__(193)([].some, true), 'Array', {
-	  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
-	  some: function some(callbackfn /* , thisArg */){
-	    return $some(this, callbackfn, arguments[1]);
+	$export($export.P + $export.F * !__webpack_require__(194)([].filter, true), 'Array', {
+	  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
+	  filter: function filter(callbackfn /* , thisArg */){
+	    return $filter(this, callbackfn, arguments[1]);
 	  }
 	});
 
@@ -20536,13 +21402,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33)
-	  , $every  = __webpack_require__(197)(4);
+	var $export = __webpack_require__(34)
+	  , $some   = __webpack_require__(198)(3);
 	
-	$export($export.P + $export.F * !__webpack_require__(193)([].every, true), 'Array', {
-	  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
-	  every: function every(callbackfn /* , thisArg */){
-	    return $every(this, callbackfn, arguments[1]);
+	$export($export.P + $export.F * !__webpack_require__(194)([].some, true), 'Array', {
+	  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
+	  some: function some(callbackfn /* , thisArg */){
+	    return $some(this, callbackfn, arguments[1]);
 	  }
 	});
 
@@ -20551,13 +21417,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33)
-	  , $reduce = __webpack_require__(205);
+	var $export = __webpack_require__(34)
+	  , $every  = __webpack_require__(198)(4);
 	
-	$export($export.P + $export.F * !__webpack_require__(193)([].reduce, true), 'Array', {
-	  // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
-	  reduce: function reduce(callbackfn /* , initialValue */){
-	    return $reduce(this, callbackfn, arguments.length, arguments[1], false);
+	$export($export.P + $export.F * !__webpack_require__(194)([].every, true), 'Array', {
+	  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
+	  every: function every(callbackfn /* , thisArg */){
+	    return $every(this, callbackfn, arguments[1]);
 	  }
 	});
 
@@ -20565,10 +21431,25 @@
 /* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var aFunction = __webpack_require__(46)
-	  , toObject  = __webpack_require__(83)
-	  , IObject   = __webpack_require__(58)
-	  , toLength  = __webpack_require__(62);
+	'use strict';
+	var $export = __webpack_require__(34)
+	  , $reduce = __webpack_require__(206);
+	
+	$export($export.P + $export.F * !__webpack_require__(194)([].reduce, true), 'Array', {
+	  // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
+	  reduce: function reduce(callbackfn /* , initialValue */){
+	    return $reduce(this, callbackfn, arguments.length, arguments[1], false);
+	  }
+	});
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var aFunction = __webpack_require__(47)
+	  , toObject  = __webpack_require__(84)
+	  , IObject   = __webpack_require__(59)
+	  , toLength  = __webpack_require__(63);
 	
 	module.exports = function(that, callbackfn, aLen, memo, isRight){
 	  aFunction(callbackfn);
@@ -20595,14 +21476,14 @@
 	};
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33)
-	  , $reduce = __webpack_require__(205);
+	var $export = __webpack_require__(34)
+	  , $reduce = __webpack_require__(206);
 	
-	$export($export.P + $export.F * !__webpack_require__(193)([].reduceRight, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(194)([].reduceRight, true), 'Array', {
 	  // 22.1.3.19 / 15.4.4.22 Array.prototype.reduceRight(callbackfn [, initialValue])
 	  reduceRight: function reduceRight(callbackfn /* , initialValue */){
 	    return $reduce(this, callbackfn, arguments.length, arguments[1], true);
@@ -20610,16 +21491,16 @@
 	});
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export       = __webpack_require__(33)
-	  , $indexOf      = __webpack_require__(61)(false)
+	var $export       = __webpack_require__(34)
+	  , $indexOf      = __webpack_require__(62)(false)
 	  , $native       = [].indexOf
 	  , NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
 	
-	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(193)($native)), 'Array', {
+	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(194)($native)), 'Array', {
 	  // 22.1.3.11 / 15.4.4.14 Array.prototype.indexOf(searchElement [, fromIndex])
 	  indexOf: function indexOf(searchElement /*, fromIndex = 0 */){
 	    return NEGATIVE_ZERO
@@ -20630,18 +21511,18 @@
 	});
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export       = __webpack_require__(33)
-	  , toIObject     = __webpack_require__(57)
-	  , toInteger     = __webpack_require__(63)
-	  , toLength      = __webpack_require__(62)
+	var $export       = __webpack_require__(34)
+	  , toIObject     = __webpack_require__(58)
+	  , toInteger     = __webpack_require__(64)
+	  , toLength      = __webpack_require__(63)
 	  , $native       = [].lastIndexOf
 	  , NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
 	
-	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(193)($native)), 'Array', {
+	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(194)($native)), 'Array', {
 	  // 22.1.3.14 / 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex])
 	  lastIndexOf: function lastIndexOf(searchElement /*, fromIndex = @[*-1] */){
 	    // convert -0 to +0
@@ -20657,25 +21538,25 @@
 	});
 
 /***/ },
-/* 209 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
-	var $export = __webpack_require__(33);
-	
-	$export($export.P, 'Array', {copyWithin: __webpack_require__(210)});
-	
-	__webpack_require__(211)('copyWithin');
-
-/***/ },
 /* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
+	var $export = __webpack_require__(34);
+	
+	$export($export.P, 'Array', {copyWithin: __webpack_require__(211)});
+	
+	__webpack_require__(212)('copyWithin');
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 	'use strict';
-	var toObject = __webpack_require__(83)
-	  , toIndex  = __webpack_require__(64)
-	  , toLength = __webpack_require__(62);
+	var toObject = __webpack_require__(84)
+	  , toIndex  = __webpack_require__(65)
+	  , toLength = __webpack_require__(63);
 	
 	module.exports = [].copyWithin || function copyWithin(target/*= 0*/, start/*= 0, end = @length*/){
 	  var O     = toObject(this)
@@ -20699,37 +21580,37 @@
 	};
 
 /***/ },
-/* 211 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 22.1.3.31 Array.prototype[@@unscopables]
-	var UNSCOPABLES = __webpack_require__(50)('unscopables')
-	  , ArrayProto  = Array.prototype;
-	if(ArrayProto[UNSCOPABLES] == undefined)__webpack_require__(35)(ArrayProto, UNSCOPABLES, {});
-	module.exports = function(key){
-	  ArrayProto[UNSCOPABLES][key] = true;
-	};
-
-/***/ },
 /* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
-	var $export = __webpack_require__(33);
-	
-	$export($export.P, 'Array', {fill: __webpack_require__(213)});
-	
-	__webpack_require__(211)('fill');
+	// 22.1.3.31 Array.prototype[@@unscopables]
+	var UNSCOPABLES = __webpack_require__(51)('unscopables')
+	  , ArrayProto  = Array.prototype;
+	if(ArrayProto[UNSCOPABLES] == undefined)__webpack_require__(36)(ArrayProto, UNSCOPABLES, {});
+	module.exports = function(key){
+	  ArrayProto[UNSCOPABLES][key] = true;
+	};
 
 /***/ },
 /* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
+	var $export = __webpack_require__(34);
+	
+	$export($export.P, 'Array', {fill: __webpack_require__(214)});
+	
+	__webpack_require__(212)('fill');
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 	'use strict';
-	var toObject = __webpack_require__(83)
-	  , toIndex  = __webpack_require__(64)
-	  , toLength = __webpack_require__(62);
+	var toObject = __webpack_require__(84)
+	  , toIndex  = __webpack_require__(65)
+	  , toLength = __webpack_require__(63);
 	module.exports = function fill(value /*, start = 0, end = @length */){
 	  var O      = toObject(this)
 	    , length = toLength(O.length)
@@ -20742,13 +21623,13 @@
 	};
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
-	var $export = __webpack_require__(33)
-	  , $find   = __webpack_require__(197)(5)
+	var $export = __webpack_require__(34)
+	  , $find   = __webpack_require__(198)(5)
 	  , KEY     = 'find'
 	  , forced  = true;
 	// Shouldn't skip holes
@@ -20758,16 +21639,16 @@
 	    return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
-	__webpack_require__(211)(KEY);
+	__webpack_require__(212)(KEY);
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
-	var $export = __webpack_require__(33)
-	  , $find   = __webpack_require__(197)(6)
+	var $export = __webpack_require__(34)
+	  , $find   = __webpack_require__(198)(6)
 	  , KEY     = 'findIndex'
 	  , forced  = true;
 	// Shouldn't skip holes
@@ -20777,23 +21658,23 @@
 	    return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
-	__webpack_require__(211)(KEY);
-
-/***/ },
-/* 216 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(217)('Array');
+	__webpack_require__(212)(KEY);
 
 /***/ },
 /* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
+	__webpack_require__(218)('Array');
+
+/***/ },
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
-	var global      = __webpack_require__(29)
-	  , dP          = __webpack_require__(36)
-	  , DESCRIPTORS = __webpack_require__(31)
-	  , SPECIES     = __webpack_require__(50)('species');
+	var global      = __webpack_require__(30)
+	  , dP          = __webpack_require__(37)
+	  , DESCRIPTORS = __webpack_require__(32)
+	  , SPECIES     = __webpack_require__(51)('species');
 	
 	module.exports = function(KEY){
 	  var C = global[KEY];
@@ -20804,20 +21685,20 @@
 	};
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var addToUnscopables = __webpack_require__(211)
-	  , step             = __webpack_require__(219)
-	  , Iterators        = __webpack_require__(154)
-	  , toIObject        = __webpack_require__(57);
+	var addToUnscopables = __webpack_require__(212)
+	  , step             = __webpack_require__(220)
+	  , Iterators        = __webpack_require__(155)
+	  , toIObject        = __webpack_require__(58);
 	
 	// 22.1.3.4 Array.prototype.entries()
 	// 22.1.3.13 Array.prototype.keys()
 	// 22.1.3.29 Array.prototype.values()
 	// 22.1.3.30 Array.prototype[@@iterator]()
-	module.exports = __webpack_require__(153)(Array, 'Array', function(iterated, kind){
+	module.exports = __webpack_require__(154)(Array, 'Array', function(iterated, kind){
 	  this._t = toIObject(iterated); // target
 	  this._i = 0;                   // next index
 	  this._k = kind;                // kind
@@ -20843,7 +21724,7 @@
 	addToUnscopables('entries');
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports) {
 
 	module.exports = function(done, value){
@@ -20851,15 +21732,15 @@
 	};
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global            = __webpack_require__(29)
-	  , inheritIfRequired = __webpack_require__(113)
-	  , dP                = __webpack_require__(36).f
-	  , gOPN              = __webpack_require__(75).f
-	  , isRegExp          = __webpack_require__(159)
-	  , $flags            = __webpack_require__(221)
+	var global            = __webpack_require__(30)
+	  , inheritIfRequired = __webpack_require__(114)
+	  , dP                = __webpack_require__(37).f
+	  , gOPN              = __webpack_require__(76).f
+	  , isRegExp          = __webpack_require__(160)
+	  , $flags            = __webpack_require__(222)
 	  , $RegExp           = global.RegExp
 	  , Base              = $RegExp
 	  , proto             = $RegExp.prototype
@@ -20868,8 +21749,8 @@
 	  // "new" creates a new object, old webkit buggy here
 	  , CORRECT_NEW       = new $RegExp(re1) !== re1;
 	
-	if(__webpack_require__(31) && (!CORRECT_NEW || __webpack_require__(32)(function(){
-	  re2[__webpack_require__(50)('match')] = false;
+	if(__webpack_require__(32) && (!CORRECT_NEW || __webpack_require__(33)(function(){
+	  re2[__webpack_require__(51)('match')] = false;
 	  // RegExp constructor can alter flags and IsRegExp works correct with @@match
 	  return $RegExp(re1) != re1 || $RegExp(re2) == re2 || $RegExp(re1, 'i') != '/a/i';
 	}))){
@@ -20893,18 +21774,18 @@
 	  for(var keys = gOPN(Base), i = 0; keys.length > i; )proxy(keys[i++]);
 	  proto.constructor = $RegExp;
 	  $RegExp.prototype = proto;
-	  __webpack_require__(43)(global, 'RegExp', $RegExp);
+	  __webpack_require__(44)(global, 'RegExp', $RegExp);
 	}
 	
-	__webpack_require__(217)('RegExp');
+	__webpack_require__(218)('RegExp');
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 21.2.5.3 get RegExp.prototype.flags
-	var anObject = __webpack_require__(37);
+	var anObject = __webpack_require__(38);
 	module.exports = function(){
 	  var that   = anObject(this)
 	    , result = '';
@@ -20917,23 +21798,23 @@
 	};
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(223);
-	var anObject    = __webpack_require__(37)
-	  , $flags      = __webpack_require__(221)
-	  , DESCRIPTORS = __webpack_require__(31)
+	__webpack_require__(224);
+	var anObject    = __webpack_require__(38)
+	  , $flags      = __webpack_require__(222)
+	  , DESCRIPTORS = __webpack_require__(32)
 	  , TO_STRING   = 'toString'
 	  , $toString   = /./[TO_STRING];
 	
 	var define = function(fn){
-	  __webpack_require__(43)(RegExp.prototype, TO_STRING, fn, true);
+	  __webpack_require__(44)(RegExp.prototype, TO_STRING, fn, true);
 	};
 	
 	// 21.2.5.14 RegExp.prototype.toString()
-	if(__webpack_require__(32)(function(){ return $toString.call({source: 'a', flags: 'b'}) != '/a/b'; })){
+	if(__webpack_require__(33)(function(){ return $toString.call({source: 'a', flags: 'b'}) != '/a/b'; })){
 	  define(function toString(){
 	    var R = anObject(this);
 	    return '/'.concat(R.source, '/',
@@ -20947,21 +21828,21 @@
 	}
 
 /***/ },
-/* 223 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 21.2.5.3 get RegExp.prototype.flags()
-	if(__webpack_require__(31) && /./g.flags != 'g')__webpack_require__(36).f(RegExp.prototype, 'flags', {
-	  configurable: true,
-	  get: __webpack_require__(221)
-	});
-
-/***/ },
 /* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 21.2.5.3 get RegExp.prototype.flags()
+	if(__webpack_require__(32) && /./g.flags != 'g')__webpack_require__(37).f(RegExp.prototype, 'flags', {
+	  configurable: true,
+	  get: __webpack_require__(222)
+	});
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// @@match logic
-	__webpack_require__(225)('match', 1, function(defined, MATCH, $match){
+	__webpack_require__(226)('match', 1, function(defined, MATCH, $match){
 	  // 21.1.3.11 String.prototype.match(regexp)
 	  return [function match(regexp){
 	    'use strict';
@@ -20972,15 +21853,15 @@
 	});
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var hide     = __webpack_require__(35)
-	  , redefine = __webpack_require__(43)
-	  , fails    = __webpack_require__(32)
-	  , defined  = __webpack_require__(60)
-	  , wks      = __webpack_require__(50);
+	var hide     = __webpack_require__(36)
+	  , redefine = __webpack_require__(44)
+	  , fails    = __webpack_require__(33)
+	  , defined  = __webpack_require__(61)
+	  , wks      = __webpack_require__(51);
 	
 	module.exports = function(KEY, length, exec){
 	  var SYMBOL   = wks(KEY)
@@ -21005,11 +21886,11 @@
 	};
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@replace logic
-	__webpack_require__(225)('replace', 2, function(defined, REPLACE, $replace){
+	__webpack_require__(226)('replace', 2, function(defined, REPLACE, $replace){
 	  // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
 	  return [function replace(searchValue, replaceValue){
 	    'use strict';
@@ -21022,11 +21903,11 @@
 	});
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@search logic
-	__webpack_require__(225)('search', 1, function(defined, SEARCH, $search){
+	__webpack_require__(226)('search', 1, function(defined, SEARCH, $search){
 	  // 21.1.3.15 String.prototype.search(regexp)
 	  return [function search(regexp){
 	    'use strict';
@@ -21037,13 +21918,13 @@
 	});
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@split logic
-	__webpack_require__(225)('split', 2, function(defined, SPLIT, $split){
+	__webpack_require__(226)('split', 2, function(defined, SPLIT, $split){
 	  'use strict';
-	  var isRegExp   = __webpack_require__(159)
+	  var isRegExp   = __webpack_require__(160)
 	    , _split     = $split
 	    , $push      = [].push
 	    , $SPLIT     = 'split'
@@ -21112,22 +21993,22 @@
 	});
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var LIBRARY            = __webpack_require__(53)
-	  , global             = __webpack_require__(29)
-	  , ctx                = __webpack_require__(45)
-	  , classof            = __webpack_require__(100)
-	  , $export            = __webpack_require__(33)
-	  , isObject           = __webpack_require__(38)
-	  , aFunction          = __webpack_require__(46)
-	  , anInstance         = __webpack_require__(230)
-	  , forOf              = __webpack_require__(231)
-	  , speciesConstructor = __webpack_require__(232)
-	  , task               = __webpack_require__(233).set
-	  , microtask          = __webpack_require__(234)()
+	var LIBRARY            = __webpack_require__(54)
+	  , global             = __webpack_require__(30)
+	  , ctx                = __webpack_require__(46)
+	  , classof            = __webpack_require__(101)
+	  , $export            = __webpack_require__(34)
+	  , isObject           = __webpack_require__(39)
+	  , aFunction          = __webpack_require__(47)
+	  , anInstance         = __webpack_require__(231)
+	  , forOf              = __webpack_require__(232)
+	  , speciesConstructor = __webpack_require__(233)
+	  , task               = __webpack_require__(234).set
+	  , microtask          = __webpack_require__(235)()
 	  , PROMISE            = 'Promise'
 	  , TypeError          = global.TypeError
 	  , process            = global.process
@@ -21141,7 +22022,7 @@
 	  try {
 	    // correct subclassing with @@species support
 	    var promise     = $Promise.resolve(1)
-	      , FakePromise = (promise.constructor = {})[__webpack_require__(50)('species')] = function(exec){ exec(empty, empty); };
+	      , FakePromise = (promise.constructor = {})[__webpack_require__(51)('species')] = function(exec){ exec(empty, empty); };
 	    // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
 	    return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
 	  } catch(e){ /* empty */ }
@@ -21319,7 +22200,7 @@
 	    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
 	    this._n = false;          // <- notify
 	  };
-	  Internal.prototype = __webpack_require__(235)($Promise.prototype, {
+	  Internal.prototype = __webpack_require__(236)($Promise.prototype, {
 	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
 	    then: function then(onFulfilled, onRejected){
 	      var reaction    = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -21345,9 +22226,9 @@
 	}
 	
 	$export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
-	__webpack_require__(49)($Promise, PROMISE);
-	__webpack_require__(217)(PROMISE);
-	Wrapper = __webpack_require__(34)[PROMISE];
+	__webpack_require__(50)($Promise, PROMISE);
+	__webpack_require__(218)(PROMISE);
+	Wrapper = __webpack_require__(35)[PROMISE];
 	
 	// statics
 	$export($export.S + $export.F * !USE_NATIVE, PROMISE, {
@@ -21370,7 +22251,7 @@
 	    return capability.promise;
 	  }
 	});
-	$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(190)(function(iter){
+	$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(191)(function(iter){
 	  $Promise.all(iter)['catch'](empty);
 	})), PROMISE, {
 	  // 25.4.4.1 Promise.all(iterable)
@@ -21416,7 +22297,7 @@
 	});
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports) {
 
 	module.exports = function(it, Constructor, name, forbiddenField){
@@ -21426,15 +22307,15 @@
 	};
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ctx         = __webpack_require__(45)
-	  , call        = __webpack_require__(186)
-	  , isArrayIter = __webpack_require__(187)
-	  , anObject    = __webpack_require__(37)
-	  , toLength    = __webpack_require__(62)
-	  , getIterFn   = __webpack_require__(189)
+	var ctx         = __webpack_require__(46)
+	  , call        = __webpack_require__(187)
+	  , isArrayIter = __webpack_require__(188)
+	  , anObject    = __webpack_require__(38)
+	  , toLength    = __webpack_require__(63)
+	  , getIterFn   = __webpack_require__(190)
 	  , BREAK       = {}
 	  , RETURN      = {};
 	var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
@@ -21456,27 +22337,27 @@
 	exports.RETURN = RETURN;
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.3.20 SpeciesConstructor(O, defaultConstructor)
-	var anObject  = __webpack_require__(37)
-	  , aFunction = __webpack_require__(46)
-	  , SPECIES   = __webpack_require__(50)('species');
+	var anObject  = __webpack_require__(38)
+	  , aFunction = __webpack_require__(47)
+	  , SPECIES   = __webpack_require__(51)('species');
 	module.exports = function(O, D){
 	  var C = anObject(O).constructor, S;
 	  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 	};
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ctx                = __webpack_require__(45)
-	  , invoke             = __webpack_require__(103)
-	  , html               = __webpack_require__(73)
-	  , cel                = __webpack_require__(40)
-	  , global             = __webpack_require__(29)
+	var ctx                = __webpack_require__(46)
+	  , invoke             = __webpack_require__(104)
+	  , html               = __webpack_require__(74)
+	  , cel                = __webpack_require__(41)
+	  , global             = __webpack_require__(30)
 	  , process            = global.process
 	  , setTask            = global.setImmediate
 	  , clearTask          = global.clearImmediate
@@ -21511,7 +22392,7 @@
 	    delete queue[id];
 	  };
 	  // Node.js 0.8-
-	  if(__webpack_require__(59)(process) == 'process'){
+	  if(__webpack_require__(60)(process) == 'process'){
 	    defer = function(id){
 	      process.nextTick(ctx(run, id, 1));
 	    };
@@ -21549,15 +22430,15 @@
 	};
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global    = __webpack_require__(29)
-	  , macrotask = __webpack_require__(233).set
+	var global    = __webpack_require__(30)
+	  , macrotask = __webpack_require__(234).set
 	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
 	  , process   = global.process
 	  , Promise   = global.Promise
-	  , isNode    = __webpack_require__(59)(process) == 'process';
+	  , isNode    = __webpack_require__(60)(process) == 'process';
 	
 	module.exports = function(){
 	  var head, last, notify;
@@ -21622,24 +22503,24 @@
 	};
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var redefine = __webpack_require__(43);
+	var redefine = __webpack_require__(44);
 	module.exports = function(target, src, safe){
 	  for(var key in src)redefine(target, key, src[key], safe);
 	  return target;
 	};
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var strong = __webpack_require__(237);
+	var strong = __webpack_require__(238);
 	
 	// 23.1 Map Objects
-	module.exports = __webpack_require__(238)('Map', function(get){
+	module.exports = __webpack_require__(239)('Map', function(get){
 	  return function Map(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 	}, {
 	  // 23.1.3.6 Map.prototype.get(key)
@@ -21654,22 +22535,22 @@
 	}, strong, true);
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var dP          = __webpack_require__(36).f
-	  , create      = __webpack_require__(71)
-	  , redefineAll = __webpack_require__(235)
-	  , ctx         = __webpack_require__(45)
-	  , anInstance  = __webpack_require__(230)
-	  , defined     = __webpack_require__(60)
-	  , forOf       = __webpack_require__(231)
-	  , $iterDefine = __webpack_require__(153)
-	  , step        = __webpack_require__(219)
-	  , setSpecies  = __webpack_require__(217)
-	  , DESCRIPTORS = __webpack_require__(31)
-	  , fastKey     = __webpack_require__(47).fastKey
+	var dP          = __webpack_require__(37).f
+	  , create      = __webpack_require__(72)
+	  , redefineAll = __webpack_require__(236)
+	  , ctx         = __webpack_require__(46)
+	  , anInstance  = __webpack_require__(231)
+	  , defined     = __webpack_require__(61)
+	  , forOf       = __webpack_require__(232)
+	  , $iterDefine = __webpack_require__(154)
+	  , step        = __webpack_require__(220)
+	  , setSpecies  = __webpack_require__(218)
+	  , DESCRIPTORS = __webpack_require__(32)
+	  , fastKey     = __webpack_require__(48).fastKey
 	  , SIZE        = DESCRIPTORS ? '_s' : 'size';
 	
 	var getEntry = function(that, key){
@@ -21801,22 +22682,22 @@
 	};
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var global            = __webpack_require__(29)
-	  , $export           = __webpack_require__(33)
-	  , redefine          = __webpack_require__(43)
-	  , redefineAll       = __webpack_require__(235)
-	  , meta              = __webpack_require__(47)
-	  , forOf             = __webpack_require__(231)
-	  , anInstance        = __webpack_require__(230)
-	  , isObject          = __webpack_require__(38)
-	  , fails             = __webpack_require__(32)
-	  , $iterDetect       = __webpack_require__(190)
-	  , setToStringTag    = __webpack_require__(49)
-	  , inheritIfRequired = __webpack_require__(113);
+	var global            = __webpack_require__(30)
+	  , $export           = __webpack_require__(34)
+	  , redefine          = __webpack_require__(44)
+	  , redefineAll       = __webpack_require__(236)
+	  , meta              = __webpack_require__(48)
+	  , forOf             = __webpack_require__(232)
+	  , anInstance        = __webpack_require__(231)
+	  , isObject          = __webpack_require__(39)
+	  , fails             = __webpack_require__(33)
+	  , $iterDetect       = __webpack_require__(191)
+	  , setToStringTag    = __webpack_require__(50)
+	  , inheritIfRequired = __webpack_require__(114);
 	
 	module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 	  var Base  = global[NAME]
@@ -21891,14 +22772,14 @@
 	};
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var strong = __webpack_require__(237);
+	var strong = __webpack_require__(238);
 	
 	// 23.2 Set Objects
-	module.exports = __webpack_require__(238)('Set', function(get){
+	module.exports = __webpack_require__(239)('Set', function(get){
 	  return function Set(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 	}, {
 	  // 23.2.3.1 Set.prototype.add(value)
@@ -21908,16 +22789,16 @@
 	}, strong);
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var each         = __webpack_require__(197)(0)
-	  , redefine     = __webpack_require__(43)
-	  , meta         = __webpack_require__(47)
-	  , assign       = __webpack_require__(94)
-	  , weak         = __webpack_require__(241)
-	  , isObject     = __webpack_require__(38)
+	var each         = __webpack_require__(198)(0)
+	  , redefine     = __webpack_require__(44)
+	  , meta         = __webpack_require__(48)
+	  , assign       = __webpack_require__(95)
+	  , weak         = __webpack_require__(242)
+	  , isObject     = __webpack_require__(39)
 	  , getWeak      = meta.getWeak
 	  , isExtensible = Object.isExtensible
 	  , uncaughtFrozenStore = weak.ufstore
@@ -21946,7 +22827,7 @@
 	};
 	
 	// 23.3 WeakMap Objects
-	var $WeakMap = module.exports = __webpack_require__(238)('WeakMap', wrapper, methods, weak, true, true);
+	var $WeakMap = module.exports = __webpack_require__(239)('WeakMap', wrapper, methods, weak, true, true);
 	
 	// IE11 WeakMap frozen keys fix
 	if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
@@ -21969,18 +22850,18 @@
 	}
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var redefineAll       = __webpack_require__(235)
-	  , getWeak           = __webpack_require__(47).getWeak
-	  , anObject          = __webpack_require__(37)
-	  , isObject          = __webpack_require__(38)
-	  , anInstance        = __webpack_require__(230)
-	  , forOf             = __webpack_require__(231)
-	  , createArrayMethod = __webpack_require__(197)
-	  , $has              = __webpack_require__(30)
+	var redefineAll       = __webpack_require__(236)
+	  , getWeak           = __webpack_require__(48).getWeak
+	  , anObject          = __webpack_require__(38)
+	  , isObject          = __webpack_require__(39)
+	  , anInstance        = __webpack_require__(231)
+	  , forOf             = __webpack_require__(232)
+	  , createArrayMethod = __webpack_require__(198)
+	  , $has              = __webpack_require__(31)
 	  , arrayFind         = createArrayMethod(5)
 	  , arrayFindIndex    = createArrayMethod(6)
 	  , id                = 0;
@@ -22057,14 +22938,14 @@
 	};
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var weak = __webpack_require__(241);
+	var weak = __webpack_require__(242);
 	
 	// 23.4 WeakSet Objects
-	__webpack_require__(238)('WeakSet', function(get){
+	__webpack_require__(239)('WeakSet', function(get){
 	  return function WeakSet(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 	}, {
 	  // 23.4.3.1 WeakSet.prototype.add(value)
@@ -22074,19 +22955,19 @@
 	}, weak, false, true);
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export      = __webpack_require__(33)
-	  , $typed       = __webpack_require__(244)
-	  , buffer       = __webpack_require__(245)
-	  , anObject     = __webpack_require__(37)
-	  , toIndex      = __webpack_require__(64)
-	  , toLength     = __webpack_require__(62)
-	  , isObject     = __webpack_require__(38)
-	  , ArrayBuffer  = __webpack_require__(29).ArrayBuffer
-	  , speciesConstructor = __webpack_require__(232)
+	var $export      = __webpack_require__(34)
+	  , $typed       = __webpack_require__(245)
+	  , buffer       = __webpack_require__(246)
+	  , anObject     = __webpack_require__(38)
+	  , toIndex      = __webpack_require__(65)
+	  , toLength     = __webpack_require__(63)
+	  , isObject     = __webpack_require__(39)
+	  , ArrayBuffer  = __webpack_require__(30).ArrayBuffer
+	  , speciesConstructor = __webpack_require__(233)
 	  , $ArrayBuffer = buffer.ArrayBuffer
 	  , $DataView    = buffer.DataView
 	  , $isView      = $typed.ABV && ArrayBuffer.isView
@@ -22103,7 +22984,7 @@
 	  }
 	});
 	
-	$export($export.P + $export.U + $export.F * __webpack_require__(32)(function(){
+	$export($export.P + $export.U + $export.F * __webpack_require__(33)(function(){
 	  return !new $ArrayBuffer(2).slice(1, undefined).byteLength;
 	}), ARRAY_BUFFER, {
 	  // 24.1.4.3 ArrayBuffer.prototype.slice(start, end)
@@ -22122,15 +23003,15 @@
 	  }
 	});
 	
-	__webpack_require__(217)(ARRAY_BUFFER);
+	__webpack_require__(218)(ARRAY_BUFFER);
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(29)
-	  , hide   = __webpack_require__(35)
-	  , uid    = __webpack_require__(44)
+	var global = __webpack_require__(30)
+	  , hide   = __webpack_require__(36)
+	  , uid    = __webpack_require__(45)
 	  , TYPED  = uid('typed_array')
 	  , VIEW   = uid('view')
 	  , ABV    = !!(global.ArrayBuffer && global.DataView)
@@ -22156,24 +23037,24 @@
 	};
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var global         = __webpack_require__(29)
-	  , DESCRIPTORS    = __webpack_require__(31)
-	  , LIBRARY        = __webpack_require__(53)
-	  , $typed         = __webpack_require__(244)
-	  , hide           = __webpack_require__(35)
-	  , redefineAll    = __webpack_require__(235)
-	  , fails          = __webpack_require__(32)
-	  , anInstance     = __webpack_require__(230)
-	  , toInteger      = __webpack_require__(63)
-	  , toLength       = __webpack_require__(62)
-	  , gOPN           = __webpack_require__(75).f
-	  , dP             = __webpack_require__(36).f
-	  , arrayFill      = __webpack_require__(213)
-	  , setToStringTag = __webpack_require__(49)
+	var global         = __webpack_require__(30)
+	  , DESCRIPTORS    = __webpack_require__(32)
+	  , LIBRARY        = __webpack_require__(54)
+	  , $typed         = __webpack_require__(245)
+	  , hide           = __webpack_require__(36)
+	  , redefineAll    = __webpack_require__(236)
+	  , fails          = __webpack_require__(33)
+	  , anInstance     = __webpack_require__(231)
+	  , toInteger      = __webpack_require__(64)
+	  , toLength       = __webpack_require__(63)
+	  , gOPN           = __webpack_require__(76).f
+	  , dP             = __webpack_require__(37).f
+	  , arrayFill      = __webpack_require__(214)
+	  , setToStringTag = __webpack_require__(50)
 	  , ARRAY_BUFFER   = 'ArrayBuffer'
 	  , DATA_VIEW      = 'DataView'
 	  , PROTOTYPE      = 'prototype'
@@ -22434,68 +23315,68 @@
 	exports[DATA_VIEW] = $DataView;
 
 /***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $export = __webpack_require__(33);
-	$export($export.G + $export.W + $export.F * !__webpack_require__(244).ABV, {
-	  DataView: __webpack_require__(245).DataView
-	});
-
-/***/ },
 /* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Int8', 1, function(init){
-	  return function Int8Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
+	var $export = __webpack_require__(34);
+	$export($export.G + $export.W + $export.F * !__webpack_require__(245).ABV, {
+	  DataView: __webpack_require__(246).DataView
 	});
 
 /***/ },
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
+	__webpack_require__(249)('Int8', 1, function(init){
+	  return function Int8Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
-	if(__webpack_require__(31)){
-	  var LIBRARY             = __webpack_require__(53)
-	    , global              = __webpack_require__(29)
-	    , fails               = __webpack_require__(32)
-	    , $export             = __webpack_require__(33)
-	    , $typed              = __webpack_require__(244)
-	    , $buffer             = __webpack_require__(245)
-	    , ctx                 = __webpack_require__(45)
-	    , anInstance          = __webpack_require__(230)
-	    , propertyDesc        = __webpack_require__(42)
-	    , hide                = __webpack_require__(35)
-	    , redefineAll         = __webpack_require__(235)
-	    , toInteger           = __webpack_require__(63)
-	    , toLength            = __webpack_require__(62)
-	    , toIndex             = __webpack_require__(64)
-	    , toPrimitive         = __webpack_require__(41)
-	    , has                 = __webpack_require__(30)
-	    , same                = __webpack_require__(96)
-	    , classof             = __webpack_require__(100)
-	    , isObject            = __webpack_require__(38)
-	    , toObject            = __webpack_require__(83)
-	    , isArrayIter         = __webpack_require__(187)
-	    , create              = __webpack_require__(71)
-	    , getPrototypeOf      = __webpack_require__(84)
-	    , gOPN                = __webpack_require__(75).f
-	    , getIterFn           = __webpack_require__(189)
-	    , uid                 = __webpack_require__(44)
-	    , wks                 = __webpack_require__(50)
-	    , createArrayMethod   = __webpack_require__(197)
-	    , createArrayIncludes = __webpack_require__(61)
-	    , speciesConstructor  = __webpack_require__(232)
-	    , ArrayIterators      = __webpack_require__(218)
-	    , Iterators           = __webpack_require__(154)
-	    , $iterDetect         = __webpack_require__(190)
-	    , setSpecies          = __webpack_require__(217)
-	    , arrayFill           = __webpack_require__(213)
-	    , arrayCopyWithin     = __webpack_require__(210)
-	    , $DP                 = __webpack_require__(36)
-	    , $GOPD               = __webpack_require__(76)
+	if(__webpack_require__(32)){
+	  var LIBRARY             = __webpack_require__(54)
+	    , global              = __webpack_require__(30)
+	    , fails               = __webpack_require__(33)
+	    , $export             = __webpack_require__(34)
+	    , $typed              = __webpack_require__(245)
+	    , $buffer             = __webpack_require__(246)
+	    , ctx                 = __webpack_require__(46)
+	    , anInstance          = __webpack_require__(231)
+	    , propertyDesc        = __webpack_require__(43)
+	    , hide                = __webpack_require__(36)
+	    , redefineAll         = __webpack_require__(236)
+	    , toInteger           = __webpack_require__(64)
+	    , toLength            = __webpack_require__(63)
+	    , toIndex             = __webpack_require__(65)
+	    , toPrimitive         = __webpack_require__(42)
+	    , has                 = __webpack_require__(31)
+	    , same                = __webpack_require__(97)
+	    , classof             = __webpack_require__(101)
+	    , isObject            = __webpack_require__(39)
+	    , toObject            = __webpack_require__(84)
+	    , isArrayIter         = __webpack_require__(188)
+	    , create              = __webpack_require__(72)
+	    , getPrototypeOf      = __webpack_require__(85)
+	    , gOPN                = __webpack_require__(76).f
+	    , getIterFn           = __webpack_require__(190)
+	    , uid                 = __webpack_require__(45)
+	    , wks                 = __webpack_require__(51)
+	    , createArrayMethod   = __webpack_require__(198)
+	    , createArrayIncludes = __webpack_require__(62)
+	    , speciesConstructor  = __webpack_require__(233)
+	    , ArrayIterators      = __webpack_require__(219)
+	    , Iterators           = __webpack_require__(155)
+	    , $iterDetect         = __webpack_require__(191)
+	    , setSpecies          = __webpack_require__(218)
+	    , arrayFill           = __webpack_require__(214)
+	    , arrayCopyWithin     = __webpack_require__(211)
+	    , $DP                 = __webpack_require__(37)
+	    , $GOPD               = __webpack_require__(77)
 	    , dP                  = $DP.f
 	    , gOPD                = $GOPD.f
 	    , RangeError          = global.RangeError
@@ -22937,41 +23818,31 @@
 	} else module.exports = function(){ /* empty */ };
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Uint8', 1, function(init){
+	__webpack_require__(249)('Uint8', 1, function(init){
 	  return function Uint8Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Uint8', 1, function(init){
+	__webpack_require__(249)('Uint8', 1, function(init){
 	  return function Uint8ClampedArray(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	}, true);
 
 /***/ },
-/* 251 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(248)('Int16', 2, function(init){
-	  return function Int16Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
-	});
-
-/***/ },
 /* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Uint16', 2, function(init){
-	  return function Uint16Array(data, byteOffset, length){
+	__webpack_require__(249)('Int16', 2, function(init){
+	  return function Int16Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -22980,8 +23851,8 @@
 /* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Int32', 4, function(init){
-	  return function Int32Array(data, byteOffset, length){
+	__webpack_require__(249)('Uint16', 2, function(init){
+	  return function Uint16Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -22990,8 +23861,8 @@
 /* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Uint32', 4, function(init){
-	  return function Uint32Array(data, byteOffset, length){
+	__webpack_require__(249)('Int32', 4, function(init){
+	  return function Int32Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -23000,8 +23871,8 @@
 /* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Float32', 4, function(init){
-	  return function Float32Array(data, byteOffset, length){
+	__webpack_require__(249)('Uint32', 4, function(init){
+	  return function Uint32Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -23010,8 +23881,8 @@
 /* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(248)('Float64', 8, function(init){
-	  return function Float64Array(data, byteOffset, length){
+	__webpack_require__(249)('Float32', 4, function(init){
+	  return function Float32Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -23020,14 +23891,24 @@
 /* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
+	__webpack_require__(249)('Float64', 8, function(init){
+	  return function Float64Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
-	var $export   = __webpack_require__(33)
-	  , aFunction = __webpack_require__(46)
-	  , anObject  = __webpack_require__(37)
-	  , rApply    = (__webpack_require__(29).Reflect || {}).apply
+	var $export   = __webpack_require__(34)
+	  , aFunction = __webpack_require__(47)
+	  , anObject  = __webpack_require__(38)
+	  , rApply    = (__webpack_require__(30).Reflect || {}).apply
 	  , fApply    = Function.apply;
 	// MS Edge argumentsList argument is optional
-	$export($export.S + $export.F * !__webpack_require__(32)(function(){
+	$export($export.S + $export.F * !__webpack_require__(33)(function(){
 	  rApply(function(){});
 	}), 'Reflect', {
 	  apply: function apply(target, thisArgument, argumentsList){
@@ -23038,18 +23919,18 @@
 	});
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
-	var $export    = __webpack_require__(33)
-	  , create     = __webpack_require__(71)
-	  , aFunction  = __webpack_require__(46)
-	  , anObject   = __webpack_require__(37)
-	  , isObject   = __webpack_require__(38)
-	  , fails      = __webpack_require__(32)
-	  , bind       = __webpack_require__(102)
-	  , rConstruct = (__webpack_require__(29).Reflect || {}).construct;
+	var $export    = __webpack_require__(34)
+	  , create     = __webpack_require__(72)
+	  , aFunction  = __webpack_require__(47)
+	  , anObject   = __webpack_require__(38)
+	  , isObject   = __webpack_require__(39)
+	  , fails      = __webpack_require__(33)
+	  , bind       = __webpack_require__(103)
+	  , rConstruct = (__webpack_require__(30).Reflect || {}).construct;
 	
 	// MS Edge supports only 2 arguments and argumentsList argument is optional
 	// FF Nightly sets third argument as `new.target`, but does not create `this` from it
@@ -23090,17 +23971,17 @@
 	});
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
-	var dP          = __webpack_require__(36)
-	  , $export     = __webpack_require__(33)
-	  , anObject    = __webpack_require__(37)
-	  , toPrimitive = __webpack_require__(41);
+	var dP          = __webpack_require__(37)
+	  , $export     = __webpack_require__(34)
+	  , anObject    = __webpack_require__(38)
+	  , toPrimitive = __webpack_require__(42);
 	
 	// MS Edge has broken Reflect.defineProperty - throwing instead of returning false
-	$export($export.S + $export.F * __webpack_require__(32)(function(){
+	$export($export.S + $export.F * __webpack_require__(33)(function(){
 	  Reflect.defineProperty(dP.f({}, 1, {value: 1}), 1, {value: 2});
 	}), 'Reflect', {
 	  defineProperty: function defineProperty(target, propertyKey, attributes){
@@ -23117,13 +23998,13 @@
 	});
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.4 Reflect.deleteProperty(target, propertyKey)
-	var $export  = __webpack_require__(33)
-	  , gOPD     = __webpack_require__(76).f
-	  , anObject = __webpack_require__(37);
+	var $export  = __webpack_require__(34)
+	  , gOPD     = __webpack_require__(77).f
+	  , anObject = __webpack_require__(38);
 	
 	$export($export.S, 'Reflect', {
 	  deleteProperty: function deleteProperty(target, propertyKey){
@@ -23133,13 +24014,13 @@
 	});
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 26.1.5 Reflect.enumerate(target)
-	var $export  = __webpack_require__(33)
-	  , anObject = __webpack_require__(37);
+	var $export  = __webpack_require__(34)
+	  , anObject = __webpack_require__(38);
 	var Enumerate = function(iterated){
 	  this._t = anObject(iterated); // target
 	  this._i = 0;                  // next index
@@ -23147,7 +24028,7 @@
 	    , key;
 	  for(key in iterated)keys.push(key);
 	};
-	__webpack_require__(155)(Enumerate, 'Object', function(){
+	__webpack_require__(156)(Enumerate, 'Object', function(){
 	  var that = this
 	    , keys = that._k
 	    , key;
@@ -23164,16 +24045,16 @@
 	});
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.6 Reflect.get(target, propertyKey [, receiver])
-	var gOPD           = __webpack_require__(76)
-	  , getPrototypeOf = __webpack_require__(84)
-	  , has            = __webpack_require__(30)
-	  , $export        = __webpack_require__(33)
-	  , isObject       = __webpack_require__(38)
-	  , anObject       = __webpack_require__(37);
+	var gOPD           = __webpack_require__(77)
+	  , getPrototypeOf = __webpack_require__(85)
+	  , has            = __webpack_require__(31)
+	  , $export        = __webpack_require__(34)
+	  , isObject       = __webpack_require__(39)
+	  , anObject       = __webpack_require__(38);
 	
 	function get(target, propertyKey/*, receiver*/){
 	  var receiver = arguments.length < 3 ? target : arguments[2]
@@ -23190,13 +24071,13 @@
 	$export($export.S, 'Reflect', {get: get});
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
-	var gOPD     = __webpack_require__(76)
-	  , $export  = __webpack_require__(33)
-	  , anObject = __webpack_require__(37);
+	var gOPD     = __webpack_require__(77)
+	  , $export  = __webpack_require__(34)
+	  , anObject = __webpack_require__(38);
 	
 	$export($export.S, 'Reflect', {
 	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, propertyKey){
@@ -23205,13 +24086,13 @@
 	});
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.8 Reflect.getPrototypeOf(target)
-	var $export  = __webpack_require__(33)
-	  , getProto = __webpack_require__(84)
-	  , anObject = __webpack_require__(37);
+	var $export  = __webpack_require__(34)
+	  , getProto = __webpack_require__(85)
+	  , anObject = __webpack_require__(38);
 	
 	$export($export.S, 'Reflect', {
 	  getPrototypeOf: function getPrototypeOf(target){
@@ -23220,11 +24101,11 @@
 	});
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.9 Reflect.has(target, propertyKey)
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Reflect', {
 	  has: function has(target, propertyKey){
@@ -23233,12 +24114,12 @@
 	});
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.10 Reflect.isExtensible(target)
-	var $export       = __webpack_require__(33)
-	  , anObject      = __webpack_require__(37)
+	var $export       = __webpack_require__(34)
+	  , anObject      = __webpack_require__(38)
 	  , $isExtensible = Object.isExtensible;
 	
 	$export($export.S, 'Reflect', {
@@ -23249,23 +24130,23 @@
 	});
 
 /***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 26.1.11 Reflect.ownKeys(target)
-	var $export = __webpack_require__(33);
-	
-	$export($export.S, 'Reflect', {ownKeys: __webpack_require__(268)});
-
-/***/ },
 /* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 26.1.11 Reflect.ownKeys(target)
+	var $export = __webpack_require__(34);
+	
+	$export($export.S, 'Reflect', {ownKeys: __webpack_require__(269)});
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// all object keys, includes non-enumerable and symbols
-	var gOPN     = __webpack_require__(75)
-	  , gOPS     = __webpack_require__(68)
-	  , anObject = __webpack_require__(37)
-	  , Reflect  = __webpack_require__(29).Reflect;
+	var gOPN     = __webpack_require__(76)
+	  , gOPS     = __webpack_require__(69)
+	  , anObject = __webpack_require__(38)
+	  , Reflect  = __webpack_require__(30).Reflect;
 	module.exports = Reflect && Reflect.ownKeys || function ownKeys(it){
 	  var keys       = gOPN.f(anObject(it))
 	    , getSymbols = gOPS.f;
@@ -23273,12 +24154,12 @@
 	};
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.12 Reflect.preventExtensions(target)
-	var $export            = __webpack_require__(33)
-	  , anObject           = __webpack_require__(37)
+	var $export            = __webpack_require__(34)
+	  , anObject           = __webpack_require__(38)
 	  , $preventExtensions = Object.preventExtensions;
 	
 	$export($export.S, 'Reflect', {
@@ -23294,18 +24175,18 @@
 	});
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-	var dP             = __webpack_require__(36)
-	  , gOPD           = __webpack_require__(76)
-	  , getPrototypeOf = __webpack_require__(84)
-	  , has            = __webpack_require__(30)
-	  , $export        = __webpack_require__(33)
-	  , createDesc     = __webpack_require__(42)
-	  , anObject       = __webpack_require__(37)
-	  , isObject       = __webpack_require__(38);
+	var dP             = __webpack_require__(37)
+	  , gOPD           = __webpack_require__(77)
+	  , getPrototypeOf = __webpack_require__(85)
+	  , has            = __webpack_require__(31)
+	  , $export        = __webpack_require__(34)
+	  , createDesc     = __webpack_require__(43)
+	  , anObject       = __webpack_require__(38)
+	  , isObject       = __webpack_require__(39);
 	
 	function set(target, propertyKey, V/*, receiver*/){
 	  var receiver = arguments.length < 4 ? target : arguments[3]
@@ -23330,12 +24211,12 @@
 	$export($export.S, 'Reflect', {set: set});
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.14 Reflect.setPrototypeOf(target, proto)
-	var $export  = __webpack_require__(33)
-	  , setProto = __webpack_require__(98);
+	var $export  = __webpack_require__(34)
+	  , setProto = __webpack_require__(99);
 	
 	if(setProto)$export($export.S, 'Reflect', {
 	  setPrototypeOf: function setPrototypeOf(target, proto){
@@ -23350,13 +24231,13 @@
 	});
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/tc39/Array.prototype.includes
-	var $export   = __webpack_require__(33)
-	  , $includes = __webpack_require__(61)(true);
+	var $export   = __webpack_require__(34)
+	  , $includes = __webpack_require__(62)(true);
 	
 	$export($export.P, 'Array', {
 	  includes: function includes(el /*, fromIndex = 0 */){
@@ -23364,16 +24245,16 @@
 	  }
 	});
 	
-	__webpack_require__(211)('includes');
+	__webpack_require__(212)('includes');
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/mathiasbynens/String.prototype.at
-	var $export = __webpack_require__(33)
-	  , $at     = __webpack_require__(152)(true);
+	var $export = __webpack_require__(34)
+	  , $at     = __webpack_require__(153)(true);
 	
 	$export($export.P, 'String', {
 	  at: function at(pos){
@@ -23382,13 +24263,13 @@
 	});
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/tc39/proposal-string-pad-start-end
-	var $export = __webpack_require__(33)
-	  , $pad    = __webpack_require__(275);
+	var $export = __webpack_require__(34)
+	  , $pad    = __webpack_require__(276);
 	
 	$export($export.P, 'String', {
 	  padStart: function padStart(maxLength /*, fillString = ' ' */){
@@ -23397,13 +24278,13 @@
 	});
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-string-pad-start-end
-	var toLength = __webpack_require__(62)
-	  , repeat   = __webpack_require__(116)
-	  , defined  = __webpack_require__(60);
+	var toLength = __webpack_require__(63)
+	  , repeat   = __webpack_require__(117)
+	  , defined  = __webpack_require__(61);
 	
 	module.exports = function(that, maxLength, fillString, left){
 	  var S            = String(defined(that))
@@ -23419,13 +24300,13 @@
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/tc39/proposal-string-pad-start-end
-	var $export = __webpack_require__(33)
-	  , $pad    = __webpack_require__(275);
+	var $export = __webpack_require__(34)
+	  , $pad    = __webpack_require__(276);
 	
 	$export($export.P, 'String', {
 	  padEnd: function padEnd(maxLength /*, fillString = ' ' */){
@@ -23434,40 +24315,40 @@
 	});
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-	__webpack_require__(108)('trimLeft', function($trim){
+	__webpack_require__(109)('trimLeft', function($trim){
 	  return function trimLeft(){
 	    return $trim(this, 1);
 	  };
 	}, 'trimStart');
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-	__webpack_require__(108)('trimRight', function($trim){
+	__webpack_require__(109)('trimRight', function($trim){
 	  return function trimRight(){
 	    return $trim(this, 2);
 	  };
 	}, 'trimEnd');
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://tc39.github.io/String.prototype.matchAll/
-	var $export     = __webpack_require__(33)
-	  , defined     = __webpack_require__(60)
-	  , toLength    = __webpack_require__(62)
-	  , isRegExp    = __webpack_require__(159)
-	  , getFlags    = __webpack_require__(221)
+	var $export     = __webpack_require__(34)
+	  , defined     = __webpack_require__(61)
+	  , toLength    = __webpack_require__(63)
+	  , isRegExp    = __webpack_require__(160)
+	  , getFlags    = __webpack_require__(222)
 	  , RegExpProto = RegExp.prototype;
 	
 	var $RegExpStringIterator = function(regexp, string){
@@ -23475,7 +24356,7 @@
 	  this._s = string;
 	};
 	
-	__webpack_require__(155)($RegExpStringIterator, 'RegExp String', function next(){
+	__webpack_require__(156)($RegExpStringIterator, 'RegExp String', function next(){
 	  var match = this._r.exec(this._s);
 	  return {value: match, done: match === null};
 	});
@@ -23493,27 +24374,27 @@
 	});
 
 /***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(52)('asyncIterator');
-
-/***/ },
 /* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(52)('observable');
+	__webpack_require__(53)('asyncIterator');
 
 /***/ },
 /* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
+	__webpack_require__(53)('observable');
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// https://github.com/tc39/proposal-object-getownpropertydescriptors
-	var $export        = __webpack_require__(33)
-	  , ownKeys        = __webpack_require__(268)
-	  , toIObject      = __webpack_require__(57)
-	  , gOPD           = __webpack_require__(76)
-	  , createProperty = __webpack_require__(188);
+	var $export        = __webpack_require__(34)
+	  , ownKeys        = __webpack_require__(269)
+	  , toIObject      = __webpack_require__(58)
+	  , gOPD           = __webpack_require__(77)
+	  , createProperty = __webpack_require__(189);
 	
 	$export($export.S, 'Object', {
 	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object){
@@ -23529,12 +24410,12 @@
 	});
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-object-values-entries
-	var $export = __webpack_require__(33)
-	  , $values = __webpack_require__(284)(false);
+	var $export = __webpack_require__(34)
+	  , $values = __webpack_require__(285)(false);
 	
 	$export($export.S, 'Object', {
 	  values: function values(it){
@@ -23543,12 +24424,12 @@
 	});
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getKeys   = __webpack_require__(55)
-	  , toIObject = __webpack_require__(57)
-	  , isEnum    = __webpack_require__(69).f;
+	var getKeys   = __webpack_require__(56)
+	  , toIObject = __webpack_require__(58)
+	  , isEnum    = __webpack_require__(70).f;
 	module.exports = function(isEntries){
 	  return function(it){
 	    var O      = toIObject(it)
@@ -23564,12 +24445,12 @@
 	};
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-object-values-entries
-	var $export  = __webpack_require__(33)
-	  , $entries = __webpack_require__(284)(true);
+	var $export  = __webpack_require__(34)
+	  , $entries = __webpack_require__(285)(true);
 	
 	$export($export.S, 'Object', {
 	  entries: function entries(it){
@@ -23578,49 +24459,32 @@
 	});
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export         = __webpack_require__(33)
-	  , toObject        = __webpack_require__(83)
-	  , aFunction       = __webpack_require__(46)
-	  , $defineProperty = __webpack_require__(36);
+	var $export         = __webpack_require__(34)
+	  , toObject        = __webpack_require__(84)
+	  , aFunction       = __webpack_require__(47)
+	  , $defineProperty = __webpack_require__(37);
 	
 	// B.2.2.2 Object.prototype.__defineGetter__(P, getter)
-	__webpack_require__(31) && $export($export.P + __webpack_require__(287), 'Object', {
+	__webpack_require__(32) && $export($export.P + __webpack_require__(288), 'Object', {
 	  __defineGetter__: function __defineGetter__(P, getter){
 	    $defineProperty.f(toObject(this), P, {get: aFunction(getter), enumerable: true, configurable: true});
 	  }
 	});
 
 /***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Forced replacement prototype accessors methods
-	module.exports = __webpack_require__(53)|| !__webpack_require__(32)(function(){
-	  var K = Math.random();
-	  // In FF throws only define methods
-	  __defineSetter__.call(null, K, function(){ /* empty */});
-	  delete __webpack_require__(29)[K];
-	});
-
-/***/ },
 /* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	var $export         = __webpack_require__(33)
-	  , toObject        = __webpack_require__(83)
-	  , aFunction       = __webpack_require__(46)
-	  , $defineProperty = __webpack_require__(36);
-	
-	// B.2.2.3 Object.prototype.__defineSetter__(P, setter)
-	__webpack_require__(31) && $export($export.P + __webpack_require__(287), 'Object', {
-	  __defineSetter__: function __defineSetter__(P, setter){
-	    $defineProperty.f(toObject(this), P, {set: aFunction(setter), enumerable: true, configurable: true});
-	  }
+	// Forced replacement prototype accessors methods
+	module.exports = __webpack_require__(54)|| !__webpack_require__(33)(function(){
+	  var K = Math.random();
+	  // In FF throws only define methods
+	  __defineSetter__.call(null, K, function(){ /* empty */});
+	  delete __webpack_require__(30)[K];
 	});
 
 /***/ },
@@ -23628,14 +24492,31 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export                  = __webpack_require__(33)
-	  , toObject                 = __webpack_require__(83)
-	  , toPrimitive              = __webpack_require__(41)
-	  , getPrototypeOf           = __webpack_require__(84)
-	  , getOwnPropertyDescriptor = __webpack_require__(76).f;
+	var $export         = __webpack_require__(34)
+	  , toObject        = __webpack_require__(84)
+	  , aFunction       = __webpack_require__(47)
+	  , $defineProperty = __webpack_require__(37);
+	
+	// B.2.2.3 Object.prototype.__defineSetter__(P, setter)
+	__webpack_require__(32) && $export($export.P + __webpack_require__(288), 'Object', {
+	  __defineSetter__: function __defineSetter__(P, setter){
+	    $defineProperty.f(toObject(this), P, {set: aFunction(setter), enumerable: true, configurable: true});
+	  }
+	});
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $export                  = __webpack_require__(34)
+	  , toObject                 = __webpack_require__(84)
+	  , toPrimitive              = __webpack_require__(42)
+	  , getPrototypeOf           = __webpack_require__(85)
+	  , getOwnPropertyDescriptor = __webpack_require__(77).f;
 	
 	// B.2.2.4 Object.prototype.__lookupGetter__(P)
-	__webpack_require__(31) && $export($export.P + __webpack_require__(287), 'Object', {
+	__webpack_require__(32) && $export($export.P + __webpack_require__(288), 'Object', {
 	  __lookupGetter__: function __lookupGetter__(P){
 	    var O = toObject(this)
 	      , K = toPrimitive(P, true)
@@ -23647,18 +24528,18 @@
 	});
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export                  = __webpack_require__(33)
-	  , toObject                 = __webpack_require__(83)
-	  , toPrimitive              = __webpack_require__(41)
-	  , getPrototypeOf           = __webpack_require__(84)
-	  , getOwnPropertyDescriptor = __webpack_require__(76).f;
+	var $export                  = __webpack_require__(34)
+	  , toObject                 = __webpack_require__(84)
+	  , toPrimitive              = __webpack_require__(42)
+	  , getPrototypeOf           = __webpack_require__(85)
+	  , getOwnPropertyDescriptor = __webpack_require__(77).f;
 	
 	// B.2.2.5 Object.prototype.__lookupSetter__(P)
-	__webpack_require__(31) && $export($export.P + __webpack_require__(287), 'Object', {
+	__webpack_require__(32) && $export($export.P + __webpack_require__(288), 'Object', {
 	  __lookupSetter__: function __lookupSetter__(P){
 	    var O = toObject(this)
 	      , K = toPrimitive(P, true)
@@ -23670,21 +24551,21 @@
 	});
 
 /***/ },
-/* 291 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
-	var $export  = __webpack_require__(33);
-	
-	$export($export.P + $export.R, 'Map', {toJSON: __webpack_require__(292)('Map')});
-
-/***/ },
 /* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
-	var classof = __webpack_require__(100)
-	  , from    = __webpack_require__(293);
+	var $export  = __webpack_require__(34);
+	
+	$export($export.P + $export.R, 'Map', {toJSON: __webpack_require__(293)('Map')});
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
+	var classof = __webpack_require__(101)
+	  , from    = __webpack_require__(294);
 	module.exports = function(NAME){
 	  return function toJSON(){
 	    if(classof(this) != NAME)throw TypeError(NAME + "#toJSON isn't generic");
@@ -23693,10 +24574,10 @@
 	};
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var forOf = __webpack_require__(231);
+	var forOf = __webpack_require__(232);
 	
 	module.exports = function(iter, ITERATOR){
 	  var result = [];
@@ -23706,30 +24587,30 @@
 
 
 /***/ },
-/* 294 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
-	var $export  = __webpack_require__(33);
-	
-	$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(292)('Set')});
-
-/***/ },
 /* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://github.com/ljharb/proposal-global
-	var $export = __webpack_require__(33);
+	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
+	var $export  = __webpack_require__(34);
 	
-	$export($export.S, 'System', {global: __webpack_require__(29)});
+	$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(293)('Set')});
 
 /***/ },
 /* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// https://github.com/ljharb/proposal-global
+	var $export = __webpack_require__(34);
+	
+	$export($export.S, 'System', {global: __webpack_require__(30)});
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// https://github.com/ljharb/proposal-is-error
-	var $export = __webpack_require__(33)
-	  , cof     = __webpack_require__(59);
+	var $export = __webpack_require__(34)
+	  , cof     = __webpack_require__(60);
 	
 	$export($export.S, 'Error', {
 	  isError: function isError(it){
@@ -23738,11 +24619,11 @@
 	});
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  iaddh: function iaddh(x0, x1, y0, y1){
@@ -23754,11 +24635,11 @@
 	});
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  isubh: function isubh(x0, x1, y0, y1){
@@ -23770,11 +24651,11 @@
 	});
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  imulh: function imulh(u, v){
@@ -23791,11 +24672,11 @@
 	});
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
 	$export($export.S, 'Math', {
 	  umulh: function umulh(u, v){
@@ -23812,11 +24693,11 @@
 	});
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata                  = __webpack_require__(302)
-	  , anObject                  = __webpack_require__(37)
+	var metadata                  = __webpack_require__(303)
+	  , anObject                  = __webpack_require__(38)
 	  , toMetaKey                 = metadata.key
 	  , ordinaryDefineOwnMetadata = metadata.set;
 	
@@ -23825,13 +24706,13 @@
 	}});
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Map     = __webpack_require__(236)
-	  , $export = __webpack_require__(33)
-	  , shared  = __webpack_require__(48)('metadata')
-	  , store   = shared.store || (shared.store = new (__webpack_require__(240)));
+	var Map     = __webpack_require__(237)
+	  , $export = __webpack_require__(34)
+	  , shared  = __webpack_require__(49)('metadata')
+	  , store   = shared.store || (shared.store = new (__webpack_require__(241)));
 	
 	var getOrCreateMetadataMap = function(target, targetKey, create){
 	  var targetMetadata = store.get(target);
@@ -23881,11 +24762,11 @@
 	};
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(302)
-	  , anObject               = __webpack_require__(37)
+	var metadata               = __webpack_require__(303)
+	  , anObject               = __webpack_require__(38)
 	  , toMetaKey              = metadata.key
 	  , getOrCreateMetadataMap = metadata.map
 	  , store                  = metadata.store;
@@ -23901,12 +24782,12 @@
 	}});
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(302)
-	  , anObject               = __webpack_require__(37)
-	  , getPrototypeOf         = __webpack_require__(84)
+	var metadata               = __webpack_require__(303)
+	  , anObject               = __webpack_require__(38)
+	  , getPrototypeOf         = __webpack_require__(85)
 	  , ordinaryHasOwnMetadata = metadata.has
 	  , ordinaryGetOwnMetadata = metadata.get
 	  , toMetaKey              = metadata.key;
@@ -23923,14 +24804,14 @@
 	}});
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Set                     = __webpack_require__(239)
-	  , from                    = __webpack_require__(293)
-	  , metadata                = __webpack_require__(302)
-	  , anObject                = __webpack_require__(37)
-	  , getPrototypeOf          = __webpack_require__(84)
+	var Set                     = __webpack_require__(240)
+	  , from                    = __webpack_require__(294)
+	  , metadata                = __webpack_require__(303)
+	  , anObject                = __webpack_require__(38)
+	  , getPrototypeOf          = __webpack_require__(85)
 	  , ordinaryOwnMetadataKeys = metadata.keys
 	  , toMetaKey               = metadata.key;
 	
@@ -23947,11 +24828,11 @@
 	}});
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(302)
-	  , anObject               = __webpack_require__(37)
+	var metadata               = __webpack_require__(303)
+	  , anObject               = __webpack_require__(38)
 	  , ordinaryGetOwnMetadata = metadata.get
 	  , toMetaKey              = metadata.key;
 	
@@ -23961,11 +24842,11 @@
 	}});
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata                = __webpack_require__(302)
-	  , anObject                = __webpack_require__(37)
+	var metadata                = __webpack_require__(303)
+	  , anObject                = __webpack_require__(38)
 	  , ordinaryOwnMetadataKeys = metadata.keys
 	  , toMetaKey               = metadata.key;
 	
@@ -23974,12 +24855,12 @@
 	}});
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(302)
-	  , anObject               = __webpack_require__(37)
-	  , getPrototypeOf         = __webpack_require__(84)
+	var metadata               = __webpack_require__(303)
+	  , anObject               = __webpack_require__(38)
+	  , getPrototypeOf         = __webpack_require__(85)
 	  , ordinaryHasOwnMetadata = metadata.has
 	  , toMetaKey              = metadata.key;
 	
@@ -23995,11 +24876,11 @@
 	}});
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(302)
-	  , anObject               = __webpack_require__(37)
+	var metadata               = __webpack_require__(303)
+	  , anObject               = __webpack_require__(38)
 	  , ordinaryHasOwnMetadata = metadata.has
 	  , toMetaKey              = metadata.key;
 	
@@ -24009,12 +24890,12 @@
 	}});
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata                  = __webpack_require__(302)
-	  , anObject                  = __webpack_require__(37)
-	  , aFunction                 = __webpack_require__(46)
+	var metadata                  = __webpack_require__(303)
+	  , anObject                  = __webpack_require__(38)
+	  , aFunction                 = __webpack_require__(47)
 	  , toMetaKey                 = metadata.key
 	  , ordinaryDefineOwnMetadata = metadata.set;
 	
@@ -24029,14 +24910,14 @@
 	}});
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
-	var $export   = __webpack_require__(33)
-	  , microtask = __webpack_require__(234)()
-	  , process   = __webpack_require__(29).process
-	  , isNode    = __webpack_require__(59)(process) == 'process';
+	var $export   = __webpack_require__(34)
+	  , microtask = __webpack_require__(235)()
+	  , process   = __webpack_require__(30).process
+	  , isNode    = __webpack_require__(60)(process) == 'process';
 	
 	$export($export.G, {
 	  asap: function asap(fn){
@@ -24046,22 +24927,22 @@
 	});
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/zenparsing/es-observable
-	var $export     = __webpack_require__(33)
-	  , global      = __webpack_require__(29)
-	  , core        = __webpack_require__(34)
-	  , microtask   = __webpack_require__(234)()
-	  , OBSERVABLE  = __webpack_require__(50)('observable')
-	  , aFunction   = __webpack_require__(46)
-	  , anObject    = __webpack_require__(37)
-	  , anInstance  = __webpack_require__(230)
-	  , redefineAll = __webpack_require__(235)
-	  , hide        = __webpack_require__(35)
-	  , forOf       = __webpack_require__(231)
+	var $export     = __webpack_require__(34)
+	  , global      = __webpack_require__(30)
+	  , core        = __webpack_require__(35)
+	  , microtask   = __webpack_require__(235)()
+	  , OBSERVABLE  = __webpack_require__(51)('observable')
+	  , aFunction   = __webpack_require__(47)
+	  , anObject    = __webpack_require__(38)
+	  , anInstance  = __webpack_require__(231)
+	  , redefineAll = __webpack_require__(236)
+	  , hide        = __webpack_require__(36)
+	  , forOf       = __webpack_require__(232)
 	  , RETURN      = forOf.RETURN;
 	
 	var getMethod = function(fn){
@@ -24247,17 +25128,17 @@
 	
 	$export($export.G, {Observable: $Observable});
 	
-	__webpack_require__(217)('Observable');
+	__webpack_require__(218)('Observable');
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// ie9- setTimeout & setInterval additional parameters fix
-	var global     = __webpack_require__(29)
-	  , $export    = __webpack_require__(33)
-	  , invoke     = __webpack_require__(103)
-	  , partial    = __webpack_require__(314)
+	var global     = __webpack_require__(30)
+	  , $export    = __webpack_require__(34)
+	  , invoke     = __webpack_require__(104)
+	  , partial    = __webpack_require__(315)
 	  , navigator  = global.navigator
 	  , MSIE       = !!navigator && /MSIE .\./.test(navigator.userAgent); // <- dirty ie9- check
 	var wrap = function(set){
@@ -24275,13 +25156,13 @@
 	});
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var path      = __webpack_require__(315)
-	  , invoke    = __webpack_require__(103)
-	  , aFunction = __webpack_require__(46);
+	var path      = __webpack_require__(316)
+	  , invoke    = __webpack_require__(104)
+	  , aFunction = __webpack_require__(47);
 	module.exports = function(/* ...pargs */){
 	  var fn     = aFunction(this)
 	    , length = arguments.length
@@ -24303,32 +25184,32 @@
 	};
 
 /***/ },
-/* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(29);
-
-/***/ },
 /* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33)
-	  , $task   = __webpack_require__(233);
+	module.exports = __webpack_require__(30);
+
+/***/ },
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $export = __webpack_require__(34)
+	  , $task   = __webpack_require__(234);
 	$export($export.G + $export.B, {
 	  setImmediate:   $task.set,
 	  clearImmediate: $task.clear
 	});
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $iterators    = __webpack_require__(218)
-	  , redefine      = __webpack_require__(43)
-	  , global        = __webpack_require__(29)
-	  , hide          = __webpack_require__(35)
-	  , Iterators     = __webpack_require__(154)
-	  , wks           = __webpack_require__(50)
+	var $iterators    = __webpack_require__(219)
+	  , redefine      = __webpack_require__(44)
+	  , global        = __webpack_require__(30)
+	  , hide          = __webpack_require__(36)
+	  , Iterators     = __webpack_require__(155)
+	  , wks           = __webpack_require__(51)
 	  , ITERATOR      = wks('iterator')
 	  , TO_STRING_TAG = wks('toStringTag')
 	  , ArrayValues   = Iterators.Array;
@@ -24347,28 +25228,28 @@
 	}
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var ctx            = __webpack_require__(45)
-	  , $export        = __webpack_require__(33)
-	  , createDesc     = __webpack_require__(42)
-	  , assign         = __webpack_require__(94)
-	  , create         = __webpack_require__(71)
-	  , getPrototypeOf = __webpack_require__(84)
-	  , getKeys        = __webpack_require__(55)
-	  , dP             = __webpack_require__(36)
-	  , keyOf          = __webpack_require__(54)
-	  , aFunction      = __webpack_require__(46)
-	  , forOf          = __webpack_require__(231)
-	  , isIterable     = __webpack_require__(319)
-	  , $iterCreate    = __webpack_require__(155)
-	  , step           = __webpack_require__(219)
-	  , isObject       = __webpack_require__(38)
-	  , toIObject      = __webpack_require__(57)
-	  , DESCRIPTORS    = __webpack_require__(31)
-	  , has            = __webpack_require__(30);
+	var ctx            = __webpack_require__(46)
+	  , $export        = __webpack_require__(34)
+	  , createDesc     = __webpack_require__(43)
+	  , assign         = __webpack_require__(95)
+	  , create         = __webpack_require__(72)
+	  , getPrototypeOf = __webpack_require__(85)
+	  , getKeys        = __webpack_require__(56)
+	  , dP             = __webpack_require__(37)
+	  , keyOf          = __webpack_require__(55)
+	  , aFunction      = __webpack_require__(47)
+	  , forOf          = __webpack_require__(232)
+	  , isIterable     = __webpack_require__(320)
+	  , $iterCreate    = __webpack_require__(156)
+	  , step           = __webpack_require__(220)
+	  , isObject       = __webpack_require__(39)
+	  , toIObject      = __webpack_require__(58)
+	  , DESCRIPTORS    = __webpack_require__(32)
+	  , has            = __webpack_require__(31);
 	
 	// 0 -> Dict.forEach
 	// 1 -> Dict.map
@@ -24507,13 +25388,13 @@
 	});
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var classof   = __webpack_require__(100)
-	  , ITERATOR  = __webpack_require__(50)('iterator')
-	  , Iterators = __webpack_require__(154);
-	module.exports = __webpack_require__(34).isIterable = function(it){
+	var classof   = __webpack_require__(101)
+	  , ITERATOR  = __webpack_require__(51)('iterator')
+	  , Iterators = __webpack_require__(155);
+	module.exports = __webpack_require__(35).isIterable = function(it){
 	  var O = Object(it);
 	  return O[ITERATOR] !== undefined
 	    || '@@iterator' in O
@@ -24521,25 +25402,25 @@
 	};
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var anObject = __webpack_require__(37)
-	  , get      = __webpack_require__(189);
-	module.exports = __webpack_require__(34).getIterator = function(it){
+	var anObject = __webpack_require__(38)
+	  , get      = __webpack_require__(190);
+	module.exports = __webpack_require__(35).getIterator = function(it){
 	  var iterFn = get(it);
 	  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
 	  return anObject(iterFn.call(it));
 	};
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global  = __webpack_require__(29)
-	  , core    = __webpack_require__(34)
-	  , $export = __webpack_require__(33)
-	  , partial = __webpack_require__(314);
+	var global  = __webpack_require__(30)
+	  , core    = __webpack_require__(35)
+	  , $export = __webpack_require__(34)
+	  , partial = __webpack_require__(315);
 	// https://esdiscuss.org/topic/promise-returning-delay-function
 	$export($export.G + $export.F, {
 	  delay: function delay(time){
@@ -24550,50 +25431,50 @@
 	});
 
 /***/ },
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var path    = __webpack_require__(315)
-	  , $export = __webpack_require__(33);
-	
-	// Placeholder
-	__webpack_require__(34)._ = path._ = path._ || {};
-	
-	$export($export.P + $export.F, 'Function', {part: __webpack_require__(314)});
-
-/***/ },
 /* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33);
+	var path    = __webpack_require__(316)
+	  , $export = __webpack_require__(34);
 	
-	$export($export.S + $export.F, 'Object', {isObject: __webpack_require__(38)});
+	// Placeholder
+	__webpack_require__(35)._ = path._ = path._ || {};
+	
+	$export($export.P + $export.F, 'Function', {part: __webpack_require__(315)});
 
 /***/ },
 /* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33);
+	var $export = __webpack_require__(34);
 	
-	$export($export.S + $export.F, 'Object', {classof: __webpack_require__(100)});
+	$export($export.S + $export.F, 'Object', {isObject: __webpack_require__(39)});
 
 /***/ },
 /* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33)
-	  , define  = __webpack_require__(326);
+	var $export = __webpack_require__(34);
 	
-	$export($export.S + $export.F, 'Object', {define: define});
+	$export($export.S + $export.F, 'Object', {classof: __webpack_require__(101)});
 
 /***/ },
 /* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var dP        = __webpack_require__(36)
-	  , gOPD      = __webpack_require__(76)
-	  , ownKeys   = __webpack_require__(268)
-	  , toIObject = __webpack_require__(57);
+	var $export = __webpack_require__(34)
+	  , define  = __webpack_require__(327);
+	
+	$export($export.S + $export.F, 'Object', {define: define});
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var dP        = __webpack_require__(37)
+	  , gOPD      = __webpack_require__(77)
+	  , ownKeys   = __webpack_require__(269)
+	  , toIObject = __webpack_require__(58);
 	
 	module.exports = function define(target, mixin){
 	  var keys   = ownKeys(toIObject(mixin))
@@ -24604,12 +25485,12 @@
 	};
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export = __webpack_require__(33)
-	  , define  = __webpack_require__(326)
-	  , create  = __webpack_require__(71);
+	var $export = __webpack_require__(34)
+	  , define  = __webpack_require__(327)
+	  , create  = __webpack_require__(72);
 	
 	$export($export.S + $export.F, 'Object', {
 	  make: function(proto, mixin){
@@ -24618,11 +25499,11 @@
 	});
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(153)(Number, 'Number', function(iterated){
+	__webpack_require__(154)(Number, 'Number', function(iterated){
 	  this._l = +iterated;
 	  this._i = 0;
 	}, function(){
@@ -24632,18 +25513,18 @@
 	});
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/benjamingr/RexExp.escape
-	var $export = __webpack_require__(33)
-	  , $re     = __webpack_require__(330)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+	var $export = __webpack_require__(34)
+	  , $re     = __webpack_require__(331)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 	
 	$export($export.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports) {
 
 	module.exports = function(regExp, replace){
@@ -24656,12 +25537,12 @@
 	};
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33);
-	var $re = __webpack_require__(330)(/[&<>"']/g, {
+	var $export = __webpack_require__(34);
+	var $re = __webpack_require__(331)(/[&<>"']/g, {
 	  '&': '&amp;',
 	  '<': '&lt;',
 	  '>': '&gt;',
@@ -24672,12 +25553,12 @@
 	$export($export.P + $export.F, 'String', {escapeHTML: function escapeHTML(){ return $re(this); }});
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $export = __webpack_require__(33);
-	var $re = __webpack_require__(330)(/&(?:amp|lt|gt|quot|apos);/g, {
+	var $export = __webpack_require__(34);
+	var $re = __webpack_require__(331)(/&(?:amp|lt|gt|quot|apos);/g, {
 	  '&amp;':  '&',
 	  '&lt;':   '<',
 	  '&gt;':   '>',
