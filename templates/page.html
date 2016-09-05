@@ -203,8 +203,8 @@
         baseUrl: '/',
         paths: { 
           {% if model.debug == "true" %}
-            'core-js': 'lib/dev/core.min',          // Debug: only needed when loading 'ext/js/main/main'
-            'fable-core': 'lib/dev/fable-core.min', // Debug: Only needed when loading 'ext/js/main/main'
+            'core-js': 'lib/dev/core.min',          // Debug: only needed when loading 'ext/src/main/main'
+            'fable-core': 'lib/dev/fable-core.min', // Debug: Only needed when loading 'ext/src/main/main'
           {% endif %}
           'vs': 'lib/vs' 
         },
@@ -216,7 +216,7 @@
       logEvent("page", "loaded", "", window.navigator.userAgent);
       {% if model.debug == "true" %}
         // Debug: load individual source files instead of WebPacked version
-        require(["ext/js/main/main"]);
+        require(["ext/src/main/main"]);
       {% else %}
         require(["ext/thegamma-script"]);
       {% endif %}

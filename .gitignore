@@ -9,7 +9,8 @@ paket.targets
 paket-files
 packages
 
-web/ext/js
+web/ext/tests/
+web/ext/src/
 
 temp
 bin

@@ -98,7 +98,7 @@
 	        return x < y ? -1 : x > y ? 1 : 0;
 	      }));
 	
-	      var lookupNamed = function (n) {
+	      var lookupNamed = function lookupNamed(n) {
 	        return function (tyargs) {
 	          var matchValue = _fableCore.Map.tryFind(n, named);
 	
@@ -134,28 +134,16 @@
 	
 	        return _fableCore.Date.ticks(copyOfStruct);
 	      }())), function (_arg1) {
-	        var fsTys = _arg1;
-	
-	        var allTys = _fableCore.List.append(restTys, fsTys);
+	        var allTys = _fableCore.List.append(restTys, _arg1);
 	
 	        named = _fableCore.Map.create(_fableCore.Seq.choose(function (_arg2) {
-	          return _arg2.Case === "NamedType" ? function () {
-	            var tya = _arg2.Fields[1];
-	            var t = _arg2.Fields[2];
-	            var s = _arg2.Fields[0];
-	            return [s, [t, tya]];
-	          }() : null;
+	          return _arg2.Case === "NamedType" ? [_arg2.Fields[0], [_arg2.Fields[2], _arg2.Fields[1]]] : null;
 	        }, allTys), new _fableCore.GenericComparer(function (x, y) {
 	          return x < y ? -1 : x > y ? 1 : 0;
 	        }));
 	
 	        var globals = _fableCore.Map.create(_fableCore.List.choose(function (_arg3) {
-	          return _arg3.Case === "GlobalValue" ? function () {
-	            var t = _arg3.Fields[2];
-	            var s = _arg3.Fields[0];
-	            var e = _arg3.Fields[1];
-	            return [s, [e, t]];
-	          }() : null;
+	          return _arg3.Case === "GlobalValue" ? [_arg3.Fields[0], [_arg3.Fields[1], _arg3.Fields[2]]] : null;
 	        }, allTys), new _fableCore.GenericComparer(function (x, y) {
 	          return x < y ? -1 : x > y ? 1 : 0;
 	        }));
@@ -172,12 +160,9 @@
 	  }("global types")(function (builder_) {
 	    return builder_.Delay(function (unitVar) {
 	      return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(types), function (_arg1) {
-	        var ty = _arg1;
 	        return builder_.Return(_fableCore.Map.map(function (_arg2, tupledArg) {
-	          var _arg1_1 = tupledArg[0];
-	          var t = tupledArg[1];
-	          return t;
-	        }, ty.Globals));
+	          return tupledArg[1];
+	        }, _arg1.Globals));
 	      });
 	    });
 	  }(_fableCore.defaultAsyncBuilder));
@@ -189,18 +174,15 @@
 	  }("global exps")(function (builder_) {
 	    return builder_.Delay(function (unitVar) {
 	      return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(types), function (_arg1) {
-	        var ty = _arg1;
 	        return builder_.Return(_fableCore.Map.map(function (_arg2, tupledArg) {
-	          var e = tupledArg[0];
-	          var _arg1_1 = tupledArg[1];
-	          return e;
-	        }, ty.Globals));
+	          return tupledArg[0];
+	        }, _arg1.Globals));
 	      });
 	    });
 	  }(_fableCore.defaultAsyncBuilder));
 	
 	  function findElements(f, el) {
-	    var loop = function (acc) {
+	    var loop = function loop(acc) {
 	      return function (el_1) {
 	        return el_1 == null ? acc : function () {
 	          var acc_1 = (el_1.nodeType === 1 ? f(el_1) : false) ? _fableCore.List.ofArray([el_1], acc) : acc;
@@ -213,15 +195,14 @@
 	  }
 	
 	  function tryFindChildElement(f, el) {
-	    var loop = function (el_1) {
+	    var loop = function loop(el_1) {
 	      return el_1 == null ? null : (el_1.nodeType === 1 ? f(el_1) : false) ? el_1 : function () {
 	        var matchValue = loop(el_1.firstChild);
 	
 	        if (matchValue == null) {
 	          return loop(el_1.nextSibling);
 	        } else {
-	          var res = matchValue;
-	          return res;
+	          return matchValue;
 	        }
 	      }();
 	    };
@@ -240,31 +221,21 @@
 	  function callShowMethod(outId, cmd) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        var matchValue = cmd.Command;
+	        return cmd.Command.Case === "Expr" ? builder_.Bind((0, _typechecker.getObjectMembers)(cmd.Command.Fields[0].Type), function (_arg1) {
+	          return _arg1.Case === "Members" ? function () {
+	            var hasShow = _arg1.Fields[0].some(function (_arg2) {
+	              var $target1 = function $target1() {
+	                return false;
+	              };
 	
-	        if (matchValue.Case === "Expr") {
-	          var e = matchValue.Fields[0];
-	          return builder_.Bind((0, _typechecker.getObjectMembers)(e.Type), function (_arg1) {
-	            var m = _arg1;
-	
-	            if (m.Case === "Members") {
-	              var members = m.Fields[0];
-	              var hasShow = members.some(function (_arg2) {
-	                var $target1 = function () {
-	                  return false;
-	                };
-	
-	                if (_arg2.Case === "Method") {
-	                  if (_arg2.Fields[0] === "show") {
-	                    if (_arg2.Fields[1].tail == null) {
-	                      if (_arg2.Fields[2].tail != null) {
-	                        if (_arg2.Fields[2].head[2].Case === "Primitive") {
-	                          if (_arg2.Fields[2].head[2].Fields[0] === "string") {
-	                            if (_arg2.Fields[2].tail.tail == null) {
-	                              return true;
-	                            } else {
-	                              return $target1();
-	                            }
+	              if (_arg2.Case === "Method") {
+	                if (_arg2.Fields[0] === "show") {
+	                  if (_arg2.Fields[1].tail == null) {
+	                    if (_arg2.Fields[2].tail != null) {
+	                      if (_arg2.Fields[2].head[2].Case === "Primitive") {
+	                        if (_arg2.Fields[2].head[2].Fields[0] === "string") {
+	                          if (_arg2.Fields[2].tail.tail == null) {
+	                            return true;
 	                          } else {
 	                            return $target1();
 	                          }
@@ -283,26 +254,24 @@
 	                } else {
 	                  return $target1();
 	                }
-	              });
-	
-	              if (hasShow) {
-	                var rng = new _ast.Range(e.Range.End, e.Range.End);
-	                var outExpr = new _ast.Expr(new _ast.ExprKind("String", [outId]), rng, new _ast.Type("Primitive", ["string"]));
-	
-	                var args = _fableCore.List.ofArray([new _ast.Argument(null, outExpr)]);
-	
-	                var newE = new _ast.Expr(new _ast.ExprKind("Call", [e, new _ast.Name("show", rng), args]), e.Range, e.Type);
-	                return builder_.Return(new _ast.Command(new _ast.CommandKind("Expr", [newE]), cmd.Range));
 	              } else {
-	                return builder_.Return(cmd);
+	                return $target1();
 	              }
+	            });
+	
+	            if (hasShow) {
+	              var rng = new _ast.Range(cmd.Command.Fields[0].Range.End, cmd.Command.Fields[0].Range.End);
+	              var outExpr = new _ast.Expr(new _ast.ExprKind("String", [outId]), rng, new _ast.Type("Primitive", ["string"]));
+	
+	              var args = _fableCore.List.ofArray([new _ast.Argument(null, outExpr)]);
+	
+	              var newE = new _ast.Expr(new _ast.ExprKind("Call", [cmd.Command.Fields[0], new _ast.Name("show", rng), args]), cmd.Command.Fields[0].Range, cmd.Command.Fields[0].Type);
+	              return builder_.Return(new _ast.Command(new _ast.CommandKind("Expr", [newE]), cmd.Range));
 	            } else {
 	              return builder_.Return(cmd);
 	            }
-	          });
-	        } else {
-	          return builder_.Return(cmd);
-	        }
+	          }() : builder_.Return(cmd);
+	        }) : builder_.Return(cmd);
 	      });
 	    }(_fableCore.defaultAsyncBuilder);
 	  }
@@ -363,19 +332,19 @@
 	    }(), parent).innerText, "both");
 	
 	    var compiled = function () {
-	      var $var9 = tryFindChildElement(function () {
+	      var $var1 = tryFindChildElement(function () {
 	        var cls = "ia-compiled";
 	        return function (el) {
 	          return withClass(cls, el);
 	        };
 	      }(), parent);
 	
-	      if ($var9 != null) {
+	      if ($var1 != null) {
 	        return function (el) {
 	          return _fableCore.String.trim(el.innerText, "both");
-	        }($var9);
+	        }($var1);
 	      } else {
-	        return $var9;
+	        return $var1;
 	      }
 	    }();
 	
@@ -440,36 +409,29 @@
 	    }, 2000);
 	
 	    _fableCore.Observable.add(function (tupledArg) {
-	      var source_1 = tupledArg[0];
-	      var errors = tupledArg[1];
-	      renderErrors(article, errorsEl, source_1, errors);
+	      renderErrors(article, errorsEl, tupledArg[0], tupledArg[1]);
 	    }, checkingService.ErrorsReported);
 	
-	    var run = function (text) {
+	    var run = function run(text) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
 	          _extensions.Log.event("compiler", "run", article, text);
 	
 	          return builder_.Bind(function (builder__1) {
 	            return builder__1.Delay(function (unitVar_1) {
-	              var $target1 = function () {
+	              var $target1 = function $target1() {
 	                return builder__1.Bind(checkingService.TypeCheck(text), function (_arg1) {
-	                  var prog = _arg1[1];
 	                  return builder__1.Bind(_extensions.Async.map(function (cmd) {
 	                    return callShowMethod(outputId, cmd);
-	                  }, prog.Body), function (_arg2) {
-	                    var newBody = _arg2;
-	                    var prog_1 = new _ast.Program(newBody, prog.Range);
-	                    return builder__1.ReturnFrom((0, _codegen.compileAndRun)(globalExprs, text, prog_1));
+	                  }, _arg1[1].Body), function (_arg2) {
+	                    var prog = new _ast.Program(_arg2, _arg1[1].Range);
+	                    return builder__1.ReturnFrom((0, _codegen.compileAndRun)(globalExprs, text, prog));
 	                  });
 	                });
 	              };
 	
 	              if (compiled != null) {
-	                if (function () {
-	                  var compiled_1 = compiled;
-	                  return text === source;
-	                }()) {
+	                if (text === source) {
 	                  var compiled_1 = compiled;
 	                  return builder__1.Return(compiled_1);
 	                } else {
@@ -480,8 +442,6 @@
 	              }
 	            });
 	          }(_fableCore.defaultAsyncBuilder), function (_arg3) {
-	            var code = _arg3;
-	
 	            var s = _series.series.create(function (builder__1) {
 	              return builder__1.Delay(function (unitVar_1) {
 	                return builder__1.Return([]);
@@ -506,7 +466,7 @@
 	
 	            _series.series.values(new Int32Array([1]));
 	
-	            eval(code);
+	            eval(_arg3);
 	            return builder_.Zero();
 	          });
 	        });
@@ -525,7 +485,7 @@
 	        opts.lineHeight = 20;
 	      });
 	
-	      var resizeEditor = function (text) {
+	      var resizeEditor = function resizeEditor(text) {
 	        var dim = {};
 	        dim.width = parent.clientWidth - 40;
 	
@@ -548,11 +508,11 @@
 	      return ed;
 	    });
 	
-	    var getText = function (unitVar0) {
+	    var getText = function getText(unitVar0) {
 	      return !ed.isValueCreated ? source : ed.value.getModel().getValue(1, false);
 	    };
 	
-	    var setText = function (edit) {
+	    var setText = function setText(edit) {
 	      return function (membr) {
 	        return function (t) {
 	          _extensions.Log.event("options", "set-text", article, {
@@ -578,7 +538,7 @@
 	    var optionsVisible = false;
 	    var editorVisible = false;
 	
-	    var showOrHideActions = function (unitVar0) {
+	    var showOrHideActions = function showOrHideActions(unitVar0) {
 	      var vis = (optionsVisible ? true : editorVisible) ? "inline" : "none";
 	      var modf = getText() !== source;
 	      runBtn.style.display = vis;
@@ -599,7 +559,7 @@
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
 	        }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ia-editor-panel")]))(_fableCore.List.map(function () {
-	          var typeCheck = function (arg00) {
+	          var typeCheck = function typeCheck(arg00) {
 	            return checkingService.IsWellTyped(arg00);
 	          };
 	
@@ -636,16 +596,16 @@
 	        return null;
 	      };
 	    }, function () {
-	      var $var10 = showOptionsBtn;
+	      var $var2 = showOptionsBtn;
 	
-	      if ($var10 != null) {
-	        return [$var10];
+	      if ($var2 != null) {
+	        return [$var2];
 	      } else {
 	        return [];
 	      }
 	    }());
 	
-	    showCodeBtn.onclick = function (_arg3) {
+	    var switchEditor = function switchEditor(unitVar0) {
 	      editorVisible = !editorVisible;
 	      showOrHideActions();
 	
@@ -660,9 +620,16 @@
 	      if (editorVisible) {
 	        ed.value;
 	      }
+	    };
 	
+	    showCodeBtn.onclick = function (_arg3) {
+	      switchEditor();
 	      return null;
 	    };
+	
+	    if (source.indexOf("empty.create") >= 0) {
+	      switchEditor();
+	    }
 	
 	    shareBtn.onclick = function (e) {
 	      var text = getText();
@@ -674,26 +641,21 @@
 	      })(function (builder_) {
 	        return builder_.Delay(function (unitVar) {
 	          return builder_.Bind(checkingService.TypeCheck(text), function (_arg7) {
-	            var prog = _arg7[1];
-	            var ok = _arg7[0];
 	            return builder_.Bind(_extensions.Async.map(function () {
 	              var outId = "output-id-placeholder";
 	              return function (cmd) {
 	                return callShowMethod(outId, cmd);
 	              };
-	            }(), prog.Body), function (_arg8) {
-	              var newBody = _arg8;
-	              var prog_1 = new _ast.Program(newBody, prog.Range);
-	              return builder_.Bind((0, _codegen.compileAndRun)(globalExprs, text, prog_1), function (_arg9) {
-	                var compiled_1 = _arg9;
-	
-	                if (!ok) {
+	            }(), _arg7[1].Body), function (_arg8) {
+	              var prog = new _ast.Program(_arg8, _arg7[1].Range);
+	              return builder_.Bind((0, _codegen.compileAndRun)(globalExprs, text, prog), function (_arg9) {
+	                return !_arg7[0] ? function () {
 	                  cannotShareSnippet();
 	                  return builder_.Zero();
-	                } else {
-	                  shareSnippet(text, compiled_1);
+	                }() : function () {
+	                  shareSnippet(text, _arg9);
 	                  return builder_.Zero();
-	                }
+	                }();
 	              });
 	            });
 	          });
@@ -852,11 +814,11 @@
 	        if ((level === "EXCEPTION" ? true : level === "ERROR") ? true : enabledCategories.has(category_1)) {
 	          var dt = _fableCore.Date.now();
 	
-	          var p2 = function (s) {
+	          var p2 = function p2(s) {
 	            return _fableCore.String.padLeft(String(s), 2, "0");
 	          };
 	
-	          var p4 = function (s) {
+	          var p4 = function p4(s) {
 	            return _fableCore.String.padLeft(String(s), 4, "0");
 	          };
 	
@@ -911,21 +873,13 @@
 	      key: "Request",
 	      value: function Request(meth, url, data, cookies) {
 	        return _fableCore.Async.fromContinuations(function (tupledArg) {
-	          var cont = tupledArg[0];
-	          var _arg2 = tupledArg[1];
-	          var _arg3 = tupledArg[2];
-	          var matchValue = _arg2;
-	          var matchValue_1 = _arg3;
-	          var xhr = new XMLHttpRequest(null);
+	          var xhr = new XMLHttpRequest();
 	          xhr.open(meth, url, true);
 	          {
-	            var $target1 = function () {};
+	            var $target1 = function $target1() {};
 	
 	            if (cookies != null) {
-	              if (function () {
-	                var cookies_1 = cookies;
-	                return cookies_1 !== "";
-	              }()) {
+	              if (cookies !== "") {
 	                var cookies_1 = cookies;
 	                xhr.setRequestHeader("X-Cookie", cookies_1);
 	              } else {
@@ -938,7 +892,7 @@
 	
 	          xhr.onreadystatechange = function (_arg1) {
 	            if (xhr.readyState > 3 ? xhr.status === 200 : false) {
-	              cont(xhr.responseText);
+	              tupledArg[0](xhr.responseText);
 	            }
 	
 	            return {};
@@ -956,12 +910,7 @@
 	
 	  function Async_AwaitFuture_Static(f) {
 	    return _fableCore.Async.fromContinuations(function (tupledArg) {
-	      var cont = tupledArg[0];
-	      var _arg4 = tupledArg[1];
-	      var _arg5 = tupledArg[2];
-	      var matchValue = _arg4;
-	      var matchValue_1 = _arg5;
-	      f.Then(cont);
+	      f.Then(tupledArg[0]);
 	    });
 	  }
 	
@@ -974,7 +923,7 @@
 	    var handlers = new _fableCore.List();
 	    var running = false;
 	
-	    var trigger = function (h) {
+	    var trigger = function trigger(h) {
 	      if (res.Case === "Choice2Of3") {
 	        var v = res.Fields[0];
 	        h(v);
@@ -988,7 +937,7 @@
 	      }
 	    };
 	
-	    var ensureStarted = function (unitVar0) {
+	    var ensureStarted = function ensureStarted(unitVar0) {
 	      if (!running) {
 	        Log.trace("system", "Starting future '%s'....", n);
 	        running = true;
@@ -999,19 +948,16 @@
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Combine(builder_.TryWith(builder_.Delay(function (unitVar_1) {
 	              return builder_.Bind(op, function (_arg1) {
-	                var r = _arg1;
-	                res = new _fableCore.Choice("Choice2Of3", [r]);
+	                res = new _fableCore.Choice("Choice2Of3", [_arg1]);
 	                return builder_.Zero();
 	              });
 	            }), function (_arg2) {
-	              var e = _arg2;
-	              Log.exn("system", "Evaluating future failed: %O", e);
-	              res = new _fableCore.Choice("Choice3Of3", [e]);
+	              Log.exn("system", "Evaluating future failed: %O", _arg2);
+	              res = new _fableCore.Choice("Choice3Of3", [_arg2]);
 	              return builder_.Zero();
 	            }), builder_.Delay(function (unitVar_1) {
 	              return builder_.For(handlers, function (_arg3) {
-	                var h = _arg3;
-	                trigger(h);
+	                trigger(_arg3);
 	                return builder_.Zero();
 	              });
 	            }));
@@ -1024,7 +970,7 @@
 	      ensureStarted();
 	    }
 	
-	    return _ref = {}, _defineProperty(_ref, _fableCore.Symbol.interfaces, ["Fable.Extensions.Future"]), _defineProperty(_ref, "Then", function (f) {
+	    return _ref = {}, _defineProperty(_ref, _fableCore.Symbol.interfaces, ["Fable.Extensions.Future"]), _defineProperty(_ref, "Then", function Then(f) {
 	      ensureStarted();
 	      trigger(f);
 	    }), _ref;
@@ -1069,8 +1015,7 @@
 	                  return function (builder__1) {
 	                    return builder__1.Delay(function (unitVar_2) {
 	                      return builder__1.Bind(f(ar[i]), function (_arg1) {
-	                        var v = _arg1;
-	                        res[i] = v;
+	                        res[i] = _arg1;
 	                        return builder__1.Zero();
 	                      });
 	                    });
@@ -1093,10 +1038,8 @@
 	          return builder_.Delay(function (unitVar) {
 	            var res = new Array(ar.length);
 	            return builder_.Combine(builder_.For(_fableCore.Seq.range(0, ar.length - 1), function (_arg1) {
-	              var i = _arg1;
-	              return builder_.Bind(f(ar[i]), function (_arg2) {
-	                var v = _arg2;
-	                res[i] = v;
+	              return builder_.Bind(f(ar[_arg1]), function (_arg2) {
+	                res[_arg1] = _arg2;
 	                return builder_.Zero();
 	              });
 	            }), builder_.Delay(function (unitVar_1) {
@@ -1112,17 +1055,11 @@
 	    var collect = $exports.collect = function collect(f, l) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          return l.tail == null ? builder_.Return(new _fableCore.List()) : function () {
-	            var xs = l.tail;
-	            var x = l.head;
-	            return builder_.Bind(f(x), function (_arg1) {
-	              var y = _arg1;
-	              return builder_.Bind(collect(f, xs), function (_arg2) {
-	                var ys = _arg2;
-	                return builder_.Return(_fableCore.List.append(y, ys));
-	              });
+	          return l.tail == null ? builder_.Return(new _fableCore.List()) : builder_.Bind(f(l.head), function (_arg1) {
+	            return builder_.Bind(collect(f, l.tail), function (_arg2) {
+	              return builder_.Return(_fableCore.List.append(_arg1, _arg2));
 	            });
-	          }();
+	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
@@ -1130,20 +1067,11 @@
 	    var choose = $exports.choose = function choose(f, l) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          return l.tail == null ? builder_.Return(new _fableCore.List()) : function () {
-	            var xs = l.tail;
-	            var x = l.head;
-	            return builder_.Bind(f(x), function (_arg1) {
-	              var y = _arg1;
-	              return builder_.Bind(choose(f, xs), function (_arg2) {
-	                var ys = _arg2;
-	                return builder_.Return(y != null ? function () {
-	                  var y_1 = y;
-	                  return _fableCore.List.ofArray([y_1], ys);
-	                }() : ys);
-	              });
+	          return l.tail == null ? builder_.Return(new _fableCore.List()) : builder_.Bind(f(l.head), function (_arg1) {
+	            return builder_.Bind(choose(f, l.tail), function (_arg2) {
+	              return builder_.Return(_arg1 != null ? _fableCore.List.ofArray([_arg1], _arg2) : _arg2);
 	            });
-	          }();
+	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
@@ -1151,17 +1079,11 @@
 	    var map = $exports.map = function map(f, l) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          return l.tail == null ? builder_.Return(new _fableCore.List()) : function () {
-	            var xs = l.tail;
-	            var x = l.head;
-	            return builder_.Bind(f(x), function (_arg1) {
-	              var y = _arg1;
-	              return builder_.Bind(map(f, xs), function (_arg2) {
-	                var ys = _arg2;
-	                return builder_.Return(_fableCore.List.ofArray([y], ys));
-	              });
+	          return l.tail == null ? builder_.Return(new _fableCore.List()) : builder_.Bind(f(l.head), function (_arg1) {
+	            return builder_.Bind(map(f, l.tail), function (_arg2) {
+	              return builder_.Return(_fableCore.List.ofArray([_arg1], _arg2));
 	            });
-	          }();
+	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
@@ -1169,19 +1091,11 @@
 	    var foldMap = $exports.foldMap = function foldMap(f, st, l) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          return l.tail == null ? builder_.Return([st, new _fableCore.List()]) : function () {
-	            var xs = l.tail;
-	            var x = l.head;
-	            return builder_.Bind(f(st)(x), function (_arg1) {
-	              var y = _arg1[0];
-	              var st_1 = _arg1[1];
-	              return builder_.Bind(foldMap(f, st_1, xs), function (_arg2) {
-	                var ys = _arg2[1];
-	                var st_2 = _arg2[0];
-	                return builder_.Return([st_2, _fableCore.List.ofArray([y], ys)]);
-	              });
+	          return l.tail == null ? builder_.Return([st, new _fableCore.List()]) : builder_.Bind(f(st)(l.head), function (_arg1) {
+	            return builder_.Bind(foldMap(f, _arg1[1], l.tail), function (_arg2) {
+	              return builder_.Return([_arg2[0], _fableCore.List.ofArray([_arg1[0]], _arg2[1])]);
 	            });
-	          }();
+	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
@@ -1189,14 +1103,9 @@
 	    var fold = $exports.fold = function fold(f, st, l) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          return l.tail == null ? builder_.Return(st) : function () {
-	            var xs = l.tail;
-	            var x = l.head;
-	            return builder_.Bind(f(st)(x), function (_arg1) {
-	              var st_1 = _arg1;
-	              return builder_.ReturnFrom(fold(f, st_1, xs));
-	            });
-	          }();
+	          return l.tail == null ? builder_.Return(st) : builder_.Bind(f(st)(l.head), function (_arg1) {
+	            return builder_.ReturnFrom(fold(f, _arg1, l.tail));
+	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
@@ -1514,9 +1423,9 @@
 	            });
 	        };
 	
-	        Util.ofJson = function ofJson(json) {
-	            return JSON.parse(json, function (k, v) {
-	                if (v != null && (typeof v === "undefined" ? "undefined" : _typeof(v)) === "object" && typeof v.$type === "string") {
+	        Util.ofJson = function ofJson(json, expected) {
+	            var parsed = JSON.parse(json, function (k, v) {
+	                if (v == null) return v;else if ((typeof v === "undefined" ? "undefined" : _typeof(v)) === "object" && typeof v.$type === "string") {
 	                    // Remove generic args and assembly info added by Newtonsoft.Json
 	                    var type = v.$type.replace('+', '.'),
 	                        i = type.indexOf('`');
@@ -1552,9 +1461,12 @@
 	                            return Object.assign(new T(), v);
 	                        }
 	                    }
-	                }
-	                return v;
+	                } else if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:[+-]\d{2}:\d{2}|Z)$/.test(v)) return FDate.parse(v);else return v;
 	            });
+	            if (parsed != null && typeof expected == "function" && !(parsed instanceof expected)) {
+	                throw "JSON is not of type " + expected.name + ": " + json;
+	            }
+	            return parsed;
 	        };
 	
 	        return Util;
@@ -1780,7 +1692,7 @@
 	        FDate.parse = function parse(v, kind) {
 	            var date = v == null ? new Date() : new Date(v);
 	            if (isNaN(date.getTime())) throw "The string is not a valid Date.";
-	            date.kind = kind || DateKind.Local;
+	            date.kind = kind || (typeof v == "string" && v.slice(-1) == "Z" ? DateKind.UTC : DateKind.Local);
 	            return date;
 	        };
 	
@@ -1822,7 +1734,7 @@
 	        };
 	
 	        FDate.timeOfDay = function timeOfDay(d) {
-	            return TimeSpan.create(FDate.hour(d), FDate.minute(d), FDate.second(d));
+	            return TimeSpan.create(0, FDate.hour(d), FDate.minute(d), FDate.second(d), FDate.millisecond(d));
 	        };
 	
 	        FDate.date = function date(d) {
@@ -2062,9 +1974,16 @@
 	                            rep = rep.toExponential(precision);
 	                            break;
 	                        case "A":
-	                            rep = (rep instanceof FMap ? "map " : rep instanceof FSet ? "set " : "") + JSON.stringify(rep, function (k, v) {
-	                                return v && v[Symbol.iterator] && !Array.isArray(v) && isObject(v) ? Array.from(v) : v;
-	                            });
+	                            try {
+	                                rep = (rep instanceof FMap ? "map " : rep instanceof FSet ? "set " : "") + JSON.stringify(rep, function (k, v) {
+	                                    return v && v[Symbol.iterator] && !Array.isArray(v) && isObject(v) ? Array.from(v) : v;
+	                                });
+	                            } catch (err) {
+	                                // Fallback for objects with circular references
+	                                rep = "{" + Object.getOwnPropertyNames(rep).map(function (k) {
+	                                    return k + ": " + String(rep[k]);
+	                                }).join(", ") + "}";
+	                            }
 	                            break;
 	                    }
 	                    var plusPrefix = flags.indexOf("+") >= 0 && parseInt(rep) >= 0;
@@ -2094,7 +2013,8 @@
 	            }
 	
 	            return str.replace(FString.formatRegExp, function (match, idx, pad, format) {
-	                var rep = args[idx];
+	                var rep = args[idx],
+	                    padSymbol = " ";
 	                if (typeof rep === "number") {
 	                    switch ((format || "").substring(0, 1)) {
 	                        case "f":
@@ -2113,6 +2033,16 @@
 	                        case "P":
 	                            rep = (format.length > 1 ? (rep * 100).toFixed(format.substring(1)) : (rep * 100).toFixed(2)) + " %";
 	                            break;
+	                        default:
+	                            var m = /^(0+)(\.0+)?$/.exec(format);
+	                            if (m != null) {
+	                                var decs = 0;
+	                                if (m[2] != null) rep = rep.toFixed(decs = m[2].length - 1);
+	                                pad = "," + (m[1].length + (decs ? decs + 1 : 0)).toString();
+	                                padSymbol = "0";
+	                            } else if (format) {
+	                                rep = format;
+	                            }
 	                    }
 	                } else if (rep instanceof Date) {
 	                    if (format.length === 1) {
@@ -2129,41 +2059,50 @@
 	                            case "t":
 	                                rep = rep.toLocaleTimeString().replace(/:\d\d(?!:)/, "");
 	                                break;
+	                            case "o":
+	                            case "O":
+	                                if (rep.kind === DateKind.Local) {
+	                                    var offset = rep.getTimezoneOffset() * -1;
+	                                    rep = FString.format("{0:yyyy-MM-dd}T{0:HH:mm}:{1:00.000}{2}{3:00}:{4:00}", rep, FDate.second(rep), offset >= 0 ? "+" : "-", ~~(offset / 60), offset % 60);
+	                                } else {
+	                                    rep = rep.toISOString();
+	                                }
 	                        }
+	                    } else {
+	                        rep = format.replace(/\w+/g, function (match2) {
+	                            var rep2 = match2;
+	                            switch (match2.substring(0, 1)) {
+	                                case "y":
+	                                    rep2 = match2.length < 4 ? FDate.year(rep) % 100 : FDate.year(rep);
+	                                    break;
+	                                case "h":
+	                                    rep2 = rep.getHours() > 12 ? FDate.hour(rep) % 12 : FDate.hour(rep);
+	                                    break;
+	                                case "M":
+	                                    rep2 = FDate.month(rep);
+	                                    break;
+	                                case "d":
+	                                    rep2 = FDate.day(rep);
+	                                    break;
+	                                case "H":
+	                                    rep2 = FDate.hour(rep);
+	                                    break;
+	                                case "m":
+	                                    rep2 = FDate.minute(rep);
+	                                    break;
+	                                case "s":
+	                                    rep2 = FDate.second(rep);
+	                                    break;
+	                            }
+	                            if (rep2 !== match2 && rep2 < 10 && match2.length > 1) {
+	                                rep2 = "0" + rep2;
+	                            }
+	                            return rep2;
+	                        });
 	                    }
-	                    rep = format.replace(/\w+/g, function (match2) {
-	                        var rep2 = match2;
-	                        switch (match2.substring(0, 1)) {
-	                            case "y":
-	                                rep2 = match2.length < 4 ? FDate.year(rep) % 100 : FDate.year(rep);
-	                                break;
-	                            case "h":
-	                                rep2 = rep.getHours() > 12 ? FDate.hour(rep) % 12 : FDate.hour(rep);
-	                                break;
-	                            case "M":
-	                                rep2 = FDate.month(rep);
-	                                break;
-	                            case "d":
-	                                rep2 = FDate.day(rep);
-	                                break;
-	                            case "H":
-	                                rep2 = FDate.hour(rep);
-	                                break;
-	                            case "m":
-	                                rep2 = FDate.minute(rep);
-	                                break;
-	                            case "s":
-	                                rep2 = FDate.second(rep);
-	                                break;
-	                        }
-	                        if (rep2 !== match2 && rep2 < 10 && match2.length > 1) {
-	                            rep2 = "0" + rep2;
-	                        }
-	                        return rep2;
-	                    });
 	                }
 	                if (!isNaN(pad = parseInt((pad || "").substring(1)))) {
-	                    rep = FString.padLeft(rep, Math.abs(pad), " ", pad < 0);
+	                    rep = FString.padLeft(rep, Math.abs(pad), padSymbol, pad < 0);
 	                }
 	                return rep;
 	            });
@@ -2275,7 +2214,6 @@
 	
 	    FString.fsFormatRegExp = /(^|[^%])%([0+ ]*)(-?\d+)?(?:\.(\d+))?(\w)/;
 	    FString.formatRegExp = /\{(\d+)(,-?\d+)?(?:\:(.+?))?\}/g;
-	    FString.concat = FString.join;
 	    exports.String = FString;
 	
 	    var FRegExp = function () {
@@ -2851,8 +2789,8 @@
 	            }, Seq.scan(function (tup, x) {
 	                var acc = tup[1];
 	                var k = f(x);
-	                return acc.has(k) ? Tuple(null, acc) : Tuple(x, acc.add(k));
-	            }, Tuple(null, new Set()), xs));
+	                return acc.has(k) ? Tuple(null, acc) : Tuple(x, FSet.add(k, acc));
+	            }, Tuple(null, FSet.create()), xs));
 	        };
 	
 	        Seq.distinct = function distinct(xs) {
@@ -4224,17 +4162,42 @@
 	            return FSet.from(s.comparer, SetTree.add(s.comparer, item, s.tree));
 	        };
 	
+	        FSet.addInPlace = function addInPlace(item, s) {
+	            return s.has(item) ? false : (s.add(item), true);
+	        };
+	
 	        FSet.remove = function remove(item, s) {
 	            return FSet.from(s.comparer, SetTree.remove(s.comparer, item, s.tree));
 	        };
 	
 	        FSet.union = function union(set1, set2) {
-	            if (set1 instanceof FSet && set2 instanceof FSet) {
-	                return set2.tree.Case === "SetEmpty" ? set1 : set1.tree.Case === "SetEmpty" ? set2 : FSet.from(set1.comparer, SetTree.union(set1.comparer, set1.tree, set2.tree));
-	            } else {
-	                return Seq.fold(function (acc, x) {
-	                    acc.add(x);return acc;
-	                }, new Set(set1), set2);
+	            return set2.tree.Case === "SetEmpty" ? set1 : set1.tree.Case === "SetEmpty" ? set2 : FSet.from(set1.comparer, SetTree.union(set1.comparer, set1.tree, set2.tree));
+	        };
+	
+	        FSet.unionInPlace = function unionInPlace(set1, set2) {
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = set2[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var x = _step.value;
+	
+	                    set1.add(x);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
 	            }
 	        };
 	
@@ -4247,23 +4210,67 @@
 	        };
 	
 	        FSet.difference = function difference(set1, set2) {
-	            if (set1 instanceof FSet && set2 instanceof FSet) {
-	                return set1.tree.Case === "SetEmpty" ? set1 : set2.tree.Case === "SetEmpty" ? set1 : FSet.from(set1.comparer, SetTree.diff(set1.comparer, set1.tree, set2.tree));
-	            } else {
-	                return Seq.fold(function (acc, x) {
-	                    acc.delete(x);return acc;
-	                }, new Set(set1), set2);
+	            return set1.tree.Case === "SetEmpty" ? set1 : set2.tree.Case === "SetEmpty" ? set1 : FSet.from(set1.comparer, SetTree.diff(set1.comparer, set1.tree, set2.tree));
+	        };
+	
+	        FSet.differenceInPlace = function differenceInPlace(set1, set2) {
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = set2[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var x = _step2.value;
+	
+	                    set1.delete(x);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
 	            }
 	        };
 	
 	        FSet.intersect = function intersect(set1, set2) {
-	            if (set1 instanceof FSet && set2 instanceof FSet) {
-	                return set2.tree.Case === "SetEmpty" ? set2 : set1.tree.Case === "SetEmpty" ? set1 : FSet.from(set1.comparer, SetTree.intersection(set1.comparer, set1.tree, set2.tree));
-	            } else {
-	                return Seq.fold(function (acc, x) {
-	                    if (!set1.has(x)) acc.delete(x);
-	                    return acc;
-	                }, new Set(set2), set2);
+	            return set2.tree.Case === "SetEmpty" ? set2 : set1.tree.Case === "SetEmpty" ? set1 : FSet.from(set1.comparer, SetTree.intersection(set1.comparer, set1.tree, set2.tree));
+	        };
+	
+	        FSet.intersectInPlace = function intersectInPlace(set1, set2) {
+	            var set2_ = set2 instanceof Set ? set2 : new Set(set2);
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = set1[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var x = _step3.value;
+	
+	                    if (!set2_.has(x)) {
+	                        set1.delete(x);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
 	            }
 	        };
 	
@@ -5682,7 +5689,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(4), __webpack_require__(5), __webpack_require__(6), __webpack_require__(7), __webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(4), __webpack_require__(5), __webpack_require__(6), __webpack_require__(7), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
 	    factory(exports, require("fable-core"), require("./extensions"), require("./errors"), require("./ast"), require("./astops"), require("./tokenizer"), require("./parser"));
 	  } else {
@@ -5810,7 +5817,7 @@
 	  function listsEqual(l1, l2, f) {
 	    var matchValue = [l1, l2];
 	
-	    var $target2 = function () {
+	    var $target2 = function $target2() {
 	      return false;
 	    };
 	
@@ -5844,7 +5851,7 @@
 	  }
 	
 	  function arraysEqual(l1, l2, f) {
-	    var loop = function (i) {
+	    var loop = function loop(i) {
 	      return (i === l1.length ? i === l2.length : false) ? true : (i < l1.length ? i < l2.length : false) ? f(l1[i])(l2[i]) ? loop(i + 1) : false : false;
 	    };
 	
@@ -5854,7 +5861,7 @@
 	  function membersEqual(m1, m2) {
 	    var matchValue = [m1, m2];
 	
-	    var $target2 = function () {
+	    var $target2 = function $target2() {
 	      return false;
 	    };
 	
@@ -5873,19 +5880,8 @@
 	
 	        if (n1 === n2 ? d1.Equals(d2) : false) {
 	          return listsEqual(a1, a2, function (tupledArg) {
-	            var s1 = tupledArg[0];
-	            var b1 = tupledArg[1];
-	            var t1_1 = tupledArg[2];
 	            return function (tupledArg_1) {
-	              var s2 = tupledArg_1[0];
-	              var b2 = tupledArg_1[1];
-	              var t2_1 = tupledArg_1[2];
-	
-	              if (s1 === s2) {
-	                return b1 === b2;
-	              } else {
-	                return false;
-	              }
+	              return tupledArg[0] === tupledArg_1[0] ? tupledArg[1] === tupledArg_1[1] : false;
 	            };
 	          });
 	        } else {
@@ -5919,7 +5915,7 @@
 	  function typesEqual(t1, t2) {
 	    var matchValue = [t1, t2];
 	
-	    var $target7 = function () {
+	    var $target7 = function $target7() {
 	      return false;
 	    };
 	
@@ -6023,13 +6019,12 @@
 	  function getObjectMembers(t) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        var $target2 = function () {
+	        var $target2 = function $target2() {
 	          return builder_.Return(new ObjectMembers("NotAnObject", []));
 	        };
 	
 	        if (t.Case === "Object") {
-	          var o = t.Fields[0];
-	          return builder_.Return(new ObjectMembers("Members", [o.Members]));
+	          return builder_.Return(new ObjectMembers("Members", [t.Fields[0].Members]));
 	        } else {
 	          if (t.Case === "Unit") {
 	            return $target2();
@@ -6049,10 +6044,8 @@
 	                    if (t.Case === "Any") {
 	                      return builder_.Return(new ObjectMembers("SilentError", []));
 	                    } else {
-	                      var f = t.Fields[1];
-	                      return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(f), function (_arg1) {
-	                        var t_1 = _arg1;
-	                        return builder_.ReturnFrom(getObjectMembers(t_1));
+	                      return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(t.Fields[1]), function (_arg1) {
+	                        return builder_.ReturnFrom(getObjectMembers(_arg1));
 	                      });
 	                    }
 	                  }
@@ -6068,21 +6061,21 @@
 	  function unifyTypes(assigns, ts1, ts2) {
 	    var matchValue = [ts1, ts2];
 	
-	    var $target1 = function (t1, t2, ts1_1, ts2_1) {
+	    var $target1 = function $target1(t1, t2, ts1_1, ts2_1) {
 	      return unifyTypes(assigns, ts1_1, ts2_1);
 	    };
 	
-	    var $target2 = function () {
-	      var $target1_1 = function () {
-	        var $target0 = function (t, ts1_1, ts2_1) {
+	    var $target2 = function $target2() {
+	      var $target1_1 = function $target1_1() {
+	        var $target0 = function $target0(t, ts1_1, ts2_1) {
 	          return unifyTypes(assigns, ts1_1, ts2_1);
 	        };
 	
-	        var $target1_1 = function (n, t, ts1_1, ts2_1) {
+	        var $target1_1 = function $target1_1(n, t, ts1_1, ts2_1) {
 	          return unifyTypes(_fableCore.List.ofArray([[n, t]], assigns), ts1_1, ts2_1);
 	        };
 	
-	        var $target5 = function (ts1_1, ts2_1) {
+	        var $target5 = function $target5(ts1_1, ts2_1) {
 	          return function (builder_) {
 	            return builder_.Delay(function (unitVar) {
 	              return builder_.Return(function (res) {
@@ -6251,10 +6244,8 @@
 	            return function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(f1), function (_arg1) {
-	                  var o1 = _arg1;
 	                  return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(f2), function (_arg2) {
-	                    var o2 = _arg2;
-	                    return builder_.ReturnFrom(unifyTypes(assigns, _fableCore.List.ofArray([o1], ts1_1), _fableCore.List.ofArray([o2], ts2_1)));
+	                    return builder_.ReturnFrom(unifyTypes(assigns, _fableCore.List.ofArray([_arg1], ts1_1), _fableCore.List.ofArray([_arg2], ts2_1)));
 	                  });
 	                });
 	              });
@@ -6300,10 +6291,7 @@
 	  function avoidCapture(bound, assigns) {
 	    var renames = _fableCore.List.choose(function (n) {
 	      var assigned = _fableCore.Map.tryFindKey(function (k, v) {
-	        return v.Case === "Parameter" ? function () {
-	          var nn = v.Fields[0];
-	          return n === nn;
-	        }() : false;
+	        return v.Case === "Parameter" ? n === v.Fields[0] : false;
 	      }, assigns);
 	
 	      if (function () {
@@ -6314,17 +6302,15 @@
 	    }, bound);
 	
 	    return [function () {
-	      var folder = function (assigns_1) {
+	      var folder = function folder(assigns_1) {
 	        return function (tupledArg) {
-	          var o = tupledArg[0];
-	          var n = tupledArg[1];
-	          return _fableCore.Map.add(o, new _ast.Type("Parameter", [n]), assigns_1);
+	          return _fableCore.Map.add(tupledArg[0], new _ast.Type("Parameter", [tupledArg[1]]), assigns_1);
 	        };
 	      };
 	
 	      return function (list) {
-	        return _fableCore.Seq.fold(function ($var28, $var29) {
-	          return folder($var28)($var29);
+	        return _fableCore.Seq.fold(function ($var8, $var9) {
+	          return folder($var8)($var9);
 	        }, assigns, list);
 	      };
 	    }()(renames), _fableCore.Map.create(renames, new _fableCore.GenericComparer(function (x, y) {
@@ -6334,51 +6320,31 @@
 	
 	  function substituteMembers(assigns, members) {
 	    return members.map(function (_arg1) {
-	      return _arg1.Case === "Property" ? function () {
-	        var t = _arg1.Fields[1];
-	        var s = _arg1.Fields[2];
-	        var n = _arg1.Fields[0];
-	        var e = _arg1.Fields[4];
-	        var d = _arg1.Fields[3];
-	        return new _ast.Member("Property", [n, substituteTypes(assigns, t), s, d, e]);
-	      }() : function () {
-	        var tp = _arg1.Fields[1];
-	        var t = _arg1.Fields[3];
-	        var n = _arg1.Fields[0];
-	        var e = _arg1.Fields[5];
-	        var d = _arg1.Fields[4];
-	        var ars = _arg1.Fields[2];
-	        var assigns0 = assigns;
-	        var patternInput = avoidCapture(tp, assigns);
-	        var renames = patternInput[1];
-	        var assigns_1 = patternInput[0];
+	      return _arg1.Case === "Property" ? new _ast.Member("Property", [_arg1.Fields[0], substituteTypes(assigns, _arg1.Fields[1]), _arg1.Fields[2], _arg1.Fields[3], _arg1.Fields[4]]) : function () {
+	        var patternInput = avoidCapture(_arg1.Fields[1], assigns);
 	
-	        var tp_1 = _fableCore.List.map(function (tp_1) {
-	          var matchValue = _fableCore.Map.tryFind(tp_1, renames);
+	        var tp = _fableCore.List.map(function (tp) {
+	          var matchValue = _fableCore.Map.tryFind(tp, patternInput[1]);
 	
 	          if (matchValue != null) {
-	            var r = matchValue;
-	            return r;
+	            return matchValue;
 	          } else {
-	            return tp_1;
+	            return tp;
 	          }
-	        }, tp);
+	        }, _arg1.Fields[1]);
 	
 	        var nars = _fableCore.List.map(function (tupledArg) {
-	          var n_1 = tupledArg[0];
-	          var o = tupledArg[1];
-	          var t_1 = tupledArg[2];
-	          return [n_1, o, substituteTypes(assigns_1, t_1)];
-	        }, ars);
+	          return [tupledArg[0], tupledArg[1], substituteTypes(patternInput[0], tupledArg[2])];
+	        }, _arg1.Fields[2]);
 	
-	        return new _ast.Member("Method", [n, tp_1, nars, substituteTypes(assigns_1, t), d, e]);
+	        return new _ast.Member("Method", [_arg1.Fields[0], tp, nars, substituteTypes(patternInput[0], _arg1.Fields[3]), _arg1.Fields[4], _arg1.Fields[5]]);
 	      }();
 	    });
 	  }
 	
 	  function substituteTypes(assigns, t) {
-	    var $target1 = function () {
-	      var $target0 = function () {
+	    var $target1 = function $target1() {
+	      var $target0 = function $target0() {
 	        return t;
 	      };
 	
@@ -6392,48 +6358,38 @@
 	            return $target0();
 	          } else {
 	            if (t.Case === "Function") {
-	              var ts = t.Fields[0];
-	              var t_1 = t.Fields[1];
-	              return new _ast.Type("Function", [_fableCore.List.map(function (t_2) {
-	                return substituteTypes(assigns, t_2);
-	              }, ts), substituteTypes(assigns, t_1)]);
+	              return new _ast.Type("Function", [_fableCore.List.map(function (t_1) {
+	                return substituteTypes(assigns, t_1);
+	              }, t.Fields[0]), substituteTypes(assigns, t.Fields[1])]);
 	            } else {
 	              if (t.Case === "List") {
-	                var t_1 = t.Fields[0];
-	                return new _ast.Type("List", [substituteTypes(assigns, t_1)]);
+	                return new _ast.Type("List", [substituteTypes(assigns, t.Fields[0])]);
 	              } else {
 	                if (t.Case === "Object") {
-	                  var o = t.Fields[0];
-	                  var members = substituteMembers(assigns, o.Members);
+	                  var members = substituteMembers(assigns, t.Fields[0].Members);
 	
 	                  var bound = _fableCore.List.choose(function (_arg2) {
-	                    return _arg2.Case === "Parameter" ? function () {
-	                      var n = _arg2.Fields[0];
-	                      return n;
-	                    }() : null;
-	                  }, o.Typeargs);
+	                    return _arg2.Case === "Parameter" ? _arg2.Fields[0] : null;
+	                  }, t.Fields[0].Typeargs);
 	
 	                  var patternInput = avoidCapture(bound, assigns);
-	                  var assigns_1 = patternInput[0];
 	                  return new _ast.Type("Object", [function () {
 	                    var Typeargs = _fableCore.List.map(function (t_1) {
-	                      return substituteTypes(assigns_1, t_1);
-	                    }, o.Typeargs);
+	                      return substituteTypes(patternInput[0], t_1);
+	                    }, t.Fields[0].Typeargs);
 	
 	                    return new _ast.ObjectType(members, Typeargs);
 	                  }()]);
 	                } else {
 	                  if (t.Case === "Delayed") {
-	                    var _f_;
+	                    var _f;
 	
-	                    var g = t.Fields[0];
-	                    var f = t.Fields[1];
-	                    var f_1 = (_f_ = {}, _defineProperty(_f_, _fableCore.Symbol.interfaces, ["Fable.Extensions.Future"]), _defineProperty(_f_, "Then", function (g_1) {
-	                      f.Then(function (t_1) {
-	                        g_1(substituteTypes(assigns, t_1));
+	                    var f = (_f = {}, _defineProperty(_f, _fableCore.Symbol.interfaces, ["Fable.Extensions.Future"]), _defineProperty(_f, "Then", function Then(g) {
+	                      t.Fields[1].Then(function (t_1) {
+	                        g(substituteTypes(assigns, t_1));
 	                      });
-	                    }), _f_);
-	                    return new _ast.Type("Delayed", [g, f_1]);
+	                    }), _f);
+	                    return new _ast.Type("Delayed", [t.Fields[0], f]);
 	                  } else {
 	                    return $target0();
 	                  }
@@ -6446,10 +6402,7 @@
 	    };
 	
 	    if (t.Case === "Parameter") {
-	      if (function () {
-	        var s = t.Fields[0];
-	        return assigns.has(s);
-	      }()) {
+	      if (assigns.has(t.Fields[0])) {
 	        var s = t.Fields[0];
 	        return assigns.get(s);
 	      } else {
@@ -6462,32 +6415,21 @@
 	
 	  function applyTypes(assigns, t) {
 	    return t.Case === "Delayed" ? function () {
-	      var _f_2;
+	      var _f2;
 	
-	      var g = t.Fields[0];
-	      var f = t.Fields[1];
-	      var f_1 = (_f_2 = {}, _defineProperty(_f_2, _fableCore.Symbol.interfaces, ["Fable.Extensions.Future"]), _defineProperty(_f_2, "Then", function (g_1) {
-	        f.Then(function (t_1) {
-	          g_1(applyTypes(assigns, t_1));
+	      var f = (_f2 = {}, _defineProperty(_f2, _fableCore.Symbol.interfaces, ["Fable.Extensions.Future"]), _defineProperty(_f2, "Then", function Then(g) {
+	        t.Fields[1].Then(function (t_1) {
+	          g(applyTypes(assigns, t_1));
 	        });
-	      }), _f_2);
-	      return new _ast.Type("Delayed", [g, f_1]);
-	    }() : t.Case === "Object" ? function () {
-	      var o = t.Fields[0];
-	      return new _ast.Type("Object", [function () {
-	        var Typeargs = _fableCore.List.map(function (t_1) {
-	          return substituteTypes(assigns, t_1);
-	        }, o.Typeargs);
+	      }), _f2);
+	      return new _ast.Type("Delayed", [t.Fields[0], f]);
+	    }() : t.Case === "Object" ? new _ast.Type("Object", [function () {
+	      var Typeargs = _fableCore.List.map(function (t_1) {
+	        return substituteTypes(assigns, t_1);
+	      }, t.Fields[0].Typeargs);
 	
-	        return new _ast.ObjectType(substituteMembers(assigns, o.Members), Typeargs);
-	      }()]);
-	    }() : function () {
-	      var t_1 = t;
-	      return _fableCore.Seq.toList(assigns).tail == null;
-	    }() ? function () {
-	      var t_1 = t;
-	      return t_1;
-	    }() : t.Case === "Any" ? new _ast.Type("Any", []) : function () {
+	      return new _ast.ObjectType(substituteMembers(assigns, t.Fields[0].Members), Typeargs);
+	    }()]) : _fableCore.Seq.toList(assigns).tail == null ? t : t.Case === "Any" ? new _ast.Type("Any", []) : function () {
 	      _extensions.Log.error("typechecker", "Invalid type application %O with %O", t, Array.from(assigns));
 	
 	      throw "Invalid type application";
@@ -6497,47 +6439,30 @@
 	  function typeCheckExpr(ctx, ctxTyp, res, expr) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        var matchValue = expr.Expr;
-	
-	        var $target4 = function () {
-	          return matchValue.Case === "Variable" ? function () {
-	            var v = matchValue.Fields[0];
-	            return builder_.Return([function () {
-	              var Expr = new _ast.ExprKind("Variable", [v]);
-	              var Type = new _ast.Type("Any", []);
-	              return new _ast.Expr(Expr, expr.Range, Type);
-	            }(), addError(_errors.TypeChecker.variableNotInScope(expr.Range, v.Name), res)]);
-	          }() : matchValue.Case === "Number" ? function () {
-	            var n = matchValue.Fields[0];
-	            return builder_.Return([function () {
-	              var Expr = new _ast.ExprKind("Number", [n]);
-	              var Type = new _ast.Type("Primitive", ["num"]);
-	              return new _ast.Expr(Expr, expr.Range, Type);
-	            }(), res]);
-	          }() : matchValue.Case === "String" ? function () {
-	            var s = matchValue.Fields[0];
-	            return builder_.Return([function () {
-	              var Expr = new _ast.ExprKind("String", [s]);
-	              var Type = new _ast.Type("Primitive", ["string"]);
-	              return new _ast.Expr(Expr, expr.Range, Type);
-	            }(), res]);
-	          }() : matchValue.Case === "Boolean" ? function () {
-	            var b = matchValue.Fields[0];
-	            return builder_.Return([function () {
-	              var Expr = new _ast.ExprKind("Boolean", [b]);
-	              var Type = new _ast.Type("Primitive", ["bool"]);
-	              return new _ast.Expr(Expr, expr.Range, Type);
-	            }(), res]);
-	          }() : matchValue.Case === "Function" ? function () {
-	            var n = matchValue.Fields[0];
-	            var e = matchValue.Fields[1];
-	
+	        var $target4 = function $target4() {
+	          return expr.Expr.Case === "Variable" ? builder_.Return([function () {
+	            var Expr = new _ast.ExprKind("Variable", [expr.Expr.Fields[0]]);
+	            var Type = new _ast.Type("Any", []);
+	            return new _ast.Expr(Expr, expr.Range, Type);
+	          }(), addError(_errors.TypeChecker.variableNotInScope(expr.Range, expr.Expr.Fields[0].Name), res)]) : expr.Expr.Case === "Number" ? builder_.Return([function () {
+	            var Expr = new _ast.ExprKind("Number", [expr.Expr.Fields[0]]);
+	            var Type = new _ast.Type("Primitive", ["num"]);
+	            return new _ast.Expr(Expr, expr.Range, Type);
+	          }(), res]) : expr.Expr.Case === "String" ? builder_.Return([function () {
+	            var Expr = new _ast.ExprKind("String", [expr.Expr.Fields[0]]);
+	            var Type = new _ast.Type("Primitive", ["string"]);
+	            return new _ast.Expr(Expr, expr.Range, Type);
+	          }(), res]) : expr.Expr.Case === "Boolean" ? builder_.Return([function () {
+	            var Expr = new _ast.ExprKind("Boolean", [expr.Expr.Fields[0]]);
+	            var Type = new _ast.Type("Primitive", ["bool"]);
+	            return new _ast.Expr(Expr, expr.Range, Type);
+	          }(), res]) : expr.Expr.Case === "Function" ? function () {
 	            var varTy = function () {
-	              var $var30 = ctxTyp;
+	              var $var10 = ctxTyp;
 	
-	              if ($var30 != null) {
+	              if ($var10 != null) {
 	                return function (_arg1) {
-	                  var $target1 = function () {
+	                  var $target1 = function $target1() {
 	                    return null;
 	                  };
 	
@@ -6555,105 +6480,78 @@
 	                  } else {
 	                    return $target1();
 	                  }
-	                }($var30);
+	                }($var10);
 	              } else {
-	                return $var30;
+	                return $var10;
 	              }
 	            }();
 	
 	            var varTy_1 = varTy != null ? varTy : new _ast.Type("Any", []);
 	
-	            _extensions.Log.trace("typechecker", "function: '%s -> ...' in context: %O", n.Name, varTy_1);
+	            _extensions.Log.trace("typechecker", "function: '%s -> ...' in context: %O", expr.Expr.Fields[0].Name, varTy_1);
 	
-	            return builder_.Bind(typeCheckExpr(addVariable(n.Name, varTy_1, ctx), null, res, e), function (_arg2) {
-	              var res_1 = _arg2[1];
-	              var e_1 = _arg2[0];
+	            return builder_.Bind(typeCheckExpr(addVariable(expr.Expr.Fields[0].Name, varTy_1, ctx), null, res, expr.Expr.Fields[1]), function (_arg2) {
 	              return builder_.Return([function () {
-	                var Expr = new _ast.ExprKind("Function", [n, e_1]);
-	                var Type = new _ast.Type("Function", [_fableCore.List.ofArray([varTy_1]), e_1.Type]);
+	                var Expr = new _ast.ExprKind("Function", [expr.Expr.Fields[0], _arg2[0]]);
+	                var Type = new _ast.Type("Function", [_fableCore.List.ofArray([varTy_1]), _arg2[0].Type]);
 	                return new _ast.Expr(Expr, expr.Range, Type);
-	              }(), res_1]);
+	              }(), _arg2[1]]);
 	            });
-	          }() : matchValue.Case === "List" ? function () {
-	            var els = matchValue.Fields[0];
-	            return builder_.Bind(function () {
-	              var f = function () {
-	                var ctxTyp_1 = null;
-	                return function (res_1) {
-	                  return function (expr_1) {
-	                    return typeCheckExpr(ctx, ctxTyp_1, res_1, expr_1);
-	                  };
+	          }() : expr.Expr.Case === "List" ? builder_.Bind(function () {
+	            var f = function () {
+	              var ctxTyp_1 = null;
+	              return function (res_1) {
+	                return function (expr_1) {
+	                  return typeCheckExpr(ctx, ctxTyp_1, res_1, expr_1);
 	                };
-	              }();
-	
-	              return function (l) {
-	                return _extensions.Async.foldMap(f, res, l);
 	              };
-	            }()(els), function (_arg3) {
-	              var res_1 = _arg3[0];
-	              var els_1 = _arg3[1];
-	              var tys = new _fableCore.List();
-	              return builder_.Combine(builder_.For(els_1, function (_arg4) {
-	                var el = _arg4;
+	            }();
 	
-	                var known = _fableCore.Seq.exists(function () {
-	                  var t1 = el.Type;
-	                  return function (t2) {
-	                    return typesEqual(t1, t2);
-	                  };
-	                }(), tys);
+	            return function (l) {
+	              return _extensions.Async.foldMap(f, res, l);
+	            };
+	          }()(expr.Expr.Fields[0]), function (_arg3) {
+	            var tys = new _fableCore.List();
+	            return builder_.Combine(builder_.For(_arg3[1], function (_arg4) {
+	              var known = _fableCore.Seq.exists(function (t2) {
+	                return typesEqual(_arg4.Type, t2);
+	              }, tys);
 	
-	                if (!known) {
-	                  tys = _fableCore.List.ofArray([el.Type], tys);
-	                  return builder_.Zero();
-	                } else {
-	                  return builder_.Zero();
-	                }
-	              }), builder_.Delay(function (unitVar_1) {
-	                var patternInput = tys.tail != null ? tys.tail.tail == null ? function () {
-	                  var ty = tys.head;
-	                  return [ty, res_1];
-	                }() : function () {
-	                  var ty = tys.head;
-	                  return [new _ast.Type("Any", []), res_1];
-	                }() : [new _ast.Type("Any", []), res_1];
-	                var ty = patternInput[0];
-	                var res_2 = patternInput[1];
-	                return builder_.Return([function () {
-	                  var Expr = new _ast.ExprKind("List", [els_1]);
-	                  var Type = new _ast.Type("List", [ty]);
-	                  return new _ast.Expr(Expr, expr.Range, Type);
-	                }(), res_2]);
-	              }));
-	            });
-	          }() : matchValue.Case === "Property" ? function () {
-	            var name = matchValue.Fields[1];
-	            var e = matchValue.Fields[0];
+	              if (!known) {
+	                tys = _fableCore.List.ofArray([_arg4.Type], tys);
+	                return builder_.Zero();
+	              } else {
+	                return builder_.Zero();
+	              }
+	            }), builder_.Delay(function (unitVar_1) {
+	              var patternInput = tys.tail != null ? tys.tail.tail == null ? function () {
+	                var ty = tys.head;
+	                return [ty, _arg3[0]];
+	              }() : function () {
+	                var ty = tys.head;
+	                return [new _ast.Type("Any", []), _arg3[0]];
+	              }() : [new _ast.Type("Any", []), _arg3[0]];
+	              return builder_.Return([function () {
+	                var Expr = new _ast.ExprKind("List", [_arg3[1]]);
+	                var Type = new _ast.Type("List", [patternInput[0]]);
+	                return new _ast.Expr(Expr, expr.Range, Type);
+	              }(), patternInput[1]]);
+	            }));
+	          }) : expr.Expr.Case === "Property" ? function () {
+	            _extensions.Log.trace("typechecker", "checking access %s", expr.Expr.Fields[1].Name);
 	
-	            _extensions.Log.trace("typechecker", "checking access %s", name.Name);
+	            return builder_.Bind(typeCheckExpr(ctx, null, res, expr.Expr.Fields[0]), function (_arg5) {
+	              return builder_.Bind(getObjectMembers(_arg5[0].Type), function (_arg6) {
+	                _extensions.Log.trace("typechecker", "checked access %s", expr.Expr.Fields[1].Name);
 	
-	            return builder_.Bind(typeCheckExpr(ctx, null, res, e), function (_arg5) {
-	              var typed = _arg5[0];
-	              var res_1 = _arg5[1];
-	              return builder_.Bind(getObjectMembers(typed.Type), function (_arg6) {
-	                var members = _arg6;
-	
-	                _extensions.Log.trace("typechecker", "checked access %s", name.Name);
-	
-	                var patternInput = members.Case === "SilentError" ? [new _ast.Type("Any", []), res_1] : members.Case === "NotAnObject" ? [new _ast.Type("Any", []), addError(_errors.TypeChecker.notAnObject(e.Range, typed.Type), res_1)] : function () {
-	                  var members_1 = members.Fields[0];
-	
-	                  var matchValue_1 = _fableCore.Seq.tryPick(function (_arg7) {
-	                    var $target1 = function () {
+	                var patternInput = _arg6.Case === "SilentError" ? [new _ast.Type("Any", []), _arg5[1]] : _arg6.Case === "NotAnObject" ? [new _ast.Type("Any", []), addError(_errors.TypeChecker.notAnObject(expr.Expr.Fields[0].Range, _arg5[0].Type), _arg5[1])] : function () {
+	                  var matchValue = _fableCore.Seq.tryPick(function (_arg7) {
+	                    var $target1 = function $target1() {
 	                      return null;
 	                    };
 	
 	                    if (_arg7.Case === "Property") {
-	                      if (function () {
-	                        var r = _arg7.Fields[1];
-	                        var n = _arg7.Fields[0];
-	                        return n === name.Name;
-	                      }()) {
+	                      if (_arg7.Fields[0] === expr.Expr.Fields[1].Name) {
 	                        var n = _arg7.Fields[0];
 	                        var r = _arg7.Fields[1];
 	                        return r;
@@ -6663,246 +6561,196 @@
 	                    } else {
 	                      return $target1();
 	                    }
-	                  }, members_1);
+	                  }, _arg6.Fields[0]);
 	
-	                  if (matchValue_1 != null) {
-	                    var resTyp = matchValue_1;
-	                    return [resTyp, res_1];
+	                  if (matchValue != null) {
+	                    return [matchValue, _arg5[1]];
 	                  } else {
-	                    return [new _ast.Type("Any", []), addError(_errors.TypeChecker.propertyMissing(name.Range, name.Name, members_1), res_1)];
+	                    return [new _ast.Type("Any", []), addError(_errors.TypeChecker.propertyMissing(expr.Expr.Fields[1].Range, expr.Expr.Fields[1].Name, _arg6.Fields[0]), _arg5[1])];
 	                  }
 	                }();
-	                var resTyp = patternInput[0];
-	                var res_2 = patternInput[1];
 	                return builder_.Return([function () {
-	                  var Expr = new _ast.ExprKind("Property", [typed, name]);
-	                  return new _ast.Expr(Expr, expr.Range, resTyp);
-	                }(), res_2]);
+	                  var Expr = new _ast.ExprKind("Property", [_arg5[0], expr.Expr.Fields[1]]);
+	                  return new _ast.Expr(Expr, expr.Range, patternInput[0]);
+	                }(), patternInput[1]]);
 	              });
 	            });
-	          }() : matchValue.Case === "Call" ? function () {
-	            var name = matchValue.Fields[1];
-	            var e = matchValue.Fields[0];
-	            var args = matchValue.Fields[2];
-	            return builder_.Bind(typeCheckExpr(ctx, null, res, e), function (_arg8) {
-	              var typed = _arg8[0];
-	              var res_1 = _arg8[1];
-	              return builder_.Bind(getObjectMembers(typed.Type), function (_arg9) {
-	                var members = _arg9;
-	
-	                var patternInput = function () {
-	                  var pb = _fableCore.Seq.toList(_fableCore.Seq.takeWhile(function (arg) {
-	                    return function () {
-	                      return arg.Name == null;
-	                    }();
-	                  }, args));
-	
-	                  var nb = _fableCore.Seq.toList(_fableCore.Seq.skipWhile(function (arg) {
-	                    return function () {
-	                      return arg.Name == null;
-	                    }();
-	                  }, args));
-	
-	                  return [Array.from(_fableCore.List.map(function (arg) {
-	                    return arg.Value;
-	                  }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
-	                    var $var31 = arg.Name;
-	
-	                    if ($var31 != null) {
-	                      return function (n) {
-	                        return [n.Name, arg.Value];
-	                      }($var31);
-	                    } else {
-	                      return $var31;
-	                    }
-	                  }, nb), new _fableCore.GenericComparer(function (x, y) {
-	                    return x < y ? -1 : x > y ? 1 : 0;
-	                  })), function () {
-	                    var matchValue_1 = _fableCore.Seq.tryFind(function (arg) {
-	                      return function () {
-	                        return arg.Name == null;
-	                      }();
-	                    }, nb);
-	
-	                    if (matchValue_1 != null) {
-	                      var arg = matchValue_1;
-	                      return addError(_errors.TypeChecker.nameBasedParamMustBeLast(arg.Value.Range), res_1);
-	                    } else {
-	                      return res_1;
-	                    }
-	                  }()];
-	                }();
-	
-	                var res_2 = patternInput[2];
-	                var positionBased = patternInput[0];
-	                var nameBased = patternInput[1];
-	                var noRange = new _ast.Range(0, 0);
-	
-	                var checkArguments = function (pars) {
+	          }() : expr.Expr.Case === "Call" ? builder_.Bind(typeCheckExpr(ctx, null, res, expr.Expr.Fields[0]), function (_arg8) {
+	            return builder_.Bind(getObjectMembers(_arg8[0].Type), function (_arg9) {
+	              var patternInput = function () {
+	                var pb = _fableCore.Seq.toList(_fableCore.Seq.takeWhile(function (arg) {
 	                  return function () {
-	                    var f = function (res_3) {
-	                      return function (tupledArg) {
-	                        var index = tupledArg[0];
-	                        var _arg1 = tupledArg[1];
-	                        var typ = _arg1[2];
-	                        var optional = _arg1[1];
-	                        var name_1 = _arg1[0];
-	                        return function (builder__1) {
-	                          return builder__1.Delay(function (unitVar_1) {
-	                            var arg = index < positionBased.length ? positionBased[index] : _fableCore.Map.tryFind(name_1, nameBased);
+	                    return arg.Name == null;
+	                  }();
+	                }, expr.Expr.Fields[2]));
 	
-	                            if (arg == null) {
-	                              if (optional) {
-	                                var v = new _ast.Expr(new _ast.ExprKind("Null", []), noRange, typ);
-	                                return builder__1.Return([new _ast.Argument(new _ast.Name(name_1, noRange), v), res_3]);
-	                              } else {
-	                                var v = new _ast.Expr(new _ast.ExprKind("Empty", []), noRange, typ);
-	                                return builder__1.Return([new _ast.Argument(new _ast.Name(name_1, noRange), v), res_3]);
-	                              }
+	                var nb = _fableCore.Seq.toList(_fableCore.Seq.skipWhile(function (arg) {
+	                  return function () {
+	                    return arg.Name == null;
+	                  }();
+	                }, expr.Expr.Fields[2]));
+	
+	                return [Array.from(_fableCore.List.map(function (arg) {
+	                  return arg.Value;
+	                }, pb)), _fableCore.Map.create(_fableCore.List.choose(function (arg) {
+	                  var $var11 = arg.Name;
+	
+	                  if ($var11 != null) {
+	                    return function (n) {
+	                      return [n.Name, arg.Value];
+	                    }($var11);
+	                  } else {
+	                    return $var11;
+	                  }
+	                }, nb), new _fableCore.GenericComparer(function (x, y) {
+	                  return x < y ? -1 : x > y ? 1 : 0;
+	                })), function () {
+	                  var matchValue = _fableCore.Seq.tryFind(function (arg) {
+	                    return function () {
+	                      return arg.Name == null;
+	                    }();
+	                  }, nb);
+	
+	                  if (matchValue != null) {
+	                    return addError(_errors.TypeChecker.nameBasedParamMustBeLast(matchValue.Value.Range), _arg8[1]);
+	                  } else {
+	                    return _arg8[1];
+	                  }
+	                }()];
+	              }();
+	
+	              var noRange = new _ast.Range(0, 0);
+	
+	              var checkArguments = function checkArguments(pars) {
+	                return function () {
+	                  var f = function f(res_1) {
+	                    return function (tupledArg) {
+	                      return function (builder__1) {
+	                        return builder__1.Delay(function (unitVar_1) {
+	                          var arg = tupledArg[0] < patternInput[0].length ? patternInput[0][tupledArg[0]] : _fableCore.Map.tryFind(tupledArg[1][0], patternInput[1]);
+	
+	                          if (arg == null) {
+	                            if (tupledArg[1][1]) {
+	                              var v = new _ast.Expr(new _ast.ExprKind("Null", []), noRange, tupledArg[1][2]);
+	                              return builder__1.Return([new _ast.Argument(new _ast.Name(tupledArg[1][0], noRange), v), res_1]);
 	                            } else {
-	                              var arg_1 = arg;
-	                              return builder__1.Bind(typeCheckExpr(ctx, typ, res_3, arg_1), function (_arg10) {
-	                                var t = _arg10[0];
-	                                var res_4 = _arg10[1];
-	                                return builder__1.Return([new _ast.Argument(new _ast.Name(name_1, arg_1.Range), t), res_4]);
-	                              });
+	                              var v = new _ast.Expr(new _ast.ExprKind("Empty", []), noRange, tupledArg[1][2]);
+	                              return builder__1.Return([new _ast.Argument(new _ast.Name(tupledArg[1][0], noRange), v), res_1]);
 	                            }
-	                          });
-	                        }(_fableCore.defaultAsyncBuilder);
-	                      };
-	                    };
-	
-	                    return function (l) {
-	                      return _extensions.Async.foldMap(f, res_2, l);
-	                    };
-	                  }()(_fableCore.List.mapIndexed(function (i, p) {
-	                    return [i, p];
-	                  }, pars));
-	                };
-	
-	                return builder_.Bind(function (builder__1) {
-	                  return builder__1.Delay(function (unitVar_1) {
-	                    return members.Case === "SilentError" ? builder__1.Return([new _ast.Type("Any", []), new _fableCore.List(), res_2]) : members.Case === "NotAnObject" ? builder__1.Return([new _ast.Type("Any", []), new _fableCore.List(), addError(_errors.TypeChecker.notAnObject(e.Range, typed.Type), res_2)]) : function () {
-	                      var members_1 = members.Fields[0];
-	
-	                      var matchValue_1 = _fableCore.Seq.tryPick(function (_arg11) {
-	                        var $target1 = function () {
-	                          return null;
-	                        };
-	
-	                        if (_arg11.Case === "Method") {
-	                          if (function () {
-	                            var tp = _arg11.Fields[1];
-	                            var r = _arg11.Fields[3];
-	                            var n = _arg11.Fields[0];
-	                            var args_1 = _arg11.Fields[2];
-	                            return n === name.Name;
-	                          }()) {
-	                            var args_1 = _arg11.Fields[2];
-	                            var n = _arg11.Fields[0];
-	                            var r = _arg11.Fields[3];
-	                            var tp = _arg11.Fields[1];
-	                            return [tp, r, args_1];
 	                          } else {
-	                            return $target1();
+	                            return builder__1.Bind(typeCheckExpr(ctx, tupledArg[1][2], res_1, arg), function (_arg10) {
+	                              return builder__1.Return([new _ast.Argument(new _ast.Name(tupledArg[1][0], arg.Range), _arg10[0]), _arg10[1]]);
+	                            });
 	                          }
+	                        });
+	                      }(_fableCore.defaultAsyncBuilder);
+	                    };
+	                  };
+	
+	                  return function (l) {
+	                    return _extensions.Async.foldMap(f, patternInput[2], l);
+	                  };
+	                }()(_fableCore.List.mapIndexed(function (i, p) {
+	                  return [i, p];
+	                }, pars));
+	              };
+	
+	              return builder_.Bind(function (builder__1) {
+	                return builder__1.Delay(function (unitVar_1) {
+	                  return _arg9.Case === "SilentError" ? builder__1.Return([new _ast.Type("Any", []), new _fableCore.List(), patternInput[2]]) : _arg9.Case === "NotAnObject" ? builder__1.Return([new _ast.Type("Any", []), new _fableCore.List(), addError(_errors.TypeChecker.notAnObject(expr.Expr.Fields[0].Range, _arg8[0].Type), patternInput[2])]) : function () {
+	                    var matchValue = _fableCore.Seq.tryPick(function (_arg11) {
+	                      var $target1 = function $target1() {
+	                        return null;
+	                      };
+	
+	                      if (_arg11.Case === "Method") {
+	                        if (_arg11.Fields[0] === expr.Expr.Fields[1].Name) {
+	                          var args = _arg11.Fields[2];
+	                          var n = _arg11.Fields[0];
+	                          var r = _arg11.Fields[3];
+	                          var tp = _arg11.Fields[1];
+	                          return [tp, r, args];
 	                        } else {
 	                          return $target1();
 	                        }
-	                      }, members_1);
-	
-	                      if (matchValue_1 != null) {
-	                        var tp = matchValue_1[0];
-	                        var resTyp = matchValue_1[1];
-	                        var pars = matchValue_1[2];
-	                        return builder__1.Bind(checkArguments(pars), function (_arg12) {
-	                          var typedArgs = _arg12[1];
-	                          var res_3 = _arg12[0];
-	
-	                          var typedArgs_1 = _fableCore.List.map(function (tupledArg) {
-	                            var _arg2 = tupledArg[0];
-	                            var ta = tupledArg[1];
-	                            var n = _arg2[0];
-	                            return new _ast.Argument(new _ast.Name(n, ta.Value.Range), ta.Value);
-	                          }, _fableCore.Seq.toList(_fableCore.Seq.zip(pars, typedArgs)));
-	
-	                          var parTys = _fableCore.List.map(function (tupledArg) {
-	                            var _arg3 = tupledArg[0];
-	                            var _arg4 = tupledArg[1];
-	                            var t = tupledArg[2];
-	                            return t;
-	                          }, pars);
-	
-	                          var argTys = _fableCore.List.map(function (a) {
-	                            return a.Value.Type;
-	                          }, typedArgs_1);
-	
-	                          _extensions.Log.trace("typechecker", "unifying %s: pars: %O, args: %O", name.Name, Array.from(parTys), Array.from(argTys));
-	
-	                          return builder__1.Bind(unifyTypes(new _fableCore.List(), parTys, argTys), function (_arg13) {
-	                            var unifyFunc = _arg13;
-	                            var patternInput_1 = unifyFunc(res_3)(name.Range);
-	                            var res_4 = patternInput_1[1];
-	                            var assigns = patternInput_1[0];
-	
-	                            _extensions.Log.trace("typechecker", "call %s: tyargs: %s, assigns: %O", name.Name, _fableCore.String.concat(",", tp), Array.from(assigns));
-	
-	                            var resTyp_1 = applyTypes(_fableCore.Map.create(assigns, new _fableCore.GenericComparer(function (x, y) {
-	                              return x < y ? -1 : x > y ? 1 : 0;
-	                            })), resTyp);
-	
-	                            _extensions.Log.trace("typechecker", "call %s: result type: %O", name.Name, resTyp_1);
-	
-	                            return builder__1.Return([resTyp_1, typedArgs_1, res_4]);
-	                          });
-	                        });
 	                      } else {
-	                        var res_3 = addError(_errors.TypeChecker.methodMissing(name.Range, name.Name, members_1), res_2);
-	                        return builder__1.Return([new _ast.Type("Any", []), new _fableCore.List(), res_3]);
+	                        return $target1();
 	                      }
-	                    }();
-	                  });
-	                }(_fableCore.defaultAsyncBuilder), function (_arg14) {
-	                  var typedArgs = _arg14[1];
-	                  var resTyp = _arg14[0];
-	                  var res_3 = _arg14[2];
-	                  return builder_.Return([function () {
-	                    var Expr = new _ast.ExprKind("Call", [typed, name, typedArgs]);
-	                    return new _ast.Expr(Expr, expr.Range, resTyp);
-	                  }(), res_3]);
+	                    }, _arg9.Fields[0]);
+	
+	                    if (matchValue != null) {
+	                      var tp = matchValue[0];
+	                      var resTyp = matchValue[1];
+	                      var pars = matchValue[2];
+	                      return builder__1.Bind(checkArguments(pars), function (_arg12) {
+	                        var typedArgs = _fableCore.List.map(function (tupledArg) {
+	                          return new _ast.Argument(new _ast.Name(tupledArg[0][0], tupledArg[1].Value.Range), tupledArg[1].Value);
+	                        }, _fableCore.Seq.toList(_fableCore.Seq.zip(pars, _arg12[1])));
+	
+	                        var parTys = _fableCore.List.map(function (tupledArg) {
+	                          return tupledArg[2];
+	                        }, pars);
+	
+	                        var argTys = _fableCore.List.map(function (a) {
+	                          return a.Value.Type;
+	                        }, typedArgs);
+	
+	                        _extensions.Log.trace("typechecker", "unifying %s: pars: %O, args: %O", expr.Expr.Fields[1].Name, Array.from(parTys), Array.from(argTys));
+	
+	                        return builder__1.Bind(unifyTypes(new _fableCore.List(), parTys, argTys), function (_arg13) {
+	                          var patternInput_1 = _arg13(_arg12[0])(expr.Expr.Fields[1].Range);
+	
+	                          _extensions.Log.trace("typechecker", "call %s: tyargs: %s, assigns: %O", expr.Expr.Fields[1].Name, _fableCore.String.join(",", tp), Array.from(patternInput_1[0]));
+	
+	                          var resTyp_1 = applyTypes(_fableCore.Map.create(patternInput_1[0], new _fableCore.GenericComparer(function (x, y) {
+	                            return x < y ? -1 : x > y ? 1 : 0;
+	                          })), resTyp);
+	
+	                          _extensions.Log.trace("typechecker", "call %s: result type: %O", expr.Expr.Fields[1].Name, resTyp_1);
+	
+	                          return builder__1.Return([resTyp_1, typedArgs, patternInput_1[1]]);
+	                        });
+	                      });
+	                    } else {
+	                      var res_1 = addError(_errors.TypeChecker.methodMissing(expr.Expr.Fields[1].Range, expr.Expr.Fields[1].Name, _arg9.Fields[0]), patternInput[2]);
+	                      return builder__1.Return([new _ast.Type("Any", []), new _fableCore.List(), res_1]);
+	                    }
+	                  }();
 	                });
+	              }(_fableCore.defaultAsyncBuilder), function (_arg14) {
+	                return builder_.Return([function () {
+	                  var Expr = new _ast.ExprKind("Call", [_arg8[0], expr.Expr.Fields[1], _arg14[1]]);
+	                  return new _ast.Expr(Expr, expr.Range, _arg14[0]);
+	                }(), _arg14[2]]);
 	              });
 	            });
-	          }() : function () {
+	          }) : function () {
 	            throw ["c:\\tomas\\public\\thegamma\\thegamma-script\\src\\thegamma\\typechecker.fs", 154, 8];
 	          }();
 	        };
 	
-	        if (matchValue.Case === "Null") {
+	        if (expr.Expr.Case === "Null") {
 	          return builder_.Return(function () {
 	            throw "Unexpected null in source code.";
 	          }());
 	        } else {
-	          if (matchValue.Case === "Unit") {
+	          if (expr.Expr.Case === "Unit") {
 	            return builder_.Return([function () {
 	              var Expr = new _ast.ExprKind("Unit", []);
 	              var Type = new _ast.Type("Unit", []);
 	              return new _ast.Expr(Expr, expr.Range, Type);
 	            }(), res]);
 	          } else {
-	            if (matchValue.Case === "Empty") {
+	            if (expr.Expr.Case === "Empty") {
 	              return builder_.Return([function () {
 	                var Expr = new _ast.ExprKind("Empty", []);
 	                var Type = new _ast.Type("Any", []);
 	                return new _ast.Expr(Expr, expr.Range, Type);
 	              }(), res]);
 	            } else {
-	              if (matchValue.Case === "Variable") {
-	                if (function () {
-	                  var v = matchValue.Fields[0];
-	                  return ctx.Variables.has(v.Name);
-	                }()) {
-	                  var v = matchValue.Fields[0];
+	              if (expr.Expr.Case === "Variable") {
+	                if (ctx.Variables.has(expr.Expr.Fields[0].Name)) {
+	                  var v = expr.Expr.Fields[0];
 	                  return builder_.Return([function () {
 	                    var Expr = new _ast.ExprKind("Variable", [v]);
 	                    var Type = ctx.Variables.get(v.Name);
@@ -6929,12 +6777,8 @@
 	          var cmds_1 = cmds.tail;
 	          var expr = cmds.head.Command.Fields[0];
 	          return builder_.Bind(typeCheckExpr(ctx, null, res, expr), function (_arg3) {
-	            var typed = _arg3[0];
-	            var res_1 = _arg3[1];
-	            return builder_.Bind(typeCheckCmd(ctx, res_1, cmds_1), function (_arg4) {
-	              var res_2 = _arg4[1];
-	              var cmds_2 = _arg4[0];
-	              return builder_.Return([_fableCore.List.ofArray([new _ast.Command(new _ast.CommandKind("Expr", [typed]), cmd.Range)], cmds_2), res_2]);
+	            return builder_.Bind(typeCheckCmd(ctx, _arg3[1], cmds_1), function (_arg4) {
+	              return builder_.Return([_fableCore.List.ofArray([new _ast.Command(new _ast.CommandKind("Expr", [_arg3[0]]), cmd.Range)], _arg4[0]), _arg4[1]]);
 	            });
 	          });
 	        }() : function () {
@@ -6943,12 +6787,8 @@
 	          var expr = cmds.head.Command.Fields[1];
 	          var name = cmds.head.Command.Fields[0];
 	          return builder_.Bind(typeCheckExpr(ctx, null, res, expr), function (_arg1) {
-	            var typed = _arg1[0];
-	            var res_1 = _arg1[1];
-	            return builder_.Bind(typeCheckCmd(addVariable(name.Name, typed.Type, ctx), res_1, cmds_1), function (_arg2) {
-	              var res_2 = _arg2[1];
-	              var cmds_2 = _arg2[0];
-	              return builder_.Return([_fableCore.List.ofArray([new _ast.Command(new _ast.CommandKind("Let", [name, typed]), cmd.Range)], cmds_2), res_2]);
+	            return builder_.Bind(typeCheckCmd(addVariable(name.Name, _arg1[0].Type, ctx), _arg1[1], cmds_1), function (_arg2) {
+	              return builder_.Return([_fableCore.List.ofArray([new _ast.Command(new _ast.CommandKind("Let", [name, _arg1[0]]), cmd.Range)], _arg2[0]), _arg2[1]]);
 	            });
 	          });
 	        }();
@@ -6960,9 +6800,7 @@
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        return builder_.Bind(typeCheckCmd(ctx, res, prog.Body), function (_arg1) {
-	          var res_1 = _arg1[1];
-	          var cmds = _arg1[0];
-	          return builder_.Return([new _ast.Program(cmds, prog.Range), res_1]);
+	          return builder_.Return([new _ast.Program(_arg1[0], prog.Range), _arg1[1]]);
 	        });
 	      });
 	    }(_fableCore.defaultAsyncBuilder);
@@ -6985,12 +6823,11 @@
 	  }
 	
 	  function mapExprRanges(f, expr) {
-	    var matchValue = expr.Expr;
-	    var activePatternResult112649 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	    var activePatternResult4889 = (0, _astops.$ExprLeaf$ExprNode$)(expr.Expr);
 	
-	    if (activePatternResult112649.Case === "Choice2Of2") {
-	      var es = activePatternResult112649.Fields[0][0];
-	      var ns = activePatternResult112649.Fields[0][1];
+	    if (activePatternResult4889.Case === "Choice2Of2") {
+	      var es = activePatternResult4889.Fields[0][0];
+	      var ns = activePatternResult4889.Fields[0][1];
 	      return new _ast.Expr((0, _astops.rebuildExprNode)(expr.Expr, _fableCore.List.map(function (expr_1) {
 	        return mapExprRanges(f, expr_1);
 	      }, es), _fableCore.List.map(function (n) {
@@ -7004,66 +6841,25 @@
 	  }
 	
 	  function mapCmdRanges(f, cmd) {
-	    var matchValue = cmd.Command;
-	
-	    if (matchValue.Case === "Let") {
-	      var n = matchValue.Fields[0];
-	      var e = matchValue.Fields[1];
-	      return new _ast.Command(new _ast.CommandKind("Let", [mapNameRanges(f, n), mapExprRanges(f, e)]), cmd.Range);
-	    } else {
-	      var e = matchValue.Fields[0];
-	      return new _ast.Command(new _ast.CommandKind("Expr", [mapExprRanges(f, e)]), cmd.Range);
-	    }
+	    return cmd.Command.Case === "Let" ? new _ast.Command(new _ast.CommandKind("Let", [mapNameRanges(f, cmd.Command.Fields[0]), mapExprRanges(f, cmd.Command.Fields[1])]), cmd.Range) : new _ast.Command(new _ast.CommandKind("Expr", [mapExprRanges(f, cmd.Command.Fields[0])]), cmd.Range);
 	  }
 	
 	  function tokenize(input) {
 	    var input_1 = _fableCore.String.replace(input, "\r\n", "\n");
 	
-	    var p = _tokenizer.tokens.Fields[0];
-	    var matchValue = p([0, _fableCore.Seq.toList(input_1)]);
-	
-	    if (matchValue == null) {
-	      return [_fableCore.List.ofArray([function () {
-	        var _Number = 11;
-	
-	        var _Range = new _ast.Range(0, input_1.length);
-	
-	        return new _ast.Error(_Number, _fableCore.String.fsFormat("Tokenizer did not recognize input: %s")(function (x) {
-	          return x;
-	        })(input_1), _Range);
-	      }()]), new _fableCore.List()];
-	    } else {
-	      var tokens = matchValue[2];
-	      var rest = matchValue[0][1];
-	      var offs = matchValue[0][0];
-	      var errors = matchValue[1];
-	      var errors_1 = rest.tail == null ? errors : function () {
-	        var rest_1 = Array.from(rest).join('');
-	        return _fableCore.List.ofArray([function () {
-	          var _Number = 11;
-	
-	          var _Range = new _ast.Range(offs, offs + rest_1.length);
-	
-	          return new _ast.Error(_Number, _fableCore.String.fsFormat("Tokenizer stopped: %s")(function (x) {
-	            return x;
-	          })(rest_1), _Range);
-	        }()], errors);
-	      }();
-	      return [errors_1, tokens];
-	    }
+	    var patternInput = (0, _tokenizer.tokenize)(input_1);
+	    return [_fableCore.List.ofArray(patternInput[1]), patternInput[0]];
 	  }
 	
 	  function parse(input) {
 	    var patternInput = tokenize(input);
-	    var tokens = patternInput[1];
-	    var errs1 = patternInput[0];
 	    var p = _parser.program.Fields[0];
 	    var rangeLookup = Array.from(_fableCore.List.map(function (tok) {
 	      return tok.Range;
-	    }, tokens));
+	    }, patternInput[1]));
 	
-	    var tokToChar = function (rng) {
-	      var safe = function (start) {
+	    var tokToChar = function tokToChar(rng) {
+	      var safe = function safe(start) {
 	        return function (n) {
 	          return n >= rangeLookup.length ? rangeLookup[rangeLookup.length - 1].End : n < 0 ? 0 : start ? rangeLookup[n].Start : rangeLookup[n].End;
 	        };
@@ -7072,14 +6868,13 @@
 	      var rng_1 = new _ast.Range(safe(true)(rng.Start), safe(false)(rng.End - 1));
 	
 	      if (rng_1.End < rng_1.Start) {
-	        var End = rng_1.Start;
-	        return new _ast.Range(rng_1.Start, End);
+	        return new _ast.Range(rng_1.Start, rng_1.Start);
 	      } else {
 	        return rng_1;
 	      }
 	    };
 	
-	    var matchValue = p([0, tokens]);
+	    var matchValue = p([0, patternInput[1]]);
 	
 	    if (matchValue != null) {
 	      var rest = matchValue[0][1];
@@ -7093,7 +6888,7 @@
 	        return new _ast.Error(e.Number, e.Message, _Range);
 	      }, errs2);
 	
-	      var errors = rest.tail == null ? _fableCore.List.append(errs1, errs2_1) : _fableCore.List.append(_fableCore.List.ofArray([function () {
+	      var errors = rest.tail == null ? _fableCore.List.append(patternInput[0], errs2_1) : _fableCore.List.append(_fableCore.List.ofArray([function () {
 	        var _Number = 21;
 	
 	        var _Range = tokToChar(new _ast.Range(offs, offs + rest.length));
@@ -7101,24 +6896,21 @@
 	        return new _ast.Error(_Number, _fableCore.String.fsFormat("Parser stopped: %A")(function (x) {
 	          return x;
 	        })(rest), _Range);
-	      }()], errs1), errs2_1);
-	      return [errors, function () {
-	        var _Range = prog.Range;
-	        return new _ast.Program(_fableCore.List.map(function (cmd) {
-	          return mapCmdRanges(tokToChar, cmd);
-	        }, prog.Body), _Range);
-	      }()];
+	      }()], patternInput[0]), errs2_1);
+	      return [errors, new _ast.Program(_fableCore.List.map(function (cmd) {
+	        return mapCmdRanges(tokToChar, cmd);
+	      }, prog.Body), prog.Range)];
 	    } else {
 	      return [_fableCore.List.ofArray([function () {
 	        var _Number = 21;
 	
-	        var _Range = tokToChar(new _ast.Range(0, tokens.length));
+	        var _Range = tokToChar(new _ast.Range(0, patternInput[1].length));
 	
 	        return new _ast.Error(_Number, _fableCore.String.fsFormat("Parser stopped: %A")(function (x) {
 	          return x;
-	        })(tokens), _Range);
-	      }()], errs1), function () {
-	        var _Range = tokToChar(new _ast.Range(0, tokens.length));
+	        })(patternInput[1]), _Range);
+	      }()], patternInput[0]), function () {
+	        var _Range = tokToChar(new _ast.Range(0, patternInput[1].length));
 	
 	        return new _ast.Program(new _fableCore.List(), _Range);
 	      }()];
@@ -7129,12 +6921,8 @@
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        var patternInput = parse(input);
-	        var untyped = patternInput[1];
-	        var errs1 = patternInput[0];
-	        return builder_.Bind(typeCheckProgram(new CheckingContext(globals), new CheckingResult(new _fableCore.List()), untyped), function (_arg1) {
-	          var ctx = _arg1[1];
-	          var checkd = _arg1[0];
-	          return builder_.Return([_fableCore.List.append(errs1, ctx.Errors), checkd]);
+	        return builder_.Bind(typeCheckProgram(new CheckingContext(globals), new CheckingResult(new _fableCore.List()), patternInput[1]), function (_arg1) {
+	          return builder_.Return([_fableCore.List.append(patternInput[0], _arg1[1].Errors), _arg1[0]]);
 	        });
 	      });
 	    }(_fableCore.defaultAsyncBuilder);
@@ -7163,18 +6951,11 @@
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        return builder_.Bind(getObjectMembers(t), function (_arg1) {
-	          var members = _arg1;
+	          return _arg1.Case === "Members" ? builder_.Return(function () {
+	            var Completions = _fableCore.List.ofArray([[extendUntilDot(ctx.Source, r), r, _arg1.Fields[0]]], ctx.Completions);
 	
-	          if (members.Case === "Members") {
-	            var members_1 = members.Fields[0];
-	            return builder_.Return(function () {
-	              var Completions = _fableCore.List.ofArray([[extendUntilDot(ctx.Source, r), r, members_1]], ctx.Completions);
-	
-	              return new EditorInfo(ctx.Source, Completions);
-	            }());
-	          } else {
-	            return builder_.Return(ctx);
-	          }
+	            return new EditorInfo(ctx.Source, Completions);
+	          }()) : builder_.Return(ctx);
 	        });
 	      });
 	    }(_fableCore.defaultAsyncBuilder);
@@ -7183,72 +6964,60 @@
 	  function collectExprInfo(ctx, expr) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        var matchValue = expr.Expr;
-	
-	        var $target4 = function () {
+	        var $target4 = function $target4() {
 	          return builder_.Return(ctx);
 	        };
 	
-	        if (matchValue.Case === "Call") {
-	          var n = matchValue.Fields[1];
-	          var inst = matchValue.Fields[0];
-	          var args = matchValue.Fields[2];
-	          return builder_.Bind(collectExprInfo(ctx, inst), function (_arg2) {
-	            var ctx_1 = _arg2;
+	        if (expr.Expr.Case === "Call") {
+	          return builder_.Bind(collectExprInfo(ctx, expr.Expr.Fields[0]), function (_arg2) {
 	            return builder_.Bind(function () {
-	              var f = function (ctx_2) {
+	              var f = function f(ctx_1) {
 	                return function (arg) {
-	                  return collectExprInfo(ctx_2, arg.Value);
+	                  return collectExprInfo(ctx_1, arg.Value);
 	                };
 	              };
 	
 	              return function (l) {
-	                return _extensions.Async.fold(f, ctx_1, l);
+	                return _extensions.Async.fold(f, _arg2, l);
 	              };
-	            }()(args), function (_arg3) {
-	              var ctx_2 = _arg3;
-	              return builder_.ReturnFrom(withCompletion(n.Range, inst.Type, ctx_2));
+	            }()(expr.Expr.Fields[2]), function (_arg3) {
+	              return builder_.ReturnFrom(withCompletion(expr.Expr.Fields[1].Range, expr.Expr.Fields[0].Type, _arg3));
 	            });
 	          });
 	        } else {
-	          if (matchValue.Case === "List") {
-	            var els = matchValue.Fields[0];
+	          if (expr.Expr.Case === "List") {
 	            return builder_.ReturnFrom(_extensions.Async.fold(function (ctx_1) {
 	              return function (expr_1) {
 	                return collectExprInfo(ctx_1, expr_1);
 	              };
-	            }, ctx, els));
+	            }, ctx, expr.Expr.Fields[0]));
 	          } else {
-	            if (matchValue.Case === "Function") {
-	              var e = matchValue.Fields[1];
-	              return builder_.ReturnFrom(collectExprInfo(ctx, e));
+	            if (expr.Expr.Case === "Function") {
+	              return builder_.ReturnFrom(collectExprInfo(ctx, expr.Expr.Fields[1]));
 	            } else {
-	              if (matchValue.Case === "Empty") {
+	              if (expr.Expr.Case === "Empty") {
 	                return $target4();
 	              } else {
-	                if (matchValue.Case === "Unit") {
+	                if (expr.Expr.Case === "Unit") {
 	                  return $target4();
 	                } else {
-	                  if (matchValue.Case === "Null") {
+	                  if (expr.Expr.Case === "Null") {
 	                    return $target4();
 	                  } else {
-	                    if (matchValue.Case === "Number") {
+	                    if (expr.Expr.Case === "Number") {
 	                      return $target4();
 	                    } else {
-	                      if (matchValue.Case === "String") {
+	                      if (expr.Expr.Case === "String") {
 	                        return $target4();
 	                      } else {
-	                        if (matchValue.Case === "Boolean") {
+	                        if (expr.Expr.Case === "Boolean") {
 	                          return $target4();
 	                        } else {
-	                          if (matchValue.Case === "Variable") {
+	                          if (expr.Expr.Case === "Variable") {
 	                            return $target4();
 	                          } else {
-	                            var n = matchValue.Fields[1];
-	                            var inst = matchValue.Fields[0];
-	                            return builder_.Bind(collectExprInfo(ctx, inst), function (_arg1) {
-	                              var ctx_1 = _arg1;
-	                              return builder_.ReturnFrom(withCompletion(n.Range, inst.Type, ctx_1));
+	                            return builder_.Bind(collectExprInfo(ctx, expr.Expr.Fields[0]), function (_arg1) {
+	                              return builder_.ReturnFrom(withCompletion(expr.Expr.Fields[1].Range, expr.Expr.Fields[0].Type, _arg1));
 	                            });
 	                          }
 	                        }
@@ -7267,10 +7036,9 @@
 	  function collectCmdInfo(ctx, cmds) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        var $target1 = function (cmds_1, expr) {
+	        var $target1 = function $target1(cmds_1, expr) {
 	          return builder_.Bind(collectExprInfo(ctx, expr), function (_arg1) {
-	            var ctx_1 = _arg1;
-	            return builder_.ReturnFrom(collectCmdInfo(ctx_1, cmds_1));
+	            return builder_.ReturnFrom(collectCmdInfo(_arg1, cmds_1));
 	          });
 	        };
 	
@@ -7318,11 +7086,25 @@
 	  exports.TypeChecker = exports.Parser = exports.Tokenizer = undefined;
 	
 	  var Tokenizer = exports.Tokenizer = function ($exports) {
+	    var inputEndInsideString = $exports.inputEndInsideString = function inputEndInsideString(rng, s) {
+	      var _Number = 11;
+	      return new _ast.Error(_Number, _fableCore.String.fsFormat("Missing \" at the end of the input. The string \"%s\" ends without closing double-quote.")(function (x) {
+	        return x;
+	      })(s), rng);
+	    };
+	
 	    var missingClosingQuote = $exports.missingClosingQuote = function missingClosingQuote(rng, q) {
 	      var _Number = 12;
 	      return new _ast.Error(_Number, _fableCore.String.fsFormat("Quoted identifier '%s' is missing closing quote.")(function (x) {
 	        return x;
 	      })(q), rng);
+	    };
+	
+	    var unexpectedCharacter = $exports.unexpectedCharacter = function unexpectedCharacter(rng, c) {
+	      var _Number = 13;
+	      return new _ast.Error(_Number, _fableCore.String.fsFormat("Unexcpected character '%s' in the input.")(function (x) {
+	        return x;
+	      })(c), rng);
 	    };
 	
 	    return $exports;
@@ -7371,9 +7153,9 @@
 	
 	  var TypeChecker = exports.TypeChecker = function ($exports) {
 	    var formatMembers = function formatMembers(members) {
-	      return _fableCore.String.concat(", ", _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.String.join(", ", _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	        return _fableCore.Seq.collect(function (matchValue) {
-	          var $target0 = function (n) {
+	          var $target0 = function $target0(n) {
 	            return _fableCore.Seq.singleton(n);
 	          };
 	
@@ -7454,7 +7236,7 @@
 	  Object.defineProperty(exports, "__esModule", {
 	    value: true
 	  });
-	  exports.Ranges = exports.Type = exports.ObjectType = exports.Member = exports.Documentation = exports.Schema = exports.Emitter = exports.Program = exports.Expr = exports.ExprKind = exports.CommandKind = exports.Command = exports.Argument = exports.Name = exports.Token = exports.TokenKind = exports.Error = exports.Range = undefined;
+	  exports.Ranges = exports.Type = exports.ObjectType = exports.Member = exports.Documentation = exports.Schema = exports.Emitter = exports.Program = exports.Expr = exports.ExprKind = exports.CommandKind = exports.Command = exports.Argument = exports.Name = exports.Token = exports.TokenKind = exports.Operator = exports.Error = exports.Range = undefined;
 	
 	  function _classCallCheck(instance, Constructor) {
 	    if (!(instance instanceof Constructor)) {
@@ -7532,6 +7314,31 @@
 	  }();
 	
 	  _fableCore.Util.setInterfaces(Error.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.Error");
+	
+	  var Operator = exports.Operator = function () {
+	    function Operator(caseName, fields) {
+	      _classCallCheck(this, Operator);
+	
+	      this.Case = caseName;
+	      this.Fields = fields;
+	    }
+	
+	    _createClass(Operator, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsUnions(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareUnions(this, other);
+	      }
+	    }]);
+	
+	    return Operator;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(Operator.prototype, ["FSharpUnion", "System.IEquatable", "System.IComparable"], "TheGamma.Operator");
 	
 	  var TokenKind = exports.TokenKind = function () {
 	    function TokenKind(caseName, fields) {
@@ -7822,8 +7629,8 @@
 	
 	    _createClass(Member, [{
 	      key: "Name",
-	      get: function () {
-	        var $target0 = function (s) {
+	      get: function get() {
+	        var $target0 = function $target0(s) {
 	          return s;
 	        };
 	
@@ -7898,34 +7705,27 @@
 	  exports.rebuildExprNode = rebuildExprNode;
 	
 	  function $ExprLeaf$ExprNode$(e) {
-	    var $target5 = function () {
+	    var $target5 = function $target5() {
 	      return new _fableCore.Choice("Choice1Of2", [null]);
 	    };
 	
 	    if (e.Case === "Call") {
-	      var n = e.Fields[1];
-	      var e_1 = e.Fields[0];
-	      var args = e.Fields[2];
-	      return new _fableCore.Choice("Choice2Of2", [[_fableCore.List.ofArray([e_1], _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return new _fableCore.Choice("Choice2Of2", [[_fableCore.List.ofArray([e.Fields[0]], _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	        return _fableCore.Seq.map(function (a) {
 	          return a.Value;
-	        }, args);
-	      }))), _fableCore.List.ofArray([n], _fableCore.List.choose(function (a) {
+	        }, e.Fields[2]);
+	      }))), _fableCore.List.ofArray([e.Fields[1]], _fableCore.List.choose(function (a) {
 	        return a.Name;
-	      }, args))]]);
+	      }, e.Fields[2]))]]);
 	    } else {
 	      if (e.Case === "Variable") {
-	        var n = e.Fields[0];
-	        return new _fableCore.Choice("Choice2Of2", [[new _fableCore.List(), _fableCore.List.ofArray([n])]]);
+	        return new _fableCore.Choice("Choice2Of2", [[new _fableCore.List(), _fableCore.List.ofArray([e.Fields[0]])]]);
 	      } else {
 	        if (e.Case === "List") {
-	          var els = e.Fields[0];
-	          return new _fableCore.Choice("Choice2Of2", [[els, new _fableCore.List()]]);
+	          return new _fableCore.Choice("Choice2Of2", [[e.Fields[0], new _fableCore.List()]]);
 	        } else {
 	          if (e.Case === "Function") {
-	            var n = e.Fields[0];
-	            var b = e.Fields[1];
-	            return new _fableCore.Choice("Choice2Of2", [[_fableCore.List.ofArray([b]), _fableCore.List.ofArray([n])]]);
+	            return new _fableCore.Choice("Choice2Of2", [[_fableCore.List.ofArray([e.Fields[1]]), _fableCore.List.ofArray([e.Fields[0]])]]);
 	          } else {
 	            if (e.Case === "Number") {
 	              return $target5();
@@ -7945,9 +7745,7 @@
 	                      if (e.Case === "Empty") {
 	                        return $target5();
 	                      } else {
-	                        var n = e.Fields[1];
-	                        var e_1 = e.Fields[0];
-	                        return new _fableCore.Choice("Choice2Of2", [[_fableCore.List.ofArray([e_1]), _fableCore.List.ofArray([n])]]);
+	                        return new _fableCore.Choice("Choice2Of2", [[_fableCore.List.ofArray([e.Fields[0]]), _fableCore.List.ofArray([e.Fields[1]])]]);
 	                      }
 	                    }
 	                  }
@@ -7963,23 +7761,23 @@
 	  function rebuildExprNode(e, es, ns) {
 	    var matchValue = [e, es, ns];
 	
-	    var $target5 = function () {
+	    var $target5 = function $target5() {
 	      throw "rebuildExprNode: Wrong variable length";
 	    };
 	
-	    var $target6 = function () {
+	    var $target6 = function $target6() {
 	      throw "rebuildExprNode: Wrong property length";
 	    };
 	
-	    var $target7 = function () {
+	    var $target7 = function $target7() {
 	      throw "rebuildExprNode: Wrong call length";
 	    };
 	
-	    var $target9 = function () {
+	    var $target9 = function $target9() {
 	      throw "rebuildExprNode: Wrong function length";
 	    };
 	
-	    var $target10 = function () {
+	    var $target10 = function $target10() {
 	      throw "rebuildExprNode: Not a node";
 	    };
 	
@@ -8034,12 +7832,12 @@
 	              var n = matchValue[2].head;
 	              var ns_1 = matchValue[2].tail;
 	              {
-	                var rebuildArgs = function (args_1) {
+	                var rebuildArgs = function rebuildArgs(args_1) {
 	                  return function (es_2) {
 	                    return function (ns_2) {
 	                      var matchValue_1 = [args_1, es_2, ns_2];
 	
-	                      var $target3 = function () {
+	                      var $target3 = function $target3() {
 	                        throw "rebuildExprNode: Wrong call length";
 	                      };
 	
@@ -8154,135 +7952,621 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(5), __webpack_require__(8), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(2), __webpack_require__(5), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== "undefined") {
-	    factory(exports, require("fable-core"), require("./ast"), require("./parsec"), require("./errors"));
+	    factory(exports, require("fable-core"), require("./ast"), require("./errors"));
 	  } else {
 	    var mod = {
 	      exports: {}
 	    };
-	    factory(mod.exports, global.fableCore, global.ast, global.parsec, global.errors);
+	    factory(mod.exports, global.fableCore, global.ast, global.errors);
 	    global.tokenizer = mod.exports;
 	  }
-	})(this, function (exports, _fableCore, _ast, _parsec, _errors) {
+	})(this, function (exports, _fableCore, _ast, _errors) {
 	  "use strict";
 	
 	  Object.defineProperty(exports, "__esModule", {
 	    value: true
 	  });
-	  exports.tokens = exports.unclosedQuotedIdent = exports.whitespace = exports.keywordOrIdent = exports.quotedIdent = exports.stringToken = exports.operator = exports.float = exports.integer = exports.number = exports.letter = exports.char = exports.operators = exports.keywords = undefined;
-	  exports.string = string;
+	  exports.Context = undefined;
+	  exports.startsWith = startsWith;
+	  exports.letter = letter;
+	  exports.number = number;
+	  exports.addAndTokenize = addAndTokenize;
+	  exports.tokenizeIdent = tokenizeIdent;
+	  exports.tokenizeString = tokenizeString;
+	  exports.tokenizeStringEnd = tokenizeStringEnd;
+	  exports.tokenizeQuotedIdent = tokenizeQuotedIdent;
+	  exports.tokenizeQuotedIdentEnd = tokenizeQuotedIdentEnd;
+	  exports.tokenizeWhite = tokenizeWhite;
+	  exports.tokenizeNumber = tokenizeNumber;
+	  exports.tokenizeInput = tokenizeInput;
+	  exports.tokenize = tokenize;
 	
-	  var keywords = exports.keywords = _fableCore.Map.create(_fableCore.List.ofArray([["let", new _ast.TokenKind("Let", [])], ["fun", new _ast.TokenKind("Fun", [])], ["to", new _ast.TokenKind("To", [])], ["by", new _ast.TokenKind("By", [])], ["true", new _ast.TokenKind("Boolean", [true])], ["false", new _ast.TokenKind("Boolean", [false])]]), new _fableCore.GenericComparer(function (x, y) {
-	    return x < y ? -1 : x > y ? 1 : 0;
-	  }));
-	
-	  var operators = exports.operators = _fableCore.Set.create(_fableCore.List.ofArray(["+", "-", "*", "/", "^"]), new _fableCore.GenericComparer(function (x, y) {
-	    return x < y ? -1 : x > y ? 1 : 0;
-	  }));
-	
-	  function _char(c, token) {
-	    return (0, _parsec.prefix)(_fableCore.List.ofArray([c]), token);
-	  }
-	
-	  exports.char = _char;
-	
-	  function string(s, token) {
-	    return (0, _parsec.prefix)(_fableCore.List.ofArray(s.split("")), token);
-	  }
-	
-	  var letter = exports.letter = (0, _parsec.pred)(function (c) {
-	    return (c >= "a" ? c <= "z" : false) ? true : c >= "A" ? c <= "Z" : false;
-	  });
-	  var number = exports.number = (0, _parsec.pred)(function (c) {
-	    return c >= "0" ? c <= "9" : false;
-	  });
-	  var integer = exports.integer = (0, _parsec.map)(function (digits) {
-	    var str = Array.from(digits).join('');
-	    return new _ast.TokenKind("Number", [str, 1 * Number.parseFloat(str)]);
-	  }, (0, _parsec.oneOrMore)(number));
-	
-	  var _float = (0, _parsec.map)(function (tupledArg) {
-	    var d1 = tupledArg[0];
-	    var d2 = tupledArg[1];
-	    var str = Array.from(d1).join('') + "." + Array.from(d2).join('');
-	    return new _ast.TokenKind("Number", [str, 1 * Number.parseFloat(str)]);
-	  }, (0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.oneOrMore)(number), _char(".")), (0, _parsec.oneOrMore)(number)));
-	
-	  exports.float = _float;
-	  var operator = exports.operator = (0, _parsec.map)(function (op) {
-	    return new _ast.TokenKind("Operator", [op]);
-	  }, (0, _parsec.pred)(function (arg00) {
-	    return operators.has(arg00);
-	  }));
-	  var stringToken = exports.stringToken = (0, _parsec.map)(function (s) {
-	    return new _ast.TokenKind("String", [Array.from(s).join('')]);
-	  }, (0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(_char("\""), (0, _parsec.zeroOrMore)((0, _parsec.pred)(function () {
-	    var x = "\"";
-	    return function (y) {
-	      return x !== y;
-	    };
-	  }()))), _char("\"")));
-	  var quotedIdent = exports.quotedIdent = (0, _parsec.map)(function (cs) {
-	    return new _ast.TokenKind("QIdent", [Array.from(cs).join('')]);
-	  }, (0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(_char("'"), (0, _parsec.oneOrMore)((0, _parsec.pred)(function (c) {
-	    return c !== "\n" ? c !== "'" : false;
-	  }))), _char("'")));
-	  var keywordOrIdent = exports.keywordOrIdent = (0, _parsec.map)(function (tupledArg) {
-	    var c = tupledArg[0];
-	    var cs = tupledArg[1];
-	    var s = Array.from(_fableCore.List.ofArray([c], cs)).join('');
-	
-	    var matchValue = _fableCore.Map.tryFind(s, keywords);
-	
-	    if (matchValue != null) {
-	      var token = matchValue;
-	      return token;
-	    } else {
-	      return new _ast.TokenKind("Ident", [s]);
+	  function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	      throw new TypeError("Cannot call a class as a function");
 	    }
-	  }, (0, _parsec.op_LessMultiplyGreater)(letter, (0, _parsec.zeroOrMore)((0, _parsec.op_LessBarGreater)(letter, number))));
-	  var whitespace = exports.whitespace = (0, _parsec.op_LessBarGreater)((0, _parsec.map)(function (whites) {
-	    return new _ast.TokenKind("White", [Array.from(whites).join('')]);
-	  }, (0, _parsec.oneOrMore)((0, _parsec.pred)(function () {
-	    var x = " ";
-	    return function (y) {
-	      return x === y;
-	    };
-	  }()))), (0, _parsec.map)(function (_arg1) {
-	    return new _ast.TokenKind("Newline", []);
-	  }, (0, _parsec.pred)(function () {
-	    var x = "\n";
-	    return function (y) {
-	      return x === y;
-	    };
-	  }())));
-	  var unclosedQuotedIdent = exports.unclosedQuotedIdent = (0, _parsec.bind)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var ch = tupledArg[1];
-	    var q = Array.from(ch).join('');
-	    return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Tokenizer.missingClosingQuote(rng, q)), (0, _parsec.unit)(new _ast.TokenKind("QIdent", [q])));
-	  }, (0, _parsec.range)((0, _parsec.op_LessMultiplyGreaterGreater)(_char("'"), (0, _parsec.oneOrMore)((0, _parsec.pred)(function (c) {
-	    return c !== "\n" ? c !== "'" : false;
-	  })))));
-	  var tokens = exports.tokens = (0, _parsec.map)(function () {
-	    var mapping = function (tupledArg) {
-	      var rng = tupledArg[0];
-	      var tok = tupledArg[1];
-	      return new _ast.Token(tok, rng);
-	    };
+	  }
 	
-	    return function (list) {
-	      return _fableCore.List.map(mapping, list);
+	  var _createClass = function () {
+	    function defineProperties(target, props) {
+	      for (var i = 0; i < props.length; i++) {
+	        var descriptor = props[i];
+	        descriptor.enumerable = descriptor.enumerable || false;
+	        descriptor.configurable = true;
+	        if ("value" in descriptor) descriptor.writable = true;
+	        Object.defineProperty(target, descriptor.key, descriptor);
+	      }
+	    }
+	
+	    return function (Constructor, protoProps, staticProps) {
+	      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	      if (staticProps) defineProperties(Constructor, staticProps);
+	      return Constructor;
 	    };
-	  }(), (0, _parsec.sequenceChoices)(_fableCore.List.map(function (arg00_) {
-	    return (0, _parsec.range)(arg00_);
-	  }, _fableCore.List.ofArray([_char("(", new _ast.TokenKind("LParen", [])), _char(")", new _ast.TokenKind("RParen", [])), _char("[", new _ast.TokenKind("LSquare", [])), _char("]", new _ast.TokenKind("RSquare", [])), _char("=", new _ast.TokenKind("Equals", [])), _char(".", new _ast.TokenKind("Dot", [])), _char(",", new _ast.TokenKind("Comma", [])), string("->", new _ast.TokenKind("Arrow", [])), stringToken, _float, integer, keywordOrIdent, quotedIdent, operator, whitespace, unclosedQuotedIdent]))));
+	  }();
+	
+	  var Context = exports.Context = function () {
+	    function Context(tokens, errors, input) {
+	      _classCallCheck(this, Context);
+	
+	      this.Tokens = tokens;
+	      this.Errors = errors;
+	      this.Input = input;
+	    }
+	
+	    _createClass(Context, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsRecords(this, other);
+	      }
+	    }]);
+	
+	    return Context;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(Context.prototype, ["FSharpRecord", "System.IEquatable"], "TheGamma.Tokenizer.Context");
+	
+	  function startsWith(s, i, j, prefix) {
+	    return j === prefix.length ? true : i === s.length ? false : s[i] !== prefix[j] ? false : startsWith(s, i + 1, j + 1, prefix);
+	  }
+	
+	  function letter(c) {
+	    return (c >= "a" ? c <= "z" : false) ? true : c >= "A" ? c <= "Z" : false;
+	  }
+	
+	  function number(c) {
+	    return c >= "0" ? c <= "9" : false;
+	  }
+	
+	  function addAndTokenize(ctx, tok, i, l) {
+	    (function (arg00) {
+	      ctx.Tokens.push(arg00);
+	    })(new _ast.Token(tok, new _ast.Range(i, i + l)));
+	
+	    return tokenizeInput(ctx, i + l);
+	  }
+	
+	  function tokenizeIdent(ctx, start, l) {
+	    return (start + l < ctx.Input.length ? letter(ctx.Input[start + l]) ? true : number(ctx.Input[start + l]) : false) ? tokenizeIdent(ctx, start, l + 1) : addAndTokenize(ctx, new _ast.TokenKind("Ident", [ctx.Input.substr(start, l)]), start, l);
+	  }
+	
+	  function tokenizeString(ctx, acc, start, l) {
+	    return start + l >= ctx.Input.length ? tokenizeStringEnd(true, ctx, acc, start, l) : function () {
+	      var matchValue = ctx.Input[start + l];
+	
+	      var $target1 = function $target1() {
+	        return matchValue === "\"" ? tokenizeStringEnd(false, ctx, acc, start, l + 1) : matchValue === "\\" ? function () {
+	          var matchValue_1 = ctx.Input[start + l + 1];
+	
+	          if (matchValue_1 === "\"") {
+	            return tokenizeString(ctx, _fableCore.List.ofArray(["\""], acc), start, l + 2);
+	          } else {
+	            if (matchValue_1 === "\\") {
+	              return tokenizeString(ctx, _fableCore.List.ofArray(["\\"], acc), start, l + 2);
+	            } else {
+	              if (matchValue_1 === "n") {
+	                return tokenizeString(ctx, _fableCore.List.ofArray(["\n"], acc), start, l + 2);
+	              } else {
+	                if (matchValue_1 === "t") {
+	                  return tokenizeString(ctx, _fableCore.List.ofArray(["\t"], acc), start, l + 2);
+	                } else {
+	                  return tokenizeString(ctx, _fableCore.List.ofArray([matchValue_1, "\\"], acc), start, l + 2);
+	                }
+	              }
+	            }
+	          }
+	        }() : tokenizeString(ctx, _fableCore.List.ofArray([matchValue], acc), start, l + 1);
+	      };
+	
+	      if (matchValue === "\\") {
+	        if (start + l + 1 >= ctx.Input.length) {
+	          return tokenizeStringEnd(true, ctx, _fableCore.List.ofArray(["\\"], acc), start, l + 1);
+	        } else {
+	          return $target1();
+	        }
+	      } else {
+	        return $target1();
+	      }
+	    }();
+	  }
+	
+	  function tokenizeStringEnd(error, ctx, acc, start, l) {
+	    var str = Array.from(acc).reverse().join('');
+	    var rng = new _ast.Range(start, start + l);
+	
+	    if (error) {
+	      ctx.Errors.push(_errors.Tokenizer.inputEndInsideString(rng, str));
+	    }
+	
+	    return addAndTokenize(ctx, new _ast.TokenKind("String", [str]), start, l);
+	  }
+	
+	  function tokenizeQuotedIdent(ctx, start, l) {
+	    return start + l >= ctx.Input.length ? tokenizeQuotedIdentEnd(true, ctx, start, l) : function () {
+	      var matchValue = ctx.Input[start + l];
+	
+	      if (matchValue === "\n") {
+	        return tokenizeQuotedIdentEnd(true, ctx, start, l + 1);
+	      } else {
+	        if (matchValue === "'") {
+	          return tokenizeQuotedIdentEnd(false, ctx, start, l + 1);
+	        } else {
+	          return tokenizeQuotedIdent(ctx, start, l + 1);
+	        }
+	      }
+	    }();
+	  }
+	
+	  function tokenizeQuotedIdentEnd(error, ctx, start, l) {
+	    var rng = new _ast.Range(start, start + l);
+	    var qid = ctx.Input.substr(start + 1, l - (error ? 1 : 2));
+	    var qid_1 = _fableCore.String.endsWith(qid, "\n") ? qid.substr(0, qid.length - 1) : qid;
+	
+	    if (error) {
+	      ctx.Errors.push(_errors.Tokenizer.missingClosingQuote(rng, qid_1));
+	    }
+	
+	    return addAndTokenize(ctx, new _ast.TokenKind("QIdent", [qid_1]), start, l);
+	  }
+	
+	  function tokenizeWhite(ctx, start, l) {
+	    return (start + l < ctx.Input.length ? ctx.Input[start + l] === " " : false) ? tokenizeWhite(ctx, start, l + 1) : addAndTokenize(ctx, new _ast.TokenKind("White", [ctx.Input.substr(start, l)]), start, l);
+	  }
+	
+	  function tokenizeNumber(ctx, decimal, start, l) {
+	    return (start + l < ctx.Input.length ? number(ctx.Input[start + l]) : false) ? tokenizeNumber(ctx, decimal, start, l + 1) : ((start + l < ctx.Input.length ? !decimal : false) ? ctx.Input[start + l] === "." : false) ? tokenizeNumber(ctx, true, start, l + 1) : function () {
+	      var str = ctx.Input.substr(start, l);
+	      return addAndTokenize(ctx, new _ast.TokenKind("Number", [str, Number.parseFloat(str)]), start, l);
+	    }();
+	  }
+	
+	  function tokenizeInput(ctx, i) {
+	    return i >= ctx.Input.length ? ctx : function () {
+	      var matchValue = ctx.Input[i];
+	
+	      var $target1 = function $target1() {
+	        var $target1 = function $target1() {
+	          var $target1 = function $target1() {
+	            var $target1 = function $target1() {
+	              var $target1 = function $target1() {
+	                var $target1 = function $target1() {
+	                  var $target1 = function $target1() {
+	                    return matchValue === "\n" ? addAndTokenize(ctx, new _ast.TokenKind("Newline", []), i, 1) : matchValue === " " ? tokenizeWhite(ctx, i, 1) : matchValue === "\"" ? tokenizeString(ctx, new _fableCore.List(), i, 1) : matchValue === "'" ? tokenizeQuotedIdent(ctx, i, 1) : matchValue === "(" ? addAndTokenize(ctx, new _ast.TokenKind("LParen", []), i, 1) : matchValue === ")" ? addAndTokenize(ctx, new _ast.TokenKind("RParen", []), i, 1) : matchValue === "*" ? addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("Multiply", [])]), i, 1) : matchValue === "+" ? addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("Plus", [])]), i, 1) : matchValue === "," ? addAndTokenize(ctx, new _ast.TokenKind("Comma", []), i, 1) : matchValue === "-" ? addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("Minus", [])]), i, 1) : matchValue === "." ? addAndTokenize(ctx, new _ast.TokenKind("Dot", []), i, 1) : matchValue === "/" ? addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("Divide", [])]), i, 1) : matchValue === "<" ? addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("LessThan", [])]), i, 1) : matchValue === "=" ? addAndTokenize(ctx, new _ast.TokenKind("Equals", []), i, 1) : matchValue === ">" ? addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("GreaterThan", [])]), i, 1) : matchValue === "[" ? addAndTokenize(ctx, new _ast.TokenKind("LSquare", []), i, 1) : matchValue === "]" ? addAndTokenize(ctx, new _ast.TokenKind("RSquare", []), i, 1) : letter(matchValue) ? tokenizeIdent(ctx, i, 1) : number(matchValue) ? tokenizeNumber(ctx, false, i, 1) : function () {
+	                      ctx.Errors.push(_errors.Tokenizer.unexpectedCharacter(new _ast.Range(i, i + 1), matchValue));
+	                      return addAndTokenize(ctx, new _ast.TokenKind("Error", [matchValue]), i, 1);
+	                    }();
+	                  };
+	
+	                  if (matchValue === ">") {
+	                    if (startsWith(ctx.Input, i, 0, ">=")) {
+	                      return addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("GreaterThanOrEqual", [])]), i, 2);
+	                    } else {
+	                      return $target1();
+	                    }
+	                  } else {
+	                    return $target1();
+	                  }
+	                };
+	
+	                if (matchValue === "<") {
+	                  if (startsWith(ctx.Input, i, 0, "<=")) {
+	                    return addAndTokenize(ctx, new _ast.TokenKind("Operator", [new _ast.Operator("LessThanOrEqual", [])]), i, 2);
+	                  } else {
+	                    return $target1();
+	                  }
+	                } else {
+	                  return $target1();
+	                }
+	              };
+	
+	              if (matchValue === "f") {
+	                if (startsWith(ctx.Input, i, 0, "false")) {
+	                  return addAndTokenize(ctx, new _ast.TokenKind("Boolean", [false]), i, 5);
+	                } else {
+	                  return $target1();
+	                }
+	              } else {
+	                return $target1();
+	              }
+	            };
+	
+	            if (matchValue === "t") {
+	              if (startsWith(ctx.Input, i, 0, "true")) {
+	                return addAndTokenize(ctx, new _ast.TokenKind("Boolean", [true]), i, 4);
+	              } else {
+	                return $target1();
+	              }
+	            } else {
+	              return $target1();
+	            }
+	          };
+	
+	          if (matchValue === "l") {
+	            if (startsWith(ctx.Input, i, 0, "let")) {
+	              return addAndTokenize(ctx, new _ast.TokenKind("Let", []), i, 3);
+	            } else {
+	              return $target1();
+	            }
+	          } else {
+	            return $target1();
+	          }
+	        };
+	
+	        if (matchValue === "f") {
+	          if (startsWith(ctx.Input, i, 0, "fun")) {
+	            return addAndTokenize(ctx, new _ast.TokenKind("Fun", []), i, 3);
+	          } else {
+	            return $target1();
+	          }
+	        } else {
+	          return $target1();
+	        }
+	      };
+	
+	      if (matchValue === "-") {
+	        if (startsWith(ctx.Input, i, 0, "->")) {
+	          return addAndTokenize(ctx, new _ast.TokenKind("Arrow", []), i, 2);
+	        } else {
+	          return $target1();
+	        }
+	      } else {
+	        return $target1();
+	      }
+	    }();
+	  }
+	
+	  function tokenize(input) {
+	    var ctx = function () {
+	      var Errors = [];
+	      return new Context([], Errors, input);
+	    }();
+	
+	    var ctx_1 = tokenizeInput(ctx, 0);
+	    return [_fableCore.Seq.toList(ctx_1.Tokens), Array.from(ctx_1.Errors)];
+	  }
 	});
 
 
 /***/ },
 /* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(9), __webpack_require__(2), __webpack_require__(5), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== "undefined") {
+	    factory(exports, require("./parsec"), require("fable-core"), require("./ast"), require("./errors"));
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, global.parsec, global.fableCore, global.ast, global.errors);
+	    global.parser = mod.exports;
+	  }
+	})(this, function (exports, _parsec, _fableCore, _ast, _errors) {
+	  "use strict";
+	
+	  Object.defineProperty(exports, "__esModule", {
+	    value: true
+	  });
+	  exports.program = exports.letBinding = exports.declaration = exports.listrange = exports.boolean = exports.string = exports.number = exports.lambda = exports.list = exports.expressionOrNothing = exports.invocationChain = exports.callOrPropertyOrNothing = exports.callOrProperty = exports.CallOrProperty = exports.argumentList = exports.argument = exports.expression = exports.expressionSetter = exports.ident = exports.anyUntilLineEnd = exports.anyWhite = undefined;
+	  exports.token = token;
+	  exports.optionalOrError = optionalOrError;
+	  exports.separated = separated;
+	  exports.separatedThen = separatedThen;
+	  exports.separatedOrEmpty = separatedOrEmpty;
+	
+	  function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	      throw new TypeError("Cannot call a class as a function");
+	    }
+	  }
+	
+	  var _createClass = function () {
+	    function defineProperties(target, props) {
+	      for (var i = 0; i < props.length; i++) {
+	        var descriptor = props[i];
+	        descriptor.enumerable = descriptor.enumerable || false;
+	        descriptor.configurable = true;
+	        if ("value" in descriptor) descriptor.writable = true;
+	        Object.defineProperty(target, descriptor.key, descriptor);
+	      }
+	    }
+	
+	    return function (Constructor, protoProps, staticProps) {
+	      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	      if (staticProps) defineProperties(Constructor, staticProps);
+	      return Constructor;
+	    };
+	  }();
+	
+	  var anyWhite = exports.anyWhite = (0, _parsec.zeroOrMore)((0, _parsec.pred)(function (t) {
+	    var $target0 = function $target0() {
+	      return true;
+	    };
+	
+	    if (t.Token.Case === "Newline") {
+	      return $target0();
+	    } else {
+	      if (t.Token.Case === "White") {
+	        return $target0();
+	      } else {
+	        return false;
+	      }
+	    }
+	  }));
+	  var anyUntilLineEnd = exports.anyUntilLineEnd = new _parsec.Parser("Parser", [function (input) {
+	    var loop = function loop(input_1) {
+	      return input_1[1].tail == null ? function () {
+	        var offset = input_1[0];
+	        return [[offset, new _fableCore.List()], new _fableCore.List(), null];
+	      }() : input_1[1].head.Token.Case === "Newline" ? function () {
+	        var offset = input_1[0];
+	        var rest = input_1[1].tail;
+	        return [[offset + 1, rest], new _fableCore.List(), null];
+	      }() : function () {
+	        var offset = input_1[0];
+	        var rest = input_1[1].tail;
+	        var tok = input_1[1].head;
+	        return loop([offset + 1, rest]);
+	      }();
+	    };
+	
+	    return loop(input);
+	  }]);
+	
+	  function token(tok) {
+	    return (0, _parsec.pred)(function (t) {
+	      return t.Token.Equals(tok);
+	    });
+	  }
+	
+	  function optionalOrError(err, p) {
+	    return (0, _parsec.bind)(function (_arg1) {
+	      return _arg1[1] == null ? (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(err(_arg1[0])), (0, _parsec.unit)()) : function () {
+	        var v = _arg1[1];
+	        return (0, _parsec.unit)(v);
+	      }();
+	    }, (0, _parsec.range)((0, _parsec.optional)(p)));
+	  }
+	
+	  function separated(sep, p) {
+	    return (0, _parsec.map)(function (tupledArg) {
+	      return _fableCore.List.ofArray([tupledArg[0]], _fableCore.List.map(function (tuple) {
+	        return tuple[1];
+	      }, tupledArg[1]));
+	    }, (0, _parsec.op_LessMultiplyGreater)(p, (0, _parsec.zeroOrMore)((0, _parsec.op_LessMultiplyGreater)(sep, p))));
+	  }
+	
+	  function separatedThen(sep, p1, p2) {
+	    return (0, _parsec.map)(function (tupledArg) {
+	      return _fableCore.List.ofArray([tupledArg[0]], _fableCore.List.map(function (tuple) {
+	        return tuple[1];
+	      }, tupledArg[1]));
+	    }, (0, _parsec.op_LessMultiplyGreater)(p1, (0, _parsec.zeroOrMore)((0, _parsec.op_LessMultiplyGreater)(sep, p2))));
+	  }
+	
+	  function separatedOrEmpty(sep, p) {
+	    return (0, _parsec.map)(function (l) {
+	      return l != null ? l : new _fableCore.List();
+	    }, (0, _parsec.optional)(separated(sep, p)));
+	  }
+	
+	  var ident = exports.ident = (0, _parsec.map)(function (tupledArg) {
+	    return new _ast.Name(tupledArg[1], tupledArg[0]);
+	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.choose)(function (tok) {
+	    var $target0 = function $target0(id) {
+	      return id;
+	    };
+	
+	    if (tok.Token.Case === "Ident") {
+	      return $target0(tok.Token.Fields[0]);
+	    } else {
+	      if (tok.Token.Case === "QIdent") {
+	        return $target0(tok.Token.Fields[0]);
+	      }
+	    }
+	  }))));
+	  var patternInput_46 = (0, _parsec.slot)();
+	  var expressionSetter = exports.expressionSetter = patternInput_46[0];
+	  var expression = exports.expression = patternInput_46[1];
+	  var argument = exports.argument = (0, _parsec.op_LessBarGreater)((0, _parsec.map)(function (tupledArg) {
+	    return new _ast.Argument(tupledArg[0], tupledArg[1]);
+	  }, (0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)(ident, anyWhite), token(new _ast.TokenKind("Equals", []))), expression)), (0, _parsec.map)(function (expr) {
+	    return new _ast.Argument(null, expr);
+	  }, expression));
+	  var argumentList = exports.argumentList = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("LParen", [])), separatedOrEmpty((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("Comma", []))), argument)), (0, _parsec.op_LessBarGreater)((0, _parsec.ignore)((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("RParen", [])))), (0, _parsec.bind)(function (tupledArg) {
+	    return (0, _parsec.error)(_errors.Parser.missingClosingParen(tupledArg[0]));
+	  }, (0, _parsec.range)(anyUntilLineEnd))))));
+	
+	  var CallOrProperty = exports.CallOrProperty = function () {
+	    function CallOrProperty(name, _arguments) {
+	      _classCallCheck(this, CallOrProperty);
+	
+	      this.Name = name;
+	      this.Arguments = _arguments;
+	    }
+	
+	    _createClass(CallOrProperty, [{
+	      key: "Equals",
+	      value: function Equals(other) {
+	        return _fableCore.Util.equalsRecords(this, other);
+	      }
+	    }, {
+	      key: "CompareTo",
+	      value: function CompareTo(other) {
+	        return _fableCore.Util.compareRecords(this, other);
+	      }
+	    }]);
+	
+	    return CallOrProperty;
+	  }();
+	
+	  _fableCore.Util.setInterfaces(CallOrProperty.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.Parser.CallOrProperty");
+	
+	  var callOrProperty = exports.callOrProperty = (0, _parsec.bind)(function (_arg1) {
+	    return _arg1[1][0] == null ? function () {
+	      var args = _arg1[1][1];
+	      return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.emptyIdentifier(_arg1[0])), (0, _parsec.unit)(new CallOrProperty(new _ast.Name("", _arg1[0]), args)));
+	    }() : function () {
+	      var name = _arg1[1][0];
+	      var args = _arg1[1][1];
+	      return (0, _parsec.unit)(new CallOrProperty(name, args));
+	    }();
+	  }, (0, _parsec.op_LessBarGreater)((0, _parsec.range)((0, _parsec.map)(function (tupledArg) {
+	    return [tupledArg[0], tupledArg[1]];
+	  }, (0, _parsec.op_LessMultiplyGreater)(ident, (0, _parsec.optional)(argumentList)))), (0, _parsec.range)((0, _parsec.map)(function (tupledArg) {
+	    return [tupledArg[0], tupledArg[1]];
+	  }, (0, _parsec.op_LessMultiplyGreater)((0, _parsec.optional)(ident), argumentList)))));
+	  var callOrPropertyOrNothing = exports.callOrPropertyOrNothing = (0, _parsec.op_LessBarGreater)(callOrProperty, (0, _parsec.bind)(function (tupledArg) {
+	    return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.nothingAfterDot(tupledArg[0])), (0, _parsec.unit)(new CallOrProperty(new _ast.Name("", tupledArg[0]))));
+	  }, (0, _parsec.range)((0, _parsec.unit)())));
+	  var invocationChain = exports.invocationChain = (0, _parsec.bind)(function (_arg1) {
+	    return _arg1.tail == null ? function () {
+	      throw "Unexpected: Parsed empty chain";
+	    }() : function () {
+	      var inst = new _ast.Expr(new _ast.ExprKind("Variable", [_arg1.head.Name]), _arg1.head.Name.Range);
+	
+	      var parsed = function () {
+	        var folder = function folder(st) {
+	          return function (item) {
+	            var patternInput = item.Arguments == null ? [new _ast.ExprKind("Property", [st, item.Name]), _ast.Ranges.unionRanges(st.Range, item.Name.Range)] : function () {
+	              var arng = item.Arguments[0];
+	              var args = item.Arguments[1];
+	              return [new _ast.ExprKind("Call", [st, item.Name, args]), _ast.Ranges.unionRanges(st.Range, _ast.Ranges.unionRanges(item.Name.Range, arng))];
+	            }();
+	            return new _ast.Expr(patternInput[0], patternInput[1]);
+	          };
+	        };
+	
+	        return function (list) {
+	          return _fableCore.Seq.fold(function ($var6, $var7) {
+	            return folder($var6)($var7);
+	          }, inst, list);
+	        };
+	      }()(_arg1.tail);
+	
+	      return (0, _parsec.op_LessMultiplyGreaterGreater)(_arg1.head.Arguments != null ? function () {
+	        var rng = _arg1.head.Arguments[0];
+	        return (0, _parsec.error)(_errors.Parser.valueNotAfunction(rng, _arg1.head.Name.Name));
+	      }() : (0, _parsec.unit)(), (0, _parsec.unit)(parsed));
+	    }();
+	  }, separatedThen((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("Dot", []))), callOrProperty, callOrPropertyOrNothing));
+	  var expressionOrNothing = exports.expressionOrNothing = (0, _parsec.op_LessBarGreater)((0, _parsec.map)(function (arg0) {
+	    return arg0;
+	  }, expression), (0, _parsec.bind)(function (tupledArg) {
+	    return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.nothingAfterComma(tupledArg[0])), (0, _parsec.unit)());
+	  }, (0, _parsec.range)((0, _parsec.unit)())));
+	  var list = exports.list = (0, _parsec.map)(function (tupledArg) {
+	    return new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.choose(function (x) {
+	      return x;
+	    }, tupledArg[1])]), tupledArg[0]);
+	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("LSquare", [])), separatedThen((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("Comma", []))), (0, _parsec.map)(function (arg0) {
+	    return arg0;
+	  }, expression), expressionOrNothing)), anyWhite), optionalOrError(function (rng) {
+	    return _errors.Parser.missingClosingSquare(rng);
+	  }, token(new _ast.TokenKind("RSquare", [])))))));
+	  var lambda = exports.lambda = (0, _parsec.map)(function (tupledArg) {
+	    return new _ast.Expr(new _ast.ExprKind("Function", [tupledArg[1][0], tupledArg[1][1]]), tupledArg[0]);
+	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("Fun", [])), anyWhite), ident), (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, token(new _ast.TokenKind("Arrow", []))), anyWhite), expression)))));
+	  var number = exports.number = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.choose)(function (_arg1) {
+	    return _arg1.Token.Case === "Number" ? function () {
+	      var n = _arg1.Token.Fields[1];
+	      return new _ast.Expr(new _ast.ExprKind("Number", [n]), _arg1.Range);
+	    }() : null;
+	  }));
+	  var string = exports.string = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.choose)(function (_arg1) {
+	    return _arg1.Token.Case === "String" ? function () {
+	      var n = _arg1.Token.Fields[0];
+	      return new _ast.Expr(new _ast.ExprKind("String", [n]), _arg1.Range);
+	    }() : null;
+	  }));
+	
+	  var _boolean = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.choose)(function (_arg1) {
+	    return _arg1.Token.Case === "Boolean" ? function () {
+	      var b = _arg1.Token.Fields[0];
+	      return new _ast.Expr(new _ast.ExprKind("Boolean", [b]), _arg1.Range);
+	    }() : null;
+	  }));
+	
+	  exports.boolean = _boolean;
+	  var listrange = exports.listrange = (0, _parsec.bind)(function (tupledArg) {
+	    var getNum = function getNum(_arg1) {
+	      return _arg1.Expr.Case === "Number" ? function () {
+	        var n = _arg1.Expr.Fields[0];
+	        return n;
+	      }() : function () {
+	        throw "expected number";
+	      }();
+	    };
+	
+	    var asNum = function asNum(n) {
+	      var Expr = new _ast.ExprKind("Number", [n]);
+	      return new _ast.Expr(Expr, tupledArg[0]);
+	    };
+	
+	    var $target2 = function $target2() {
+	      return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.incompleteRange(tupledArg[0])), (0, _parsec.unit)(new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.ofArray([asNum(0)])]), tupledArg[0])));
+	    };
+	
+	    if (tupledArg[1][1] != null) {
+	      if (tupledArg[1][1][1] == null) {
+	        var efrom = tupledArg[1][0];
+	        var eto = tupledArg[1][1][0];
+	        return (0, _parsec.unit)(new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.map(asNum, _fableCore.Seq.toList(_fableCore.Seq.range(getNum(efrom), getNum(eto))))]), tupledArg[0]));
+	      } else {
+	        if (tupledArg[1][1][1] != null) {
+	          var efrom = tupledArg[1][0];
+	          var estep = tupledArg[1][1][1];
+	          var eto = tupledArg[1][1][0];
+	          return (0, _parsec.unit)(new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.map(asNum, _fableCore.Seq.toList(_fableCore.Seq.rangeStep(getNum(efrom), getNum(estep), getNum(eto))))]), tupledArg[0]));
+	        } else {
+	          return $target2();
+	        }
+	      }
+	    } else {
+	      return $target2();
+	    }
+	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("LSquare", [])), anyWhite), number), anyWhite), token(new _ast.TokenKind("To", []))), anyWhite), (0, _parsec.optional)((0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)(number, anyWhite), (0, _parsec.optional)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("By", [])), anyWhite), (0, _parsec.optional)((0, _parsec.op_LessLessMultiplyGreater)(number, anyWhite))))))), optionalOrError(function (rng) {
+	    return _errors.Parser.missingClosingSquare(rng);
+	  }, token(new _ast.TokenKind("RSquare", [])))))));
+	  var declaration = exports.declaration = (0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, token(new _ast.TokenKind("Let", []))), ident), anyWhite), token(new _ast.TokenKind("Equals", []))), expression);
+	  var letBinding = exports.letBinding = (0, _parsec.map)(function (tupledArg) {
+	    return new _ast.Command(new _ast.CommandKind("Let", [tupledArg[1][0], tupledArg[1][1]]), tupledArg[0]);
+	  }, (0, _parsec.range)(declaration));
+	  expressionSetter.Set((0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)(invocationChain, listrange), list), lambda), number), string), _boolean)));
+	  var program = exports.program = (0, _parsec.map)(function (tupledArg) {
+	    return new _ast.Program(tupledArg[1], tupledArg[0]);
+	  }, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.sequenceChoices)(_fableCore.List.ofArray([(0, _parsec.map)(function (e) {
+	    return new _ast.Command(new _ast.CommandKind("Expr", [e]), e.Range);
+	  }, expression), letBinding])), anyWhite)));
+	});
+
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -8347,16 +8631,12 @@
 	  _fableCore.Util.setInterfaces(ParserSetter.prototype, ["FSharpRecord"], "TheGamma.Parsec.ParserSetter");
 	
 	  function ignore(_arg1) {
-	    var p = _arg1.Fields[0];
 	    return new Parser("Parser", [function (input) {
-	      var $var2 = p(input);
+	      var $var2 = _arg1.Fields[0](input);
 	
 	      if ($var2 != null) {
 	        return function (tupledArg) {
-	          var i = tupledArg[0];
-	          var e = tupledArg[1];
-	          var r = tupledArg[2];
-	          return [i, e, null];
+	          return [tupledArg[0], tupledArg[1], null];
 	        }($var2);
 	      } else {
 	        return $var2;
@@ -8367,8 +8647,7 @@
 	  function slot() {
 	    var slot = null;
 	    return [new ParserSetter(function (_arg1) {
-	      var p = _arg1.Fields[0];
-	      slot = p;
+	      slot = _arg1.Fields[0];
 	    }), new Parser("Parser", [function (input) {
 	      return slot(input);
 	    }])];
@@ -8376,34 +8655,28 @@
 	
 	  function prefix(prefix, result) {
 	    return new Parser("Parser", [function (tupledArg) {
-	      var offset = tupledArg[0];
-	      var input = tupledArg[1];
+	      var loop = function loop(word) {
+	        return function (input) {
+	          var matchValue = [word, input];
 	
-	      var loop = function (word) {
-	        return function (input_1) {
-	          var matchValue = [word, input_1];
-	
-	          var $target1 = function () {
-	            return matchValue[0].tail == null ? function () {
-	              var input_2 = matchValue[1];
-	              return input_2;
-	            }() : null;
+	          var $target1 = function $target1() {
+	            return matchValue[0].tail == null ? matchValue[1] : null;
 	          };
 	
 	          if (matchValue[0].tail != null) {
 	            if (matchValue[1].tail != null) {
 	              if (function () {
 	                var word_1 = matchValue[0].tail;
-	                var input_2 = matchValue[1].tail;
+	                var input_1 = matchValue[1].tail;
 	                var i = matchValue[1].head;
 	                var c = matchValue[0].head;
 	                return _fableCore.Util.equals(c, i);
 	              }()) {
 	                var c = matchValue[0].head;
 	                var i = matchValue[1].head;
-	                var input_2 = matchValue[1].tail;
+	                var input_1 = matchValue[1].tail;
 	                var word_1 = matchValue[0].tail;
-	                return loop(word_1)(input_2);
+	                return loop(word_1)(input_1);
 	              } else {
 	                return $target1();
 	              }
@@ -8416,20 +8689,17 @@
 	        };
 	      };
 	
-	      var matchValue = loop(prefix)(input);
+	      var matchValue = loop(prefix)(tupledArg[1]);
 	
 	      if (matchValue != null) {
-	        var input_1 = matchValue;
-	        return [[offset + prefix.length, input_1], new _fableCore.List(), result];
+	        return [[tupledArg[0] + prefix.length, matchValue], new _fableCore.List(), result];
 	      }
 	    }]);
 	  }
 	
 	  function op_LessBarGreater(_arg2, _arg1) {
-	    var p1 = _arg2.Fields[0];
-	    var p2 = _arg1.Fields[0];
 	    return new Parser("Parser", [function (input) {
-	      var matchValue = p1(input);
+	      var matchValue = _arg2.Fields[0](input);
 	
 	      if (matchValue != null) {
 	        var res = matchValue[2];
@@ -8437,22 +8707,21 @@
 	        var err = matchValue[1];
 	        return [input_1, err, res];
 	      } else {
-	        return p2(input);
+	        return _arg1.Fields[0](input);
 	      }
 	    }]);
 	  }
 	
 	  function op_LessMultiplyGreater(_arg2, _arg1) {
-	    var p1 = _arg2.Fields[0];
-	    var p2 = _arg1.Fields[0];
 	    return new Parser("Parser", [function (input) {
-	      var matchValue = p1(input);
+	      var matchValue = _arg2.Fields[0](input);
 	
 	      if (matchValue != null) {
 	        var res1 = matchValue[2];
 	        var input_1 = matchValue[0];
 	        var e1 = matchValue[1];
-	        var matchValue_1 = p2(input_1);
+	
+	        var matchValue_1 = _arg1.Fields[0](input_1);
 	
 	        if (matchValue_1 != null) {
 	          var res2 = matchValue_1[2];
@@ -8465,16 +8734,12 @@
 	  }
 	
 	  function map(f, _arg1) {
-	    var p = _arg1.Fields[0];
 	    return new Parser("Parser", [function (input) {
-	      var $var3 = p(input);
+	      var $var3 = _arg1.Fields[0](input);
 	
 	      if ($var3 != null) {
 	        return function (tupledArg) {
-	          var input_1 = tupledArg[0];
-	          var err = tupledArg[1];
-	          var res = tupledArg[2];
-	          return [input_1, err, f(res)];
+	          return [tupledArg[0], tupledArg[1], f(tupledArg[2])];
 	        }($var3);
 	      } else {
 	        return $var3;
@@ -8507,17 +8772,15 @@
 	  }
 	
 	  function bind(f, _arg1) {
-	    var p = _arg1.Fields[0];
 	    return new Parser("Parser", [function (input) {
-	      var matchValue = p(input);
+	      var matchValue = _arg1.Fields[0](input);
 	
 	      if (matchValue != null) {
 	        var res = matchValue[2];
 	        var input_1 = matchValue[0];
 	        var err1 = matchValue[1];
 	        var patternInput = f(res);
-	        var g = patternInput.Fields[0];
-	        var matchValue_1 = g(input_1);
+	        var matchValue_1 = patternInput.Fields[0](input_1);
 	
 	        if (matchValue_1 != null) {
 	          var res_1 = matchValue_1[2];
@@ -8530,9 +8793,8 @@
 	  }
 	
 	  function optional(_arg1) {
-	    var p = _arg1.Fields[0];
 	    return new Parser("Parser", [function (input) {
-	      var matchValue = p(input);
+	      var matchValue = _arg1.Fields[0](input);
 	
 	      if (matchValue != null) {
 	        var res = matchValue[2];
@@ -8547,13 +8809,12 @@
 	
 	  function pred(p) {
 	    return new Parser("Parser", [function (_arg1) {
-	      var $target1 = function () {
+	      var $target1 = function $target1() {
 	        return null;
 	      };
 	
 	      if (_arg1[1].tail != null) {
 	        if (function () {
-	          var offs = _arg1[0];
 	          var input = _arg1[1].tail;
 	          var c = _arg1[1].head;
 	          return p(c);
@@ -8574,14 +8835,13 @@
 	  function choose(p) {
 	    return new Parser("Parser", [function (_arg1) {
 	      return _arg1[1].tail != null ? function () {
-	        var offs = _arg1[0];
 	        var input = _arg1[1].tail;
 	        var c = _arg1[1].head;
 	        var $var4 = p(c);
 	
 	        if ($var4 != null) {
 	          return function (c_1) {
-	            return [[offs + 1, input], new _fableCore.List(), c_1];
+	            return [[_arg1[0] + 1, input], new _fableCore.List(), c_1];
 	          }($var4);
 	        } else {
 	          return $var4;
@@ -8591,12 +8851,10 @@
 	  }
 	
 	  function zeroOrMore(_arg1) {
-	    var p = _arg1.Fields[0];
-	
-	    var loop = function (acc) {
+	    var loop = function loop(acc) {
 	      return function (errs) {
 	        return function (input) {
-	          var matchValue = p(input);
+	          var matchValue = _arg1.Fields[0](input);
 	
 	          if (matchValue != null) {
 	            var res = matchValue[2];
@@ -8615,27 +8873,17 @@
 	
 	  function oneOrMore(p) {
 	    return map(function (tupledArg) {
-	      var c = tupledArg[0];
-	      var cs = tupledArg[1];
-	      return _fableCore.List.ofArray([c], cs);
+	      return _fableCore.List.ofArray([tupledArg[0]], tupledArg[1]);
 	    }, op_LessMultiplyGreater(p, zeroOrMore(p)));
 	  }
 	
 	  function range(_arg1) {
-	    var p = _arg1.Fields[0];
 	    return new Parser("Parser", [function (_arg2) {
-	      var input = _arg2;
-	      var offs1 = input[0];
-	      var $var5 = p(input);
+	      var $var5 = _arg1.Fields[0](_arg2);
 	
 	      if ($var5 != null) {
 	        return function (tupledArg) {
-	          var _arg1_1 = tupledArg[0];
-	          var errs = tupledArg[1];
-	          var res = tupledArg[2];
-	          var input_1 = _arg1_1;
-	          var offs2 = input_1[0];
-	          return [input_1, errs, [new _ast.Range(offs1, offs2), res]];
+	          return [tupledArg[0], tupledArg[1], [new _ast.Range(_arg2[0], tupledArg[0][0]), tupledArg[2]]];
 	        }($var5);
 	      } else {
 	        return $var5;
@@ -8656,8 +8904,7 @@
 	
 	        while (!(parsers_1.tail == null)) {
 	          var patternInput = parsers_1.head;
-	          var p = patternInput.Fields[0];
-	          var matchValue = p(input_1);
+	          var matchValue = patternInput.Fields[0](input_1);
 	
 	          if (matchValue == null) {
 	            parsers_1 = parsers_1.tail;
@@ -8677,383 +8924,6 @@
 	      return [input_1, errors, _fableCore.List.reverse(results)];
 	    }]);
 	  }
-	});
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(8), __webpack_require__(2), __webpack_require__(5), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  } else if (typeof exports !== "undefined") {
-	    factory(exports, require("./parsec"), require("fable-core"), require("./ast"), require("./errors"));
-	  } else {
-	    var mod = {
-	      exports: {}
-	    };
-	    factory(mod.exports, global.parsec, global.fableCore, global.ast, global.errors);
-	    global.parser = mod.exports;
-	  }
-	})(this, function (exports, _parsec, _fableCore, _ast, _errors) {
-	  "use strict";
-	
-	  Object.defineProperty(exports, "__esModule", {
-	    value: true
-	  });
-	  exports.program = exports.letBinding = exports.declaration = exports.listrange = exports.boolean = exports.string = exports.number = exports.lambda = exports.list = exports.expressionOrNothing = exports.invocationChain = exports.callOrPropertyOrNothing = exports.callOrProperty = exports.CallOrProperty = exports.argumentList = exports.argument = exports.expression = exports.expressionSetter = exports.ident = exports.anyUntilLineEnd = exports.anyWhite = undefined;
-	  exports.token = token;
-	  exports.optionalOrError = optionalOrError;
-	  exports.separated = separated;
-	  exports.separatedThen = separatedThen;
-	  exports.separatedOrEmpty = separatedOrEmpty;
-	
-	  function _classCallCheck(instance, Constructor) {
-	    if (!(instance instanceof Constructor)) {
-	      throw new TypeError("Cannot call a class as a function");
-	    }
-	  }
-	
-	  var _createClass = function () {
-	    function defineProperties(target, props) {
-	      for (var i = 0; i < props.length; i++) {
-	        var descriptor = props[i];
-	        descriptor.enumerable = descriptor.enumerable || false;
-	        descriptor.configurable = true;
-	        if ("value" in descriptor) descriptor.writable = true;
-	        Object.defineProperty(target, descriptor.key, descriptor);
-	      }
-	    }
-	
-	    return function (Constructor, protoProps, staticProps) {
-	      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-	      if (staticProps) defineProperties(Constructor, staticProps);
-	      return Constructor;
-	    };
-	  }();
-	
-	  var anyWhite = exports.anyWhite = (0, _parsec.zeroOrMore)((0, _parsec.pred)(function (t) {
-	    var matchValue = t.Token;
-	
-	    var $target0 = function () {
-	      return true;
-	    };
-	
-	    if (matchValue.Case === "Newline") {
-	      return $target0();
-	    } else {
-	      if (matchValue.Case === "White") {
-	        return $target0();
-	      } else {
-	        return false;
-	      }
-	    }
-	  }));
-	  var anyUntilLineEnd = exports.anyUntilLineEnd = new _parsec.Parser("Parser", [function (input) {
-	    var loop = function (input_1) {
-	      return input_1[1].tail == null ? function () {
-	        var offset = input_1[0];
-	        return [[offset, new _fableCore.List()], new _fableCore.List(), null];
-	      }() : input_1[1].head.Token.Case === "Newline" ? function () {
-	        var offset = input_1[0];
-	        var rest = input_1[1].tail;
-	        return [[offset + 1, rest], new _fableCore.List(), null];
-	      }() : function () {
-	        var offset = input_1[0];
-	        var rest = input_1[1].tail;
-	        var tok = input_1[1].head;
-	        return loop([offset + 1, rest]);
-	      }();
-	    };
-	
-	    return loop(input);
-	  }]);
-	
-	  function token(tok) {
-	    return (0, _parsec.pred)(function (t) {
-	      return t.Token.Equals(tok);
-	    });
-	  }
-	
-	  function optionalOrError(err, p) {
-	    return (0, _parsec.bind)(function (_arg1) {
-	      return _arg1[1] == null ? function () {
-	        var rng = _arg1[0];
-	        return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(err(rng)), (0, _parsec.unit)());
-	      }() : function () {
-	        var v = _arg1[1];
-	        return (0, _parsec.unit)(v);
-	      }();
-	    }, (0, _parsec.range)((0, _parsec.optional)(p)));
-	  }
-	
-	  function separated(sep, p) {
-	    return (0, _parsec.map)(function (tupledArg) {
-	      var a1 = tupledArg[0];
-	      var args = tupledArg[1];
-	      return _fableCore.List.ofArray([a1], _fableCore.List.map(function (tuple) {
-	        return tuple[1];
-	      }, args));
-	    }, (0, _parsec.op_LessMultiplyGreater)(p, (0, _parsec.zeroOrMore)((0, _parsec.op_LessMultiplyGreater)(sep, p))));
-	  }
-	
-	  function separatedThen(sep, p1, p2) {
-	    return (0, _parsec.map)(function (tupledArg) {
-	      var a1 = tupledArg[0];
-	      var args = tupledArg[1];
-	      return _fableCore.List.ofArray([a1], _fableCore.List.map(function (tuple) {
-	        return tuple[1];
-	      }, args));
-	    }, (0, _parsec.op_LessMultiplyGreater)(p1, (0, _parsec.zeroOrMore)((0, _parsec.op_LessMultiplyGreater)(sep, p2))));
-	  }
-	
-	  function separatedOrEmpty(sep, p) {
-	    return (0, _parsec.map)(function (l) {
-	      return l != null ? l : new _fableCore.List();
-	    }, (0, _parsec.optional)(separated(sep, p)));
-	  }
-	
-	  var ident = exports.ident = (0, _parsec.map)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var id = tupledArg[1];
-	    return new _ast.Name(id, rng);
-	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.choose)(function (tok) {
-	    var matchValue = tok.Token;
-	
-	    var $target0 = function (id) {
-	      return id;
-	    };
-	
-	    if (matchValue.Case === "Ident") {
-	      return $target0(matchValue.Fields[0]);
-	    } else {
-	      if (matchValue.Case === "QIdent") {
-	        return $target0(matchValue.Fields[0]);
-	      }
-	    }
-	  }))));
-	  var patternInput_46 = (0, _parsec.slot)();
-	  var expressionSetter = exports.expressionSetter = patternInput_46[0];
-	  var expression = exports.expression = patternInput_46[1];
-	  var argument = exports.argument = (0, _parsec.op_LessBarGreater)((0, _parsec.map)(function (tupledArg) {
-	    var name = tupledArg[0];
-	    var expr = tupledArg[1];
-	    return new _ast.Argument(name, expr);
-	  }, (0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)(ident, anyWhite), token(new _ast.TokenKind("Equals", []))), expression)), (0, _parsec.map)(function (expr) {
-	    return new _ast.Argument(null, expr);
-	  }, expression));
-	  var argumentList = exports.argumentList = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("LParen", [])), separatedOrEmpty((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("Comma", []))), argument)), (0, _parsec.op_LessBarGreater)((0, _parsec.ignore)((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("RParen", [])))), (0, _parsec.bind)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var _arg1 = tupledArg[1];
-	    return (0, _parsec.error)(_errors.Parser.missingClosingParen(rng));
-	  }, (0, _parsec.range)(anyUntilLineEnd))))));
-	
-	  var CallOrProperty = exports.CallOrProperty = function () {
-	    function CallOrProperty(name, _arguments) {
-	      _classCallCheck(this, CallOrProperty);
-	
-	      this.Name = name;
-	      this.Arguments = _arguments;
-	    }
-	
-	    _createClass(CallOrProperty, [{
-	      key: "Equals",
-	      value: function Equals(other) {
-	        return _fableCore.Util.equalsRecords(this, other);
-	      }
-	    }, {
-	      key: "CompareTo",
-	      value: function CompareTo(other) {
-	        return _fableCore.Util.compareRecords(this, other);
-	      }
-	    }]);
-	
-	    return CallOrProperty;
-	  }();
-	
-	  _fableCore.Util.setInterfaces(CallOrProperty.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.Parser.CallOrProperty");
-	
-	  var callOrProperty = exports.callOrProperty = (0, _parsec.bind)(function (_arg1) {
-	    return _arg1[1][0] == null ? function () {
-	      var rng = _arg1[0];
-	      var args = _arg1[1][1];
-	      return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.emptyIdentifier(rng)), (0, _parsec.unit)(new CallOrProperty(new _ast.Name("", rng), args)));
-	    }() : function () {
-	      var name = _arg1[1][0];
-	      var args = _arg1[1][1];
-	      return (0, _parsec.unit)(new CallOrProperty(name, args));
-	    }();
-	  }, (0, _parsec.op_LessBarGreater)((0, _parsec.range)((0, _parsec.map)(function (tupledArg) {
-	    var id = tupledArg[0];
-	    var args = tupledArg[1];
-	    return [id, args];
-	  }, (0, _parsec.op_LessMultiplyGreater)(ident, (0, _parsec.optional)(argumentList)))), (0, _parsec.range)((0, _parsec.map)(function (tupledArg) {
-	    var id = tupledArg[0];
-	    var args = tupledArg[1];
-	    return [id, args];
-	  }, (0, _parsec.op_LessMultiplyGreater)((0, _parsec.optional)(ident), argumentList)))));
-	  var callOrPropertyOrNothing = exports.callOrPropertyOrNothing = (0, _parsec.op_LessBarGreater)(callOrProperty, (0, _parsec.bind)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var _arg1 = tupledArg[1];
-	    return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.nothingAfterDot(rng)), (0, _parsec.unit)(new CallOrProperty(new _ast.Name("", rng))));
-	  }, (0, _parsec.range)((0, _parsec.unit)())));
-	  var invocationChain = exports.invocationChain = (0, _parsec.bind)(function (_arg1) {
-	    return _arg1.tail == null ? function () {
-	      throw "Unexpected: Parsed empty chain";
-	    }() : function () {
-	      var first = _arg1.head;
-	      var chain = _arg1.tail;
-	      var inst = new _ast.Expr(new _ast.ExprKind("Variable", [first.Name]), first.Name.Range);
-	
-	      var parsed = function () {
-	        var folder = function (st) {
-	          return function (item) {
-	            var patternInput = function () {
-	              var matchValue = item.Arguments;
-	
-	              if (matchValue == null) {
-	                return [new _ast.ExprKind("Property", [st, item.Name]), _ast.Ranges.unionRanges(st.Range, item.Name.Range)];
-	              } else {
-	                var arng = matchValue[0];
-	                var args = matchValue[1];
-	                return [new _ast.ExprKind("Call", [st, item.Name, args]), _ast.Ranges.unionRanges(st.Range, _ast.Ranges.unionRanges(item.Name.Range, arng))];
-	              }
-	            }();
-	
-	            var r = patternInput[1];
-	            var expr = patternInput[0];
-	            return new _ast.Expr(expr, r);
-	          };
-	        };
-	
-	        return function (list) {
-	          return _fableCore.Seq.fold(function ($var6, $var7) {
-	            return folder($var6)($var7);
-	          }, inst, list);
-	        };
-	      }()(chain);
-	
-	      return (0, _parsec.op_LessMultiplyGreaterGreater)(function () {
-	        var matchValue = first.Arguments;
-	
-	        if (matchValue != null) {
-	          var rng = matchValue[0];
-	          return (0, _parsec.error)(_errors.Parser.valueNotAfunction(rng, first.Name.Name));
-	        } else {
-	          return (0, _parsec.unit)();
-	        }
-	      }(), (0, _parsec.unit)(parsed));
-	    }();
-	  }, separatedThen((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("Dot", []))), callOrProperty, callOrPropertyOrNothing));
-	  var expressionOrNothing = exports.expressionOrNothing = (0, _parsec.op_LessBarGreater)((0, _parsec.map)(function (arg0) {
-	    return arg0;
-	  }, expression), (0, _parsec.bind)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var _arg1 = tupledArg[1];
-	    return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.nothingAfterComma(rng)), (0, _parsec.unit)());
-	  }, (0, _parsec.range)((0, _parsec.unit)())));
-	  var list = exports.list = (0, _parsec.map)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var items = tupledArg[1];
-	    return new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.choose(function (x) {
-	      return x;
-	    }, items)]), rng);
-	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("LSquare", [])), separatedThen((0, _parsec.op_LessMultiplyGreater)(anyWhite, token(new _ast.TokenKind("Comma", []))), (0, _parsec.map)(function (arg0) {
-	    return arg0;
-	  }, expression), expressionOrNothing)), anyWhite), optionalOrError(function (rng) {
-	    return _errors.Parser.missingClosingSquare(rng);
-	  }, token(new _ast.TokenKind("RSquare", [])))))));
-	  var lambda = exports.lambda = (0, _parsec.map)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var _arg1 = tupledArg[1];
-	    var _var = _arg1[0];
-	    var body = _arg1[1];
-	    return new _ast.Expr(new _ast.ExprKind("Function", [_var, body]), rng);
-	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("Fun", [])), anyWhite), ident), (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, token(new _ast.TokenKind("Arrow", []))), anyWhite), expression)))));
-	  var number = exports.number = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.choose)(function (_arg1) {
-	    return _arg1.Token.Case === "Number" ? function () {
-	      var rng = _arg1.Range;
-	      var n = _arg1.Token.Fields[1];
-	      return new _ast.Expr(new _ast.ExprKind("Number", [n]), rng);
-	    }() : null;
-	  }));
-	  var string = exports.string = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.choose)(function (_arg1) {
-	    return _arg1.Token.Case === "String" ? function () {
-	      var rng = _arg1.Range;
-	      var n = _arg1.Token.Fields[0];
-	      return new _ast.Expr(new _ast.ExprKind("String", [n]), rng);
-	    }() : null;
-	  }));
-	
-	  var _boolean = (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.choose)(function (_arg1) {
-	    return _arg1.Token.Case === "Boolean" ? function () {
-	      var rng = _arg1.Range;
-	      var b = _arg1.Token.Fields[0];
-	      return new _ast.Expr(new _ast.ExprKind("Boolean", [b]), rng);
-	    }() : null;
-	  }));
-	
-	  exports.boolean = _boolean;
-	  var listrange = exports.listrange = (0, _parsec.bind)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var e = tupledArg[1];
-	
-	    var getNum = function (_arg1) {
-	      return _arg1.Expr.Case === "Number" ? function () {
-	        var n = _arg1.Expr.Fields[0];
-	        return n;
-	      }() : function () {
-	        throw "expected number";
-	      }();
-	    };
-	
-	    var asNum = function (n) {
-	      var Expr = new _ast.ExprKind("Number", [n]);
-	      return new _ast.Expr(Expr, rng);
-	    };
-	
-	    var $target2 = function () {
-	      return (0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.error)(_errors.Parser.incompleteRange(rng)), (0, _parsec.unit)(new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.ofArray([asNum(0)])]), rng)));
-	    };
-	
-	    if (e[1] != null) {
-	      if (e[1][1] == null) {
-	        var efrom = e[0];
-	        var eto = e[1][0];
-	        return (0, _parsec.unit)(new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.map(asNum, _fableCore.Seq.toList(_fableCore.Seq.range(getNum(efrom), getNum(eto))))]), rng));
-	      } else {
-	        if (e[1][1] != null) {
-	          var efrom = e[0];
-	          var estep = e[1][1];
-	          var eto = e[1][0];
-	          return (0, _parsec.unit)(new _ast.Expr(new _ast.ExprKind("List", [_fableCore.List.map(asNum, _fableCore.Seq.toList(_fableCore.Seq.rangeStep(getNum(efrom), getNum(estep), getNum(eto))))]), rng));
-	        } else {
-	          return $target2();
-	        }
-	      }
-	    } else {
-	      return $target2();
-	    }
-	  }, (0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("LSquare", [])), anyWhite), number), anyWhite), token(new _ast.TokenKind("To", []))), anyWhite), (0, _parsec.optional)((0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)(number, anyWhite), (0, _parsec.optional)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(token(new _ast.TokenKind("By", [])), anyWhite), (0, _parsec.optional)((0, _parsec.op_LessLessMultiplyGreater)(number, anyWhite))))))), optionalOrError(function (rng) {
-	    return _errors.Parser.missingClosingSquare(rng);
-	  }, token(new _ast.TokenKind("RSquare", [])))))));
-	  var declaration = exports.declaration = (0, _parsec.op_LessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.op_LessMultiplyGreaterGreater)((0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, token(new _ast.TokenKind("Let", []))), ident), anyWhite), token(new _ast.TokenKind("Equals", []))), expression);
-	  var letBinding = exports.letBinding = (0, _parsec.map)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var _arg1 = tupledArg[1];
-	    var name = _arg1[0];
-	    var expr = _arg1[1];
-	    return new _ast.Command(new _ast.CommandKind("Let", [name, expr]), rng);
-	  }, (0, _parsec.range)(declaration));
-	  expressionSetter.Set((0, _parsec.op_LessMultiplyGreaterGreater)(anyWhite, (0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)((0, _parsec.op_LessBarGreater)(invocationChain, listrange), list), lambda), number), string), _boolean)));
-	  var program = exports.program = (0, _parsec.map)(function (tupledArg) {
-	    var rng = tupledArg[0];
-	    var cmds = tupledArg[1];
-	    return new _ast.Program(cmds, rng);
-	  }, (0, _parsec.range)((0, _parsec.op_LessLessMultiplyGreater)((0, _parsec.sequenceChoices)(_fableCore.List.ofArray([(0, _parsec.map)(function (e) {
-	    return new _ast.Command(new _ast.CommandKind("Expr", [e]), e.Range);
-	  }, expression), letBinding])), anyWhite)));
 	});
 
 
@@ -9399,10 +9269,8 @@
 	    _fableCore.Util.setInterfaces(ExportedType.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.TypePoviders.FSharpProvider.ExportedType");
 	
 	    var provideFSharpTypes = $exports.provideFSharpTypes = function provideFSharpTypes(lookupNamed, url) {
-	      var mapType = function (t) {
-	        var matchValue = t.kind;
-	
-	        if (matchValue === "primitive") {
+	      var mapType = function mapType(t) {
+	        return t.kind === "primitive" ? function () {
 	          var name = t.name;
 	
 	          if (name === "object") {
@@ -9414,43 +9282,30 @@
 	              return new _ast.Type("Primitive", [name]);
 	            }
 	          }
-	        } else {
-	          if (matchValue === "function") {
-	            var t_1 = t;
-	            return new _ast.Type("Function", [_fableCore.Seq.toList(t_1.arguments.map(mapType)), mapType(t_1.returns)]);
-	          } else {
-	            if (matchValue === "named") {
-	              var t_1 = t;
-	              return lookupNamed(t_1.name)(_fableCore.List.ofArray(t_1.typargs.map(mapType)));
-	            } else {
-	              if (matchValue === "parameter") {
-	                return new _ast.Type("Parameter", [t.name]);
-	              } else {
-	                if (matchValue === "array") {
-	                  return new _ast.Type("List", [mapType(t.element)]);
-	                } else {
-	                  throw "provideFSharpType: Unexpected type";
-	                }
-	              }
-	            }
-	          }
-	        }
+	        }() : t.kind === "function" ? function () {
+	          var t_1 = t;
+	          return new _ast.Type("Function", [_fableCore.Seq.toList(t_1.arguments.map(mapType)), mapType(t_1.returns)]);
+	        }() : t.kind === "named" ? function () {
+	          var t_1 = t;
+	          return lookupNamed(t_1.name)(_fableCore.List.ofArray(t_1.typargs.map(mapType)));
+	        }() : t.kind === "parameter" ? new _ast.Type("Parameter", [t.name]) : t.kind === "array" ? new _ast.Type("List", [mapType(t.element)]) : function () {
+	          throw "provideFSharpType: Unexpected type";
+	        }();
 	      };
 	
-	      var getTypeParameters = function (typars) {
+	      var getTypeParameters = function getTypeParameters(typars) {
 	        return _fableCore.List.ofArray(typars.map(function (t) {
 	          var matchValue = mapType(t);
 	
 	          if (matchValue.Case === "Parameter") {
-	            var n = matchValue.Fields[0];
-	            return n;
+	            return matchValue.Fields[0];
 	          } else {
 	            throw "importProvidedType: expected type parameter";
 	          }
 	        }));
 	      };
 	
-	      var importProvidedType = function (exp) {
+	      var importProvidedType = function importProvidedType(exp) {
 	        return function (arg00) {
 	          return function (arg10) {
 	            return (0, _extensions.Async$2EAsFuture$2EStatic)(arg00, arg10);
@@ -9468,11 +9323,9 @@
 	                }));
 	
 	                var emitter = new _ast.Emitter(function (tupledArg) {
-	                  var inst = tupledArg[0];
-	                  var args_1 = tupledArg[1];
-	                  return new _babelast.Expression("CallExpression", [new _babelast.Expression("MemberExpression", [inst, new _babelast.Expression("IdentifierExpression", [m_1.name, null]), false, null]), _fableCore.List.map(function (tuple) {
+	                  return new _babelast.Expression("CallExpression", [new _babelast.Expression("MemberExpression", [tupledArg[0], new _babelast.Expression("IdentifierExpression", [m_1.name, null]), false, null]), _fableCore.List.map(function (tuple) {
 	                    return tuple[1];
-	                  }, args_1), null]);
+	                  }, tupledArg[1]), null]);
 	                });
 	                return new _ast.Member("Method", [m_1.name, getTypeParameters(m_1.typepars), args, mapType(m_1.returns), new _ast.Documentation("Text", [""]), emitter]);
 	              }() : null;
@@ -9491,8 +9344,7 @@
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
 	          return builder_.Bind(_extensions.Http.Request("GET", url), function (_arg1) {
-	            var json = _arg1;
-	            var expTys = JSON.parse(json);
+	            var expTys = JSON.parse(_arg1);
 	            return builder_.Return(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
 	              return _fableCore.Seq.map(function (exp) {
 	                var guid = url + "," + exp.name;
@@ -9500,10 +9352,7 @@
 	
 	                if (exp.static) {
 	                  var e = _fableCore.Seq.fold(function (chain, s) {
-	                    return chain != null ? function () {
-	                      var e = chain;
-	                      return new _babelast.Expression("MemberExpression", [e, new _babelast.Expression("IdentifierExpression", [s, null]), false, null]);
-	                    }() : new _babelast.Expression("IdentifierExpression", [s, null]);
+	                    return chain != null ? new _babelast.Expression("MemberExpression", [chain, new _babelast.Expression("IdentifierExpression", [s, null]), false, null]) : new _babelast.Expression("IdentifierExpression", [s, null]);
 	                  }, null, exp.instance);
 	
 	                  return new ProvidedType("GlobalValue", [exp.name, e, ty]);
@@ -9738,7 +9587,7 @@
 	        var doc = json;
 	        var matchValue = [doc.title, doc.details];
 	
-	        var $target1 = function () {
+	        var $target1 = function $target1() {
 	          return new _ast.Documentation("None", []);
 	        };
 	
@@ -9776,8 +9625,7 @@
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
 	          return builder_.Bind(_extensions.Http.Request("GET", url, null, cookies), function (_arg1) {
-	            var json = _arg1;
-	            var members = JSON.parse(json);
+	            var members = JSON.parse(_arg1);
 	            return builder_.Return(members);
 	          });
 	        });
@@ -9802,7 +9650,7 @@
 	
 	    var addTraceCall = $exports.addTraceCall = function addTraceCall(inst, trace) {
 	      return _fableCore.Seq.isEmpty(trace) ? inst : function () {
-	        var trace_1 = new _babelast.Expression("StringLiteral", [_fableCore.String.concat("&", trace), null]);
+	        var trace_1 = new _babelast.Expression("StringLiteral", [_fableCore.String.join("&", trace), null]);
 	        var mem = new _babelast.Expression("MemberExpression", [inst, new _babelast.Expression("IdentifierExpression", ["addTrace", null]), false, null]);
 	        return new _babelast.Expression("CallExpression", [mem, _fableCore.List.ofArray([trace_1]), null]);
 	      }();
@@ -9810,42 +9658,34 @@
 	
 	    var propAccess = $exports.propAccess = function propAccess(trace) {
 	      return new _ast.Emitter(function (tupledArg) {
-	        var inst = tupledArg[0];
-	        var _args = tupledArg[1];
-	        return addTraceCall(inst, trace);
+	        return addTraceCall(tupledArg[0], trace);
 	      });
 	    };
 	
 	    var methCall = $exports.methCall = function methCall(trace) {
 	      return new _ast.Emitter(function (tupledArg) {
-	        var inst = tupledArg[0];
-	        var args = tupledArg[1];
-	        var withTrace = addTraceCall(inst, trace);
+	        var withTrace = addTraceCall(tupledArg[0], trace);
 	        return function () {
-	          var folder = function (inst_1) {
+	          var folder = function folder(inst) {
 	            return function (tupledArg_1) {
-	              var name = tupledArg_1[0];
-	              var value = tupledArg_1[1];
-	              var trace_1 = new _babelast.Expression("BinaryExpression", [new _babelast.BinaryOperator("BinaryPlus", []), new _babelast.Expression("StringLiteral", [name + "=", null]), value, null]);
-	              var mem = new _babelast.Expression("MemberExpression", [inst_1, new _babelast.Expression("IdentifierExpression", ["addTrace", null]), false, null]);
+	              var trace_1 = new _babelast.Expression("BinaryExpression", [new _babelast.BinaryOperator("BinaryPlus", []), new _babelast.Expression("StringLiteral", [tupledArg_1[0] + "=", null]), tupledArg_1[1], null]);
+	              var mem = new _babelast.Expression("MemberExpression", [inst, new _babelast.Expression("IdentifierExpression", ["addTrace", null]), false, null]);
 	              return new _babelast.Expression("CallExpression", [mem, _fableCore.List.ofArray([trace_1]), null]);
 	            };
 	          };
 	
 	          return function (source) {
-	            return _fableCore.Seq.fold(function ($var34, $var35) {
-	              return folder($var34)($var35);
+	            return _fableCore.Seq.fold(function ($var14, $var15) {
+	              return folder($var14)($var15);
 	            }, withTrace, source);
 	          };
-	        }()(args);
+	        }()(tupledArg[1]);
 	      });
 	    };
 	
 	    var dataCall = $exports.dataCall = function dataCall(parser, trace, endp) {
 	      return new _ast.Emitter(function (tupledArg) {
-	        var inst = tupledArg[0];
-	        var args = tupledArg[1];
-	        var tr = propAccess(trace).Emit([inst, args]);
+	        var tr = propAccess(trace).Emit([tupledArg[0], tupledArg[1]]);
 	        var mem = new _babelast.Expression("MemberExpression", [tr, new _babelast.Expression("IdentifierExpression", ["getValue", null]), false, null]);
 	        return parser(new _babelast.Expression("CallExpression", [mem, _fableCore.List.ofArray([new _babelast.Expression("StringLiteral", [endp, null])]), null]));
 	      });
@@ -9873,33 +9713,28 @@
 	    };
 	
 	    var getTypeAndEmitter = $exports.getTypeAndEmitter = function getTypeAndEmitter(lookupNamed, ty) {
-	      var $target1 = function () {
+	      var $target1 = function $target1() {
 	        return [new _ast.Type("Primitive", ["num"]), function (e) {
 	          return new _babelast.Expression("CallExpression", [new _babelast.Expression("IdentifierExpression", ["Number", null]), _fableCore.List.ofArray([e]), null]);
 	        }];
 	      };
 	
-	      var $target3 = function (ty_1) {
+	      var $target3 = function $target3(ty_1) {
 	        var patternInput = getTypeAndEmitter(lookupNamed, ty_1);
-	        var emitter = patternInput[1];
-	        var elTy = patternInput[0];
-	        var serTy = lookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", ["num"]), elTy]));
+	        var serTy = lookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", ["num"]), patternInput[0]]));
 	        return [serTy, function (d) {
-	          return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "ordinal"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(ident("_restruntime"), "convertSequence"), _fableCore.List.ofArray([func("v", emitter), d])), str("key"), str("value"), str("")]));
+	          return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "ordinal"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(ident("_restruntime"), "convertSequence"), _fableCore.List.ofArray([func("v", patternInput[1]), d])), str("key"), str("value"), str("")]));
 	        }];
 	      };
 	
-	      var $target5 = function () {
+	      var $target5 = function $target5() {
 	        console.log("getTypeAndEmitter: Cannot handle %O", ty);
 	        throw "getTypeAndEmitter: Cannot handle type";
 	      };
 	
 	      if (ty.Case === "Generic") {
 	        if (ty.Fields[0] === "seq") {
-	          if (function () {
-	            var testExpr = ty.Fields[1];
-	            return testExpr.length === 1;
-	          }()) {
+	          if (ty.Fields[1].length === 1) {
 	            if (ty.Fields[1][0].Case === "Generic") {
 	              if (ty.Fields[1][0].Fields[0] === "tuple") {
 	                if (function () {
@@ -9910,14 +9745,10 @@
 	                  var t2 = ty.Fields[1][0].Fields[1][1];
 	                  {
 	                    var patternInput = getTypeAndEmitter(lookupNamed, t1);
-	                    var t1_1 = patternInput[0];
-	                    var e1 = patternInput[1];
 	                    var patternInput_1 = getTypeAndEmitter(lookupNamed, t2);
-	                    var t2_1 = patternInput_1[0];
-	                    var e2 = patternInput_1[1];
-	                    var typ = lookupNamed("series")(_fableCore.List.ofArray([t1_1, t2_1]));
+	                    var typ = lookupNamed("series")(_fableCore.List.ofArray([patternInput[0], patternInput_1[0]]));
 	                    return [typ, function (d) {
-	                      return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "create"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(ident("_restruntime"), "convertTupleSequence"), _fableCore.List.ofArray([func("v", e1), func("v", e2), d])), str("key"), str("value"), str("")]));
+	                      return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "create"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(ident("_restruntime"), "convertTupleSequence"), _fableCore.List.ofArray([func("v", patternInput[1]), func("v", patternInput_1[1]), d])), str("key"), str("value"), str("")]));
 	                    }];
 	                  }
 	                } else {
@@ -9939,17 +9770,11 @@
 	        if (ty.Case === "Record") {
 	          var membs = ty.Fields[0];
 	          var membs_1 = membs.map(function (tupledArg) {
-	            var name = tupledArg[0];
-	            var ty_1 = tupledArg[1];
-	            var patternInput = getTypeAndEmitter(lookupNamed, ty_1);
-	            var memTy = patternInput[0];
-	            var memConv = patternInput[1];
+	            var patternInput = getTypeAndEmitter(lookupNamed, tupledArg[1]);
 	            var emitter = new _ast.Emitter(function (tupledArg_1) {
-	              var inst = tupledArg_1[0];
-	              var _arg1 = tupledArg_1[1];
-	              return memConv(op_Dynamic(inst, name));
+	              return patternInput[1](op_Dynamic(tupledArg_1[0], tupledArg[0]));
 	            });
-	            return new _ast.Member("Property", [name, memTy, null, new _ast.Documentation("Text", [""]), emitter]);
+	            return new _ast.Member("Property", [tupledArg[0], patternInput[0], null, new _ast.Documentation("Text", [""]), emitter]);
 	          });
 	          var obj = new _ast.Type("Object", [new _ast.ObjectType(membs_1, new _fableCore.List())]);
 	          return [obj, function (x) {
@@ -9976,7 +9801,7 @@
 	    };
 	
 	    var mapParamType = $exports.mapParamType = function mapParamType(_arg1) {
-	      var $target0 = function () {
+	      var $target0 = function $target0() {
 	        return "num";
 	      };
 	
@@ -9998,25 +9823,23 @@
 	      var matchValue = restTypeCache.has(guid) ? [true, restTypeCache.get(guid)] : [false, null];
 	
 	      if (matchValue[0]) {
-	        var res = matchValue[1];
-	        return res;
+	        return matchValue[1];
 	      } else {
 	        var future = function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(load(concatUrl(root, url), cookies), function (_arg1) {
-	              var members = _arg1;
 	              return builder_.Return(new _ast.Type("Object", [function () {
 	                var Typeargs = new _fableCore.List();
-	                return new _ast.ObjectType(members.map(function (m) {
+	                return new _ast.ObjectType(_arg1.map(function (m) {
 	                  var schema = function () {
-	                    var $var36 = m.schema;
+	                    var $var16 = m.schema;
 	
-	                    if ($var36 != null) {
+	                    if ($var16 != null) {
 	                      return function (s) {
 	                        return new _ast.Schema(s["@type"], s);
-	                      }($var36);
+	                      }($var16);
 	                    } else {
-	                      return $var36;
+	                      return $var16;
 	                    }
 	                  }();
 	
@@ -10025,23 +9848,20 @@
 	                  if (matchValue_1 === "nested") {
 	                    var returns = m.returns;
 	                    var retTyp = createRestType(lookupNamed, root, cookies, returns.endpoint);
-	                    var matchValue_2 = m.parameters;
 	
-	                    if (matchValue_2 == null) {
+	                    if (m.parameters == null) {
 	                      return new _ast.Member("Property", [m.name, retTyp, schema, parseDoc(m.documentation), propAccess(m.trace)]);
 	                    } else {
-	                      var parameters = matchValue_2;
-	
 	                      var args = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
 	                        return _fableCore.Seq.map(function (p) {
 	                          return [p.name, false, new _ast.Type("Primitive", [mapParamType(p.type)])];
-	                        }, parameters);
+	                        }, m.parameters);
 	                      }));
 	
 	                      var argNames = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
 	                        return _fableCore.Seq.map(function (p) {
 	                          return p.name;
-	                        }, parameters);
+	                        }, m.parameters);
 	                      }));
 	
 	                      return new _ast.Member("Method", [m.name, new _fableCore.List(), args, retTyp, parseDoc(m.documentation), methCall(m.trace)]);
@@ -10051,9 +9871,7 @@
 	                      var returns = m.returns;
 	                      var ty = fromRawType(returns.type);
 	                      var patternInput = getTypeAndEmitter(lookupNamed, ty);
-	                      var typ = patternInput[0];
-	                      var parser = patternInput[1];
-	                      return new _ast.Member("Property", [m.name, typ, schema, parseDoc(m.documentation), dataCall(parser, m.trace, returns.endpoint)]);
+	                      return new _ast.Member("Property", [m.name, patternInput[0], schema, parseDoc(m.documentation), dataCall(patternInput[1], m.trace, returns.endpoint)]);
 	                    } else {
 	                      throw "?";
 	                    }
@@ -10396,20 +10214,12 @@
 	        };
 	
 	        var serializePattern = $exports.serializePattern = function serializePattern(pat) {
-	            var name = pat.Fields[0];
-	            var loc = pat.Fields[1];
-	            return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "Identifier"]]), _fableCore.List.ofArray([["name", name]]), loc != null ? function () {
-	                var v = loc;
-	                return _fableCore.List.ofArray([["loc", v]]);
-	            }() : new _fableCore.List()]));
+	            return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "Identifier"]]), _fableCore.List.ofArray([["name", pat.Fields[0]]]), pat.Fields[1] != null ? _fableCore.List.ofArray([["loc", pat.Fields[1]]]) : new _fableCore.List()]));
 	        };
 	
 	        var serializeDeclarator = $exports.serializeDeclarator = function serializeDeclarator(_arg1) {
-	            var loc = _arg1.Fields[2];
-	            var init = _arg1.Fields[1];
-	            var id = _arg1.Fields[0];
-	            return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "VariableDeclarator"]]), _fableCore.List.ofArray([["id", serializePattern(id)]]), function () {
-	                var $var1 = init;
+	            return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "VariableDeclarator"]]), _fableCore.List.ofArray([["id", serializePattern(_arg1.Fields[0])]]), function () {
+	                var $var1 = _arg1.Fields[1];
 	
 	                if ($var1 != null) {
 	                    return function (expr) {
@@ -10418,185 +10228,44 @@
 	                } else {
 	                    return $var1;
 	                }
-	            }() != null ? function () {
-	                var v = function () {
-	                    var $var1 = init;
+	            }() != null ? _fableCore.List.ofArray([["init", function () {
+	                var $var1 = _arg1.Fields[1];
 	
-	                    if ($var1 != null) {
-	                        return function (expr) {
-	                            return serializeExpression(expr);
-	                        }($var1);
-	                    } else {
-	                        return $var1;
-	                    }
-	                }();
-	
-	                return _fableCore.List.ofArray([["init", v]]);
-	            }() : new _fableCore.List(), loc != null ? function () {
-	                var v = loc;
-	                return _fableCore.List.ofArray([["loc", v]]);
-	            }() : new _fableCore.List()]));
+	                if ($var1 != null) {
+	                    return function (expr) {
+	                        return serializeExpression(expr);
+	                    }($var1);
+	                } else {
+	                    return $var1;
+	                }
+	            }()]]) : new _fableCore.List(), _arg1.Fields[2] != null ? _fableCore.List.ofArray([["loc", _arg1.Fields[2]]]) : new _fableCore.List()]));
 	        };
 	
 	        var serializeExpression = $exports.serializeExpression = function serializeExpression(expr) {
-	            return expr.Case === "NewExpression" ? function () {
-	                var loc = expr.Fields[2];
-	                var callee = expr.Fields[0];
-	                var args = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "NewExpression"]]), _fableCore.List.ofArray([["callee", serializeExpression(callee)]]), _fableCore.List.ofArray([["arguments", Array.from(_fableCore.List.map(function (expr_1) {
-	                    return serializeExpression(expr_1);
-	                }, args))]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "FunctionExpression" ? function () {
-	                var pars = expr.Fields[1];
-	                var loc = expr.Fields[5];
-	                var id = expr.Fields[0];
-	                var generator = expr.Fields[3];
-	                var body = expr.Fields[2];
-	                var async = expr.Fields[4];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "FunctionExpression"]]), id != null ? function () {
-	                    var v = id;
-	                    return _fableCore.List.ofArray([["id", v]]);
-	                }() : new _fableCore.List(), _fableCore.List.ofArray([["params", Array.from(_fableCore.List.map(function (pat) {
-	                    return serializePattern(pat);
-	                }, pars))]]), _fableCore.List.ofArray([["body", serializeStatement(body)]]), _fableCore.List.ofArray([["generator", generator]]), _fableCore.List.ofArray([["async", async]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "AssignmentExpression" ? function () {
-	                var r = expr.Fields[2];
-	                var op = expr.Fields[0];
-	                var loc = expr.Fields[3];
-	                var l = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "AssignmentExpression"]]), _fableCore.List.ofArray([["left", serializeExpression(l)]]), _fableCore.List.ofArray([["right", serializeExpression(r)]]), _fableCore.List.ofArray([["operator", serializeAssignOperator(op)]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "CallExpression" ? function () {
-	                var loc = expr.Fields[2];
-	                var callee = expr.Fields[0];
-	                var args = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "CallExpression"]]), _fableCore.List.ofArray([["callee", serializeExpression(callee)]]), _fableCore.List.ofArray([["arguments", Array.from(_fableCore.List.map(function (expr_1) {
-	                    return serializeExpression(expr_1);
-	                }, args))]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "MemberExpression" ? function () {
-	                var prop = expr.Fields[1];
-	                var obj = expr.Fields[0];
-	                var loc = expr.Fields[3];
-	                var computed = expr.Fields[2];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "MemberExpression"]]), _fableCore.List.ofArray([["object", serializeExpression(obj)]]), _fableCore.List.ofArray([["property", serializeExpression(prop)]]), _fableCore.List.ofArray([["computed", computed]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "BinaryExpression" ? function () {
-	                var r = expr.Fields[2];
-	                var op = expr.Fields[0];
-	                var loc = expr.Fields[3];
-	                var l = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "BinaryExpression"]]), _fableCore.List.ofArray([["left", serializeExpression(l)]]), _fableCore.List.ofArray([["right", serializeExpression(r)]]), _fableCore.List.ofArray([["operator", serializeBinaryOperator(op)]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "ArrayExpression" ? function () {
-	                var loc = expr.Fields[1];
-	                var elements = expr.Fields[0];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "ArrayExpression"]]), _fableCore.List.ofArray([["elements", Array.from(_fableCore.List.map(function (expr_1) {
-	                    return serializeExpression(expr_1);
-	                }, elements))]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "NullLiteral" ? function () {
-	                var loc = expr.Fields[0];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "NullLiteral"]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "StringLiteral" ? function () {
-	                var v = expr.Fields[0];
-	                var loc = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "StringLiteral"]]), _fableCore.List.ofArray([["value", v]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "BooleanLiteral" ? function () {
-	                var v = expr.Fields[0];
-	                var loc = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "BooleanLiteral"]]), _fableCore.List.ofArray([["value", v]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : expr.Case === "NumericLiteral" ? function () {
-	                var v = expr.Fields[0];
-	                var loc = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "NumericLiteral"]]), _fableCore.List.ofArray([["value", v]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : function () {
-	                var name = expr.Fields[0];
-	                var loc = expr.Fields[1];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "Identifier"]]), _fableCore.List.ofArray([["name", name]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }();
+	            return expr.Case === "NewExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "NewExpression"]]), _fableCore.List.ofArray([["callee", serializeExpression(expr.Fields[0])]]), _fableCore.List.ofArray([["arguments", Array.from(_fableCore.List.map(function (expr_1) {
+	                return serializeExpression(expr_1);
+	            }, expr.Fields[1]))]]), expr.Fields[2] != null ? _fableCore.List.ofArray([["loc", expr.Fields[2]]]) : new _fableCore.List()])) : expr.Case === "FunctionExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "FunctionExpression"]]), expr.Fields[0] != null ? _fableCore.List.ofArray([["id", expr.Fields[0]]]) : new _fableCore.List(), _fableCore.List.ofArray([["params", Array.from(_fableCore.List.map(function (pat) {
+	                return serializePattern(pat);
+	            }, expr.Fields[1]))]]), _fableCore.List.ofArray([["body", serializeStatement(expr.Fields[2])]]), _fableCore.List.ofArray([["generator", expr.Fields[3]]]), _fableCore.List.ofArray([["async", expr.Fields[4]]]), expr.Fields[5] != null ? _fableCore.List.ofArray([["loc", expr.Fields[5]]]) : new _fableCore.List()])) : expr.Case === "AssignmentExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "AssignmentExpression"]]), _fableCore.List.ofArray([["left", serializeExpression(expr.Fields[1])]]), _fableCore.List.ofArray([["right", serializeExpression(expr.Fields[2])]]), _fableCore.List.ofArray([["operator", serializeAssignOperator(expr.Fields[0])]]), expr.Fields[3] != null ? _fableCore.List.ofArray([["loc", expr.Fields[3]]]) : new _fableCore.List()])) : expr.Case === "CallExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "CallExpression"]]), _fableCore.List.ofArray([["callee", serializeExpression(expr.Fields[0])]]), _fableCore.List.ofArray([["arguments", Array.from(_fableCore.List.map(function (expr_1) {
+	                return serializeExpression(expr_1);
+	            }, expr.Fields[1]))]]), expr.Fields[2] != null ? _fableCore.List.ofArray([["loc", expr.Fields[2]]]) : new _fableCore.List()])) : expr.Case === "MemberExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "MemberExpression"]]), _fableCore.List.ofArray([["object", serializeExpression(expr.Fields[0])]]), _fableCore.List.ofArray([["property", serializeExpression(expr.Fields[1])]]), _fableCore.List.ofArray([["computed", expr.Fields[2]]]), expr.Fields[3] != null ? _fableCore.List.ofArray([["loc", expr.Fields[3]]]) : new _fableCore.List()])) : expr.Case === "BinaryExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "BinaryExpression"]]), _fableCore.List.ofArray([["left", serializeExpression(expr.Fields[1])]]), _fableCore.List.ofArray([["right", serializeExpression(expr.Fields[2])]]), _fableCore.List.ofArray([["operator", serializeBinaryOperator(expr.Fields[0])]]), expr.Fields[3] != null ? _fableCore.List.ofArray([["loc", expr.Fields[3]]]) : new _fableCore.List()])) : expr.Case === "ArrayExpression" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "ArrayExpression"]]), _fableCore.List.ofArray([["elements", Array.from(_fableCore.List.map(function (expr_1) {
+	                return serializeExpression(expr_1);
+	            }, expr.Fields[0]))]]), expr.Fields[1] != null ? _fableCore.List.ofArray([["loc", expr.Fields[1]]]) : new _fableCore.List()])) : expr.Case === "NullLiteral" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "NullLiteral"]]), expr.Fields[0] != null ? _fableCore.List.ofArray([["loc", expr.Fields[0]]]) : new _fableCore.List()])) : expr.Case === "StringLiteral" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "StringLiteral"]]), _fableCore.List.ofArray([["value", expr.Fields[0]]]), expr.Fields[1] != null ? _fableCore.List.ofArray([["loc", expr.Fields[1]]]) : new _fableCore.List()])) : expr.Case === "BooleanLiteral" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "BooleanLiteral"]]), _fableCore.List.ofArray([["value", expr.Fields[0]]]), expr.Fields[1] != null ? _fableCore.List.ofArray([["loc", expr.Fields[1]]]) : new _fableCore.List()])) : expr.Case === "NumericLiteral" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "NumericLiteral"]]), _fableCore.List.ofArray([["value", expr.Fields[0]]]), expr.Fields[1] != null ? _fableCore.List.ofArray([["loc", expr.Fields[1]]]) : new _fableCore.List()])) : createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "Identifier"]]), _fableCore.List.ofArray([["name", expr.Fields[0]]]), expr.Fields[1] != null ? _fableCore.List.ofArray([["loc", expr.Fields[1]]]) : new _fableCore.List()]));
 	        };
 	
 	        var serializeStatement = $exports.serializeStatement = function serializeStatement(stm) {
-	            return stm.Case === "BlockStatement" ? function () {
-	                var loc = stm.Fields[1];
-	                var b = stm.Fields[0];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "BlockStatement"]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List(), _fableCore.List.ofArray([["body", Array.from(_fableCore.List.map(function (stm_1) {
-	                    return serializeStatement(stm_1);
-	                }, b))]])]));
-	            }() : stm.Case === "EmptyStatement" ? function () {
-	                var loc = stm.Fields[0];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "EmptyStatement"]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : stm.Case === "ReturnStatement" ? function () {
-	                var loc = stm.Fields[1];
-	                var arg = stm.Fields[0];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "ReturnStatement"]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List(), _fableCore.List.ofArray([["argument", serializeExpression(arg)]])]));
-	            }() : stm.Case === "VariableDeclaration" ? function () {
-	                var loc = stm.Fields[2];
-	                var kind = stm.Fields[0];
-	                var decls = stm.Fields[1];
-	                var kind_1 = kind.Case === "Let" ? "let" : kind.Case === "Const" ? "const" : "var";
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "VariableDeclaration"]]), _fableCore.List.ofArray([["kind", kind_1]]), _fableCore.List.ofArray([["declarations", Array.from(_fableCore.List.map(function (arg00_) {
+	            return stm.Case === "BlockStatement" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "BlockStatement"]]), stm.Fields[1] != null ? _fableCore.List.ofArray([["loc", stm.Fields[1]]]) : new _fableCore.List(), _fableCore.List.ofArray([["body", Array.from(_fableCore.List.map(function (stm_1) {
+	                return serializeStatement(stm_1);
+	            }, stm.Fields[0]))]])])) : stm.Case === "EmptyStatement" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "EmptyStatement"]]), stm.Fields[0] != null ? _fableCore.List.ofArray([["loc", stm.Fields[0]]]) : new _fableCore.List()])) : stm.Case === "ReturnStatement" ? createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "ReturnStatement"]]), stm.Fields[1] != null ? _fableCore.List.ofArray([["loc", stm.Fields[1]]]) : new _fableCore.List(), _fableCore.List.ofArray([["argument", serializeExpression(stm.Fields[0])]])])) : stm.Case === "VariableDeclaration" ? function () {
+	                var kind = stm.Fields[0].Case === "Let" ? "let" : stm.Fields[0].Case === "Const" ? "const" : "var";
+	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "VariableDeclaration"]]), _fableCore.List.ofArray([["kind", kind]]), _fableCore.List.ofArray([["declarations", Array.from(_fableCore.List.map(function (arg00_) {
 	                    return serializeDeclarator(arg00_);
-	                }, decls))]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List()]));
-	            }() : function () {
-	                var loc = stm.Fields[1];
-	                var e = stm.Fields[0];
-	                return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "ExpressionStatement"]]), loc != null ? function () {
-	                    var v = loc;
-	                    return _fableCore.List.ofArray([["loc", v]]);
-	                }() : new _fableCore.List(), _fableCore.List.ofArray([["expression", serializeExpression(e)]])]));
-	            }();
+	                }, stm.Fields[1]))]]), stm.Fields[2] != null ? _fableCore.List.ofArray([["loc", stm.Fields[2]]]) : new _fableCore.List()]));
+	            }() : createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "ExpressionStatement"]]), stm.Fields[1] != null ? _fableCore.List.ofArray([["loc", stm.Fields[1]]]) : new _fableCore.List(), _fableCore.List.ofArray([["expression", serializeExpression(stm.Fields[0])]])]));
 	        };
 	
 	        var serializeProgram = $exports.serializeProgram = function serializeProgram(prog) {
-	            return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "Program"]]), prog.location != null ? function () {
-	                var v = prog.location;
-	                return _fableCore.List.ofArray([["loc", v]]);
-	            }() : new _fableCore.List(), _fableCore.List.ofArray([["sourceType", "module"]]), _fableCore.List.ofArray([["body", Array.from(_fableCore.List.map(function (stm) {
+	            return createObj(_fableCore.List.ofArray([_fableCore.List.ofArray([["type", "Program"]]), prog.location != null ? _fableCore.List.ofArray([["loc", prog.location]]) : new _fableCore.List(), _fableCore.List.ofArray([["sourceType", "module"]]), _fableCore.List.ofArray([["body", Array.from(_fableCore.List.map(function (stm) {
 	                return serializeStatement(stm);
 	            }, prog.body))]]), _fableCore.List.ofArray([["directives", []]])]));
 	        };
@@ -10628,7 +10297,10 @@
 	  Object.defineProperty(exports, "__esModule", {
 	    value: true
 	  });
-	  exports.propertyEmitter = exports.Transform = exports.Field = exports.Transformation = exports.Paging = exports.SortDirection = exports.Aggregation = undefined;
+	  exports.Context = exports.propertyEmitter = exports.Transform = exports.Field = exports.Transformation = exports.Paging = exports.SortDirection = exports.Aggregation = undefined;
+	  exports.trimLeft = trimLeft;
+	  exports.trimRight = trimRight;
+	  exports.concatUrl = concatUrl;
 	  exports.withDocs = withDocs;
 	  exports.withSchema = withSchema;
 	  exports.withCreateAction = withCreateAction;
@@ -10657,6 +10329,8 @@
 	  exports.aggregationMembers = aggregationMembers;
 	  exports.handleGroupAggRequest = handleGroupAggRequest;
 	  exports.handleGroupRequest = handleGroupRequest;
+	  exports.handleFilterEqNeqRequest = handleFilterEqNeqRequest;
+	  exports.handleFilterRequest = handleFilterRequest;
 	  exports.makePivotTypeImmediate = makePivotTypeImmediate;
 	  exports.makePivotType = makePivotType;
 	  exports.providePivotType = providePivotType;
@@ -10812,80 +10486,36 @@
 	
 	  var Transform = exports.Transform = function ($exports) {
 	    var formatAgg = function formatAgg(_arg1) {
-	      return _arg1.Case === "CountAll" ? _fableCore.List.ofArray(["count-all"]) : _arg1.Case === "CountDistinct" ? function () {
-	        var f = _arg1.Fields[0];
-	        return _fableCore.List.ofArray(["count-dist", f]);
-	      }() : _arg1.Case === "ReturnUnique" ? function () {
-	        var f = _arg1.Fields[0];
-	        return _fableCore.List.ofArray(["unique", f]);
-	      }() : _arg1.Case === "ConcatValues" ? function () {
-	        var f = _arg1.Fields[0];
-	        return _fableCore.List.ofArray(["concat-vals", f]);
-	      }() : _arg1.Case === "Sum" ? function () {
-	        var f = _arg1.Fields[0];
-	        return _fableCore.List.ofArray(["sum", f]);
-	      }() : _arg1.Case === "Mean" ? function () {
-	        var f = _arg1.Fields[0];
-	        return _fableCore.List.ofArray(["mean", f]);
-	      }() : _fableCore.List.ofArray(["key"]);
+	      return _arg1.Case === "CountAll" ? _fableCore.List.ofArray(["count-all"]) : _arg1.Case === "CountDistinct" ? _fableCore.List.ofArray(["count-dist", _arg1.Fields[0]]) : _arg1.Case === "ReturnUnique" ? _fableCore.List.ofArray(["unique", _arg1.Fields[0]]) : _arg1.Case === "ConcatValues" ? _fableCore.List.ofArray(["concat-vals", _arg1.Fields[0]]) : _arg1.Case === "Sum" ? _fableCore.List.ofArray(["sum", _arg1.Fields[0]]) : _arg1.Case === "Mean" ? _fableCore.List.ofArray(["mean", _arg1.Fields[0]]) : _fableCore.List.ofArray(["key"]);
 	    };
 	
 	    var toUrl = $exports.toUrl = function toUrl(transforms) {
-	      return _fableCore.String.concat("/", _fableCore.List.concat(_fableCore.List.mapIndexed(function (i, l) {
+	      return _fableCore.String.join("/", _fableCore.List.concat(_fableCore.List.mapIndexed(function (i, l) {
 	        return i === 0 ? l : _fableCore.List.ofArray(["then"], l);
 	      }, _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	        return _fableCore.Seq.map(function (t) {
-	          return t.Case === "SortBy" ? function () {
-	            var columns = t.Fields[0];
-	            return _fableCore.List.ofArray(["sort"], _fableCore.List.collect(function (tupledArg) {
-	              var c = tupledArg[0];
-	              var o = tupledArg[1];
-	              return _fableCore.List.ofArray([c, o.Equals(new SortDirection("Ascending", [])) ? "asc" : "desc"]);
-	            }, columns));
-	          }() : t.Case === "GroupBy" ? function () {
-	            var flds = t.Fields[0];
-	            var aggs = t.Fields[1];
-	            return _fableCore.List.ofArray(["group"], _fableCore.List.append(_fableCore.List.map(function (f) {
-	              return "by-" + f;
-	            }, flds), _fableCore.List.collect(function (_arg1) {
-	              return formatAgg(_arg1);
-	            }, aggs)));
-	          }() : t.Case === "Paging" ? function () {
-	            var ops = t.Fields[0];
-	            return _fableCore.List.ofArray(["page"], _fableCore.List.collect(function (_arg1) {
-	              return _arg1.Case === "Skip" ? function () {
-	                var k = _arg1.Fields[0];
-	                return _fableCore.List.ofArray(["skip", k]);
-	              }() : function () {
-	                var k = _arg1.Fields[0];
-	                return _fableCore.List.ofArray(["take", k]);
-	              }();
-	            }, ops));
-	          }() : t.Case === "GetSeries" ? function () {
-	            var v = t.Fields[1];
-	            var k = t.Fields[0];
-	            return _fableCore.List.ofArray(["series", k, v]);
-	          }() : t.Case === "Empty" ? new _fableCore.List() : function () {
-	            var columns = t.Fields[0];
-	            return _fableCore.List.ofArray(["drop"], columns);
-	          }();
+	          return t.Case === "DropColumns" ? _fableCore.List.ofArray(["drop"], t.Fields[0]) : t.Case === "SortBy" ? _fableCore.List.ofArray(["sort"], _fableCore.List.collect(function (tupledArg) {
+	            return _fableCore.List.ofArray([tupledArg[0], tupledArg[1].Equals(new SortDirection("Ascending", [])) ? "asc" : "desc"]);
+	          }, t.Fields[0])) : t.Case === "GroupBy" ? _fableCore.List.ofArray(["group"], _fableCore.List.append(_fableCore.List.map(function (f) {
+	            return "by-" + f;
+	          }, t.Fields[0]), _fableCore.List.collect(function (_arg1) {
+	            return formatAgg(_arg1);
+	          }, t.Fields[1]))) : t.Case === "Paging" ? _fableCore.List.ofArray(["page"], _fableCore.List.collect(function (_arg1) {
+	            return _arg1.Case === "Skip" ? _fableCore.List.ofArray(["skip", _arg1.Fields[0]]) : _fableCore.List.ofArray(["take", _arg1.Fields[0]]);
+	          }, t.Fields[0])) : t.Case === "GetSeries" ? _fableCore.List.ofArray(["series", t.Fields[0], t.Fields[1]]) : t.Case === "Empty" ? new _fableCore.List() : _fableCore.List.ofArray(["filter"], _fableCore.List.collect(function (tupledArg) {
+	            return _fableCore.List.ofArray([tupledArg[0], tupledArg[1] ? "eq" : "neq", tupledArg[2]]);
+	          }, t.Fields[0]));
 	        }, _fableCore.List.reverse(transforms));
 	      })))));
 	    };
 	
 	    var singleTransformFields = $exports.singleTransformFields = function singleTransformFields(fields, _arg1) {
-	      return _arg1.Case === "SortBy" ? fields : _arg1.Case === "Paging" ? fields : _arg1.Case === "GetSeries" ? function () {
-	        var v = _arg1.Fields[1];
-	        var k = _arg1.Fields[0];
-	        return _fableCore.List.ofArray([_fableCore.Seq.find(function (f) {
-	          return f.Name === k;
-	        }, fields), _fableCore.Seq.find(function (f) {
-	          return f.Name === v;
-	        }, fields)]);
-	      }() : _arg1.Case === "DropColumns" ? function () {
-	        var drop = _arg1.Fields[0];
-	
-	        var dropped = _fableCore.Set.create(drop, new _fableCore.GenericComparer(function (x, y) {
+	      return _arg1.Case === "SortBy" ? fields : _arg1.Case === "Paging" ? fields : _arg1.Case === "FilterBy" ? fields : _arg1.Case === "GetSeries" ? _fableCore.List.ofArray([_fableCore.Seq.find(function (f) {
+	        return f.Name === _arg1.Fields[0];
+	      }, fields), _fableCore.Seq.find(function (f) {
+	        return f.Name === _arg1.Fields[1];
+	      }, fields)]) : _arg1.Case === "DropColumns" ? function () {
+	        var dropped = _fableCore.Set.create(_arg1.Fields[0], new _fableCore.GenericComparer(function (x, y) {
 	          return x < y ? -1 : x > y ? 1 : 0;
 	        }));
 	
@@ -10893,15 +10523,13 @@
 	          return !dropped.has(f.Name);
 	        }, fields);
 	      }() : _arg1.Case === "GroupBy" ? function () {
-	        var flds = _arg1.Fields[0];
-	        var aggs = _arg1.Fields[1];
 	        var oldFields = new Map(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	          return _fableCore.Seq.map(function (f) {
 	            return [f.Name, f];
 	          }, fields);
 	        })));
 	        return _fableCore.List.collect(function (_arg2) {
-	          var $target1 = function (fld) {
+	          var $target1 = function $target1(fld) {
 	            return _fableCore.List.ofArray([oldFields.get(fld)]);
 	          };
 	
@@ -10915,26 +10543,24 @@
 	                return $target1(_arg2.Fields[0]);
 	              } else {
 	                if (_arg2.Case === "Mean") {
-	                  var fld = _arg2.Fields[0];
-	                  return _fableCore.List.ofArray([oldFields.get(fld)]);
+	                  return _fableCore.List.ofArray([oldFields.get(_arg2.Fields[0])]);
 	                } else {
 	                  if (_arg2.Case === "CountAll") {
 	                    return _fableCore.List.ofArray([new Field("count", "num")]);
 	                  } else {
 	                    if (_arg2.Case === "CountDistinct") {
-	                      var fld = _arg2.Fields[0];
-	                      return _fableCore.List.ofArray([new Field(oldFields.get(fld).Name, "num")]);
+	                      return _fableCore.List.ofArray([new Field(oldFields.get(_arg2.Fields[0]).Name, "num")]);
 	                    } else {
 	                      return _fableCore.List.map(function (f) {
 	                        return oldFields.get(f);
-	                      }, flds);
+	                      }, _arg1.Fields[0]);
 	                    }
 	                  }
 	                }
 	              }
 	            }
 	          }
-	        }, aggs);
+	        }, _arg1.Fields[1]);
 	      }() : fields;
 	    };
 	
@@ -10953,34 +10579,33 @@
 	    return $exports;
 	  }({});
 	
+	  function trimLeft(c, s) {
+	    return Array.from(_fableCore.Seq.skipWhile(function (y) {
+	      return c === y;
+	    }, s.split(""))).join('');
+	  }
+	
+	  function trimRight(c, s) {
+	    return Array.from(_fableCore.Seq.skipWhile(function (y) {
+	      return c === y;
+	    }, s.split("").reverse())).reverse().join('');
+	  }
+	
+	  function concatUrl(a, b) {
+	    return trimRight("/", a) + "/" + trimLeft("/", b);
+	  }
+	
 	  function withDocs(title, details, membr) {
-	    return membr.Case === "Property" ? function () {
-	      var typ = membr.Fields[1];
-	      var schema = membr.Fields[2];
-	      var n = membr.Fields[0];
-	      var emitter = membr.Fields[4];
-	      return new _ast.Member("Property", [n, typ, schema, new _ast.Documentation("Details", [title, details]), emitter]);
-	    }() : function () {
-	      var typ = membr.Fields[3];
-	      var tya = membr.Fields[1];
-	      var n = membr.Fields[0];
-	      var emitter = membr.Fields[5];
-	      var args = membr.Fields[2];
-	      return new _ast.Member("Method", [n, tya, args, typ, new _ast.Documentation("Details", [title, details]), emitter]);
-	    }();
+	    return membr.Case === "Property" ? new _ast.Member("Property", [membr.Fields[0], membr.Fields[1], membr.Fields[2], new _ast.Documentation("Details", [title, details]), membr.Fields[4]]) : new _ast.Member("Method", [membr.Fields[0], membr.Fields[1], membr.Fields[2], membr.Fields[3], new _ast.Documentation("Details", [title, details]), membr.Fields[5]]);
 	  }
 	
 	  function withSchema(actTyp, fldName, listName, membr) {
 	    return membr.Case === "Property" ? function () {
-	      var typ = membr.Fields[1];
-	      var n = membr.Fields[0];
-	      var emitter = membr.Fields[4];
-	      var docs = membr.Fields[3];
 	      var schema = new _ast.Schema(actTyp, _fableCore.Util.createObj(_fableCore.List.ofArray([["@context", "http://schema.org/"], ["@type", actTyp], [fldName, {
 	        "@type": "ItemList",
 	        name: listName
 	      }]])));
-	      return new _ast.Member("Property", [n, typ, schema, docs, emitter]);
+	      return new _ast.Member("Property", [membr.Fields[0], membr.Fields[1], schema, membr.Fields[3], membr.Fields[4]]);
 	    }() : function () {
 	      throw "withSchema: expected property";
 	    }();
@@ -11050,84 +10675,77 @@
 	  }
 	
 	  var propertyEmitter = exports.propertyEmitter = new _ast.Emitter(function (tupledArg) {
-	    var _this = tupledArg[0];
-	    var _arg1 = tupledArg[1];
-	    return _this;
+	    return tupledArg[0];
 	  });
 	
 	  function makeMethodEmitter(callid, pars) {
 	    return new _ast.Emitter(function (tupledArg) {
-	      var _this = tupledArg[0];
-	      var args = tupledArg[1];
-	      var args_1 = arr(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      var args = arr(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	        return _fableCore.Seq.collect(function (matchValue) {
-	          var v = matchValue[1];
-	          return _fableCore.Seq.singleton(v);
-	        }, args);
+	          return _fableCore.Seq.singleton(matchValue[1]);
+	        }, tupledArg[1]);
 	      })));
-	      return op_DivideAtDivide(op_Dynamic(_this, "addCall"), _fableCore.List.ofArray([str(callid), args_1]));
+	      return op_DivideAtDivide(op_Dynamic(tupledArg[0], "addCall"), _fableCore.List.ofArray([str(callid), args]));
 	    });
 	  }
 	
 	  function makeDataEmitter(isSeries, tfs) {
 	    return new _ast.Emitter(function (tupledArg) {
-	      var _this = tupledArg[0];
-	      var _arg1 = tupledArg[1];
-	
-	      if (isSeries) {
-	        return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "create"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(_this, "getData"), _fableCore.List.ofArray([str(Transform.toUrl(_fableCore.List.reverse(tfs)))])), str("key"), str("value"), str("")]));
-	      } else {
-	        return op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "ordinal"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(_this, "getData"), _fableCore.List.ofArray([str(Transform.toUrl(_fableCore.List.reverse(tfs)))])), str("key"), str("value"), str("")]));
-	      }
+	      return isSeries ? op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "create"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(tupledArg[0], "getData"), _fableCore.List.ofArray([str(Transform.toUrl(_fableCore.List.reverse(tfs)))])), str("key"), str("value"), str("")])) : op_DivideAtDivide(op_Dynamic(op_Dynamic(ident("_series"), "series"), "ordinal"), _fableCore.List.ofArray([op_DivideAtDivide(op_Dynamic(tupledArg[0], "getData"), _fableCore.List.ofArray([str(Transform.toUrl(_fableCore.List.reverse(tfs)))])), str("key"), str("value"), str("")]));
 	    });
 	  }
 	
-	  function makeProperty(lookupNamed, fields, name, tfs) {
-	    return new _ast.Member("Property", [name, makePivotType(lookupNamed, fields, tfs), null, new _ast.Documentation("None", []), propertyEmitter]);
+	  var Context = exports.Context = function Context(root, lookupNamed, inputFields, fields) {
+	    _classCallCheck(this, Context);
+	
+	    this.Root = root;
+	    this.LookupNamed = lookupNamed;
+	    this.InputFields = inputFields;
+	    this.Fields = fields;
+	  };
+	
+	  _fableCore.Util.setInterfaces(Context.prototype, ["FSharpRecord"], "TheGamma.TypeProviders.Pivot.Context");
+	
+	  function makeProperty(ctx, name, tfs) {
+	    return new _ast.Member("Property", [name, makePivotType(ctx, tfs), null, new _ast.Documentation("None", []), propertyEmitter]);
 	  }
 	
-	  function makeMethod(lookupNamed, fields, name, tfs, callid, args) {
+	  function makeMethod(ctx, name, tfs, callid, args) {
 	    return new _ast.Member("Method", [name, new _fableCore.List(), _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	      return _fableCore.Seq.collect(function (matchValue) {
-	        var t = matchValue[1];
-	        var n = matchValue[0];
-	        return _fableCore.Seq.singleton([n, false, new _ast.Type("Primitive", [t])]);
+	        return _fableCore.Seq.singleton([matchValue[0], false, new _ast.Type("Primitive", [matchValue[1]])]);
 	      }, args);
-	    })), makePivotType(lookupNamed, fields, tfs), new _ast.Documentation("None", []), makeMethodEmitter(callid, args)]);
+	    })), makePivotType(ctx, tfs), new _ast.Documentation("None", []), makeMethodEmitter(callid, args)]);
 	  }
 	
-	  function makeDataMember(lookupNamed, inputFields, name, tfs) {
-	    var fields = Transform.transformFields(inputFields, _fableCore.List.reverse(tfs));
+	  function makeDataMember(ctx, name, tfs) {
+	    var fields = Transform.transformFields(ctx.InputFields, _fableCore.List.reverse(tfs));
 	
 	    var patternInput = function () {
-	      var $target1 = function () {
+	      var $target1 = function $target1() {
 	        var membs = Array.from(fields).map(function (fld) {
 	          var patternInput = getTypeAndEmitter(fld.Type);
-	          var memTy = patternInput[0];
-	          var memConv = patternInput[1];
 	          var emitter = new _ast.Emitter(function (tupledArg) {
-	            var inst = tupledArg[0];
-	            var _arg1 = tupledArg[1];
-	            return memConv(op_DivideQmarkDivide(inst, str(fld.Name)));
+	            return patternInput[1](op_DivideQmarkDivide(tupledArg[0], str(fld.Name)));
 	          });
-	          return new _ast.Member("Property", [fld.Name, memTy, null, new _ast.Documentation("Text", [""]), emitter]);
+	          return new _ast.Member("Property", [fld.Name, patternInput[0], null, new _ast.Documentation("Text", [""]), emitter]);
 	        });
 	        var recTyp = new _ast.Type("Object", [new _ast.ObjectType(membs, new _fableCore.List())]);
-	        return [lookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", ["num"]), recTyp])), false];
+	        return [ctx.LookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", ["num"]), recTyp])), false];
 	      };
 	
 	      if (tfs.tail != null) {
 	        if (tfs.head.Case === "GetSeries") {
-	          var $target1_1 = function () {
+	          var $target1_1 = function $target1_1() {
 	            throw "makeDataMember: Series should have key and value";
 	          };
 	
-	          if (fields.tail != null) {
-	            if (fields.tail.tail != null) {
-	              if (fields.tail.tail.tail == null) {
-	                var kf = fields.head;
-	                var vf = fields.tail.head;
-	                return [lookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", [kf.Type]), new _ast.Type("Primitive", [vf.Type])])), true];
+	          if (ctx.Fields.tail != null) {
+	            if (ctx.Fields.tail.tail != null) {
+	              if (ctx.Fields.tail.tail.tail == null) {
+	                var kf = ctx.Fields.head;
+	                var vf = ctx.Fields.tail.head;
+	                return [ctx.LookupNamed("series")(_fableCore.List.ofArray([new _ast.Type("Primitive", [kf.Type]), new _ast.Type("Primitive", [vf.Type])])), true];
 	              } else {
 	                return $target1_1();
 	              }
@@ -11145,15 +10763,13 @@
 	      }
 	    }();
 	
-	    var isSeries = patternInput[1];
-	    var dataTyp = patternInput[0];
-	    return new _ast.Member("Property", [name, dataTyp, null, new _ast.Documentation("None", []), makeDataEmitter(isSeries, tfs)]);
+	    return new _ast.Member("Property", [name, patternInput[0], null, new _ast.Documentation("None", []), makeDataEmitter(patternInput[1], tfs)]);
 	  }
 	
-	  function handleGetSeriesRequest(lookupNamed, inputFields, fields, rest, k, v) {
+	  function handleGetSeriesRequest(ctx, rest, k, v) {
 	    var matchValue = [k, v];
 	
-	    var $target2 = function () {
+	    var $target2 = function $target2() {
 	      throw "handleGetSeriesRequest: Should not happen";
 	    };
 	
@@ -11161,19 +10777,18 @@
 	      if (matchValue[1] === "!") {
 	        return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	          return _fableCore.Seq.map(function (field) {
-	            return withThingSchema("ListItem", "series key", withDocs("Get the data", "Here, we select one of the attribute of the data set as the 'key' and one as a 'value'. In the first list, you can choose the key.", makeProperty(lookupNamed, fields, "with key " + field.Name, _fableCore.List.ofArray([new Transformation("GetSeries", [field.Name, "!"])], rest))));
-	          }, fields);
+	            return withThingSchema("ListItem", "series key", withDocs("Get the data", "Here, we select one of the attribute of the data set as the 'key' and one as a 'value'. In the first list, you can choose the key.", makeProperty(ctx, "with key " + field.Name, _fableCore.List.ofArray([new Transformation("GetSeries", [field.Name, "!"])], rest))));
+	          }, ctx.Fields);
 	        })));
 	      } else {
 	        return $target2();
 	      }
 	    } else {
 	      if (matchValue[1] === "!") {
-	        var k_1 = matchValue[0];
 	        return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	          return _fableCore.Seq.map(function (field) {
-	            return withThingSchema("ListItem", "series value", withDocs("Get the data", "In the second list, choose attribute that you want to use as the value.", makeDataMember(lookupNamed, inputFields, "and value " + field.Name, _fableCore.List.ofArray([new Transformation("GetSeries", [k_1, field.Name])], rest))));
-	          }, fields);
+	            return withThingSchema("ListItem", "series value", withDocs("Get the data", "In the second list, choose attribute that you want to use as the value.", makeDataMember(ctx, "and value " + field.Name, _fableCore.List.ofArray([new Transformation("GetSeries", [matchValue[0], field.Name])], rest))));
+	          }, ctx.Fields);
 	        })));
 	      } else {
 	        return $target2();
@@ -11181,12 +10796,12 @@
 	    }
 	  }
 	
-	  function handlePagingRequest(lookupNamed, fields, rest, pgid, ops) {
-	    var takeMemb = withDocs("", "Take the specified number of rows and drop the rest", makeMethod(lookupNamed, fields, "take", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("Paging", [_fableCore.List.reverse(_fableCore.List.ofArray([new Paging("Take", [pgid + "-take"])], ops))])], rest), pgid + "-take", _fableCore.List.ofArray([["count", "num"]])));
-	    var skipMemb = withDocs("", "Skip the specified number of rows and keep the rest", makeMethod(lookupNamed, fields, "skip", _fableCore.List.ofArray([new Transformation("Paging", [_fableCore.List.ofArray([new Paging("Skip", [pgid + "-skip"])], ops)])], rest), pgid + "-skip", _fableCore.List.ofArray([["count", "num"]])));
-	    var thenMemb = withDocs("", "Return the data", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("Paging", [_fableCore.List.reverse(ops)])], rest)));
+	  function handlePagingRequest(ctx, rest, pgid, ops) {
+	    var takeMemb = withDocs("", "Take the specified number of rows and drop the rest", makeMethod(ctx, "take", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("Paging", [_fableCore.List.reverse(_fableCore.List.ofArray([new Paging("Take", [pgid + "-take"])], ops))])], rest), pgid + "-take", _fableCore.List.ofArray([["count", "num"]])));
+	    var skipMemb = withDocs("", "Skip the specified number of rows and keep the rest", makeMethod(ctx, "skip", _fableCore.List.ofArray([new Transformation("Paging", [_fableCore.List.ofArray([new Paging("Skip", [pgid + "-skip"])], ops)])], rest), pgid + "-skip", _fableCore.List.ofArray([["count", "num"]])));
+	    var thenMemb = withDocs("", "Return the data", makeProperty(ctx, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("Paging", [_fableCore.List.reverse(ops)])], rest)));
 	    return makeObjectType(function () {
-	      var $target2 = function () {
+	      var $target2 = function $target2() {
 	        throw "handlePagingRequest: Shold not happen";
 	      };
 	
@@ -11206,23 +10821,23 @@
 	    }());
 	  }
 	
-	  function handleDropRequest(lookupNamed, fields, rest, dropped) {
+	  function handleDropRequest(ctx, rest, dropped) {
 	    var droppedFields = _fableCore.Set.create(dropped, new _fableCore.GenericComparer(function (x, y) {
 	      return x < y ? -1 : x > y ? 1 : 0;
 	    }));
 	
 	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
-	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("DropColumns", [dropped])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
+	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(ctx, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("DropColumns", [dropped])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
 	        return _fableCore.Seq.collect(function (field) {
-	          return !droppedFields.has(field.Name) ? _fableCore.Seq.singleton(withAddAction("Dropped fields", withDocs("", _fableCore.String.fsFormat("Removes the field '%s' from the returned data set")(function (x) {
+	          return !droppedFields.has(field.Name) ? _fableCore.Seq.singleton(withAddAction("Dropped ctx.Fields", withDocs("", _fableCore.String.fsFormat("Removes the field '%s' from the returned data set")(function (x) {
 	            return x;
-	          })(field.Name), makeProperty(lookupNamed, fields, "drop " + field.Name, _fableCore.List.ofArray([new Transformation("DropColumns", [_fableCore.List.ofArray([field.Name], dropped)])], rest))))) : _fableCore.Seq.empty();
-	        }, fields);
+	          })(field.Name), makeProperty(ctx, "drop " + field.Name, _fableCore.List.ofArray([new Transformation("DropColumns", [_fableCore.List.ofArray([field.Name], dropped)])], rest))))) : _fableCore.Seq.empty();
+	        }, ctx.Fields);
 	      }));
 	    })));
 	  }
 	
-	  function handleSortRequest(lookupNamed, fields, rest, keys) {
+	  function handleSortRequest(ctx, rest, keys) {
 	    var usedKeys = _fableCore.Set.create(_fableCore.List.map(function (tuple) {
 	      return tuple[0];
 	    }, keys), new _fableCore.GenericComparer(function (x, y) {
@@ -11230,7 +10845,7 @@
 	    }));
 	
 	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
-	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("SortBy", [keys])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
+	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(ctx, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("SortBy", [keys])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
 	        return _fableCore.Seq.collect(function (field) {
 	          return !usedKeys.has(field.Name) ? function () {
 	            var doc = _fableCore.String.fsFormat("Use the field '%s' as the next sorting keys")(function (x) {
@@ -11243,21 +10858,21 @@
 	              return function (membr) {
 	                return withDocs(title, doc, membr);
 	              };
-	            }()(makeProperty(lookupNamed, fields, prefix + field.Name, _fableCore.List.ofArray([new Transformation("SortBy", [_fableCore.List.ofArray([[field.Name, new SortDirection("Ascending", [])]], keys)])], rest))))), _fableCore.Seq.delay(function (unitVar_2) {
+	            }()(makeProperty(ctx, prefix + field.Name, _fableCore.List.ofArray([new Transformation("SortBy", [_fableCore.List.ofArray([[field.Name, new SortDirection("Ascending", [])]], keys)])], rest))))), _fableCore.Seq.delay(function (unitVar_2) {
 	              return _fableCore.Seq.singleton(withAddAction("Fields used for sorting", function () {
 	                var title = "";
 	                return function (membr) {
 	                  return withDocs(title, doc, membr);
 	                };
-	              }()(makeProperty(lookupNamed, fields, prefix + field.Name + " descending", _fableCore.List.ofArray([new Transformation("SortBy", [_fableCore.List.ofArray([[field.Name, new SortDirection("Descending", [])]], keys)])], rest)))));
+	              }()(makeProperty(ctx, prefix + field.Name + " descending", _fableCore.List.ofArray([new Transformation("SortBy", [_fableCore.List.ofArray([[field.Name, new SortDirection("Descending", [])]], keys)])], rest)))));
 	            }));
 	          }() : _fableCore.Seq.empty();
-	        }, fields);
+	        }, ctx.Fields);
 	      }));
 	    })));
 	  }
 	
-	  function aggregationMembers(lookupNamed, fields, rest, keys, aggs) {
+	  function aggregationMembers(ctx, rest, keys, aggs) {
 	    var containsCountAll = _fableCore.Seq.exists(function () {
 	      var x = new Aggregation("CountAll", []);
 	      return function (y) {
@@ -11265,13 +10880,13 @@
 	      };
 	    }(), aggs);
 	
-	    var containsField = function (fld) {
+	    var containsField = function containsField(fld) {
 	      return _fableCore.Seq.exists(function (_arg1) {
-	        var $target0 = function (f) {
+	        var $target0 = function $target0(f) {
 	          return f === fld;
 	        };
 	
-	        var $target1 = function () {
+	        var $target1 = function $target1() {
 	          return false;
 	        };
 	
@@ -11303,7 +10918,7 @@
 	      }, aggs);
 	    };
 	
-	    var makeAggMember = function (name) {
+	    var makeAggMember = function makeAggMember(name) {
 	      return function (agg) {
 	        return function (doc) {
 	          return withAddAction("Aggregation operations", function () {
@@ -11311,13 +10926,13 @@
 	            return function (membr) {
 	              return withDocs(title, doc, membr);
 	            };
-	          }()(makeProperty(lookupNamed, fields, name, _fableCore.List.ofArray([new Transformation("GroupBy", [keys, _fableCore.List.ofArray([agg], aggs)])], rest))));
+	          }()(makeProperty(ctx, name, _fableCore.List.ofArray([new Transformation("GroupBy", [keys, _fableCore.List.ofArray([agg], aggs)])], rest))));
 	        };
 	      };
 	    };
 	
 	    return _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
-	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Get data or perform another transformation", makeProperty(lookupNamed, fields, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("GroupBy", [keys, aggs])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
+	      return _fableCore.Seq.append(_fableCore.Seq.singleton(withDocs("", "Get data or perform another transformation", makeProperty(ctx, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("GroupBy", [keys, aggs])], rest)))), _fableCore.Seq.delay(function (unitVar_1) {
 	        return _fableCore.Seq.append(!containsCountAll ? _fableCore.Seq.singleton(makeAggMember("count all")(new Aggregation("CountAll", []))("Count the number of items in the group")) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_2) {
 	          return _fableCore.Seq.collect(function (fld) {
 	            return !containsField(fld.Name) ? _fableCore.Seq.append(_fableCore.Seq.singleton(makeAggMember("count distinct " + fld.Name)(new Aggregation("CountDistinct", [fld.Name]))("Count the number of distinct values of the field")), _fableCore.Seq.delay(function (unitVar_3) {
@@ -11329,103 +10944,150 @@
 	                }));
 	              }));
 	            })) : _fableCore.Seq.empty();
-	          }, fields);
+	          }, ctx.Fields);
 	        }));
 	      }));
 	    }));
 	  }
 	
-	  function handleGroupAggRequest(lookupNamed, fields, rest, keys, aggs) {
-	    return makeObjectType(aggregationMembers(lookupNamed, fields, rest, keys, aggs));
+	  function handleGroupAggRequest(ctx, rest, keys, aggs) {
+	    return makeObjectType(aggregationMembers(ctx, rest, keys, aggs));
 	  }
 	
-	  function handleGroupRequest(lookupNamed, fields, rest, keys) {
+	  function handleGroupRequest(ctx, rest, keys) {
 	    var prefix = keys.tail == null ? "by " : "and ";
 	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	      return _fableCore.Seq.append(_fableCore.Seq.map(function (field) {
 	        return withCreateAction("Aggregation operations", withDocs(_fableCore.String.fsFormat("Group by %s")(function (x) {
 	          return x;
-	        })(field.Name.toLocaleLowerCase()), "Creates groups based on the value of " + field.Name + " and calculte summary " + "values for each group. You can specify a number of summary calculations in the " + "following list:", makeProperty(lookupNamed, fields, prefix + field.Name, _fableCore.List.ofArray([new Transformation("GroupBy", [_fableCore.List.ofArray([field.Name], keys), new _fableCore.List()])], rest))));
-	      }, fields), _fableCore.Seq.delay(function (unitVar_1) {
-	        return !(keys.tail == null) ? aggregationMembers(lookupNamed, fields, rest, keys, _fableCore.List.ofArray([new Aggregation("GroupKey", [])])) : _fableCore.Seq.empty();
+	        })(field.Name.toLocaleLowerCase()), "Creates groups based on the value of " + field.Name + " and calculte summary " + "values for each group. You can specify a number of summary calculations in the " + "following list:", makeProperty(ctx, prefix + field.Name, _fableCore.List.ofArray([new Transformation("GroupBy", [_fableCore.List.ofArray([field.Name], keys), new _fableCore.List()])], rest))));
+	      }, ctx.Fields), _fableCore.Seq.delay(function (unitVar_1) {
+	        return !(keys.tail == null) ? aggregationMembers(ctx, rest, keys, _fableCore.List.ofArray([new Aggregation("GroupKey", [])])) : _fableCore.Seq.empty();
 	      }));
 	    })));
 	  }
 	
-	  function makePivotTypeImmediate(lookupNamed, inputFields, tfs) {
-	    var patternInput = tfs.tail != null ? function () {
-	      var rest = tfs.tail;
-	      var last = tfs.head;
-	      return [last, rest];
-	    }() : [new Transformation("Empty", []), new _fableCore.List()];
-	    var rest = patternInput[1];
-	    var last = patternInput[0];
-	    var fields = Transform.transformFields(inputFields, _fableCore.List.reverse(rest));
+	  function handleFilterEqNeqRequest(ctx, rest, fld, eq, conds) {
+	    return function (builder_) {
+	      return builder_.Delay(function (unitVar) {
+	        var url = concatUrl(concatUrl(ctx.Root, "range"), Transform.toUrl(_fableCore.List.reverse(_fableCore.List.ofArray([new Transformation("FilterBy", [conds])], rest))));
+	        return builder_.Bind(_extensions.Http.Request("GET", url + "?" + fld), function (_arg2) {
+	          var options = JSON.parse(_arg2);
+	          return builder_.Return(makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
+	            return _fableCore.Seq.map(function (opt) {
+	              return makeProperty(ctx, opt, _fableCore.List.ofArray([new Transformation("FilterBy", [_fableCore.List.ofArray([[fld, eq, opt]], conds)])], rest));
+	            }, options);
+	          }))));
+	        });
+	      });
+	    }(_fableCore.defaultAsyncBuilder);
+	  }
 	
-	    if (last.Case === "GetSeries") {
-	      var k = last.Fields[0];
-	      var v = last.Fields[1];
-	      return handleGetSeriesRequest(lookupNamed, inputFields, fields, rest, k, v);
-	    } else {
-	      if (last.Case === "Paging") {
-	        var ops = last.Fields[0];
+	  function handleFilterRequest(ctx, rest, conds) {
+	    var prefix = conds.tail == null ? "" : "and ";
+	    return makeObjectType(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.append(_fableCore.Seq.collect(function (field) {
+	        return _fableCore.Seq.append(_fableCore.Seq.singleton(makeProperty(ctx, prefix + field.Name + " is", _fableCore.List.ofArray([new Transformation("FilterBy", [_fableCore.List.ofArray([[field.Name, true, "!"]], conds)])], rest))), _fableCore.Seq.delay(function (unitVar_1) {
+	          return _fableCore.Seq.singleton(makeProperty(ctx, prefix + field.Name + " is not", _fableCore.List.ofArray([new Transformation("FilterBy", [_fableCore.List.ofArray([[field.Name, false, "!"]], conds)])], rest)));
+	        }));
+	      }, ctx.Fields), _fableCore.Seq.delay(function (unitVar_1) {
+	        return !(conds.tail == null) ? _fableCore.Seq.singleton(withDocs("", "Return the data", makeProperty(ctx, "then", _fableCore.List.ofArray([new Transformation("Empty", []), new Transformation("FilterBy", [conds])], rest)))) : _fableCore.Seq.empty();
+	      }));
+	    })));
+	  }
 	
-	        var pgid = _fableCore.String.fsFormat("pgid-%d")(function (x) {
-	          return x;
-	        })(_fableCore.Seq.sumBy(function (_arg2) {
-	          return _arg2.Case === "Paging" ? 1 : 0;
-	        }, rest));
+	  function makePivotTypeImmediate(ctx, tfs) {
+	    return function (builder_) {
+	      return builder_.Delay(function (unitVar) {
+	        var patternInput = tfs.tail != null ? [tfs.head, tfs.tail] : [new Transformation("Empty", []), new _fableCore.List()];
 	
-	        return handlePagingRequest(lookupNamed, fields, rest, pgid, ops);
-	      } else {
-	        if (last.Case === "SortBy") {
-	          var keys = last.Fields[0];
-	          return handleSortRequest(lookupNamed, fields, rest, keys);
+	        var ctx_1 = function () {
+	          var Fields = Transform.transformFields(ctx.InputFields, _fableCore.List.reverse(patternInput[1]));
+	          return new Context(ctx.Root, ctx.LookupNamed, ctx.InputFields, Fields);
+	        }();
+	
+	        var $target6 = function $target6(conds) {
+	          return builder_.Return(handleFilterRequest(ctx_1, patternInput[1], conds));
+	        };
+	
+	        if (patternInput[0].Case === "GetSeries") {
+	          var k = patternInput[0].Fields[0];
+	          var v = patternInput[0].Fields[1];
+	          return builder_.Return(handleGetSeriesRequest(ctx_1, patternInput[1], k, v));
 	        } else {
-	          if (last.Case === "DropColumns") {
-	            var dropped = last.Fields[0];
-	            return handleDropRequest(lookupNamed, fields, rest, dropped);
+	          if (patternInput[0].Case === "Paging") {
+	            var ops = patternInput[0].Fields[0];
+	
+	            var pgid = _fableCore.String.fsFormat("pgid-%d")(function (x) {
+	              return x;
+	            })(_fableCore.Seq.sumBy(function (_arg3) {
+	              return _arg3.Case === "Paging" ? 1 : 0;
+	            }, patternInput[1]));
+	
+	            return builder_.Return(handlePagingRequest(ctx_1, patternInput[1], pgid, ops));
 	          } else {
-	            if (last.Case === "GroupBy") {
-	              if (last.Fields[1].tail == null) {
-	                var flds = last.Fields[0];
-	                return handleGroupRequest(lookupNamed, fields, rest, flds);
-	              } else {
-	                var aggs = last.Fields[1];
-	                var flds = last.Fields[0];
-	                return handleGroupAggRequest(lookupNamed, fields, rest, flds, aggs);
-	              }
+	            if (patternInput[0].Case === "SortBy") {
+	              var keys = patternInput[0].Fields[0];
+	              return builder_.Return(handleSortRequest(ctx_1, patternInput[1], keys));
 	            } else {
-	              return makeObjectType(_fableCore.List.ofArray([withDocs("", "Lets you perform pivot table aggregations.", makeProperty(lookupNamed, fields, "group data", _fableCore.List.ofArray([new Transformation("GroupBy", [new _fableCore.List(), new _fableCore.List()])], rest))), withCreateAction("Fields used for sorting", withDocs("Sort the data", "Specify how the data is sorted. You can choose one or more attributes " + "to use for sorting in the following list. Choose 'descending' to sort the values from largest value " + "to smallest value.", makeProperty(lookupNamed, fields, "sort data", _fableCore.List.ofArray([new Transformation("SortBy", [new _fableCore.List()])], rest)))), withCreateAction("Dropped fields", withDocs("Filter returned attributes", "Specify which attributes of the data sets should be returned. " + "By default you'll get all available attributes, but you can drop uninteresting attributes by listing " + "them in the following list:", makeProperty(lookupNamed, fields, "filter columns", _fableCore.List.ofArray([new Transformation("DropColumns", [new _fableCore.List()])], rest)))), withDocs("", "Take a number of rows or skip a number of rows.", makeProperty(lookupNamed, fields, "paging", _fableCore.List.ofArray([new Transformation("Paging", [new _fableCore.List()])], rest))), withDocs("", "Get a single key-value series from the data set.", makeProperty(lookupNamed, fields, "get series", _fableCore.List.ofArray([new Transformation("GetSeries", ["!", "!"])], rest))), withDocs("", "Returns the transformed data", makeDataMember(lookupNamed, inputFields, "get the data", rest))]));
+	              if (patternInput[0].Case === "DropColumns") {
+	                var dropped = patternInput[0].Fields[0];
+	                return builder_.Return(handleDropRequest(ctx_1, patternInput[1], dropped));
+	              } else {
+	                if (patternInput[0].Case === "FilterBy") {
+	                  if (patternInput[0].Fields[0].tail != null) {
+	                    if (patternInput[0].Fields[0].head[2] === "!") {
+	                      var conds = patternInput[0].Fields[0].tail;
+	                      var eq = patternInput[0].Fields[0].head[1];
+	                      var fld = patternInput[0].Fields[0].head[0];
+	                      return builder_.ReturnFrom(handleFilterEqNeqRequest(ctx_1, patternInput[1], fld, eq, conds));
+	                    } else {
+	                      return $target6(patternInput[0].Fields[0]);
+	                    }
+	                  } else {
+	                    return $target6(patternInput[0].Fields[0]);
+	                  }
+	                } else {
+	                  if (patternInput[0].Case === "GroupBy") {
+	                    if (patternInput[0].Fields[1].tail == null) {
+	                      var flds = patternInput[0].Fields[0];
+	                      return builder_.Return(handleGroupRequest(ctx_1, patternInput[1], flds));
+	                    } else {
+	                      var aggs = patternInput[0].Fields[1];
+	                      var flds = patternInput[0].Fields[0];
+	                      return builder_.Return(handleGroupAggRequest(ctx_1, patternInput[1], flds, aggs));
+	                    }
+	                  } else {
+	                    return builder_.Return(makeObjectType(_fableCore.List.ofArray([withDocs("", "Lets you perform pivot table aggregations.", makeProperty(ctx_1, "group data", _fableCore.List.ofArray([new Transformation("GroupBy", [new _fableCore.List(), new _fableCore.List()])], patternInput[1]))), withDocs("", "Lets you filter data in the table.", makeProperty(ctx_1, "filter data", _fableCore.List.ofArray([new Transformation("FilterBy", [new _fableCore.List()])], patternInput[1]))), withCreateAction("Fields used for sorting", withDocs("Sort the data", "Specify how the data is sorted. You can choose one or more attributes " + "to use for sorting in the following list. Choose 'descending' to sort the values from largest value " + "to smallest value.", makeProperty(ctx_1, "sort data", _fableCore.List.ofArray([new Transformation("SortBy", [new _fableCore.List()])], patternInput[1])))), withCreateAction("Dropped ctx.Fields", withDocs("Filter returned attributes", "Specify which attributes of the data sets should be returned. " + "By default you'll get all available attributes, but you can drop uninteresting attributes by listing " + "them in the following list:", makeProperty(ctx_1, "drop columns", _fableCore.List.ofArray([new Transformation("DropColumns", [new _fableCore.List()])], patternInput[1])))), withDocs("", "Take a number of rows or skip a number of rows.", makeProperty(ctx_1, "paging", _fableCore.List.ofArray([new Transformation("Paging", [new _fableCore.List()])], patternInput[1]))), withDocs("", "Get a single key-value series from the data set.", makeProperty(ctx_1, "get series", _fableCore.List.ofArray([new Transformation("GetSeries", ["!", "!"])], patternInput[1]))), withDocs("", "Returns the transformed data", makeDataMember(ctx_1, "get the data", patternInput[1]))])));
+	                  }
+	                }
+	              }
 	            }
 	          }
 	        }
-	      }
-	    }
+	      });
+	    }(_fableCore.defaultAsyncBuilder);
 	  }
 	
-	  function makePivotType(lookupNamed, fields, tfs) {
-	    return new _ast.Type("Delayed", ["pivot", function (arg00) {
+	  function makePivotType(ctx, tfs) {
+	    var guid = Transform.toUrl(tfs);
+	    return new _ast.Type("Delayed", ["pivot: " + guid, function (arg00) {
 	      return function (arg10) {
 	        return (0, _extensions.Async$2EAsFuture$2EStatic)(arg00, arg10);
 	      };
-	    }("pivot")(function (builder_) {
-	      return builder_.Delay(function (unitVar) {
-	        return builder_.Return(makePivotTypeImmediate(lookupNamed, fields, tfs));
-	      });
-	    }(_fableCore.defaultAsyncBuilder))]);
+	    }(guid)(makePivotTypeImmediate(ctx, tfs))]);
 	  }
 	
 	  function providePivotType(root, name, lookupNamed, fields) {
-	    var ctx = op_Dynamic(ident("_restruntime"), "PivotContext");
-	    var typ = makePivotType(lookupNamed, _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	    var fields_1 = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	      return _fableCore.Seq.collect(function (matchValue) {
-	        var t = matchValue[1];
-	        var f = matchValue[0];
-	        return _fableCore.Seq.singleton(new Field(f, t));
+	        return _fableCore.Seq.singleton(new Field(matchValue[0], matchValue[1]));
 	      }, fields);
-	    })), new _fableCore.List());
-	    return new _providers.ProvidedType("GlobalValue", [name, new _babelast.Expression("NewExpression", [ctx, _fableCore.List.ofArray([str(root), new _babelast.Expression("ArrayExpression", [new _fableCore.List(), null])]), null]), typ]);
+	    }));
+	
+	    var typ = makePivotType(new Context(root, lookupNamed, fields_1, fields_1), new _fableCore.List());
+	    var ctx = op_Dynamic(ident("_restruntime"), "PivotContext");
+	    return new _providers.ProvidedType("GlobalValue", [name, new _babelast.Expression("NewExpression", [ctx, _fableCore.List.ofArray([str(concatUrl(root, "data")), new _babelast.Expression("ArrayExpression", [new _fableCore.List(), null])]), null]), typ]);
 	  }
 	});
 
@@ -11503,54 +11165,43 @@
 	
 	  function render(node) {
 	    return node.Case === "Part" ? function () {
-	      var func = node.Fields[0];
 	      var el = document.createElement("div");
 	      return [el, function (unitVar0) {
-	        func(el);
+	        node.Fields[0](el);
 	      }];
 	    }() : node.Case === "Element" ? function () {
-	      var tag = node.Fields[0];
-	      var f = node.Fields[3];
-	      var children = node.Fields[2];
-	      var attrs = node.Fields[1];
-	      var el = document.createElement(tag);
-	      var rc = children.map(function (node_1) {
+	      var el = document.createElement(node.Fields[0]);
+	      var rc = node.Fields[2].map(function (node_1) {
 	        return render(node_1);
 	      });
 	
 	      for (var idx = 0; idx <= rc.length - 1; idx++) {
 	        var forLoopVar = rc[idx];
-	        var c = forLoopVar[0];
-	        el.appendChild(c);
+	        el.appendChild(forLoopVar[0]);
 	      }
 	
-	      for (var idx = 0; idx <= attrs.length - 1; idx++) {
-	        var forLoopVar = attrs[idx];
-	        var k = forLoopVar[0];
-	        var a = forLoopVar[1];
+	      for (var idx = 0; idx <= node.Fields[1].length - 1; idx++) {
+	        var forLoopVar = node.Fields[1][idx];
 	
-	        if (a.Case === "Event") {
-	          var f_1 = a.Fields[0];
-	          el.addEventListener(k, function (delegateArg0) {
-	            f_1(el)(delegateArg0);
+	        if (forLoopVar[1].Case === "Event") {
+	          el.addEventListener(forLoopVar[0], function (delegateArg0) {
+	            forLoopVar[1].Fields[0](el)(delegateArg0);
 	          });
 	        } else {
-	          var v = a.Fields[0];
-	          el.setAttribute(k, v);
+	          el.setAttribute(forLoopVar[0], forLoopVar[1].Fields[0]);
 	        }
 	      }
 	
-	      var onRender = function (unitVar0) {
+	      var onRender = function onRender(unitVar0) {
 	        for (var idx = 0; idx <= rc.length - 1; idx++) {
 	          var forLoopVar = rc[idx];
-	          var f_1 = forLoopVar[1];
-	          f_1();
+	          forLoopVar[1]();
 	        }
 	
-	        _fableCore.Seq.iterate(function (f_1) {
-	          f_1(el);
+	        _fableCore.Seq.iterate(function (f) {
+	          f(el);
 	        }, function () {
-	          var $var1 = f;
+	          var $var1 = node.Fields[3];
 	
 	          if ($var1 != null) {
 	            return [$var1];
@@ -11561,12 +11212,9 @@
 	      };
 	
 	      return [el, onRender];
-	    }() : function () {
-	      var s = node.Fields[0];
-	      return [document.createTextNode(s), function (value) {
-	        value;
-	      }];
-	    }();
+	    }() : [document.createTextNode(node.Fields[0]), function (value) {
+	      value;
+	    }];
 	  }
 	
 	  function renderTo(node, dom) {
@@ -11575,10 +11223,8 @@
 	    }
 	
 	    var patternInput = render(dom);
-	    var f = patternInput[1];
-	    var el = patternInput[0];
-	    node.appendChild(el);
-	    f();
+	    node.appendChild(patternInput[0]);
+	    patternInput[1]();
 	  }
 	
 	  function text(s) {
@@ -11606,10 +11252,10 @@
 	        var container = null;
 	        var renderer = null;
 	
-	        var render_1 = function (unitVar0) {
+	        var render_1 = function render_1(unitVar0) {
 	          var matchValue = [container, renderer];
 	
-	          var $target1 = function () {};
+	          var $target1 = function $target1() {};
 	
 	          if (matchValue[0] != null) {
 	            if (matchValue[1] != null) {
@@ -11656,13 +11302,10 @@
 	              try {
 	                for (var _iterator = a[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                  var forLoopVar = _step.value;
-	                  var v = forLoopVar[1];
-	                  var k = forLoopVar[0];
 	
-	                  if (v.Case === "Event") {
-	                    var f = v.Fields[0];
-	                    jQuery(el).on(k, function (unitVar0) {
-	                      return f(el)(event);
+	                  if (forLoopVar[1].Case === "Event") {
+	                    jQuery(el).on(forLoopVar[0], function (unitVar0) {
+	                      forLoopVar[1].Fields[0](el)(event);
 	                    });
 	                  }
 	                }
@@ -11781,73 +11424,57 @@
 	      this.checker = checker;
 	      this.renderEditors = new _fableCore.Event();
 	      this.agent = _fableCore.MailboxProcessor.start(function (inbox) {
-	        var loop = function (lastText) {
+	        var loop = function loop(lastText) {
 	          return function (pending) {
 	            return function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(inbox.receive(), function (_arg3) {
-	                  var msg = _arg3;
+	                  return _arg3.Case === "UpdateNow" ? builder_.Combine(builder_.TryWith(builder_.Delay(function (unitVar_1) {
+	                    _extensions.Log.trace("editors", "updating...");
 	
-	                  if (msg.Case === "UpdateNow") {
-	                    var text = msg.Fields[0];
-	                    return builder_.Combine(builder_.TryWith(builder_.Delay(function (unitVar_1) {
-	                      _extensions.Log.trace("editors", "updating...");
-	
-	                      if (text !== lastText) {
-	                        return builder_.Bind(_this.update(text), function (_arg5) {
-	                          return builder_.Return();
-	                        });
-	                      } else {
-	                        return builder_.Zero();
-	                      }
-	                    }), function (_arg6) {
-	                      var e = _arg6;
-	
-	                      _extensions.Log.exn("editors", "update failed: %O", e);
-	
-	                      return builder_.Zero();
-	                    }), builder_.Delay(function (unitVar_1) {
-	                      return builder_.ReturnFrom(loop(text)(pending));
-	                    }));
-	                  } else {
-	                    if (msg.Case === "Refersh") {
-	                      var text = msg.Fields[0];
-	                      return builder_.Combine(pending === 1 ? builder_.TryWith(builder_.Delay(function (unitVar_1) {
-	                        _extensions.Log.trace("editors", "updating...");
-	
-	                        if (text !== lastText) {
-	                          return builder_.Bind(_this.update(text), function (_arg7) {
-	                            return builder_.Return();
-	                          });
-	                        } else {
-	                          return builder_.Zero();
-	                        }
-	                      }), function (_arg8) {
-	                        var e = _arg8;
-	
-	                        _extensions.Log.exn("editors", "update failed: %O", e);
-	
-	                        return builder_.Zero();
-	                      }) : builder_.Zero(), builder_.Delay(function (unitVar_1) {
-	                        return builder_.ReturnFrom(loop(text)(pending - 1));
-	                      }));
+	                    if (_arg3.Fields[0] !== lastText) {
+	                      return builder_.Bind(_this.update(_arg3.Fields[0]), function (_arg5) {
+	                        return builder_.Return();
+	                      });
 	                    } else {
-	                      var text = msg.Fields[0];
-	
-	                      (function (arg00) {
-	                        _fableCore.Async.startImmediate(arg00);
-	                      })(function (builder__1) {
-	                        return builder__1.Delay(function (unitVar_1) {
-	                          return builder__1.Bind(_fableCore.Async.sleep(delay), function (_arg4) {
-	                            inbox.post(new EditorWorkerMessage("Refersh", [text]));
-	                            return builder__1.Zero();
-	                          });
-	                        });
-	                      }(_fableCore.defaultAsyncBuilder));
-	
-	                      return builder_.ReturnFrom(loop(lastText)(pending + 1));
+	                      return builder_.Zero();
 	                    }
-	                  }
+	                  }), function (_arg6) {
+	                    _extensions.Log.exn("editors", "update failed: %O", _arg6);
+	
+	                    return builder_.Zero();
+	                  }), builder_.Delay(function (unitVar_1) {
+	                    return builder_.ReturnFrom(loop(_arg3.Fields[0])(pending));
+	                  })) : _arg3.Case === "Refersh" ? builder_.Combine(pending === 1 ? builder_.TryWith(builder_.Delay(function (unitVar_1) {
+	                    _extensions.Log.trace("editors", "updating...");
+	
+	                    if (_arg3.Fields[0] !== lastText) {
+	                      return builder_.Bind(_this.update(_arg3.Fields[0]), function (_arg7) {
+	                        return builder_.Return();
+	                      });
+	                    } else {
+	                      return builder_.Zero();
+	                    }
+	                  }), function (_arg8) {
+	                    _extensions.Log.exn("editors", "update failed: %O", _arg8);
+	
+	                    return builder_.Zero();
+	                  }) : builder_.Zero(), builder_.Delay(function (unitVar_1) {
+	                    return builder_.ReturnFrom(loop(_arg3.Fields[0])(pending - 1));
+	                  })) : function () {
+	                    (function (arg00) {
+	                      _fableCore.Async.startImmediate(arg00);
+	                    })(function (builder__1) {
+	                      return builder__1.Delay(function (unitVar_1) {
+	                        return builder__1.Bind(_fableCore.Async.sleep(delay), function (_arg4) {
+	                          inbox.post(new EditorWorkerMessage("Refersh", [_arg3.Fields[0]]));
+	                          return builder__1.Zero();
+	                        });
+	                      });
+	                    }(_fableCore.defaultAsyncBuilder));
+	
+	                    return builder_.ReturnFrom(loop(lastText)(pending + 1));
+	                  }();
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -11877,37 +11504,24 @@
 	            _extensions.Log.event("options", "update", _this2.article, text);
 	
 	            return builder_.Bind(_this2.checker(text), function (_arg1) {
-	              var prg = _arg1[1];
-	
 	              _extensions.Log.trace("service", "Collecting editors");
 	
 	              return builder_.Bind(_extensions.Async.collect(function (cmd) {
 	                return (0, _editors.collectCmdEditors)(cmd);
-	              }, prg.Body), function (_arg2) {
-	                var eds = _arg2;
-	
-	                var eds_1 = _fableCore.List.mapIndexed(function (i, v) {
+	              }, _arg1[1].Body), function (_arg2) {
+	                var eds = _fableCore.List.mapIndexed(function (i, v) {
 	                  return [i, v];
-	                }, eds);
+	                }, _arg2);
 	
 	                var filteredEds = _fableCore.List.map(function (tuple) {
 	                  return tuple[1];
 	                }, _fableCore.List.filter(function (tupledArg) {
-	                  var i = tupledArg[0];
-	                  var ed1 = tupledArg[1];
 	                  return !_fableCore.Seq.exists(function (tupledArg_1) {
-	                    var j = tupledArg_1[0];
-	                    var ed2 = tupledArg_1[1];
+	                    return tupledArg_1[0] !== tupledArg[0] ? _ast.Ranges.strictSubRange(tupledArg[1].Range, tupledArg_1[1].Range) : false;
+	                  }, eds);
+	                }, eds));
 	
-	                    if (j !== i) {
-	                      return _ast.Ranges.strictSubRange(ed1.Range, ed2.Range);
-	                    } else {
-	                      return false;
-	                    }
-	                  }, eds_1);
-	                }, eds_1));
-	
-	                _extensions.Log.trace("service", "Rendering %s out of %s", filteredEds.length, eds_1.length);
+	                _extensions.Log.trace("service", "Rendering %s out of %s", filteredEds.length, eds.length);
 	
 	                _this2.renderEditors.Trigger(filteredEds);
 	
@@ -11919,7 +11533,7 @@
 	      }
 	    }, {
 	      key: "EditorsUpdated",
-	      get: function () {
+	      get: function get() {
 	        return this.renderEditors.Publish;
 	      }
 	    }]);
@@ -12000,20 +11614,12 @@
 	  _fableCore.Util.setInterfaces(LineRange.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.Services.LineRange");
 	
 	  function offsetToLocation(lines, offs, lengths) {
-	    var $target1 = function () {
-	      return lengths.tail == null ? new Position(lines, offs) : function () {
-	        var lengths_1 = lengths.tail;
-	        var l = lengths.head;
-	        return offsetToLocation(lines + 1, offs - l - 1, lengths_1);
-	      }();
+	    var $target1 = function $target1() {
+	      return lengths.tail == null ? new Position(lines, offs) : offsetToLocation(lines + 1, offs - lengths.head - 1, lengths.tail);
 	    };
 	
 	    if (lengths.tail != null) {
-	      if (function () {
-	        var lengths_1 = lengths.tail;
-	        var l = lengths.head;
-	        return offs <= l;
-	      }()) {
+	      if (offs <= lengths.head) {
 	        var l = lengths.head;
 	        var lengths_1 = lengths.tail;
 	        return new Position(lines, offs);
@@ -12037,88 +11643,67 @@
 	
 	      this.errorsReported = new _fableCore.Event();
 	      this.agent = _fableCore.MailboxProcessor.start(function (inbox) {
-	        var loop = function (lastCode) {
+	        var loop = function loop(lastCode) {
 	          return function (lastResult) {
 	            return function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(inbox.receive(), function (_arg1) {
-	                  var msg = _arg1;
+	                  return _arg1.Case === "TypeCheck" ? _arg1.Fields[0] === lastCode ? function () {
+	                    var code = _arg1.Fields[0];
+	                    var repl = _arg1.Fields[1];
+	                    {
+	                      _extensions.Log.trace("service", "Returning previous result");
 	
-	                  if (msg.Case === "TypeCheck") {
-	                    if (function () {
-	                      var repl = msg.Fields[1];
-	                      var code = msg.Fields[0];
-	                      return code === lastCode;
-	                    }()) {
-	                      var code = msg.Fields[0];
-	                      var repl = msg.Fields[1];
-	                      {
-	                        _extensions.Log.trace("service", "Returning previous result");
-	
-	                        repl.reply(lastResult);
-	                        return builder_.ReturnFrom(loop(lastCode)(lastResult));
-	                      }
-	                    } else {
-	                      if (msg.Case === "TypeCheck") {
-	                        var repl = msg.Fields[1];
-	                        var code = msg.Fields[0];
-	
-	                        _extensions.Log.trace("service", "Type checking source code");
-	
-	                        return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(globals), function (_arg5) {
-	                          var globals_1 = _arg5;
-	                          return builder_.TryWith(builder_.Delay(function (unitVar_1) {
-	                            _extensions.Log.event("compiler", "check-source", article, code);
-	
-	                            return builder_.Bind((0, _typechecker.typeCheck)(globals_1, code), function (_arg6) {
-	                              var result = _arg6[1];
-	                              var errors = _arg6[0];
-	
-	                              _extensions.Log.trace("service", "Type checking completed");
-	
-	                              var lengths = _fableCore.List.map(function (l) {
-	                                return l.length;
-	                              }, _fableCore.Seq.toList(code.split("\n")));
-	
-	                              var errors_1 = _fableCore.List.map(function (e) {
-	                                return new _ast.Error(e.Number, e.Message, rangeToLoc(lengths, e.Range));
-	                              }, errors);
-	
-	                              _this3.errorsReported.Trigger([code, errors_1]);
-	
-	                              var result_1 = [errors_1.tail == null, result];
-	                              repl.reply(result_1);
-	                              return builder_.ReturnFrom(loop(code)(result_1));
-	                            });
-	                          }), function (_arg7) {
-	                            var e = _arg7;
-	
-	                            _extensions.Log.exn("service", "Type checking failed: %O", e);
-	
-	                            repl.reply([false, _this3.emptyProg()]);
-	                            return builder_.ReturnFrom(loop(lastCode)(lastResult));
-	                          });
-	                        });
-	                      } else {
-	                        throw ["c:\\tomas\\public\\thegamma\\thegamma-script\\src\\thegamma\\services.fs", 93, 12];
-	                      }
+	                      repl.reply(lastResult);
+	                      return builder_.ReturnFrom(loop(lastCode)(lastResult));
 	                    }
-	                  } else {
-	                    var code = msg.Fields[0];
-	                    var repl = msg.Fields[1];
+	                  }() : _arg1.Case === "TypeCheck" ? function () {
+	                    _extensions.Log.trace("service", "Type checking source code");
+	
+	                    return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(globals), function (_arg5) {
+	                      return builder_.TryWith(builder_.Delay(function (unitVar_1) {
+	                        _extensions.Log.event("compiler", "check-source", article, _arg1.Fields[0]);
+	
+	                        return builder_.Bind((0, _typechecker.typeCheck)(_arg5, _arg1.Fields[0]), function (_arg6) {
+	                          _extensions.Log.trace("service", "Type checking completed");
+	
+	                          var lengths = _fableCore.List.map(function (l) {
+	                            return l.length;
+	                          }, _fableCore.Seq.toList(_arg1.Fields[0].split("\n")));
+	
+	                          var errors = _fableCore.List.map(function (e) {
+	                            return new _ast.Error(e.Number, e.Message, rangeToLoc(lengths, e.Range));
+	                          }, _arg6[0]);
+	
+	                          _this3.errorsReported.Trigger([_arg1.Fields[0], errors]);
+	
+	                          var result = [errors.tail == null, _arg6[1]];
+	
+	                          _arg1.Fields[1].reply(result);
+	
+	                          return builder_.ReturnFrom(loop(_arg1.Fields[0])(result));
+	                        });
+	                      }), function (_arg7) {
+	                        _extensions.Log.exn("service", "Type checking failed: %O", _arg7);
+	
+	                        _arg1.Fields[1].reply([false, _this3.emptyProg()]);
+	
+	                        return builder_.ReturnFrom(loop(lastCode)(lastResult));
+	                      });
+	                    });
+	                  }() : function () {
+	                    throw ["c:\\tomas\\public\\thegamma\\thegamma-script\\src\\thegamma\\services.fs", 93, 12];
+	                  }() : function () {
+	                    var code = _arg1.Fields[0];
+	                    var repl = _arg1.Fields[1];
 	                    return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(globals), function (_arg2) {
-	                      var globals_1 = _arg2;
 	                      return builder_.Combine(builder_.TryWith(builder_.Delay(function (unitVar_1) {
-	                        return builder_.Bind((0, _typechecker.typeCheck)(globals_1, code), function (_arg3) {
-	                          var result = _arg3[1];
-	                          var errors = _arg3[0];
-	                          repl.reply(errors.tail == null);
+	                        return builder_.Bind((0, _typechecker.typeCheck)(_arg2, code), function (_arg3) {
+	                          repl.reply(_arg3[0].tail == null);
 	                          return builder_.Zero();
 	                        });
 	                      }), function (_arg4) {
-	                        var e = _arg4;
-	
-	                        _extensions.Log.exn("service", "Type checking failed: %O", e);
+	                        _extensions.Log.exn("service", "Type checking failed: %O", _arg4);
 	
 	                        repl.reply(false);
 	                        return builder_.Zero();
@@ -12126,7 +11711,7 @@
 	                        return builder_.ReturnFrom(loop(lastCode)(lastResult));
 	                      }));
 	                    });
-	                  }
+	                  }();
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -12158,7 +11743,7 @@
 	      }
 	    }, {
 	      key: "ErrorsReported",
-	      get: function () {
+	      get: function get() {
 	        return this.errorsReported.Publish;
 	      }
 	    }]);
@@ -12252,26 +11837,10 @@
 	
 	    _createClass(Editor, [{
 	      key: "Range",
-	      get: function () {
-	        var _this = this;
-	
-	        return this.Case === "NestedChoice" ? function () {
-	          var n2 = _this.Fields[3];
-	          var n1 = _this.Fields[2];
-	          return _ast.Ranges.unionRanges(n1.Range, n2.Range);
-	        }() : this.Case === "CreateList" ? function () {
-	          var n2 = _this.Fields[2];
-	          var n = _this.Fields[1];
-	          return _fableCore.Seq.fold(function (r, n_1) {
-	            return _ast.Ranges.unionRanges(r, n_1.Range);
-	          }, function () {
-	            var inputRecord = n.Range;
-	            return new _ast.Range(n.Range.End, inputRecord.End);
-	          }(), n2);
-	        }() : function () {
-	          var n = _this.Fields[1];
-	          return n.Range;
-	        }();
+	      get: function get() {
+	        return this.Case === "NestedChoice" ? _ast.Ranges.unionRanges(this.Fields[2].Range, this.Fields[3].Range) : this.Case === "CreateList" ? _fableCore.Seq.fold(function (r, n) {
+	          return _ast.Ranges.unionRanges(r, n.Range);
+	        }, new _ast.Range(this.Fields[1].Range.End, this.Fields[1].Range.End), this.Fields[2]) : this.Fields[1].Range;
 	      }
 	    }]);
 	
@@ -12283,16 +11852,9 @@
 	  function getMembers(typ) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        return typ.Case === "Object" ? function () {
-	          var o = typ.Fields[0];
-	          return builder_.Return(o.Members);
-	        }() : typ.Case === "Delayed" ? function () {
-	          var f = typ.Fields[1];
-	          return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(f), function (_arg1) {
-	            var typ_1 = _arg1;
-	            return builder_.ReturnFrom(getMembers(typ_1));
-	          });
-	        }() : function () {
+	        return typ.Case === "Object" ? builder_.Return(typ.Fields[0].Members) : typ.Case === "Delayed" ? builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(typ.Fields[1]), function (_arg1) {
+	          return builder_.ReturnFrom(getMembers(_arg1));
+	        }) : function () {
 	          _extensions.Log.error("editors", "getMembers: Type %O is not an object", typ);
 	
 	          return builder_.Return(function () {
@@ -12305,18 +11867,12 @@
 	
 	  function getProperty(name, members) {
 	    return _fableCore.Seq.tryPick(function (_arg1) {
-	      var $target1 = function () {
+	      var $target1 = function $target1() {
 	        return null;
 	      };
 	
 	      if (_arg1.Case === "Property") {
-	        if (function () {
-	          var t = _arg1.Fields[1];
-	          var s = _arg1.Fields[2];
-	          var n = _arg1.Fields[0];
-	          var d = _arg1.Fields[3];
-	          return n === name.Name;
-	        }()) {
+	        if (_arg1.Fields[0] === name.Name) {
 	          var d = _arg1.Fields[3];
 	          var n = _arg1.Fields[0];
 	          var s = _arg1.Fields[2];
@@ -12333,17 +11889,12 @@
 	
 	  function filterProperties(f, members) {
 	    var filtered = Array.from(_fableCore.Seq.choose(function (_arg1) {
-	      var $target1 = function () {
+	      var $target1 = function $target1() {
 	        return null;
 	      };
 	
 	      if (_arg1.Case === "Property") {
-	        if (function () {
-	          var t = _arg1.Fields[1];
-	          var s = _arg1.Fields[2];
-	          var n = _arg1.Fields[0];
-	          return f([n, s, t]);
-	        }()) {
+	        if (f([_arg1.Fields[0], _arg1.Fields[2], _arg1.Fields[1]])) {
 	          var n = _arg1.Fields[0];
 	          var s = _arg1.Fields[2];
 	          var t = _arg1.Fields[1];
@@ -12374,10 +11925,9 @@
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        return builder_.Bind(getMembers(typ), function (_arg1) {
-	          var members = _arg1;
-	          var matchValue = getProperty(name, members);
+	          var matchValue = getProperty(name, _arg1);
 	
-	          var $target1 = function () {
+	          var $target1 = function $target1() {
 	            return builder_.Return();
 	          };
 	
@@ -12388,22 +11938,21 @@
 	              {
 	                var alts = filterProperties(function (_arg2) {
 	                  return _arg2[1] != null ? function () {
-	                    var t = _arg2[2];
 	                    var s = _arg2[1];
 	
 	                    if (s.Type === propSchema.Type) {
 	                      if (!equalTyp) {
 	                        return true;
 	                      } else {
-	                        return (0, _typechecker.typesEqual)(t, propTyp);
+	                        return (0, _typechecker.typesEqual)(_arg2[2], propTyp);
 	                      }
 	                    } else {
 	                      return false;
 	                    }
 	                  }() : false;
-	                }, members);
+	                }, _arg1);
 	
-	                if (dominant(members, alts)) {
+	                if (dominant(_arg1, alts)) {
 	                  return builder_.Return([name, alts]);
 	                } else {
 	                  return builder_.Return();
@@ -12421,50 +11970,40 @@
 	  }
 	
 	  function pickChainSuffixes(f, expr) {
-	    var loop = function (res) {
+	    var loop = function loop(res) {
 	      return function (suffix) {
 	        return function (expr_1) {
 	          return function (builder_) {
 	            return builder_.Delay(function (unitVar) {
-	              var matchValue = expr_1.Expr;
-	
-	              if (matchValue.Case === "Property") {
-	                var inst = matchValue.Fields[0];
-	                var name = matchValue.Fields[1];
+	              return expr_1.Expr.Case === "Property" ? function () {
+	                var inst = expr_1.Expr.Fields[0];
+	                var name = expr_1.Expr.Fields[1];
 	                return builder_.Bind(getMembers(inst.Type), function (_arg1) {
-	                  var members = _arg1;
-	                  var matchValue_1 = getProperty(name, members);
+	                  var matchValue = getProperty(name, _arg1);
 	
-	                  if (matchValue_1 == null) {
+	                  if (matchValue == null) {
 	                    return builder_.ReturnFrom(loop(res)(suffix)(inst));
 	                  } else {
-	                    var propTy = matchValue_1[1];
-	                    var propSch = matchValue_1[0];
-	                    var propDoc = matchValue_1[2];
+	                    var propTy = matchValue[1];
+	                    var propSch = matchValue[0];
+	                    var propDoc = matchValue[2];
 	
 	                    var suffix_1 = _fableCore.List.ofArray([[inst.Type, name, propSch, propTy, propDoc]], suffix);
 	
 	                    return builder_.Bind(f(suffix_1), function (_arg2) {
-	                      var picked = _arg2;
-	
-	                      if (picked != null) {
-	                        var newRes = picked;
-	                        return builder_.ReturnFrom(loop(_fableCore.List.ofArray([newRes], res))(suffix_1)(inst));
-	                      } else {
-	                        return builder_.ReturnFrom(loop(res)(suffix_1)(inst));
-	                      }
+	                      return _arg2 != null ? builder_.ReturnFrom(loop(_fableCore.List.ofArray([_arg2], res))(suffix_1)(inst)) : builder_.ReturnFrom(loop(res)(suffix_1)(inst));
 	                    });
 	                  }
 	                });
-	              } else {
-	                var activePatternResult113509 = (0, _astops.$ExprLeaf$ExprNode$)(matchValue);
+	              }() : function () {
+	                var activePatternResult5764 = (0, _astops.$ExprLeaf$ExprNode$)(expr_1.Expr);
 	
-	                if (activePatternResult113509.Case === "Choice1Of2") {
+	                if (activePatternResult5764.Case === "Choice1Of2") {
 	                  return builder_.Return(res);
 	                } else {
-	                  var es = activePatternResult113509.Fields[0][0];
+	                  var es = activePatternResult5764.Fields[0][0];
 	                  return builder_.ReturnFrom(function () {
-	                    var f_1 = function (st) {
+	                    var f_1 = function f_1(st) {
 	                      return function (e) {
 	                        return loop(st)(new _fableCore.List())(e);
 	                      };
@@ -12475,7 +12014,7 @@
 	                    };
 	                  }()(es));
 	                }
-	              }
+	              }();
 	            });
 	          }(_fableCore.defaultAsyncBuilder);
 	        };
@@ -12486,7 +12025,7 @@
 	  }
 	
 	  var collectSingleChoiceEditors = exports.collectSingleChoiceEditors = function () {
-	    var f = function (chain) {
+	    var f = function f(chain) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
 	          return chain.tail != null ? function () {
@@ -12494,18 +12033,15 @@
 	            var name = chain.head[1];
 	            var doc = chain.head[4];
 	            return builder_.Bind(chooseableProperty(true, name, tyParent), function (_arg1) {
-	              var ed = _arg1;
 	              return builder_.Return(function () {
-	                var $var37 = ed;
+	                var $var17 = _arg1;
 	
-	                if ($var37 != null) {
+	                if ($var17 != null) {
 	                  return function (tupledArg) {
-	                    var n = tupledArg[0];
-	                    var p = tupledArg[1];
-	                    return new Editor("SingleChoice", [doc, n, p]);
-	                  }($var37);
+	                    return new Editor("SingleChoice", [doc, tupledArg[0], tupledArg[1]]);
+	                  }($var17);
 	                } else {
-	                  return $var37;
+	                  return $var17;
 	                }
 	              }());
 	            });
@@ -12520,10 +12056,10 @@
 	  }();
 	
 	  var collectNestedChoiceEditors = exports.collectNestedChoiceEditors = function () {
-	    var f = function (chain) {
+	    var f = function f(chain) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          var $target1 = function () {
+	          var $target1 = function $target1() {
 	            return builder_.Return();
 	          };
 	
@@ -12544,12 +12080,10 @@
 	                  _extensions.Log.trace("editors", "checking %s.%s", catName.Name, valName.Name);
 	
 	                  return builder_.Bind(chooseableProperty(false, catName, catParentTy), function (_arg1) {
-	                    var catp = _arg1;
 	                    return builder_.Bind(chooseableProperty(true, valName, valParentTy), function (_arg2) {
-	                      var valp = _arg2;
-	                      var matchValue = [catp, valp];
+	                      var matchValue = [_arg1, _arg2];
 	
-	                      var $target1_1 = function () {
+	                      var $target1_1 = function $target1_1() {
 	                        return builder_.Return();
 	                      };
 	
@@ -12562,60 +12096,45 @@
 	                          {
 	                            _extensions.Log.trace("editors", "collecting %s nested members", catMembers.length);
 	
-	                            var nestedMembers = function (trunc) {
+	                            var nestedMembers = function nestedMembers(trunc) {
 	                              return _extensions.Async.Array.map(function (_arg1_1) {
-	                                var p = _arg1_1;
-	                                var t = p.Fields[2];
-	                                var n = p.Fields[0];
 	                                return function (builder__1) {
 	                                  return builder__1.Delay(function (unitVar_1) {
-	                                    return builder__1.Bind(getMembers(t), function (_arg3) {
-	                                      var members = _arg3;
+	                                    return builder__1.Bind(getMembers(_arg1_1.Fields[2]), function (_arg3) {
 	                                      var filtered = filterProperties(function (_arg4) {
 	                                        return _arg4[1] != null ? function () {
-	                                          var t_1 = _arg4[2];
 	                                          var s = _arg4[1];
-	                                          var n_1 = _arg4[0];
 	
 	                                          if (s.Type === valSch.Type) {
-	                                            return (0, _typechecker.typesEqual)(t_1, valTy);
+	                                            return (0, _typechecker.typesEqual)(_arg4[2], valTy);
 	                                          } else {
 	                                            return false;
 	                                          }
 	                                        }() : false;
-	                                      }, members);
-	                                      return builder__1.Return([p, [members, filtered]]);
+	                                      }, _arg3);
+	                                      return builder__1.Return([_arg1_1, [_arg3, filtered]]);
 	                                    });
 	                                  });
 	                                }(_fableCore.defaultAsyncBuilder);
 	                              }, trunc(catMembers));
 	                            };
 	
-	                            return builder_.Bind(nestedMembers(function ($var38) {
-	                              return Array.from(_fableCore.Seq.truncate(5, $var38));
+	                            return builder_.Bind(nestedMembers(function ($var18) {
+	                              return Array.from(_fableCore.Seq.truncate(5, $var18));
 	                            }), function (_arg5) {
-	                              var checkMembers = _arg5;
-	
-	                              if (_fableCore.Seq.count(checkMembers) > 2 ? dominant(_fableCore.Seq.collect(function ($var39) {
-	                                return $var39[1][0];
-	                              }, checkMembers), _fableCore.Seq.collect(function ($var40) {
-	                                return $var40[1][1];
-	                              }, checkMembers)) : false) {
-	                                return builder_.Bind(nestedMembers(function (x) {
-	                                  return x;
-	                                }), function (_arg6) {
-	                                  var allMembers = _arg6;
-	                                  var props = allMembers.map(function (tupledArg) {
-	                                    var p = tupledArg[0];
-	                                    var _arg2_1 = tupledArg[1];
-	                                    var filtered = _arg2_1[1];
-	                                    return [p, filtered];
-	                                  });
-	                                  return builder_.Return(new Editor("NestedChoice", [catDoc, valDoc, catName_1, valName_1, props]));
+	                              return (_fableCore.Seq.count(_arg5) > 2 ? dominant(_fableCore.Seq.collect(function ($var19) {
+	                                return $var19[1][0];
+	                              }, _arg5), _fableCore.Seq.collect(function ($var20) {
+	                                return $var20[1][1];
+	                              }, _arg5)) : false) ? builder_.Bind(nestedMembers(function (x) {
+	                                return x;
+	                              }), function (_arg6) {
+	                                var props = _arg6.map(function (tupledArg) {
+	                                  return [tupledArg[0], tupledArg[1][1]];
 	                                });
-	                              } else {
-	                                return builder_.Return();
-	                              }
+	
+	                                return builder_.Return(new Editor("NestedChoice", [catDoc, valDoc, catName_1, valName_1, props]));
+	                              }) : builder_.Return();
 	                            });
 	                          }
 	                        } else {
@@ -12718,11 +12237,11 @@
 	  _fableCore.Util.setInterfaces(AddActionSchema.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.Editors.AddActionSchema");
 	
 	  var collectItemListEditors = exports.collectItemListEditors = function () {
-	    var f = function (chain) {
+	    var f = function f(chain) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          var $target1 = function () {
-	            var $target1 = function () {
+	          var $target1 = function $target1() {
+	            var $target1 = function $target1() {
 	              return builder_.Return();
 	            };
 	
@@ -12734,7 +12253,6 @@
 	                  var caSch = chain.head[2];
 	                  var caParentTy = chain.head[0];
 	                  var caName = chain.head[1];
-	                  var addActions = chain.tail;
 	                  return caSch.Type === "CreateAction";
 	                }()) {
 	                  var addActions = chain.tail;
@@ -12746,10 +12264,10 @@
 	                  {
 	                    var listName = caSch.JSON.result.name;
 	
-	                    var collectAdds = function (added) {
+	                    var collectAdds = function collectAdds(added) {
 	                      return function (lastTy) {
 	                        return function (_arg1) {
-	                          var $target1_1 = function () {
+	                          var $target1_1 = function $target1_1() {
 	                            return [_fableCore.List.reverse(added), lastTy];
 	                          };
 	
@@ -12760,7 +12278,6 @@
 	                                var addSch = _arg1.head[2];
 	                                var addParentTy = _arg1.head[0];
 	                                var addName = _arg1.head[1];
-	                                var addActions_1 = _arg1.tail;
 	
 	                                if (addSch.Type === "AddAction") {
 	                                  return listName === addSch.JSON.targetCollection.name;
@@ -12788,20 +12305,15 @@
 	                    };
 	
 	                    var patternInput = collectAdds(new _fableCore.List())(caTy)(addActions);
-	                    var lastTy = patternInput[1];
-	                    var adds = patternInput[0];
-	                    return builder_.Bind(getMembers(lastTy), function (_arg2) {
-	                      var members = _arg2;
+	                    return builder_.Bind(getMembers(patternInput[1]), function (_arg2) {
 	                      var availableAdds = filterProperties(function (_arg3) {
-	                        var $target1_1 = function () {
+	                        var $target1_1 = function $target1_1() {
 	                          return false;
 	                        };
 	
 	                        if (_arg3[1] != null) {
 	                          if (function () {
-	                            var t = _arg3[2];
 	                            var s = _arg3[1];
-	                            var n = _arg3[0];
 	                            return s.Type === "AddAction";
 	                          }()) {
 	                            var n = _arg3[0];
@@ -12814,8 +12326,8 @@
 	                        } else {
 	                          return $target1_1();
 	                        }
-	                      }, members);
-	                      return builder_.Return(new Editor("CreateList", [catDoc, caName, Array.from(adds), availableAdds]));
+	                      }, _arg2);
+	                      return builder_.Return(new Editor("CreateList", [catDoc, caName, Array.from(patternInput[0]), availableAdds]));
 	                    });
 	                  }
 	                } else {
@@ -12873,33 +12385,26 @@
 	  function collectCmdEditors(cmd) {
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
-	        var matchValue = cmd.Command;
-	
-	        var $target0 = function (e) {
+	        var $target0 = function $target0(e) {
 	          _extensions.Log.trace("editors", "single choice");
 	
 	          return builder_.Bind(collectSingleChoiceEditors(e), function (_arg1) {
-	            var single = _arg1;
-	
 	            _extensions.Log.trace("editors", "item list");
 	
 	            return builder_.Bind(collectItemListEditors(e), function (_arg2) {
-	              var itemList = _arg2;
-	
 	              _extensions.Log.trace("editors", "multi choice");
 	
 	              return builder_.Bind(collectNestedChoiceEditors(e), function (_arg3) {
-	                var nested = _arg3;
-	                return builder_.Return(_fableCore.List.append(single, _fableCore.List.append(nested, itemList)));
+	                return builder_.Return(_fableCore.List.append(_arg1, _fableCore.List.append(_arg3, _arg2)));
 	              });
 	            });
 	          });
 	        };
 	
-	        if (matchValue.Case === "Expr") {
-	          return $target0(matchValue.Fields[0]);
+	        if (cmd.Command.Case === "Expr") {
+	          return $target0(cmd.Command.Fields[0]);
 	        } else {
-	          return $target0(matchValue.Fields[1]);
+	          return $target0(cmd.Command.Fields[1]);
 	        }
 	      });
 	    }(_fableCore.defaultAsyncBuilder);
@@ -12937,36 +12442,29 @@
 	      return function (arg1) {
 	        return _html.El.op_Dynamic(arg0, arg1);
 	      };
-	    }(_html.h)("span")(new _fableCore.List())(new _fableCore.List()) : _arg1.Case === "Details" ? function () {
-	      var title = _arg1.Fields[0];
-	      var details = _arg1.Fields[1];
-	      return function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("div")(new _fableCore.List())(_fableCore.List.ofArray([function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("h3")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(title)])), function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("p")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(details)]))]));
-	    }() : function () {
-	      var s = _arg1.Fields[0];
-	      return function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("h3")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(s)]));
-	    }();
+	    }(_html.h)("span")(new _fableCore.List())(new _fableCore.List()) : _arg1.Case === "Details" ? function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("div")(new _fableCore.List())(_fableCore.List.ofArray([function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("h3")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(_arg1.Fields[0])])), function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("p")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(_arg1.Fields[1])]))])) : function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("h3")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(_arg1.Fields[0])]));
 	  }
 	
 	  function renderNestedDoc(_arg1_0, _arg1_1) {
 	    var _arg1 = [_arg1_0, _arg1_1];
 	
-	    var $target1 = function () {
+	    var $target1 = function $target1() {
 	      return [function (arg0) {
 	        return function (arg1) {
 	          return _html.El.op_Dynamic(arg0, arg1);
@@ -13002,11 +12500,7 @@
 	
 	  function renderEditor(typeCheck, setValue, origText, _arg1) {
 	    return _arg1.Case === "CreateList" ? function () {
-	      var ns = _arg1.Fields[2];
-	      var ms = _arg1.Fields[3];
-	      var doc = _arg1.Fields[0];
-	      var ca = _arg1.Fields[1];
-	      var edits = ns.map(function (n) {
+	      var edits = _arg1.Fields[2].map(function (n) {
 	        return [n, removeRangeWithPrecendingDot(origText, n.Range)];
 	      });
 	
@@ -13022,35 +12516,26 @@
 	        };
 	      });
 	
-	      var trigger = patternInput[0];
-	      var render = patternInput[1];
 	      edits.forEach(function (tupledArg) {
-	        var n = tupledArg[0];
-	        var edited = tupledArg[1];
-	
 	        (function (arg00) {
 	          _fableCore.Async.startImmediate(arg00);
 	        })(function (builder_) {
 	          return builder_.Delay(function (unitVar) {
-	            return builder_.Bind(typeCheck(edited), function (_arg14) {
-	              var safe = _arg14;
-	
-	              if (safe) {
-	                trigger(n.Name);
+	            return builder_.Bind(typeCheck(tupledArg[1]), function (_arg14) {
+	              return _arg14 ? function () {
+	                patternInput[0](tupledArg[0].Name);
 	                return builder_.Zero();
-	              } else {
-	                return builder_.Zero();
-	              }
+	              }() : builder_.Zero();
 	            });
 	          });
 	        }(_fableCore.defaultAsyncBuilder));
 	      });
-	      return render(function (safe) {
+	      return patternInput[1](function (safe) {
 	        return function (arg0) {
 	          return function (arg1) {
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
-	        }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ed-list")]))(_fableCore.List.ofArray([renderDoc(doc), function (arg0) {
+	        }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ed-list")]))(_fableCore.List.ofArray([renderDoc(_arg1.Fields[0]), function (arg0) {
 	          return function (arg1) {
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
@@ -13060,15 +12545,13 @@
 	          };
 	        }(_html.h)("ul")(new _fableCore.List())(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	          return _fableCore.Seq.collect(function (matchValue) {
-	            var n = matchValue[0];
-	            var edit = matchValue[1];
 	            return _fableCore.Seq.singleton(function (arg0) {
 	              return function (arg1) {
 	                return _html.El.op_Dynamic(arg0, arg1);
 	              };
 	            }(_html.h)("li")(new _fableCore.List())(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_1) {
-	              var dis = !safe.has(n.Name);
-	              return _fableCore.Seq.append(_fableCore.Seq.singleton((0, _html.text)(n.Name)), _fableCore.Seq.delay(function (unitVar_2) {
+	              var dis = !safe.has(matchValue[0].Name);
+	              return _fableCore.Seq.append(_fableCore.Seq.singleton((0, _html.text)(matchValue[0].Name)), _fableCore.Seq.delay(function (unitVar_2) {
 	                return _fableCore.Seq.append(_fableCore.Seq.singleton((0, _html.text)(" ")), _fableCore.Seq.delay(function (unitVar_3) {
 	                  return _fableCore.Seq.singleton(function (arg0) {
 	                    return function (arg1) {
@@ -13078,7 +12561,7 @@
 	                    return _fableCore.Seq.append(dis ? _fableCore.Seq.singleton((0, _html.op_EqualsGreater)("disabled", "disabled")) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_5) {
 	                      return _fableCore.Seq.singleton((0, _html.op_EqualsBangGreater)("click", function (el) {
 	                        return function (e) {
-	                          return setValue("list-delete")(n.Name)(edit);
+	                          setValue("list-delete")(matchValue[0].Name)(matchValue[1]);
 	                        };
 	                      }));
 	                    }));
@@ -13098,7 +12581,7 @@
 	        }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("data-placeholder", "add another item..."), (0, _html.op_EqualsBangGreater)("change", function (el) {
 	          return function (e) {
 	            var sel = el.value;
-	            var last = ns.length === 0 ? ca : ns[ns.length - 1];
+	            var last = _arg1.Fields[2].length === 0 ? _arg1.Fields[1] : _arg1.Fields[2][_arg1.Fields[2].length - 1];
 	            setValue("list-add")(sel)(insertDotTextAfter(origText, last.Range, sel));
 	          };
 	        })]))(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
@@ -13108,65 +12591,48 @@
 	            };
 	          }(_html.h)("option")(new _fableCore.List())(new _fableCore.List())), _fableCore.Seq.delay(function (unitVar_1) {
 	            return _fableCore.Seq.collect(function (matchValue) {
-	              var name = matchValue.Fields[0];
 	              return _fableCore.Seq.singleton(function (arg0) {
 	                return function (arg1) {
 	                  return _html.El.op_Dynamic(arg0, arg1);
 	                };
-	              }(_html.h)("option")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(name)])));
-	            }, ms);
+	              }(_html.h)("option")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(matchValue.Fields[0])])));
+	            }, _arg1.Fields[3]);
 	          }));
 	        })))]))]));
 	      });
 	    }() : _arg1.Case === "NestedChoice" ? function () {
-	      var props = _arg1.Fields[4];
-	      var n2 = _arg1.Fields[3];
-	      var n1 = _arg1.Fields[2];
-	      var doc2 = _arg1.Fields[1];
-	      var doc1 = _arg1.Fields[0];
-	
 	      var patternInput = function (arg00) {
 	        return function (arg10) {
 	          return _html.h.part(arg00, arg10);
 	        };
-	      }([n1.Name, n2.Name])(function (_arg1_1) {
+	      }([_arg1.Fields[2].Name, _arg1.Fields[3].Name])(function (_arg1_1) {
 	        return function (n) {
 	          return n;
 	        };
 	      });
 	
-	      var update = patternInput[0];
-	      var render = patternInput[1];
-	      return render(function (tupledArg) {
-	        var name1 = tupledArg[0];
-	        var name2 = tupledArg[1];
-	
+	      return patternInput[1](function (tupledArg) {
 	        var selected = function () {
-	          var $var41 = _fableCore.Seq.tryFind(function (tupledArg_1) {
-	            var _arg2 = tupledArg_1[0];
-	            var nested = tupledArg_1[1];
-	            var name = _arg2.Fields[0];
-	            return name === name1;
-	          }, props);
+	          var $var21 = _fableCore.Seq.tryFind(function (tupledArg_1) {
+	            return tupledArg_1[0].Fields[0] === tupledArg[0];
+	          }, _arg1.Fields[4]);
 	
-	          if ($var41 != null) {
+	          if ($var21 != null) {
 	            return function (tuple) {
 	              return tuple[1];
-	            }($var41);
+	            }($var21);
 	          } else {
-	            return $var41;
+	            return $var21;
 	          }
 	        }();
 	
 	        var nested = selected != null ? selected : [];
-	        var patternInput_1 = renderNestedDoc(doc1, doc2);
-	        var p = patternInput_1[1];
-	        var heading = patternInput_1[0];
+	        var patternInput_1 = renderNestedDoc(_arg1.Fields[0], _arg1.Fields[1]);
 	        return function (arg0) {
 	          return function (arg1) {
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
-	        }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ed-nested")]))(_fableCore.List.ofArray([heading, p, function (arg0) {
+	        }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ed-nested")]))(_fableCore.List.ofArray([patternInput_1[0], patternInput_1[1], function (arg0) {
 	          return function (arg1) {
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
@@ -13176,85 +12642,77 @@
 	          };
 	        }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsBangGreater)("change", function (el) {
 	          return function (e) {
-	            update([el.value, ""]);
+	            patternInput[0]([el.value, ""]);
 	          };
 	        })]))(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	          return _fableCore.Seq.collect(function (matchValue) {
-	            var nested_1 = matchValue[1];
 	            var name = matchValue[0].Fields[0];
 	            return _fableCore.Seq.singleton(function () {
-	              var sel = name === name1 ? _fableCore.List.ofArray([(0, _html.op_EqualsGreater)("selected", "selected")]) : new _fableCore.List();
+	              var sel = name === tupledArg[0] ? _fableCore.List.ofArray([(0, _html.op_EqualsGreater)("selected", "selected")]) : new _fableCore.List();
 	              return function (arg0) {
 	                return function (arg1) {
 	                  return _html.El.op_Dynamic(arg0, arg1);
 	                };
 	              }(_html.h)("option")(sel)(_fableCore.List.ofArray([(0, _html.text)(name)]));
 	            }());
-	          }, props);
+	          }, _arg1.Fields[4]);
 	        }))), function (arg0) {
 	          return function (arg1) {
 	            return _html.El.op_Dynamic(arg0, arg1);
 	          };
 	        }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("data-placeholder", "choose an item..."), (0, _html.op_EqualsBangGreater)("change", function (el) {
 	          return function (e) {
-	            var name2_1 = el.value;
-	            setValue("nested")(name2_1)(replaceTwoNamesWithValues(origText, n1, n2, name1, name2_1));
+	            var name2 = el.value;
+	            setValue("nested")(name2)(replaceTwoNamesWithValues(origText, _arg1.Fields[2], _arg1.Fields[3], tupledArg[0], name2));
 	          };
 	        })]))(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
-	          return _fableCore.Seq.append(name2 === "" ? _fableCore.Seq.singleton(function (arg0) {
+	          return _fableCore.Seq.append(tupledArg[1] === "" ? _fableCore.Seq.singleton(function (arg0) {
 	            return function (arg1) {
 	              return _html.El.op_Dynamic(arg0, arg1);
 	            };
 	          }(_html.h)("option")(new _fableCore.List())(new _fableCore.List())) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_1) {
 	            return _fableCore.Seq.collect(function (matchValue) {
-	              var name = matchValue.Fields[0];
 	              return _fableCore.Seq.singleton(function () {
-	                var sel = name === name2 ? _fableCore.List.ofArray([(0, _html.op_EqualsGreater)("selected", "selected")]) : new _fableCore.List();
+	                var sel = matchValue.Fields[0] === tupledArg[1] ? _fableCore.List.ofArray([(0, _html.op_EqualsGreater)("selected", "selected")]) : new _fableCore.List();
 	                return function (arg0) {
 	                  return function (arg1) {
 	                    return _html.El.op_Dynamic(arg0, arg1);
 	                  };
-	                }(_html.h)("option")(sel)(_fableCore.List.ofArray([(0, _html.text)(name)]));
+	                }(_html.h)("option")(sel)(_fableCore.List.ofArray([(0, _html.text)(matchValue.Fields[0])]));
 	              }());
 	            }, nested);
 	          }));
 	        })))]))]));
 	      });
-	    }() : function () {
-	      var n = _arg1.Fields[1];
-	      var ms = _arg1.Fields[2];
-	      var doc = _arg1.Fields[0];
-	      return function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ed-single")]))(_fableCore.List.ofArray([renderDoc(doc), function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "control")]))(_fableCore.List.ofArray([function (arg0) {
-	        return function (arg1) {
-	          return _html.El.op_Dynamic(arg0, arg1);
-	        };
-	      }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsBangGreater)("change", function (el) {
-	        return function (e) {
-	          var value = el.value;
-	          setValue("single")(value)(replaceNameWithValue(origText, n, value));
-	        };
-	      })]))(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
-	        return _fableCore.Seq.collect(function (matchValue) {
-	          var name = matchValue.Fields[0];
-	          return _fableCore.Seq.singleton(function () {
-	            var sel = name === n.Name ? _fableCore.List.ofArray([(0, _html.op_EqualsGreater)("selected", "selected")]) : new _fableCore.List();
-	            return function (arg0) {
-	              return function (arg1) {
-	                return _html.El.op_Dynamic(arg0, arg1);
-	              };
-	            }(_html.h)("option")(sel)(_fableCore.List.ofArray([(0, _html.text)(name)]));
-	          }());
-	        }, ms);
-	      })))]))]));
-	    }();
+	    }() : function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "ed-single")]))(_fableCore.List.ofArray([renderDoc(_arg1.Fields[0]), function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "control")]))(_fableCore.List.ofArray([function (arg0) {
+	      return function (arg1) {
+	        return _html.El.op_Dynamic(arg0, arg1);
+	      };
+	    }(_html.h)("select")(_fableCore.List.ofArray([(0, _html.op_EqualsBangGreater)("change", function (el) {
+	      return function (e) {
+	        var value = el.value;
+	        setValue("single")(value)(replaceNameWithValue(origText, _arg1.Fields[1], value));
+	      };
+	    })]))(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
+	      return _fableCore.Seq.collect(function (matchValue) {
+	        return _fableCore.Seq.singleton(function () {
+	          var sel = matchValue.Fields[0] === _arg1.Fields[1].Name ? _fableCore.List.ofArray([(0, _html.op_EqualsGreater)("selected", "selected")]) : new _fableCore.List();
+	          return function (arg0) {
+	            return function (arg1) {
+	              return _html.El.op_Dynamic(arg0, arg1);
+	            };
+	          }(_html.h)("option")(sel)(_fableCore.List.ofArray([(0, _html.text)(matchValue.Fields[0])]));
+	        }());
+	      }, _arg1.Fields[2]);
+	    })))]))]));
 	  }
 	});
 
@@ -13378,7 +12836,7 @@
 	    };
 	
 	    var isSortedUsing = $exports.isSortedUsing = function isSortedUsing(test, proj, arr) {
-	      var loop = function (i) {
+	      var loop = function loop(i) {
 	        return i === arr.length ? true : test(proj(arr[i - 1]))(proj(arr[i])) ? loop(i + 1) : false;
 	      };
 	
@@ -13393,13 +12851,13 @@
 	      var i1 = 0;
 	      var i2 = 0;
 	
-	      var op_LessDot = function (a) {
+	      var op_LessDot = function op_LessDot(a) {
 	        return function (b) {
 	          return (a < b ? -1 : a == b ? 0 : 1) < 0;
 	        };
 	      };
 	
-	      var eq = function (a) {
+	      var eq = function eq(a) {
 	        return function (b) {
 	          return (a < b ? -1 : a == b ? 0 : 1) === 0;
 	        };
@@ -13433,17 +12891,13 @@
 	
 	      while (i1 < arr1.length) {
 	        var patternInput = arr1[i1];
-	        var v1 = patternInput[1];
-	        var k1 = patternInput[0];
-	        res.push([k1, [v1, null]]);
+	        res.push([patternInput[0], [patternInput[1], null]]);
 	        i1 = i1 + 1;
 	      }
 	
 	      while (i2 < arr2.length) {
 	        var patternInput = arr2[i2];
-	        var v2 = patternInput[1];
-	        var k2 = patternInput[0];
-	        res.push([k2, [null, v2]]);
+	        res.push([patternInput[0], [null, patternInput[1]]]);
 	        i2 = i2 + 2;
 	      }
 	
@@ -13451,13 +12905,13 @@
 	    };
 	
 	    var zipAny = $exports.zipAny = function zipAny(arr1, arr2) {
-	      var op_LessEqualsDot = function (a) {
+	      var op_LessEqualsDot = function op_LessEqualsDot(a) {
 	        return function (b) {
 	          return (a < b ? -1 : a == b ? 0 : 1) <= 0;
 	        };
 	      };
 	
-	      var op_GreaterEqualsDot = function (a) {
+	      var op_GreaterEqualsDot = function op_GreaterEqualsDot(a) {
 	        return function (b) {
 	          return (a < b ? -1 : a == b ? 0 : 1) >= 0;
 	        };
@@ -13522,8 +12976,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13535,16 +12988,8 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var1, $var2) {
-	            return function (tupledArg) {
-	              var k1 = tupledArg[0];
-	              var _arg2 = tupledArg[1];
-	              return function (tupledArg_1) {
-	                var k2 = tupledArg_1[0];
-	                var _arg1 = tupledArg_1[1];
-	                return k1 < k2 ? -1 : k1 == k2 ? 0 : 1;
-	              };
-	            }($var1)($var2);
+	          })(Array.from(_fableCore.Seq.sortWith(function (tupledArg, tupledArg_1) {
+	            return tupledArg[0] < tupledArg_1[0] ? -1 : tupledArg[0] == tupledArg_1[0] ? 0 : 1;
 	          }, arr)));
 	        })(this);
 	      }
@@ -13556,8 +13001,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13569,16 +13013,8 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var3, $var4) {
-	            return function (tupledArg) {
-	              var _arg4 = tupledArg[0];
-	              var v1 = tupledArg[1];
-	              return function (tupledArg_1) {
-	                var _arg3 = tupledArg_1[0];
-	                var v2 = tupledArg_1[1];
-	                return v1 < v2 ? -1 : v1 == v2 ? 0 : 1;
-	              };
-	            }($var3)($var4);
+	          })(Array.from(_fableCore.Seq.sortWith(function (tupledArg, tupledArg_1) {
+	            return tupledArg[1] < tupledArg_1[1] ? -1 : tupledArg[1] == tupledArg_1[1] ? 0 : 1;
 	          }, arr)));
 	        })(this);
 	      }
@@ -13590,8 +13026,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13603,16 +13038,8 @@
 	            return array.reverse();
 	          } : function (x) {
 	            return x;
-	          })(Array.from(_fableCore.Seq.sortWith(function ($var5, $var6) {
-	            return function (tupledArg) {
-	              var _arg6 = tupledArg[0];
-	              var v1 = tupledArg[1];
-	              return function (tupledArg_1) {
-	                var _arg5 = tupledArg_1[0];
-	                var v2 = tupledArg_1[1];
-	                return f(v1) < f(v2) ? -1 : f(v1) == f(v2) ? 0 : 1;
-	              };
-	            }($var5)($var6);
+	          })(Array.from(_fableCore.Seq.sortWith(function (tupledArg, tupledArg_1) {
+	            return f(tupledArg[1]) < f(tupledArg_1[1]) ? -1 : f(tupledArg[1]) == f(tupledArg_1[1]) ? 0 : 1;
 	          }, arr)));
 	        })(this);
 	      }
@@ -13624,8 +13051,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13644,8 +13070,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13664,8 +13089,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13684,8 +13108,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13693,10 +13116,8 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var mapping = function (tupledArg) {
-	            var k = tupledArg[0];
-	            var v = tupledArg[1];
-	            return [k, f(v)];
+	          var mapping = function mapping(tupledArg) {
+	            return [tupledArg[0], f(tupledArg[1])];
 	          };
 	
 	          return function (array) {
@@ -13712,8 +13133,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13721,10 +13141,8 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var mapping = function (tupledArg) {
-	            var k = tupledArg[0];
-	            var v = tupledArg[1];
-	            return [f(k), v];
+	          var mapping = function mapping(tupledArg) {
+	            return [f(tupledArg[0]), tupledArg[1]];
 	          };
 	
 	          return function (array) {
@@ -13740,8 +13158,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13749,10 +13166,8 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var mapping = function (tupledArg) {
-	            var k = tupledArg[0];
-	            var v = tupledArg[1];
-	            return [k, f(k)(v)];
+	          var mapping = function mapping(tupledArg) {
+	            return [tupledArg[0], f(tupledArg[0])(tupledArg[1])];
 	          };
 	
 	          return function (array) {
@@ -13768,8 +13183,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13777,10 +13191,10 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var predicate = function ($var7) {
+	          var predicate = function predicate($var1) {
 	            return f(function (tuple) {
 	              return tuple[1];
-	            }($var7));
+	            }($var1));
 	          };
 	
 	          return function (array) {
@@ -13796,8 +13210,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13805,14 +13218,11 @@
 	            return new series(nd, arg10.keyName, arg10.valueName, arg10.seriesName);
 	          };
 	        }(function () {
-	          var chooser = function (tupledArg) {
-	            var k = tupledArg[0];
-	            var v = tupledArg[1];
-	            var matchValue = f(v);
+	          var chooser = function chooser(tupledArg) {
+	            var matchValue = f(tupledArg[1]);
 	
 	            if (matchValue != null) {
-	              var r = matchValue;
-	              return [k, r];
+	              return [tupledArg[0], matchValue];
 	            }
 	          };
 	
@@ -13829,10 +13239,8 @@
 	        var data = function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(_this.data, function (_arg4) {
-	              var v1 = _arg4;
 	              return builder_.Bind(s2.data, function (_arg5) {
-	                var v2 = _arg5;
-	                return builder_.Return(SeriesInternals.zipAny(v1, v2));
+	                return builder_.Return(SeriesInternals.zipAny(_arg4, _arg5));
 	              });
 	            });
 	          });
@@ -13844,7 +13252,7 @@
 	      key: "joinInner",
 	      value: function joinInner(s2) {
 	        return this.joinOuter(s2).choose(function (_arg6) {
-	          var $target1 = function () {
+	          var $target1 = function $target1() {
 	            return null;
 	          };
 	
@@ -13869,8 +13277,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg1) {
-	                  var vs = _arg1;
-	                  return builder_.Return(arg00(vs));
+	                  return builder_.Return(arg00(_arg1));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13889,10 +13296,8 @@
 	        return this.set(function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(_this2.data, function (_arg7) {
-	              var arr1 = _arg7;
 	              return builder_.Bind(s2.data, function (_arg8) {
-	                var arr2 = _arg8;
-	                return builder_.Return(arr1.concat(arr2));
+	                return builder_.Return(_arg7.concat(_arg8));
 	              });
 	            });
 	          });
@@ -13906,8 +13311,7 @@
 	            var nd = function (builder_) {
 	              return builder_.Delay(function (unitVar) {
 	                return builder_.Bind(arg10.data, function (_arg2) {
-	                  var vs = _arg2;
-	                  return builder_.ReturnFrom(arg00(vs));
+	                  return builder_.ReturnFrom(arg00(_arg2));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
@@ -13918,25 +13322,21 @@
 	          return function (builder_) {
 	            return builder_.Delay(function (unitVar) {
 	              return builder_.Bind(newKeys.data, function (_arg9) {
-	                var newKeys_1 = _arg9;
-	                var newKeys_2 = newKeys_1.map(function (tupledArg) {
-	                  var k = tupledArg[0];
-	                  var v = tupledArg[1];
-	                  return v;
+	                var newKeys_1 = _arg9.map(function (tupledArg) {
+	                  return tupledArg[1];
 	                });
 	
 	                var lookup = _fableCore.Map.create(arr, new _fableCore.GenericComparer(function (x, y) {
 	                  return x < y ? -1 : x > y ? 1 : 0;
 	                }));
 	
-	                return builder_.Return(newKeys_2.map(function (k) {
+	                return builder_.Return(newKeys_1.map(function (k) {
 	                  var matchValue = _fableCore.Map.tryFind(k, lookup);
 	
 	                  if (matchValue == null) {
 	                    return [k, defaultValue];
 	                  } else {
-	                    var res = matchValue;
-	                    return [k, res];
+	                    return [k, matchValue];
 	                  }
 	                }));
 	              });
@@ -13978,10 +13378,9 @@
 	        var data_1 = function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(data, function (_arg3) {
-	              var values = _arg3;
 	              return builder_.Return(Array.from(_fableCore.Seq.mapIndexed(function (i, v) {
 	                return [i, v];
-	              }, values)));
+	              }, _arg3)));
 	            });
 	          });
 	        }(_fableCore.defaultAsyncBuilder);
@@ -14056,11 +13455,8 @@
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        return builder_.Bind(data, function (_arg1) {
-	          var values = _arg1;
-	          return builder_.Return(values.map(function (tupledArg) {
-	            var a = tupledArg[0];
-	            var b = tupledArg[1];
-	            return [f(a), g(b)];
+	          return builder_.Return(_arg1.map(function (tupledArg) {
+	            return [f(tupledArg[0]), g(tupledArg[1])];
 	          }));
 	        });
 	      });
@@ -14071,10 +13467,9 @@
 	    return function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        return builder_.Bind(data, function (_arg1) {
-	          var values = _arg1;
 	          return builder_.Return(function (array) {
 	            return Array.from(_fableCore.Seq.map(f, array));
-	          }(values));
+	          }(_arg1));
 	        });
 	      });
 	    }(_fableCore.defaultAsyncBuilder);
@@ -14116,7 +13511,7 @@
 	          }));
 	        }));
 	
-	        return new RuntimeContext(this["root@19"], this.cookies, _fableCore.String.concat("&", traces));
+	        return new RuntimeContext(this["root@19"], this.cookies, _fableCore.String.join("&", traces));
 	      }
 	    }, {
 	      key: "getValue",
@@ -14126,20 +13521,19 @@
 	        return function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(_extensions.Http.Request("POST", concatUrl(_this2["root@19"], endpoint), _this2["trace@19"], _this2.cookies), function (_arg1) {
-	              var res = _arg1;
-	              return builder_.Return(JSON.parse(res));
+	              return builder_.Return(JSON.parse(_arg1));
 	            });
 	          });
 	        }(_fableCore.defaultAsyncBuilder);
 	      }
 	    }, {
 	      key: "root",
-	      get: function () {
+	      get: function get() {
 	        return this["root@19"];
 	      }
 	    }, {
 	      key: "trace",
-	      get: function () {
+	      get: function get() {
 	        return this["trace@19"];
 	      }
 	    }]);
@@ -14170,22 +13564,19 @@
 	        return function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            var url = function () {
-	              var folder = function (tfs_1) {
+	              var folder = function folder(tfs_1) {
 	                return function (tupledArg) {
-	                  var id = tupledArg[0];
-	                  var vals = tupledArg[1];
-	
-	                  if (vals.length !== 1) {
+	                  if (tupledArg[1].length !== 1) {
 	                    throw "PivotContext.getData: Expected one argument";
 	                  }
 	
-	                  return _fableCore.String.replace(tfs_1, id, _fableCore.Util.toString(vals[0]));
+	                  return _fableCore.String.replace(tfs_1, tupledArg[0], _fableCore.Util.toString(tupledArg[1][0]));
 	                };
 	              };
 	
 	              return function (array) {
-	                return _fableCore.Seq.fold(function ($var46, $var47) {
-	                  return folder($var46)($var47);
+	                return _fableCore.Seq.fold(function ($var12, $var13) {
+	                  return folder($var12)($var13);
 	                }, tfs, array);
 	              };
 	            }()(_this3.calls);
@@ -14193,8 +13584,7 @@
 	            _extensions.Log.trace("runtime", "Pivot: %s", concatUrl(_this3.root, url));
 	
 	            return builder_.Bind(_extensions.Http.Request("GET", concatUrl(_this3.root, url)), function (_arg1) {
-	              var res = _arg1;
-	              return builder_.Return(JSON.parse(res));
+	              return builder_.Return(JSON.parse(_arg1));
 	            });
 	          });
 	        }(_fableCore.defaultAsyncBuilder);
@@ -14312,13 +13702,10 @@
 	        var i = {
 	          contents: 0
 	        };
-	        var data_1 = names == null ? data : function () {
-	          var names_1 = names;
-	          return data.map(function (s) {
-	            void i.contents++;
-	            return s.setProperties(null, null, names_1[i.contents - 1]);
-	          });
-	        }();
+	        var data_1 = names == null ? data : data.map(function (s) {
+	          void i.contents++;
+	          return s.setProperties(null, null, names[i.contents - 1]);
+	        });
 	        return new _extensions.Area(_core.ChartDataOperations.oneKeyNValues("number", data_1), "AreaChart", (0, _extensions.AreaChartOptions$2Eget_empty$2EStatic)());
 	      }
 	    }, {
@@ -14341,7 +13728,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(global,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports,__webpack_require__(20),__webpack_require__(21),__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports!=="undefined"){factory(exports,require("./core"),require("./options"),require("fable-core"));}else{var mod={exports:{}};factory(mod.exports,global.core,global.options,global.fableCore);global.extensions=mod.exports;}})(this,function(exports,_core,_options,_fableCore){"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.options=exports.CandlestickChartOptions$2Eget_empty$2EStatic=exports.TimelineOptions$2Eget_empty$2EStatic=exports.TableOptions$2Eget_empty$2EStatic=exports.TreeMapOptions$2Eget_empty$2EStatic=exports.BubbleChartOptions$2Eget_empty$2EStatic=exports.PieChartOptions$2Eget_empty$2EStatic=exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=exports.AnnotationChartOptions$2Eget_empty$2EStatic=exports.AreaChartOptions$2Eget_empty$2EStatic=exports.HistogramOptions$2Eget_empty$2EStatic=exports.BarChartOptions$2Eget_empty$2EStatic=exports.LineChartOptions$2Eget_empty$2EStatic=exports.ColumnChartOptions$2Eget_empty$2EStatic=exports.ScatterChartOptions$2Eget_empty$2EStatic=exports.GeoChartOptions$2Eget_empty$2EStatic=exports.Candlestick=exports.Timeline=exports.Table=exports.TreeMap=exports.Bubble=exports.Pie=exports.SteppedArea=exports.Annotation=exports.Area=exports.Histogram=exports.Bar=exports.Line=exports.Column=exports.Scatter=exports.Geo=undefined;function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var Geo=exports.Geo=function(){function Geo(data,typeName,options){_classCallCheck(this,Geo);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Geo,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,datalessRegionColor,displayMode,enableRegionInteractivity,height,keepAspectRatio,region,markerOpacity,resolution,width){var _this=this;var o=this.options;var newOptions=function(){var inputRecord=_this.options;var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var datalessRegionColor_1=_core.Helpers.right(o,"datalessRegionColor",datalessRegionColor);var displayMode_1=_core.Helpers.right(o,"displayMode",displayMode);var enableRegionInteractivity_1=_core.Helpers.right(o,"enableRegionInteractivity",enableRegionInteractivity);var height_1=_core.Helpers.right(o,"height",height);var keepAspectRatio_1=_core.Helpers.right(o,"keepAspectRatio",keepAspectRatio);var region_1=_core.Helpers.right(o,"region",region);var markerOpacity_1=_core.Helpers.right(o,"markerOpacity",markerOpacity);var resolution_1=_core.Helpers.right(o,"resolution",resolution);var width_1=_core.Helpers.right(o,"width",width);return new _options.GeoChartOptions(backgroundColor_1,inputRecord.colorAxis,datalessRegionColor_1,displayMode_1,enableRegionInteractivity_1,height_1,keepAspectRatio_1,inputRecord.legend,region_1,inputRecord.magnifyingGlass,markerOpacity_1,resolution_1,inputRecord.sizeAxis,inputRecord.tooltip,width_1);}();return new Geo(this.data,this.typeName,newOptions);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var _this2=this;var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var10=values;if($var10!=null){return function(source){return Float64Array.from(source);}($var10);}else{return $var10;}}()),_core.Helpers.right(o,"colors",function(){var $var11=colors;if($var11!=null){return function(source){return Array.from(source);}($var11);}else{return $var11;}}()),_core.Helpers.copy(o,"legend"));var options=function(){var inputRecord=_this2.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,newNested,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this3=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this3.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,newNested,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"magnifyingGlass",value:function magnifyingGlass(enable,zoomFactor){var _this4=this;var o=this.options.magnifyingGlass;var newNested=new _options.GeoChartMagnifyingGlass(_core.Helpers.right(o,"enable",enable),_core.Helpers.right(o,"zoomFactor",zoomFactor));var options=function(){var inputRecord=_this4.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,newNested,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var _this5=this;var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=function(){var inputRecord=_this5.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,newNested,inputRecord.tooltip,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this6=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this6.options;return new _options.GeoChartOptions(inputRecord.backgroundColor,inputRecord.colorAxis,inputRecord.datalessRegionColor,inputRecord.displayMode,inputRecord.enableRegionInteractivity,inputRecord.height,inputRecord.keepAspectRatio,inputRecord.legend,inputRecord.region,inputRecord.magnifyingGlass,inputRecord.markerOpacity,inputRecord.resolution,inputRecord.sizeAxis,newNested,inputRecord.width);}();return new Geo(this.data,this.typeName,options);}}]);return Geo;}();_fableCore.Util.setInterfaces(Geo.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Geo");var Scatter=function(){function Scatter(data,typeName,options){_classCallCheck(this,Scatter);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Scatter,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,fontSize,fontName,forceIFrame,height,lineWidth,pointSize,selectionMode,series,theme,title,titlePosition,width){var _this7=this;var o=this.options;var newOptions=function(){var inputRecord=_this7.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var12=colors;if($var12!=null){return function(source){return Array.from(source);}($var12);}else{return $var12;}}());var curveType_1=_core.Helpers.right(o,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var width_1=_core.Helpers.right(o,"width",width);return new _options.ScatterChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,fontSize_1,fontName_1,forceIFrame_1,inputRecord.hAxis,height_1,inputRecord.legend,lineWidth_1,pointSize_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,width_1);}();return new Scatter(this.data,this.typeName,newOptions);}},{key:"trendlines",value:function trendlines(_trendlines){var _this8=this;var o=this.options;var options=function(){var inputRecord=_this8.options;var trendlines_1=_core.Helpers.right(o,"trendlines",function(){var $var13=_trendlines;if($var13!=null){return function(source){return Array.from(source);}($var13);}else{return $var13;}}());return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,trendlines_1,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"animation",value:function animation(duration,easing){var _this9=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this9.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this10=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this10.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this11=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this11.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this12=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var14=actions;if($var14!=null){return function(source){return Array.from(source);}($var14);}else{return $var14;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this12.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this13=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var15=ticks;if($var15!=null){return function(source){return Array.from(source);}($var15);}else{return $var15;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this13.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,newNested,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this14=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this14.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this15=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this15.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this16=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this16.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.trendlines,inputRecord.vAxis,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this17=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var16=ticks;if($var16!=null){return function(source){return Array.from(source);}($var16);}else{return $var16;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this17.options;return new _options.ScatterChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.lineWidth,inputRecord.pointSize,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.trendlines,newNested,inputRecord.width);}();return new Scatter(this.data,this.typeName,options);}}]);return Scatter;}();exports.Scatter=Scatter;_fableCore.Util.setInterfaces(Scatter.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Scatter");var Column=exports.Column=function(){function Column(data,typeName,options){_classCallCheck(this,Column);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Column,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this18=this;var o=this.options;var newOptions=function(){var inputRecord=_this18.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var17=colors;if($var17!=null){return function(source){return Array.from(source);}($var17);}else{return $var17;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.ColumnChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,isStacked_1,inputRecord.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Column(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this19=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this19.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this20=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this20.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this21=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this21.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this22=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var18=ticks;if($var18!=null){return function(source){return Array.from(source);}($var18);}else{return $var18;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this22.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this23=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this23.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this24=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this24.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this25=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this25.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Column(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this26=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var19=ticks;if($var19!=null){return function(source){return Array.from(source);}($var19);}else{return $var19;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this26.options;return new _options.ColumnChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Column(this.data,this.typeName,options);}}]);return Column;}();_fableCore.Util.setInterfaces(Column.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Column");var Line=exports.Line=function(){function Line(data,typeName,options){_classCallCheck(this,Line);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Line,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this27=this;var o=this.options;var newOptions=function(){var inputRecord=_this27.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var20=colors;if($var20!=null){return function(source){return Array.from(source);}($var20);}else{return $var20;}}());var curveType_1=_core.Helpers.right(o,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.LineChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,inputRecord.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Line(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this28=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this28.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this29=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this29.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this30=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this30.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this31=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var21=actions;if($var21!=null){return function(source){return Array.from(source);}($var21);}else{return $var21;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this31.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this32=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var22=ticks;if($var22!=null){return function(source){return Array.from(source);}($var22);}else{return $var22;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this32.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this33=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this33.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,newNested,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this34=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this34.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this35=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this35.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Line(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this36=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var23=ticks;if($var23!=null){return function(source){return Array.from(source);}($var23);}else{return $var23;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this36.options;return new _options.LineChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.curveType,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Line(this.data,this.typeName,options);}}]);return Line;}();_fableCore.Util.setInterfaces(Line.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Line");var Bar=exports.Bar=function(){function Bar(data,typeName,options){_classCallCheck(this,Bar);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bar,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,hAxes,height,isStacked,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this37=this;var o=this.options;var newOptions=function(){var inputRecord=_this37.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var24=colors;if($var24!=null){return function(source){return Array.from(source);}($var24);}else{return $var24;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var hAxes_1=_core.Helpers.right(o,"hAxes",hAxes);var height_1=_core.Helpers.right(o,"height",height);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.BarChartOptions(aggregationTarget_1,inputRecord.animation,inputRecord.annotations,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,hAxes_1,inputRecord.hAxis,height_1,isStacked_1,inputRecord.legend,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Bar(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this38=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this38.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this39=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this39.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this40=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this40.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this41=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var25=ticks;if($var25!=null){return function(source){return Array.from(source);}($var25);}else{return $var25;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this41.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,newNested,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this42=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this42.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this43=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this43.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this44=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this44.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this45=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var26=ticks;if($var26!=null){return function(source){return Array.from(source);}($var26);}else{return $var26;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this45.options;return new _options.BarChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.annotations,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxes,inputRecord.hAxis,inputRecord.height,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Bar(this.data,this.typeName,options);}}]);return Bar;}();_fableCore.Util.setInterfaces(Bar.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bar");var Histogram=exports.Histogram=function(){function Histogram(data,typeName,options){_classCallCheck(this,Histogram);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Histogram,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,orientation,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this46=this;var o=this.options;var newOptions=function(){var inputRecord=_this46.options;var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var27=colors;if($var27!=null){return function(source){return Array.from(source);}($var27);}else{return $var27;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.HistogramOptions(inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,inputRecord.histogram,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,orientation_1,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Histogram(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this47=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this47.options;return new _options.HistogramOptions(newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this48=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this48.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this49=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this49.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this50=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var28=ticks;if($var28!=null){return function(source){return Array.from(source);}($var28);}else{return $var28;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this50.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"histogram",value:function histogram(bucketSize,hideBucketItems,lastBucketPercentile){var _this51=this;var o=this.options.histogram;var newNested=new _options.HistogramHistogram(_core.Helpers.right(o,"bucketSize",bucketSize),_core.Helpers.right(o,"hideBucketItems",hideBucketItems),_core.Helpers.right(o,"lastBucketPercentile",lastBucketPercentile));var options=function(){var inputRecord=_this51.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this52=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this52.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this53=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this53.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this54=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this54.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this55=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var29=ticks;if($var29!=null){return function(source){return Array.from(source);}($var29);}else{return $var29;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this55.options;return new _options.HistogramOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.chartArea,inputRecord.colors,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.histogram,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Histogram(this.data,this.typeName,options);}}]);return Histogram;}();_fableCore.Util.setInterfaces(Histogram.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Histogram");var Area=exports.Area=function(){function Area(data,typeName,options){_classCallCheck(this,Area);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Area,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this56=this;var o=this.options;var newOptions=function(){var inputRecord=_this56.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(o,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var30=colors;if($var30!=null){return function(source){return Array.from(source);}($var30);}else{return $var30;}}());var dataOpacity_1=_core.Helpers.right(o,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var lineWidth_1=_core.Helpers.right(o,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var pointSize_1=_core.Helpers.right(o,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.AreaChartOptions(aggregationTarget_1,inputRecord.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,inputRecord.crosshair,dataOpacity_1,enableInteractivity_1,inputRecord.explorer,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Area(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this57=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this57.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this58=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this58.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var _this59=this;var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=function(){var inputRecord=_this59.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this60=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var31=actions;if($var31!=null){return function(source){return Array.from(source);}($var31);}else{return $var31;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this60.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,newNested,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this61=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var32=ticks;if($var32!=null){return function(source){return Array.from(source);}($var32);}else{return $var32;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this61.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this62=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this62.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this63=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this63.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this64=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this64.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Area(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this65=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var33=ticks;if($var33!=null){return function(source){return Array.from(source);}($var33);}else{return $var33;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this65.options;return new _options.AreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.crosshair,inputRecord.dataOpacity,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.lineWidth,inputRecord.orientation,inputRecord.pointSize,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Area(this.data,this.typeName,options);}}]);return Area;}();_fableCore.Util.setInterfaces(Area.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Area");var Annotation=exports.Annotation=function(){function Annotation(data,typeName,options){_classCallCheck(this,Annotation);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Annotation,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,allValuesSuffix,annotationsWidth,colors,dateFormat,displayAnnotations,displayAnnotationsFilter,displayDateTimeBarSeparator,displayExactValues,displayLegendDots,displayLegendValues,displayRangeSelector,displayZoomButtons,fill,legendPosition,max,min,numberFormats,scaleColumns,scaleFormat,scaleType,thickness,zoomEndTime,zoomStartTime){var _this66=this;var o=this.options;var newOptions=function(){var inputRecord=_this66.options;return new _options.AnnotationChartOptions(_core.Helpers.right(o,"allowHtml",allowHtml),_core.Helpers.right(o,"allValuesSuffix",allValuesSuffix),_core.Helpers.right(o,"annotationsWidth",annotationsWidth),_core.Helpers.right(o,"colors",function(){var $var34=colors;if($var34!=null){return function(source){return Array.from(source);}($var34);}else{return $var34;}}()),_core.Helpers.right(o,"dateFormat",dateFormat),_core.Helpers.right(o,"displayAnnotations",displayAnnotations),_core.Helpers.right(o,"displayAnnotationsFilter",displayAnnotationsFilter),_core.Helpers.right(o,"displayDateTimeBarSeparator",displayDateTimeBarSeparator),_core.Helpers.right(o,"displayExactValues",displayExactValues),_core.Helpers.right(o,"displayLegendDots",displayLegendDots),_core.Helpers.right(o,"displayLegendValues",displayLegendValues),_core.Helpers.right(o,"displayRangeSelector",displayRangeSelector),_core.Helpers.right(o,"displayZoomButtons",displayZoomButtons),_core.Helpers.right(o,"fill",fill),_core.Helpers.right(o,"legendPosition",legendPosition),_core.Helpers.right(o,"max",max),_core.Helpers.right(o,"min",min),_core.Helpers.right(o,"numberFormats",numberFormats),_core.Helpers.right(o,"scaleColumns",function(){var $var35=scaleColumns;if($var35!=null){return function(source){return Float64Array.from(source);}($var35);}else{return $var35;}}()),_core.Helpers.right(o,"scaleFormat",scaleFormat),_core.Helpers.right(o,"scaleType",scaleType),_core.Helpers.right(o,"thickness",thickness),_core.Helpers.right(o,"zoomEndTime",zoomEndTime),_core.Helpers.right(o,"zoomStartTime",zoomStartTime));}();return new Annotation(this.data,this.typeName,newOptions);}}]);return Annotation;}();_fableCore.Util.setInterfaces(Annotation.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Annotation");var SteppedArea=exports.SteppedArea=function(){function SteppedArea(data,typeName,options){_classCallCheck(this,SteppedArea);this.data=data;this.typeName=typeName;this.options=options;}_createClass(SteppedArea,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,connectSteps,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this67=this;var o=this.options;var newOptions=function(){var inputRecord=_this67.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(o,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var36=colors;if($var36!=null){return function(source){return Array.from(source);}($var36);}else{return $var36;}}());var connectSteps_1=_core.Helpers.right(o,"connectSteps",connectSteps);var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var interpolateNulls_1=_core.Helpers.right(o,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(o,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.SteppedAreaChartOptions(aggregationTarget_1,inputRecord.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,inputRecord.chartArea,colors_1,connectSteps_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,interpolateNulls_1,isStacked_1,inputRecord.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new SteppedArea(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this68=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this68.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this69=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this69.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this70=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var37=ticks;if($var37!=null){return function(source){return Array.from(source);}($var37);}else{return $var37;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this70.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this71=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this71.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,newNested,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this72=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this72.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this73=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this73.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this74=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var38=ticks;if($var38!=null){return function(source){return Array.from(source);}($var38);}else{return $var38;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this74.options;return new _options.SteppedAreaChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.areaOpacity,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.connectSteps,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.interpolateNulls,inputRecord.isStacked,inputRecord.legend,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new SteppedArea(this.data,this.typeName,options);}}]);return SteppedArea;}();_fableCore.Util.setInterfaces(SteppedArea.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.SteppedArea");var Pie=exports.Pie=function(){function Pie(data,typeName,options){_classCallCheck(this,Pie);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Pie,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,colors,enableInteractivity,fontSize,fontName,height,is3D,pieHole,pieSliceBorderColor,pieSliceText,pieStartAngle,reverseCategories,pieResidueSliceColor,pieResidueSliceLabel,slices,sliceVisibilityThreshold,title,width){var _this75=this;var o=this.options;var newOptions=function(){var inputRecord=_this75.options;var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var39=colors;if($var39!=null){return function(source){return Array.from(source);}($var39);}else{return $var39;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var is3D_1=_core.Helpers.right(o,"is3D",is3D);var pieHole_1=_core.Helpers.right(o,"pieHole",pieHole);var pieSliceBorderColor_1=_core.Helpers.right(o,"pieSliceBorderColor",pieSliceBorderColor);var pieSliceText_1=_core.Helpers.right(o,"pieSliceText",pieSliceText);var pieStartAngle_1=_core.Helpers.right(o,"pieStartAngle",pieStartAngle);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var pieResidueSliceColor_1=_core.Helpers.right(o,"pieResidueSliceColor",pieResidueSliceColor);var pieResidueSliceLabel_1=_core.Helpers.right(o,"pieResidueSliceLabel",pieResidueSliceLabel);var slices_1=_core.Helpers.right(o,"slices",slices);var sliceVisibilityThreshold_1=_core.Helpers.right(o,"sliceVisibilityThreshold",sliceVisibilityThreshold);var title_1=_core.Helpers.right(o,"title",title);var width_1=_core.Helpers.right(o,"width",width);return new _options.PieChartOptions(backgroundColor_1,inputRecord.chartArea,colors_1,enableInteractivity_1,fontSize_1,fontName_1,height_1,is3D_1,inputRecord.legend,pieHole_1,pieSliceBorderColor_1,pieSliceText_1,inputRecord.pieSliceTextStyle,pieStartAngle_1,reverseCategories_1,pieResidueSliceColor_1,pieResidueSliceLabel_1,slices_1,sliceVisibilityThreshold_1,title_1,inputRecord.titleTextStyle,inputRecord.tooltip,width_1);}();return new Pie(this.data,this.typeName,newOptions);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this76=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this76.options;return new _options.PieChartOptions(inputRecord.backgroundColor,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this77=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this77.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,newNested,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"pieSliceTextStyle",value:function pieSliceTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this78=this;var o=this.options.pieSliceTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this78.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,newNested,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this79=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this79.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,newNested,inputRecord.tooltip,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this80=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this80.options;return new _options.PieChartOptions(inputRecord.backgroundColor,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.fontSize,inputRecord.fontName,inputRecord.height,inputRecord.is3D,inputRecord.legend,inputRecord.pieHole,inputRecord.pieSliceBorderColor,inputRecord.pieSliceText,inputRecord.pieSliceTextStyle,inputRecord.pieStartAngle,inputRecord.reverseCategories,inputRecord.pieResidueSliceColor,inputRecord.pieResidueSliceLabel,inputRecord.slices,inputRecord.sliceVisibilityThreshold,inputRecord.title,inputRecord.titleTextStyle,newNested,inputRecord.width);}();return new Pie(this.data,this.typeName,options);}}]);return Pie;}();_fableCore.Util.setInterfaces(Pie.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Pie");var Bubble=exports.Bubble=function(){function Bubble(data,typeName,options){_classCallCheck(this,Bubble);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bubble,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,enableInteractivity,fontSize,fontName,forceIFrame,height,selectionMode,series,sortBubblesBySize,theme,title,titlePosition,width){var _this81=this;var o=this.options;var newOptions=function(){var inputRecord=_this81.options;var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var40=colors;if($var40!=null){return function(source){return Array.from(source);}($var40);}else{return $var40;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var sortBubblesBySize_1=_core.Helpers.right(o,"sortBubblesBySize",sortBubblesBySize);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var width_1=_core.Helpers.right(o,"width",width);return new _options.BubbleChartOptions(inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bubble,inputRecord.chartArea,colors_1,inputRecord.colorAxis,enableInteractivity_1,inputRecord.explorer,fontSize_1,fontName_1,forceIFrame_1,inputRecord.hAxis,height_1,inputRecord.legend,selectionMode_1,series_1,inputRecord.sizeAxis,sortBubblesBySize_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,width_1);}();return new Bubble(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this82=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this82.options;return new _options.BubbleChartOptions(newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"bubble",value:function bubble(opacity,stroke){var _this83=this;var o=this.options.bubble;var newNested=new _options.ChartBubble(_core.Helpers.right(o,"opacity",opacity),_core.Helpers.right(o,"stroke",stroke),_core.Helpers.copy(o,"textStyle"));var options=function(){var inputRecord=_this83.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this84=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this84.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,newNested,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var _this85=this;var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var41=values;if($var41!=null){return function(source){return Float64Array.from(source);}($var41);}else{return $var41;}}()),_core.Helpers.right(o,"colors",function(){var $var42=colors;if($var42!=null){return function(source){return Array.from(source);}($var42);}else{return $var42;}}()),_core.Helpers.copy(o,"legend"));var options=function(){var inputRecord=_this85.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,newNested,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var _this86=this;var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var43=actions;if($var43!=null){return function(source){return Array.from(source);}($var43);}else{return $var43;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=function(){var inputRecord=_this86.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,newNested,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this87=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var44=ticks;if($var44!=null){return function(source){return Array.from(source);}($var44);}else{return $var44;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this87.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,newNested,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this88=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this88.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var _this89=this;var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=function(){var inputRecord=_this89.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,newNested,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this90=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this90.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this91=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this91.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxis,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this92=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var45=ticks;if($var45!=null){return function(source){return Array.from(source);}($var45);}else{return $var45;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this92.options;return new _options.BubbleChartOptions(inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bubble,inputRecord.chartArea,inputRecord.colors,inputRecord.colorAxis,inputRecord.enableInteractivity,inputRecord.explorer,inputRecord.fontSize,inputRecord.fontName,inputRecord.forceIFrame,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.selectionMode,inputRecord.series,inputRecord.sizeAxis,inputRecord.sortBubblesBySize,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,newNested,inputRecord.width);}();return new Bubble(this.data,this.typeName,options);}}]);return Bubble;}();_fableCore.Util.setInterfaces(Bubble.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bubble");var TreeMap=exports.TreeMap=function(){function TreeMap(data,typeName,options){_classCallCheck(this,TreeMap);this.data=data;this.typeName=typeName;this.options=options;}_createClass(TreeMap,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(fontColor,fontFamily,fontSize,forceIFrame,headerColor,headerHeight,headerHighlightColor,hintOpacity,maxColor,maxDepth,maxHighlightColor,maxPostDepth,maxColorValue,midColor,midHighlightColor,minColor,minHighlightColor,minColorValue,showScale,showTooltips,title,useWeightedAverageForAggregation){var _this93=this;var o=this.options;var newOptions=function(){var inputRecord=_this93.options;var fontColor_1=_core.Helpers.right(o,"fontColor",fontColor);var fontFamily_1=_core.Helpers.right(o,"fontFamily",fontFamily);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var headerColor_1=_core.Helpers.right(o,"headerColor",headerColor);var headerHeight_1=_core.Helpers.right(o,"headerHeight",headerHeight);var headerHighlightColor_1=_core.Helpers.right(o,"headerHighlightColor",headerHighlightColor);var hintOpacity_1=_core.Helpers.right(o,"hintOpacity",hintOpacity);var maxColor_1=_core.Helpers.right(o,"maxColor",maxColor);var maxDepth_1=_core.Helpers.right(o,"maxDepth",maxDepth);var maxHighlightColor_1=_core.Helpers.right(o,"maxHighlightColor",maxHighlightColor);var maxPostDepth_1=_core.Helpers.right(o,"maxPostDepth",maxPostDepth);var maxColorValue_1=_core.Helpers.right(o,"maxColorValue",maxColorValue);var midColor_1=_core.Helpers.right(o,"midColor",midColor);var midHighlightColor_1=_core.Helpers.right(o,"midHighlightColor",midHighlightColor);var minColor_1=_core.Helpers.right(o,"minColor",minColor);var minHighlightColor_1=_core.Helpers.right(o,"minHighlightColor",minHighlightColor);var minColorValue_1=_core.Helpers.right(o,"minColorValue",minColorValue);var showScale_1=_core.Helpers.right(o,"showScale",showScale);var showTooltips_1=_core.Helpers.right(o,"showTooltips",showTooltips);var title_1=_core.Helpers.right(o,"title",title);var useWeightedAverageForAggregation_1=_core.Helpers.right(o,"useWeightedAverageForAggregation",useWeightedAverageForAggregation);return new _options.TreeMapOptions(fontColor_1,fontFamily_1,fontSize_1,forceIFrame_1,headerColor_1,headerHeight_1,headerHighlightColor_1,hintOpacity_1,maxColor_1,maxDepth_1,maxHighlightColor_1,maxPostDepth_1,maxColorValue_1,midColor_1,midHighlightColor_1,minColor_1,minHighlightColor_1,minColorValue_1,showScale_1,showTooltips_1,inputRecord.textStyle,title_1,inputRecord.titleTextStyle,useWeightedAverageForAggregation_1);}();return new TreeMap(this.data,this.typeName,newOptions);}},{key:"textStyle",value:function textStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this94=this;var o=this.options.textStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this94.options;return new _options.TreeMapOptions(inputRecord.fontColor,inputRecord.fontFamily,inputRecord.fontSize,inputRecord.forceIFrame,inputRecord.headerColor,inputRecord.headerHeight,inputRecord.headerHighlightColor,inputRecord.hintOpacity,inputRecord.maxColor,inputRecord.maxDepth,inputRecord.maxHighlightColor,inputRecord.maxPostDepth,inputRecord.maxColorValue,inputRecord.midColor,inputRecord.midHighlightColor,inputRecord.minColor,inputRecord.minHighlightColor,inputRecord.minColorValue,inputRecord.showScale,inputRecord.showTooltips,newNested,inputRecord.title,inputRecord.titleTextStyle,inputRecord.useWeightedAverageForAggregation);}();return new TreeMap(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this95=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this95.options;return new _options.TreeMapOptions(inputRecord.fontColor,inputRecord.fontFamily,inputRecord.fontSize,inputRecord.forceIFrame,inputRecord.headerColor,inputRecord.headerHeight,inputRecord.headerHighlightColor,inputRecord.hintOpacity,inputRecord.maxColor,inputRecord.maxDepth,inputRecord.maxHighlightColor,inputRecord.maxPostDepth,inputRecord.maxColorValue,inputRecord.midColor,inputRecord.midHighlightColor,inputRecord.minColor,inputRecord.minHighlightColor,inputRecord.minColorValue,inputRecord.showScale,inputRecord.showTooltips,inputRecord.textStyle,inputRecord.title,newNested,inputRecord.useWeightedAverageForAggregation);}();return new TreeMap(this.data,this.typeName,options);}}]);return TreeMap;}();_fableCore.Util.setInterfaces(TreeMap.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.TreeMap");var Table=exports.Table=function(){function Table(data,typeName,options){_classCallCheck(this,Table);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Table,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,alternatingRowStyle,firstRowNumber,height,page,pageSize,rtlTable,scrollLeftStartPosition,showRowNumber,sort,sortAscending,sortColumn,startPage,width){var _this96=this;var o=this.options;var newOptions=function(){var inputRecord=_this96.options;var allowHtml_1=_core.Helpers.right(o,"allowHtml",allowHtml);var alternatingRowStyle_1=_core.Helpers.right(o,"alternatingRowStyle",alternatingRowStyle);var firstRowNumber_1=_core.Helpers.right(o,"firstRowNumber",firstRowNumber);var height_1=_core.Helpers.right(o,"height",height);var page_1=_core.Helpers.right(o,"page",page);var pageSize_1=_core.Helpers.right(o,"pageSize",pageSize);var rtlTable_1=_core.Helpers.right(o,"rtlTable",rtlTable);var scrollLeftStartPosition_1=_core.Helpers.right(o,"scrollLeftStartPosition",scrollLeftStartPosition);var showRowNumber_1=_core.Helpers.right(o,"showRowNumber",showRowNumber);var sort_1=_core.Helpers.right(o,"sort",sort);var sortAscending_1=_core.Helpers.right(o,"sortAscending",sortAscending);var sortColumn_1=_core.Helpers.right(o,"sortColumn",sortColumn);var startPage_1=_core.Helpers.right(o,"startPage",startPage);var width_1=_core.Helpers.right(o,"width",width);return new _options.TableOptions(allowHtml_1,alternatingRowStyle_1,inputRecord.cssClassName,firstRowNumber_1,height_1,page_1,pageSize_1,rtlTable_1,scrollLeftStartPosition_1,showRowNumber_1,sort_1,sortAscending_1,sortColumn_1,startPage_1,width_1);}();return new Table(this.data,this.typeName,newOptions);}},{key:"cssClassName",value:function cssClassName(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){var _this97=this;var o=this.options.cssClassName;var newNested=new _options.CssClassNames(_core.Helpers.right(o,"headerRow",headerRow),_core.Helpers.right(o,"tableRow",tableRow),_core.Helpers.right(o,"oddTableRow",oddTableRow),_core.Helpers.right(o,"selectedTableRow",selectedTableRow),_core.Helpers.right(o,"hoverTableRow",hoverTableRow),_core.Helpers.right(o,"headerCell",headerCell),_core.Helpers.right(o,"tableCell",tableCell),_core.Helpers.right(o,"rowNumberCell",rowNumberCell));var options=function(){var inputRecord=_this97.options;return new _options.TableOptions(inputRecord.allowHtml,inputRecord.alternatingRowStyle,newNested,inputRecord.firstRowNumber,inputRecord.height,inputRecord.page,inputRecord.pageSize,inputRecord.rtlTable,inputRecord.scrollLeftStartPosition,inputRecord.showRowNumber,inputRecord.sort,inputRecord.sortAscending,inputRecord.sortColumn,inputRecord.startPage,inputRecord.width);}();return new Table(this.data,this.typeName,options);}}]);return Table;}();_fableCore.Util.setInterfaces(Table.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Table");var Timeline=exports.Timeline=function(){function Timeline(data,typeName,options){_classCallCheck(this,Timeline);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Timeline,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(avoidOverlappingGridLines,backgroundColor,colors,enableInteractivity,forceIFrame,height,width){var _this98=this;var o=this.options;var newOptions=function(){var inputRecord=_this98.options;var avoidOverlappingGridLines_1=_core.Helpers.right(o,"avoidOverlappingGridLines",avoidOverlappingGridLines);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var46=colors;if($var46!=null){return function(source){return Array.from(source);}($var46);}else{return $var46;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var forceIFrame_1=_core.Helpers.right(o,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(o,"height",height);var width_1=_core.Helpers.right(o,"width",width);return new _options.TimelineOptions(avoidOverlappingGridLines_1,backgroundColor_1,colors_1,enableInteractivity_1,forceIFrame_1,height_1,inputRecord.timeline,width_1);}();return new Timeline(this.data,this.typeName,newOptions);}},{key:"timeline",value:function timeline(colorByRowLabel,groupByRowLabel,showRowLabels,singleColor){var _this99=this;var o=this.options.timeline;var newNested=function(){var colorByRowLabel_1=_core.Helpers.right(o,"colorByRowLabel",colorByRowLabel);var groupByRowLabel_1=_core.Helpers.right(o,"groupByRowLabel",groupByRowLabel);var showRowLabels_1=_core.Helpers.right(o,"showRowLabels",showRowLabels);var singleColor_1=_core.Helpers.right(o,"singleColor",singleColor);return new _options.TimelineTimeline(_core.Helpers.copy(o,"barLabelStyle"),colorByRowLabel_1,groupByRowLabel_1,_core.Helpers.copy(o,"rowLabelStyle"),showRowLabels_1,singleColor_1);}();var options=function(){var inputRecord=_this99.options;return new _options.TimelineOptions(inputRecord.avoidOverlappingGridLines,inputRecord.backgroundColor,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.forceIFrame,inputRecord.height,newNested,inputRecord.width);}();return new Timeline(this.data,this.typeName,options);}}]);return Timeline;}();_fableCore.Util.setInterfaces(Timeline.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Timeline");var Candlestick=exports.Candlestick=function(){function Candlestick(data,typeName,options){_classCallCheck(this,Candlestick);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Candlestick,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,orientation,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this100=this;var o=this.options;var newOptions=function(){var inputRecord=_this100.options;var aggregationTarget_1=_core.Helpers.right(o,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(o,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(o,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(o,"colors",function(){var $var47=colors;if($var47!=null){return function(source){return Array.from(source);}($var47);}else{return $var47;}}());var enableInteractivity_1=_core.Helpers.right(o,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(o,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(o,"fontSize",fontSize);var fontName_1=_core.Helpers.right(o,"fontName",fontName);var height_1=_core.Helpers.right(o,"height",height);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(o,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(o,"selectionMode",selectionMode);var series_1=_core.Helpers.right(o,"series",series);var theme_1=_core.Helpers.right(o,"theme",theme);var title_1=_core.Helpers.right(o,"title",title);var titlePosition_1=_core.Helpers.right(o,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(o,"vAxes",vAxes);var width_1=_core.Helpers.right(o,"width",width);return new _options.CandlestickChartOptions(aggregationTarget_1,inputRecord.animation,axisTitlesPosition_1,backgroundColor_1,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,inputRecord.hAxis,height_1,inputRecord.legend,orientation_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,inputRecord.titleTextStyle,inputRecord.tooltip,vAxes_1,inputRecord.vAxis,width_1);}();return new Candlestick(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var _this101=this;var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=function(){var inputRecord=_this101.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,newNested,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var _this102=this;var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=function(){var inputRecord=_this102.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,newNested,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"candlestick",value:function candlestick(hollowIsRising){var _this103=this;var o=this.options.candlestick;var newNested=new _options.CandlestickCandlestick(_core.Helpers.right(o,"hollowIsRising",hollowIsRising),_core.Helpers.copy(o,"fallingColor"),_core.Helpers.copy(o,"risingColor"));var options=function(){var inputRecord=_this103.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,newNested,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var _this104=this;var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=function(){var inputRecord=_this104.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,newNested,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this105=this;var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var48=ticks;if($var48!=null){return function(source){return Array.from(source);}($var48);}else{return $var48;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this105.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,newNested,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var _this106=this;var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=function(){var inputRecord=_this106.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,newNested,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var _this107=this;var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=function(){var inputRecord=_this107.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,newNested,inputRecord.tooltip,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var _this108=this;var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=function(){var inputRecord=_this108.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,newNested,inputRecord.vAxes,inputRecord.vAxis,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var _this109=this;var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var49=ticks;if($var49!=null){return function(source){return Array.from(source);}($var49);}else{return $var49;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=function(){var inputRecord=_this109.options;return new _options.CandlestickChartOptions(inputRecord.aggregationTarget,inputRecord.animation,inputRecord.axisTitlesPosition,inputRecord.backgroundColor,inputRecord.bar,inputRecord.candlestick,inputRecord.chartArea,inputRecord.colors,inputRecord.enableInteractivity,inputRecord.focusTarget,inputRecord.fontSize,inputRecord.fontName,inputRecord.hAxis,inputRecord.height,inputRecord.legend,inputRecord.orientation,inputRecord.reverseCategories,inputRecord.selectionMode,inputRecord.series,inputRecord.theme,inputRecord.title,inputRecord.titlePosition,inputRecord.titleTextStyle,inputRecord.tooltip,inputRecord.vAxes,newNested,inputRecord.width);}();return new Candlestick(this.data,this.typeName,options);}}]);return Candlestick;}();_fableCore.Util.setInterfaces(Candlestick.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Candlestick");function GeoChartOptions_get_empty_Static(){return new _options.GeoChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.GeoChartOptions$2Eget_empty$2EStatic=GeoChartOptions_get_empty_Static;function ScatterChartOptions_get_empty_Static(){return new _options.ScatterChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ScatterChartOptions$2Eget_empty$2EStatic=ScatterChartOptions_get_empty_Static;function ColumnChartOptions_get_empty_Static(){return new _options.ColumnChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ColumnChartOptions$2Eget_empty$2EStatic=ColumnChartOptions_get_empty_Static;function LineChartOptions_get_empty_Static(){return new _options.LineChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.LineChartOptions$2Eget_empty$2EStatic=LineChartOptions_get_empty_Static;function BarChartOptions_get_empty_Static(){return new _options.BarChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BarChartOptions$2Eget_empty$2EStatic=BarChartOptions_get_empty_Static;function HistogramOptions_get_empty_Static(){return new _options.HistogramOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.HistogramOptions$2Eget_empty$2EStatic=HistogramOptions_get_empty_Static;function AreaChartOptions_get_empty_Static(){return new _options.AreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AreaChartOptions$2Eget_empty$2EStatic=AreaChartOptions_get_empty_Static;function AnnotationChartOptions_get_empty_Static(){return new _options.AnnotationChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AnnotationChartOptions$2Eget_empty$2EStatic=AnnotationChartOptions_get_empty_Static;function SteppedAreaChartOptions_get_empty_Static(){return new _options.SteppedAreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=SteppedAreaChartOptions_get_empty_Static;function PieChartOptions_get_empty_Static(){return new _options.PieChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.PieChartOptions$2Eget_empty$2EStatic=PieChartOptions_get_empty_Static;function BubbleChartOptions_get_empty_Static(){return new _options.BubbleChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BubbleChartOptions$2Eget_empty$2EStatic=BubbleChartOptions_get_empty_Static;function TreeMapOptions_get_empty_Static(){return new _options.TreeMapOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TreeMapOptions$2Eget_empty$2EStatic=TreeMapOptions_get_empty_Static;function TableOptions_get_empty_Static(){return new _options.TableOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TableOptions$2Eget_empty$2EStatic=TableOptions_get_empty_Static;function TimelineOptions_get_empty_Static(){return new _options.TimelineOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TimelineOptions$2Eget_empty$2EStatic=TimelineOptions_get_empty_Static;function CandlestickChartOptions_get_empty_Static(){return new _options.CandlestickChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.CandlestickChartOptions$2Eget_empty$2EStatic=CandlestickChartOptions_get_empty_Static;var options=function(){function options(){_classCallCheck(this,options);}_createClass(options,null,[{key:"chartSizeAxis",value:function chartSizeAxis(maxSize,maxValue,minSize,minValue){return new _options.ChartSizeAxis(_core.Helpers.orDefault(maxSize),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minSize),_core.Helpers.orDefault(minValue));}},{key:"chartTextStyle",value:function chartTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){return new _options.ChartTextStyle(_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize),_core.Helpers.orDefault(bold),_core.Helpers.orDefault(italic),_core.Helpers.orDefault(color),_core.Helpers.orDefault(auraColor),_core.Helpers.orDefault(opacity));}},{key:"chartTooltip",value:function chartTooltip(isHtml,showColorCode,textStyle,trigger){return new _options.ChartTooltip(_core.Helpers.orDefault(isHtml),_core.Helpers.orDefault(showColorCode),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(trigger));}},{key:"chartLegend",value:function chartLegend(alignment,maxLines,position,textStyle,numberFormat){return new _options.ChartLegend(_core.Helpers.orDefault(alignment),_core.Helpers.orDefault(maxLines),_core.Helpers.orDefault(position),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(numberFormat));}},{key:"chartColorAxis",value:function chartColorAxis(minValue,maxValue,values,colors,legend){return new _options.ChartColorAxis(_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(function(){var $var50=values;if($var50!=null){return function(source){return Float64Array.from(source);}($var50);}else{return $var50;}}()),_core.Helpers.orDefault(function(){var $var51=colors;if($var51!=null){return function(source){return Array.from(source);}($var51);}else{return $var51;}}()),_core.Helpers.orDefault(legend));}},{key:"geoChartMagnifyingGlass",value:function geoChartMagnifyingGlass(enable,zoomFactor){return new _options.GeoChartMagnifyingGlass(_core.Helpers.orDefault(enable),_core.Helpers.orDefault(zoomFactor));}},{key:"chartBoxStyleGradient",value:function chartBoxStyleGradient(color1,color2,x1,y1,x2,y2,useObjectBoundingBoxUnits){return new _options.ChartBoxStyleGradient(_core.Helpers.orDefault(color1),_core.Helpers.orDefault(color2),_core.Helpers.orDefault(x1),_core.Helpers.orDefault(y1),_core.Helpers.orDefault(x2),_core.Helpers.orDefault(y2),_core.Helpers.orDefault(useObjectBoundingBoxUnits));}},{key:"chartBoxStyle",value:function chartBoxStyle(stroke,strokeWidth,rx,ry,gradient){return new _options.ChartBoxStyle(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(rx),_core.Helpers.orDefault(ry),_core.Helpers.orDefault(gradient));}},{key:"chartAnnotations",value:function chartAnnotations(boxStyle,textStyle){return new _options.ChartAnnotations(_core.Helpers.orDefault(boxStyle),_core.Helpers.orDefault(textStyle));}},{key:"chartCrosshairFocused",value:function chartCrosshairFocused(color,opacity){return new _options.ChartCrosshairFocused(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshairSelected",value:function chartCrosshairSelected(color,opacity){return new _options.ChartCrosshairSelected(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshair",value:function chartCrosshair(color,focused,opacity,orientation,selected,trigger){return new _options.ChartCrosshair(_core.Helpers.orDefault(color),_core.Helpers.orDefault(focused),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(orientation),_core.Helpers.orDefault(selected),_core.Helpers.orDefault(trigger));}},{key:"chartExplorer",value:function chartExplorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){return new _options.ChartExplorer(_core.Helpers.orDefault(function(){var $var52=actions;if($var52!=null){return function(source){return Array.from(source);}($var52);}else{return $var52;}}()),_core.Helpers.orDefault(axis),_core.Helpers.orDefault(keepInBounds),_core.Helpers.orDefault(maxZoomIn),_core.Helpers.orDefault(maxZoomOut),_core.Helpers.orDefault(zoomDelta));}},{key:"chartStroke",value:function chartStroke(stroke,strokeWidth,fill){return new _options.ChartStroke(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(fill));}},{key:"chartArea",value:function chartArea(top,left,width,height){return new _options.ChartArea(_core.Helpers.orDefault(top),_core.Helpers.orDefault(left),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"transitionAnimation",value:function transitionAnimation(duration,easing){return new _options.TransitionAnimation(_core.Helpers.orDefault(duration),_core.Helpers.orDefault(easing));}},{key:"chartGridlines",value:function chartGridlines(color,count){return new _options.ChartGridlines(_core.Helpers.orDefault(color),_core.Helpers.orDefault(count));}},{key:"chartViewWindow",value:function chartViewWindow(max,min){return new _options.ChartViewWindow(_core.Helpers.orDefault(max),_core.Helpers.orDefault(min));}},{key:"chartAxis",value:function chartAxis(baseline,baselineColor,direction,format,gridlines,minorGridlines,logScale,textPosition,textStyle,ticks,title,titleTextStyle,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode,viewWindow){return new _options.ChartAxis(_core.Helpers.orDefault(baseline),_core.Helpers.orDefault(baselineColor),_core.Helpers.orDefault(direction),_core.Helpers.orDefault(format),_core.Helpers.orDefault(gridlines),_core.Helpers.orDefault(minorGridlines),_core.Helpers.orDefault(logScale),_core.Helpers.orDefault(textPosition),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(function(){var $var53=ticks;if($var53!=null){return function(source){return Array.from(source);}($var53);}else{return $var53;}}()),_core.Helpers.orDefault(title),_core.Helpers.orDefault(titleTextStyle),_core.Helpers.orDefault(allowContainerBoundaryTextCufoff),_core.Helpers.orDefault(slantedText),_core.Helpers.orDefault(slantedTextAngle),_core.Helpers.orDefault(maxAlternation),_core.Helpers.orDefault(maxTextLines),_core.Helpers.orDefault(minTextSpacing),_core.Helpers.orDefault(showTextEvery),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(viewWindowMode),_core.Helpers.orDefault(viewWindow));}},{key:"chartBoundingBox",value:function chartBoundingBox(left,top,width,height){return new _options.ChartBoundingBox(_core.Helpers.orDefault(left),_core.Helpers.orDefault(top),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"groupWidth",value:function groupWidth(_groupWidth){return new _options.GroupWidth(_core.Helpers.orDefault(_groupWidth));}},{key:"trendline",value:function trendline(color,lineWidth,labelInLegend,opacity,pointSize,pointsVisible,showR2,type,visibleInLegend){return new _options.Trendline(_core.Helpers.orDefault(color),_core.Helpers.orDefault(lineWidth),_core.Helpers.orDefault(labelInLegend),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(pointSize),_core.Helpers.orDefault(pointsVisible),_core.Helpers.orDefault(showR2),_core.Helpers.orDefault(type),_core.Helpers.orDefault(visibleInLegend));}},{key:"histogramHistogram",value:function histogramHistogram(bucketSize,hideBucketItems,lastBucketPercentile){return new _options.HistogramHistogram(_core.Helpers.orDefault(bucketSize),_core.Helpers.orDefault(hideBucketItems),_core.Helpers.orDefault(lastBucketPercentile));}},{key:"chartBubble",value:function chartBubble(opacity,stroke,textStyle){return new _options.ChartBubble(_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(textStyle));}},{key:"cssClassNames",value:function cssClassNames(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){return new _options.CssClassNames(_core.Helpers.orDefault(headerRow),_core.Helpers.orDefault(tableRow),_core.Helpers.orDefault(oddTableRow),_core.Helpers.orDefault(selectedTableRow),_core.Helpers.orDefault(hoverTableRow),_core.Helpers.orDefault(headerCell),_core.Helpers.orDefault(tableCell),_core.Helpers.orDefault(rowNumberCell));}},{key:"labelStyle",value:function labelStyle(color,fontName,fontSize){return new _options.LabelStyle(_core.Helpers.orDefault(color),_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize));}},{key:"timelineTimeline",value:function timelineTimeline(barLabelStyle,colorByRowLabel,groupByRowLabel,rowLabelStyle,showRowLabels,singleColor){return new _options.TimelineTimeline(_core.Helpers.orDefault(barLabelStyle),_core.Helpers.orDefault(colorByRowLabel),_core.Helpers.orDefault(groupByRowLabel),_core.Helpers.orDefault(rowLabelStyle),_core.Helpers.orDefault(showRowLabels),_core.Helpers.orDefault(singleColor));}},{key:"candlestickCandlestick",value:function candlestickCandlestick(hollowIsRising,fallingColor,risingColor){return new _options.CandlestickCandlestick(_core.Helpers.orDefault(hollowIsRising),_core.Helpers.orDefault(fallingColor),_core.Helpers.orDefault(risingColor));}}]);return options;}();exports.options=options;_fableCore.Util.setInterfaces(options.prototype,[],"TheGamma.GoogleCharts.Extensions.options");});
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(global,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports,__webpack_require__(20),__webpack_require__(21),__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports!=="undefined"){factory(exports,require("./core"),require("./options"),require("fable-core"));}else{var mod={exports:{}};factory(mod.exports,global.core,global.options,global.fableCore);global.extensions=mod.exports;}})(this,function(exports,_core,_options,_fableCore){"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.options=exports.CandlestickChartOptions$2Eget_empty$2EStatic=exports.TimelineOptions$2Eget_empty$2EStatic=exports.TableOptions$2Eget_empty$2EStatic=exports.TreeMapOptions$2Eget_empty$2EStatic=exports.BubbleChartOptions$2Eget_empty$2EStatic=exports.PieChartOptions$2Eget_empty$2EStatic=exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=exports.AnnotationChartOptions$2Eget_empty$2EStatic=exports.AreaChartOptions$2Eget_empty$2EStatic=exports.HistogramOptions$2Eget_empty$2EStatic=exports.BarChartOptions$2Eget_empty$2EStatic=exports.LineChartOptions$2Eget_empty$2EStatic=exports.ColumnChartOptions$2Eget_empty$2EStatic=exports.ScatterChartOptions$2Eget_empty$2EStatic=exports.GeoChartOptions$2Eget_empty$2EStatic=exports.Candlestick=exports.Timeline=exports.Table=exports.TreeMap=exports.Bubble=exports.Pie=exports.SteppedArea=exports.Annotation=exports.Area=exports.Histogram=exports.Bar=exports.Line=exports.Column=exports.Scatter=exports.Geo=undefined;function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var Geo=exports.Geo=function(){function Geo(data,typeName,options){_classCallCheck(this,Geo);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Geo,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,datalessRegionColor,displayMode,enableRegionInteractivity,height,keepAspectRatio,region,markerOpacity,resolution,width){var _this=this;var newOptions=function(){var backgroundColor_1=_core.Helpers.right(_this.options,"backgroundColor",backgroundColor);var datalessRegionColor_1=_core.Helpers.right(_this.options,"datalessRegionColor",datalessRegionColor);var displayMode_1=_core.Helpers.right(_this.options,"displayMode",displayMode);var enableRegionInteractivity_1=_core.Helpers.right(_this.options,"enableRegionInteractivity",enableRegionInteractivity);var height_1=_core.Helpers.right(_this.options,"height",height);var keepAspectRatio_1=_core.Helpers.right(_this.options,"keepAspectRatio",keepAspectRatio);var region_1=_core.Helpers.right(_this.options,"region",region);var markerOpacity_1=_core.Helpers.right(_this.options,"markerOpacity",markerOpacity);var resolution_1=_core.Helpers.right(_this.options,"resolution",resolution);var width_1=_core.Helpers.right(_this.options,"width",width);return new _options.GeoChartOptions(backgroundColor_1,_this.options.colorAxis,datalessRegionColor_1,displayMode_1,enableRegionInteractivity_1,height_1,keepAspectRatio_1,_this.options.legend,region_1,_this.options.magnifyingGlass,markerOpacity_1,resolution_1,_this.options.sizeAxis,_this.options.tooltip,width_1);}();return new Geo(this.data,this.typeName,newOptions);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var2=values;if($var2!=null){return function(source){return Float64Array.from(source);}($var2);}else{return $var2;}}()),_core.Helpers.right(o,"colors",function(){var $var3=colors;if($var3!=null){return function(source){return Array.from(source);}($var3);}else{return $var3;}}()),_core.Helpers.copy(o,"legend"));var options=new _options.GeoChartOptions(this.options.backgroundColor,newNested,this.options.datalessRegionColor,this.options.displayMode,this.options.enableRegionInteractivity,this.options.height,this.options.keepAspectRatio,this.options.legend,this.options.region,this.options.magnifyingGlass,this.options.markerOpacity,this.options.resolution,this.options.sizeAxis,this.options.tooltip,this.options.width);return new Geo(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.GeoChartOptions(this.options.backgroundColor,this.options.colorAxis,this.options.datalessRegionColor,this.options.displayMode,this.options.enableRegionInteractivity,this.options.height,this.options.keepAspectRatio,newNested,this.options.region,this.options.magnifyingGlass,this.options.markerOpacity,this.options.resolution,this.options.sizeAxis,this.options.tooltip,this.options.width);return new Geo(this.data,this.typeName,options);}},{key:"magnifyingGlass",value:function magnifyingGlass(enable,zoomFactor){var o=this.options.magnifyingGlass;var newNested=new _options.GeoChartMagnifyingGlass(_core.Helpers.right(o,"enable",enable),_core.Helpers.right(o,"zoomFactor",zoomFactor));var options=new _options.GeoChartOptions(this.options.backgroundColor,this.options.colorAxis,this.options.datalessRegionColor,this.options.displayMode,this.options.enableRegionInteractivity,this.options.height,this.options.keepAspectRatio,this.options.legend,this.options.region,newNested,this.options.markerOpacity,this.options.resolution,this.options.sizeAxis,this.options.tooltip,this.options.width);return new Geo(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=new _options.GeoChartOptions(this.options.backgroundColor,this.options.colorAxis,this.options.datalessRegionColor,this.options.displayMode,this.options.enableRegionInteractivity,this.options.height,this.options.keepAspectRatio,this.options.legend,this.options.region,this.options.magnifyingGlass,this.options.markerOpacity,this.options.resolution,newNested,this.options.tooltip,this.options.width);return new Geo(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.GeoChartOptions(this.options.backgroundColor,this.options.colorAxis,this.options.datalessRegionColor,this.options.displayMode,this.options.enableRegionInteractivity,this.options.height,this.options.keepAspectRatio,this.options.legend,this.options.region,this.options.magnifyingGlass,this.options.markerOpacity,this.options.resolution,this.options.sizeAxis,newNested,this.options.width);return new Geo(this.data,this.typeName,options);}}]);return Geo;}();_fableCore.Util.setInterfaces(Geo.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Geo");var Scatter=function(){function Scatter(data,typeName,options){_classCallCheck(this,Scatter);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Scatter,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,fontSize,fontName,forceIFrame,height,lineWidth,pointSize,selectionMode,series,theme,title,titlePosition,width){var _this2=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this2.options,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(_this2.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this2.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this2.options,"colors",function(){var $var4=colors;if($var4!=null){return function(source){return Array.from(source);}($var4);}else{return $var4;}}());var curveType_1=_core.Helpers.right(_this2.options,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(_this2.options,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(_this2.options,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(_this2.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this2.options,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(_this2.options,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(_this2.options,"height",height);var lineWidth_1=_core.Helpers.right(_this2.options,"lineWidth",lineWidth);var pointSize_1=_core.Helpers.right(_this2.options,"pointSize",pointSize);var selectionMode_1=_core.Helpers.right(_this2.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this2.options,"series",series);var theme_1=_core.Helpers.right(_this2.options,"theme",theme);var title_1=_core.Helpers.right(_this2.options,"title",title);var titlePosition_1=_core.Helpers.right(_this2.options,"titlePosition",titlePosition);var width_1=_core.Helpers.right(_this2.options,"width",width);return new _options.ScatterChartOptions(aggregationTarget_1,_this2.options.animation,_this2.options.annotations,axisTitlesPosition_1,backgroundColor_1,_this2.options.chartArea,colors_1,_this2.options.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,_this2.options.explorer,fontSize_1,fontName_1,forceIFrame_1,_this2.options.hAxis,height_1,_this2.options.legend,lineWidth_1,pointSize_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,_this2.options.titleTextStyle,_this2.options.tooltip,_this2.options.trendlines,_this2.options.vAxis,width_1);}();return new Scatter(this.data,this.typeName,newOptions);}},{key:"trendlines",value:function trendlines(_trendlines){var _this3=this;var options=function(){var trendlines_1=_core.Helpers.right(_this3.options,"trendlines",function(){var $var5=_trendlines;if($var5!=null){return function(source){return Array.from(source);}($var5);}else{return $var5;}}());return new _options.ScatterChartOptions(_this3.options.aggregationTarget,_this3.options.animation,_this3.options.annotations,_this3.options.axisTitlesPosition,_this3.options.backgroundColor,_this3.options.chartArea,_this3.options.colors,_this3.options.crosshair,_this3.options.curveType,_this3.options.dataOpacity,_this3.options.enableInteractivity,_this3.options.explorer,_this3.options.fontSize,_this3.options.fontName,_this3.options.forceIFrame,_this3.options.hAxis,_this3.options.height,_this3.options.legend,_this3.options.lineWidth,_this3.options.pointSize,_this3.options.selectionMode,_this3.options.series,_this3.options.theme,_this3.options.title,_this3.options.titlePosition,_this3.options.titleTextStyle,_this3.options.tooltip,trendlines_1,_this3.options.vAxis,_this3.options.width);}();return new Scatter(this.data,this.typeName,options);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.ScatterChartOptions(this.options.aggregationTarget,newNested,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,newNested,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var6=actions;if($var6!=null){return function(source){return Array.from(source);}($var6);}else{return $var6;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,newNested,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var7=ticks;if($var7!=null){return function(source){return Array.from(source);}($var7);}else{return $var7;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,newNested,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,newNested,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.trendlines,this.options.vAxis,this.options.width);return new Scatter(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var8=ticks;if($var8!=null){return function(source){return Array.from(source);}($var8);}else{return $var8;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.ScatterChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.lineWidth,this.options.pointSize,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.trendlines,newNested,this.options.width);return new Scatter(this.data,this.typeName,options);}}]);return Scatter;}();exports.Scatter=Scatter;_fableCore.Util.setInterfaces(Scatter.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Scatter");var Column=exports.Column=function(){function Column(data,typeName,options){_classCallCheck(this,Column);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Column,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this4=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this4.options,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(_this4.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this4.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this4.options,"colors",function(){var $var9=colors;if($var9!=null){return function(source){return Array.from(source);}($var9);}else{return $var9;}}());var enableInteractivity_1=_core.Helpers.right(_this4.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this4.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this4.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this4.options,"fontName",fontName);var height_1=_core.Helpers.right(_this4.options,"height",height);var isStacked_1=_core.Helpers.right(_this4.options,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(_this4.options,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(_this4.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this4.options,"series",series);var theme_1=_core.Helpers.right(_this4.options,"theme",theme);var title_1=_core.Helpers.right(_this4.options,"title",title);var titlePosition_1=_core.Helpers.right(_this4.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this4.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this4.options,"width",width);return new _options.ColumnChartOptions(aggregationTarget_1,_this4.options.animation,_this4.options.annotations,axisTitlesPosition_1,backgroundColor_1,_this4.options.bar,_this4.options.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,_this4.options.hAxis,height_1,isStacked_1,_this4.options.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,_this4.options.titleTextStyle,_this4.options.tooltip,vAxes_1,_this4.options.vAxis,width_1);}();return new Column(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.ColumnChartOptions(this.options.aggregationTarget,newNested,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,newNested,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var10=ticks;if($var10!=null){return function(source){return Array.from(source);}($var10);}else{return $var10;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,newNested,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,newNested,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new Column(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var11=ticks;if($var11!=null){return function(source){return Array.from(source);}($var11);}else{return $var11;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.ColumnChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new Column(this.data,this.typeName,options);}}]);return Column;}();_fableCore.Util.setInterfaces(Column.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Column");var Line=exports.Line=function(){function Line(data,typeName,options){_classCallCheck(this,Line);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Line,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,curveType,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this5=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this5.options,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(_this5.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this5.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this5.options,"colors",function(){var $var12=colors;if($var12!=null){return function(source){return Array.from(source);}($var12);}else{return $var12;}}());var curveType_1=_core.Helpers.right(_this5.options,"curveType",curveType);var dataOpacity_1=_core.Helpers.right(_this5.options,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(_this5.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this5.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this5.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this5.options,"fontName",fontName);var height_1=_core.Helpers.right(_this5.options,"height",height);var interpolateNulls_1=_core.Helpers.right(_this5.options,"interpolateNulls",interpolateNulls);var lineWidth_1=_core.Helpers.right(_this5.options,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(_this5.options,"orientation",orientation);var pointSize_1=_core.Helpers.right(_this5.options,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(_this5.options,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(_this5.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this5.options,"series",series);var theme_1=_core.Helpers.right(_this5.options,"theme",theme);var title_1=_core.Helpers.right(_this5.options,"title",title);var titlePosition_1=_core.Helpers.right(_this5.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this5.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this5.options,"width",width);return new _options.LineChartOptions(aggregationTarget_1,_this5.options.animation,_this5.options.annotations,axisTitlesPosition_1,backgroundColor_1,_this5.options.chartArea,colors_1,_this5.options.crosshair,curveType_1,dataOpacity_1,enableInteractivity_1,_this5.options.explorer,focusTarget_1,fontSize_1,fontName_1,_this5.options.hAxis,height_1,interpolateNulls_1,_this5.options.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,_this5.options.titleTextStyle,_this5.options.tooltip,vAxes_1,_this5.options.vAxis,width_1);}();return new Line(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.LineChartOptions(this.options.aggregationTarget,newNested,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,newNested,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var13=actions;if($var13!=null){return function(source){return Array.from(source);}($var13);}else{return $var13;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,newNested,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var14=ticks;if($var14!=null){return function(source){return Array.from(source);}($var14);}else{return $var14;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,newNested,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,newNested,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new Line(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var15=ticks;if($var15!=null){return function(source){return Array.from(source);}($var15);}else{return $var15;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.LineChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.curveType,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new Line(this.data,this.typeName,options);}}]);return Line;}();_fableCore.Util.setInterfaces(Line.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Line");var Bar=exports.Bar=function(){function Bar(data,typeName,options){_classCallCheck(this,Bar);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bar,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,hAxes,height,isStacked,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this6=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this6.options,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(_this6.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this6.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this6.options,"colors",function(){var $var16=colors;if($var16!=null){return function(source){return Array.from(source);}($var16);}else{return $var16;}}());var dataOpacity_1=_core.Helpers.right(_this6.options,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(_this6.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this6.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this6.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this6.options,"fontName",fontName);var hAxes_1=_core.Helpers.right(_this6.options,"hAxes",hAxes);var height_1=_core.Helpers.right(_this6.options,"height",height);var isStacked_1=_core.Helpers.right(_this6.options,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(_this6.options,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(_this6.options,"series",series);var theme_1=_core.Helpers.right(_this6.options,"theme",theme);var title_1=_core.Helpers.right(_this6.options,"title",title);var titlePosition_1=_core.Helpers.right(_this6.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this6.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this6.options,"width",width);return new _options.BarChartOptions(aggregationTarget_1,_this6.options.animation,_this6.options.annotations,axisTitlesPosition_1,backgroundColor_1,_this6.options.bar,_this6.options.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,hAxes_1,_this6.options.hAxis,height_1,isStacked_1,_this6.options.legend,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,_this6.options.titleTextStyle,_this6.options.tooltip,vAxes_1,_this6.options.vAxis,width_1);}();return new Bar(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.BarChartOptions(this.options.aggregationTarget,newNested,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,newNested,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var17=ticks;if($var17!=null){return function(source){return Array.from(source);}($var17);}else{return $var17;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,newNested,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,newNested,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new Bar(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var18=ticks;if($var18!=null){return function(source){return Array.from(source);}($var18);}else{return $var18;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.BarChartOptions(this.options.aggregationTarget,this.options.animation,this.options.annotations,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxes,this.options.hAxis,this.options.height,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new Bar(this.data,this.typeName,options);}}]);return Bar;}();_fableCore.Util.setInterfaces(Bar.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bar");var Histogram=exports.Histogram=function(){function Histogram(data,typeName,options){_classCallCheck(this,Histogram);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Histogram,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,orientation,reverseCategories,series,theme,title,titlePosition,vAxes,width){var _this7=this;var newOptions=function(){var axisTitlesPosition_1=_core.Helpers.right(_this7.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this7.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this7.options,"colors",function(){var $var19=colors;if($var19!=null){return function(source){return Array.from(source);}($var19);}else{return $var19;}}());var dataOpacity_1=_core.Helpers.right(_this7.options,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(_this7.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this7.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this7.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this7.options,"fontName",fontName);var height_1=_core.Helpers.right(_this7.options,"height",height);var interpolateNulls_1=_core.Helpers.right(_this7.options,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(_this7.options,"isStacked",isStacked);var orientation_1=_core.Helpers.right(_this7.options,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(_this7.options,"reverseCategories",reverseCategories);var series_1=_core.Helpers.right(_this7.options,"series",series);var theme_1=_core.Helpers.right(_this7.options,"theme",theme);var title_1=_core.Helpers.right(_this7.options,"title",title);var titlePosition_1=_core.Helpers.right(_this7.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this7.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this7.options,"width",width);return new _options.HistogramOptions(_this7.options.animation,axisTitlesPosition_1,backgroundColor_1,_this7.options.bar,_this7.options.chartArea,colors_1,dataOpacity_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,_this7.options.hAxis,_this7.options.histogram,height_1,interpolateNulls_1,isStacked_1,_this7.options.legend,orientation_1,reverseCategories_1,series_1,theme_1,title_1,titlePosition_1,_this7.options.titleTextStyle,_this7.options.tooltip,vAxes_1,_this7.options.vAxis,width_1);}();return new Histogram(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.HistogramOptions(newNested,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,newNested,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var20=ticks;if($var20!=null){return function(source){return Array.from(source);}($var20);}else{return $var20;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,newNested,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"histogram",value:function histogram(bucketSize,hideBucketItems,lastBucketPercentile){var o=this.options.histogram;var newNested=new _options.HistogramHistogram(_core.Helpers.right(o,"bucketSize",bucketSize),_core.Helpers.right(o,"hideBucketItems",hideBucketItems),_core.Helpers.right(o,"lastBucketPercentile",lastBucketPercentile));var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,newNested,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,newNested,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new Histogram(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var21=ticks;if($var21!=null){return function(source){return Array.from(source);}($var21);}else{return $var21;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.HistogramOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.chartArea,this.options.colors,this.options.dataOpacity,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.histogram,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new Histogram(this.data,this.typeName,options);}}]);return Histogram;}();_fableCore.Util.setInterfaces(Histogram.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Histogram");var Area=exports.Area=function(){function Area(data,typeName,options){_classCallCheck(this,Area);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Area,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,dataOpacity,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,lineWidth,orientation,pointSize,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this8=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this8.options,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(_this8.options,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(_this8.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this8.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this8.options,"colors",function(){var $var22=colors;if($var22!=null){return function(source){return Array.from(source);}($var22);}else{return $var22;}}());var dataOpacity_1=_core.Helpers.right(_this8.options,"dataOpacity",dataOpacity);var enableInteractivity_1=_core.Helpers.right(_this8.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this8.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this8.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this8.options,"fontName",fontName);var height_1=_core.Helpers.right(_this8.options,"height",height);var interpolateNulls_1=_core.Helpers.right(_this8.options,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(_this8.options,"isStacked",isStacked);var lineWidth_1=_core.Helpers.right(_this8.options,"lineWidth",lineWidth);var orientation_1=_core.Helpers.right(_this8.options,"orientation",orientation);var pointSize_1=_core.Helpers.right(_this8.options,"pointSize",pointSize);var reverseCategories_1=_core.Helpers.right(_this8.options,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(_this8.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this8.options,"series",series);var theme_1=_core.Helpers.right(_this8.options,"theme",theme);var title_1=_core.Helpers.right(_this8.options,"title",title);var titlePosition_1=_core.Helpers.right(_this8.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this8.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this8.options,"width",width);return new _options.AreaChartOptions(aggregationTarget_1,_this8.options.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,_this8.options.chartArea,colors_1,_this8.options.crosshair,dataOpacity_1,enableInteractivity_1,_this8.options.explorer,focusTarget_1,fontSize_1,fontName_1,_this8.options.hAxis,height_1,interpolateNulls_1,isStacked_1,_this8.options.legend,lineWidth_1,orientation_1,pointSize_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,_this8.options.titleTextStyle,_this8.options.tooltip,vAxes_1,_this8.options.vAxis,width_1);}();return new Area(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.AreaChartOptions(this.options.aggregationTarget,newNested,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"crosshair",value:function crosshair(color,opacity,orientation,trigger){var o=this.options.crosshair;var newNested=function(){var color_1=_core.Helpers.right(o,"color",color);var opacity_1=_core.Helpers.right(o,"opacity",opacity);var orientation_1=_core.Helpers.right(o,"orientation",orientation);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartCrosshair(color_1,_core.Helpers.copy(o,"focused"),opacity_1,orientation_1,_core.Helpers.copy(o,"selected"),trigger_1);}();var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,newNested,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var23=actions;if($var23!=null){return function(source){return Array.from(source);}($var23);}else{return $var23;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,newNested,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var24=ticks;if($var24!=null){return function(source){return Array.from(source);}($var24);}else{return $var24;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,newNested,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,newNested,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new Area(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var25=ticks;if($var25!=null){return function(source){return Array.from(source);}($var25);}else{return $var25;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.AreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.crosshair,this.options.dataOpacity,this.options.enableInteractivity,this.options.explorer,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.lineWidth,this.options.orientation,this.options.pointSize,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new Area(this.data,this.typeName,options);}}]);return Area;}();_fableCore.Util.setInterfaces(Area.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Area");var Annotation=exports.Annotation=function(){function Annotation(data,typeName,options){_classCallCheck(this,Annotation);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Annotation,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,allValuesSuffix,annotationsWidth,colors,dateFormat,displayAnnotations,displayAnnotationsFilter,displayDateTimeBarSeparator,displayExactValues,displayLegendDots,displayLegendValues,displayRangeSelector,displayZoomButtons,fill,legendPosition,max,min,numberFormats,scaleColumns,scaleFormat,scaleType,thickness,zoomEndTime,zoomStartTime){var newOptions=new _options.AnnotationChartOptions(_core.Helpers.right(this.options,"allowHtml",allowHtml),_core.Helpers.right(this.options,"allValuesSuffix",allValuesSuffix),_core.Helpers.right(this.options,"annotationsWidth",annotationsWidth),_core.Helpers.right(this.options,"colors",function(){var $var26=colors;if($var26!=null){return function(source){return Array.from(source);}($var26);}else{return $var26;}}()),_core.Helpers.right(this.options,"dateFormat",dateFormat),_core.Helpers.right(this.options,"displayAnnotations",displayAnnotations),_core.Helpers.right(this.options,"displayAnnotationsFilter",displayAnnotationsFilter),_core.Helpers.right(this.options,"displayDateTimeBarSeparator",displayDateTimeBarSeparator),_core.Helpers.right(this.options,"displayExactValues",displayExactValues),_core.Helpers.right(this.options,"displayLegendDots",displayLegendDots),_core.Helpers.right(this.options,"displayLegendValues",displayLegendValues),_core.Helpers.right(this.options,"displayRangeSelector",displayRangeSelector),_core.Helpers.right(this.options,"displayZoomButtons",displayZoomButtons),_core.Helpers.right(this.options,"fill",fill),_core.Helpers.right(this.options,"legendPosition",legendPosition),_core.Helpers.right(this.options,"max",max),_core.Helpers.right(this.options,"min",min),_core.Helpers.right(this.options,"numberFormats",numberFormats),_core.Helpers.right(this.options,"scaleColumns",function(){var $var27=scaleColumns;if($var27!=null){return function(source){return Float64Array.from(source);}($var27);}else{return $var27;}}()),_core.Helpers.right(this.options,"scaleFormat",scaleFormat),_core.Helpers.right(this.options,"scaleType",scaleType),_core.Helpers.right(this.options,"thickness",thickness),_core.Helpers.right(this.options,"zoomEndTime",zoomEndTime),_core.Helpers.right(this.options,"zoomStartTime",zoomStartTime));return new Annotation(this.data,this.typeName,newOptions);}}]);return Annotation;}();_fableCore.Util.setInterfaces(Annotation.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Annotation");var SteppedArea=exports.SteppedArea=function(){function SteppedArea(data,typeName,options){_classCallCheck(this,SteppedArea);this.data=data;this.typeName=typeName;this.options=options;}_createClass(SteppedArea,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,areaOpacity,axisTitlesPosition,backgroundColor,colors,connectSteps,enableInteractivity,focusTarget,fontSize,fontName,height,interpolateNulls,isStacked,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this9=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this9.options,"aggregationTarget",aggregationTarget);var areaOpacity_1=_core.Helpers.right(_this9.options,"areaOpacity",areaOpacity);var axisTitlesPosition_1=_core.Helpers.right(_this9.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this9.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this9.options,"colors",function(){var $var28=colors;if($var28!=null){return function(source){return Array.from(source);}($var28);}else{return $var28;}}());var connectSteps_1=_core.Helpers.right(_this9.options,"connectSteps",connectSteps);var enableInteractivity_1=_core.Helpers.right(_this9.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this9.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this9.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this9.options,"fontName",fontName);var height_1=_core.Helpers.right(_this9.options,"height",height);var interpolateNulls_1=_core.Helpers.right(_this9.options,"interpolateNulls",interpolateNulls);var isStacked_1=_core.Helpers.right(_this9.options,"isStacked",isStacked);var reverseCategories_1=_core.Helpers.right(_this9.options,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(_this9.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this9.options,"series",series);var theme_1=_core.Helpers.right(_this9.options,"theme",theme);var title_1=_core.Helpers.right(_this9.options,"title",title);var titlePosition_1=_core.Helpers.right(_this9.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this9.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this9.options,"width",width);return new _options.SteppedAreaChartOptions(aggregationTarget_1,_this9.options.animation,areaOpacity_1,axisTitlesPosition_1,backgroundColor_1,_this9.options.chartArea,colors_1,connectSteps_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,_this9.options.hAxis,height_1,interpolateNulls_1,isStacked_1,_this9.options.legend,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,_this9.options.titleTextStyle,_this9.options.tooltip,vAxes_1,_this9.options.vAxis,width_1);}();return new SteppedArea(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,newNested,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new SteppedArea(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new SteppedArea(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var29=ticks;if($var29!=null){return function(source){return Array.from(source);}($var29);}else{return $var29;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,newNested,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new SteppedArea(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,newNested,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new SteppedArea(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new SteppedArea(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new SteppedArea(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var30=ticks;if($var30!=null){return function(source){return Array.from(source);}($var30);}else{return $var30;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.SteppedAreaChartOptions(this.options.aggregationTarget,this.options.animation,this.options.areaOpacity,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.connectSteps,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.interpolateNulls,this.options.isStacked,this.options.legend,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new SteppedArea(this.data,this.typeName,options);}}]);return SteppedArea;}();_fableCore.Util.setInterfaces(SteppedArea.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.SteppedArea");var Pie=exports.Pie=function(){function Pie(data,typeName,options){_classCallCheck(this,Pie);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Pie,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(backgroundColor,colors,enableInteractivity,fontSize,fontName,height,is3D,pieHole,pieSliceBorderColor,pieSliceText,pieStartAngle,reverseCategories,pieResidueSliceColor,pieResidueSliceLabel,slices,sliceVisibilityThreshold,title,width){var _this10=this;var newOptions=function(){var backgroundColor_1=_core.Helpers.right(_this10.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this10.options,"colors",function(){var $var31=colors;if($var31!=null){return function(source){return Array.from(source);}($var31);}else{return $var31;}}());var enableInteractivity_1=_core.Helpers.right(_this10.options,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(_this10.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this10.options,"fontName",fontName);var height_1=_core.Helpers.right(_this10.options,"height",height);var is3D_1=_core.Helpers.right(_this10.options,"is3D",is3D);var pieHole_1=_core.Helpers.right(_this10.options,"pieHole",pieHole);var pieSliceBorderColor_1=_core.Helpers.right(_this10.options,"pieSliceBorderColor",pieSliceBorderColor);var pieSliceText_1=_core.Helpers.right(_this10.options,"pieSliceText",pieSliceText);var pieStartAngle_1=_core.Helpers.right(_this10.options,"pieStartAngle",pieStartAngle);var reverseCategories_1=_core.Helpers.right(_this10.options,"reverseCategories",reverseCategories);var pieResidueSliceColor_1=_core.Helpers.right(_this10.options,"pieResidueSliceColor",pieResidueSliceColor);var pieResidueSliceLabel_1=_core.Helpers.right(_this10.options,"pieResidueSliceLabel",pieResidueSliceLabel);var slices_1=_core.Helpers.right(_this10.options,"slices",slices);var sliceVisibilityThreshold_1=_core.Helpers.right(_this10.options,"sliceVisibilityThreshold",sliceVisibilityThreshold);var title_1=_core.Helpers.right(_this10.options,"title",title);var width_1=_core.Helpers.right(_this10.options,"width",width);return new _options.PieChartOptions(backgroundColor_1,_this10.options.chartArea,colors_1,enableInteractivity_1,fontSize_1,fontName_1,height_1,is3D_1,_this10.options.legend,pieHole_1,pieSliceBorderColor_1,pieSliceText_1,_this10.options.pieSliceTextStyle,pieStartAngle_1,reverseCategories_1,pieResidueSliceColor_1,pieResidueSliceLabel_1,slices_1,sliceVisibilityThreshold_1,title_1,_this10.options.titleTextStyle,_this10.options.tooltip,width_1);}();return new Pie(this.data,this.typeName,newOptions);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.PieChartOptions(this.options.backgroundColor,newNested,this.options.colors,this.options.enableInteractivity,this.options.fontSize,this.options.fontName,this.options.height,this.options.is3D,this.options.legend,this.options.pieHole,this.options.pieSliceBorderColor,this.options.pieSliceText,this.options.pieSliceTextStyle,this.options.pieStartAngle,this.options.reverseCategories,this.options.pieResidueSliceColor,this.options.pieResidueSliceLabel,this.options.slices,this.options.sliceVisibilityThreshold,this.options.title,this.options.titleTextStyle,this.options.tooltip,this.options.width);return new Pie(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.PieChartOptions(this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.fontSize,this.options.fontName,this.options.height,this.options.is3D,newNested,this.options.pieHole,this.options.pieSliceBorderColor,this.options.pieSliceText,this.options.pieSliceTextStyle,this.options.pieStartAngle,this.options.reverseCategories,this.options.pieResidueSliceColor,this.options.pieResidueSliceLabel,this.options.slices,this.options.sliceVisibilityThreshold,this.options.title,this.options.titleTextStyle,this.options.tooltip,this.options.width);return new Pie(this.data,this.typeName,options);}},{key:"pieSliceTextStyle",value:function pieSliceTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.pieSliceTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.PieChartOptions(this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.fontSize,this.options.fontName,this.options.height,this.options.is3D,this.options.legend,this.options.pieHole,this.options.pieSliceBorderColor,this.options.pieSliceText,newNested,this.options.pieStartAngle,this.options.reverseCategories,this.options.pieResidueSliceColor,this.options.pieResidueSliceLabel,this.options.slices,this.options.sliceVisibilityThreshold,this.options.title,this.options.titleTextStyle,this.options.tooltip,this.options.width);return new Pie(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.PieChartOptions(this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.fontSize,this.options.fontName,this.options.height,this.options.is3D,this.options.legend,this.options.pieHole,this.options.pieSliceBorderColor,this.options.pieSliceText,this.options.pieSliceTextStyle,this.options.pieStartAngle,this.options.reverseCategories,this.options.pieResidueSliceColor,this.options.pieResidueSliceLabel,this.options.slices,this.options.sliceVisibilityThreshold,this.options.title,newNested,this.options.tooltip,this.options.width);return new Pie(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.PieChartOptions(this.options.backgroundColor,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.fontSize,this.options.fontName,this.options.height,this.options.is3D,this.options.legend,this.options.pieHole,this.options.pieSliceBorderColor,this.options.pieSliceText,this.options.pieSliceTextStyle,this.options.pieStartAngle,this.options.reverseCategories,this.options.pieResidueSliceColor,this.options.pieResidueSliceLabel,this.options.slices,this.options.sliceVisibilityThreshold,this.options.title,this.options.titleTextStyle,newNested,this.options.width);return new Pie(this.data,this.typeName,options);}}]);return Pie;}();_fableCore.Util.setInterfaces(Pie.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Pie");var Bubble=exports.Bubble=function(){function Bubble(data,typeName,options){_classCallCheck(this,Bubble);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Bubble,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(axisTitlesPosition,backgroundColor,colors,enableInteractivity,fontSize,fontName,forceIFrame,height,selectionMode,series,sortBubblesBySize,theme,title,titlePosition,width){var _this11=this;var newOptions=function(){var axisTitlesPosition_1=_core.Helpers.right(_this11.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this11.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this11.options,"colors",function(){var $var32=colors;if($var32!=null){return function(source){return Array.from(source);}($var32);}else{return $var32;}}());var enableInteractivity_1=_core.Helpers.right(_this11.options,"enableInteractivity",enableInteractivity);var fontSize_1=_core.Helpers.right(_this11.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this11.options,"fontName",fontName);var forceIFrame_1=_core.Helpers.right(_this11.options,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(_this11.options,"height",height);var selectionMode_1=_core.Helpers.right(_this11.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this11.options,"series",series);var sortBubblesBySize_1=_core.Helpers.right(_this11.options,"sortBubblesBySize",sortBubblesBySize);var theme_1=_core.Helpers.right(_this11.options,"theme",theme);var title_1=_core.Helpers.right(_this11.options,"title",title);var titlePosition_1=_core.Helpers.right(_this11.options,"titlePosition",titlePosition);var width_1=_core.Helpers.right(_this11.options,"width",width);return new _options.BubbleChartOptions(_this11.options.animation,axisTitlesPosition_1,backgroundColor_1,_this11.options.bubble,_this11.options.chartArea,colors_1,_this11.options.colorAxis,enableInteractivity_1,_this11.options.explorer,fontSize_1,fontName_1,forceIFrame_1,_this11.options.hAxis,height_1,_this11.options.legend,selectionMode_1,series_1,_this11.options.sizeAxis,sortBubblesBySize_1,theme_1,title_1,titlePosition_1,_this11.options.titleTextStyle,_this11.options.tooltip,_this11.options.vAxis,width_1);}();return new Bubble(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.BubbleChartOptions(newNested,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"bubble",value:function bubble(opacity,stroke){var o=this.options.bubble;var newNested=new _options.ChartBubble(_core.Helpers.right(o,"opacity",opacity),_core.Helpers.right(o,"stroke",stroke),_core.Helpers.copy(o,"textStyle"));var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,newNested,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"colorAxis",value:function colorAxis(minValue,maxValue,values,colors){var o=this.options.colorAxis;var newNested=new _options.ChartColorAxis(_core.Helpers.right(o,"minValue",minValue),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"values",function(){var $var33=values;if($var33!=null){return function(source){return Float64Array.from(source);}($var33);}else{return $var33;}}()),_core.Helpers.right(o,"colors",function(){var $var34=colors;if($var34!=null){return function(source){return Array.from(source);}($var34);}else{return $var34;}}()),_core.Helpers.copy(o,"legend"));var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,newNested,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"explorer",value:function explorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){var o=this.options.explorer;var newNested=new _options.ChartExplorer(_core.Helpers.right(o,"actions",function(){var $var35=actions;if($var35!=null){return function(source){return Array.from(source);}($var35);}else{return $var35;}}()),_core.Helpers.right(o,"axis",axis),_core.Helpers.right(o,"keepInBounds",keepInBounds),_core.Helpers.right(o,"maxZoomIn",maxZoomIn),_core.Helpers.right(o,"maxZoomOut",maxZoomOut),_core.Helpers.right(o,"zoomDelta",zoomDelta));var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,newNested,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var36=ticks;if($var36!=null){return function(source){return Array.from(source);}($var36);}else{return $var36;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,newNested,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,newNested,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"sizeAxis",value:function sizeAxis(maxSize,maxValue,minSize,minValue){var o=this.options.sizeAxis;var newNested=new _options.ChartSizeAxis(_core.Helpers.right(o,"maxSize",maxSize),_core.Helpers.right(o,"maxValue",maxValue),_core.Helpers.right(o,"minSize",minSize),_core.Helpers.right(o,"minValue",minValue));var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,newNested,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxis,this.options.width);return new Bubble(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var37=ticks;if($var37!=null){return function(source){return Array.from(source);}($var37);}else{return $var37;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.BubbleChartOptions(this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bubble,this.options.chartArea,this.options.colors,this.options.colorAxis,this.options.enableInteractivity,this.options.explorer,this.options.fontSize,this.options.fontName,this.options.forceIFrame,this.options.hAxis,this.options.height,this.options.legend,this.options.selectionMode,this.options.series,this.options.sizeAxis,this.options.sortBubblesBySize,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,newNested,this.options.width);return new Bubble(this.data,this.typeName,options);}}]);return Bubble;}();_fableCore.Util.setInterfaces(Bubble.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Bubble");var TreeMap=exports.TreeMap=function(){function TreeMap(data,typeName,options){_classCallCheck(this,TreeMap);this.data=data;this.typeName=typeName;this.options=options;}_createClass(TreeMap,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(fontColor,fontFamily,fontSize,forceIFrame,headerColor,headerHeight,headerHighlightColor,hintOpacity,maxColor,maxDepth,maxHighlightColor,maxPostDepth,maxColorValue,midColor,midHighlightColor,minColor,minHighlightColor,minColorValue,showScale,showTooltips,title,useWeightedAverageForAggregation){var _this12=this;var newOptions=function(){var fontColor_1=_core.Helpers.right(_this12.options,"fontColor",fontColor);var fontFamily_1=_core.Helpers.right(_this12.options,"fontFamily",fontFamily);var fontSize_1=_core.Helpers.right(_this12.options,"fontSize",fontSize);var forceIFrame_1=_core.Helpers.right(_this12.options,"forceIFrame",forceIFrame);var headerColor_1=_core.Helpers.right(_this12.options,"headerColor",headerColor);var headerHeight_1=_core.Helpers.right(_this12.options,"headerHeight",headerHeight);var headerHighlightColor_1=_core.Helpers.right(_this12.options,"headerHighlightColor",headerHighlightColor);var hintOpacity_1=_core.Helpers.right(_this12.options,"hintOpacity",hintOpacity);var maxColor_1=_core.Helpers.right(_this12.options,"maxColor",maxColor);var maxDepth_1=_core.Helpers.right(_this12.options,"maxDepth",maxDepth);var maxHighlightColor_1=_core.Helpers.right(_this12.options,"maxHighlightColor",maxHighlightColor);var maxPostDepth_1=_core.Helpers.right(_this12.options,"maxPostDepth",maxPostDepth);var maxColorValue_1=_core.Helpers.right(_this12.options,"maxColorValue",maxColorValue);var midColor_1=_core.Helpers.right(_this12.options,"midColor",midColor);var midHighlightColor_1=_core.Helpers.right(_this12.options,"midHighlightColor",midHighlightColor);var minColor_1=_core.Helpers.right(_this12.options,"minColor",minColor);var minHighlightColor_1=_core.Helpers.right(_this12.options,"minHighlightColor",minHighlightColor);var minColorValue_1=_core.Helpers.right(_this12.options,"minColorValue",minColorValue);var showScale_1=_core.Helpers.right(_this12.options,"showScale",showScale);var showTooltips_1=_core.Helpers.right(_this12.options,"showTooltips",showTooltips);var title_1=_core.Helpers.right(_this12.options,"title",title);var useWeightedAverageForAggregation_1=_core.Helpers.right(_this12.options,"useWeightedAverageForAggregation",useWeightedAverageForAggregation);return new _options.TreeMapOptions(fontColor_1,fontFamily_1,fontSize_1,forceIFrame_1,headerColor_1,headerHeight_1,headerHighlightColor_1,hintOpacity_1,maxColor_1,maxDepth_1,maxHighlightColor_1,maxPostDepth_1,maxColorValue_1,midColor_1,midHighlightColor_1,minColor_1,minHighlightColor_1,minColorValue_1,showScale_1,showTooltips_1,_this12.options.textStyle,title_1,_this12.options.titleTextStyle,useWeightedAverageForAggregation_1);}();return new TreeMap(this.data,this.typeName,newOptions);}},{key:"textStyle",value:function textStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.textStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.TreeMapOptions(this.options.fontColor,this.options.fontFamily,this.options.fontSize,this.options.forceIFrame,this.options.headerColor,this.options.headerHeight,this.options.headerHighlightColor,this.options.hintOpacity,this.options.maxColor,this.options.maxDepth,this.options.maxHighlightColor,this.options.maxPostDepth,this.options.maxColorValue,this.options.midColor,this.options.midHighlightColor,this.options.minColor,this.options.minHighlightColor,this.options.minColorValue,this.options.showScale,this.options.showTooltips,newNested,this.options.title,this.options.titleTextStyle,this.options.useWeightedAverageForAggregation);return new TreeMap(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.TreeMapOptions(this.options.fontColor,this.options.fontFamily,this.options.fontSize,this.options.forceIFrame,this.options.headerColor,this.options.headerHeight,this.options.headerHighlightColor,this.options.hintOpacity,this.options.maxColor,this.options.maxDepth,this.options.maxHighlightColor,this.options.maxPostDepth,this.options.maxColorValue,this.options.midColor,this.options.midHighlightColor,this.options.minColor,this.options.minHighlightColor,this.options.minColorValue,this.options.showScale,this.options.showTooltips,this.options.textStyle,this.options.title,newNested,this.options.useWeightedAverageForAggregation);return new TreeMap(this.data,this.typeName,options);}}]);return TreeMap;}();_fableCore.Util.setInterfaces(TreeMap.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.TreeMap");var Table=exports.Table=function(){function Table(data,typeName,options){_classCallCheck(this,Table);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Table,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(allowHtml,alternatingRowStyle,firstRowNumber,height,page,pageSize,rtlTable,scrollLeftStartPosition,showRowNumber,sort,sortAscending,sortColumn,startPage,width){var _this13=this;var newOptions=function(){var allowHtml_1=_core.Helpers.right(_this13.options,"allowHtml",allowHtml);var alternatingRowStyle_1=_core.Helpers.right(_this13.options,"alternatingRowStyle",alternatingRowStyle);var firstRowNumber_1=_core.Helpers.right(_this13.options,"firstRowNumber",firstRowNumber);var height_1=_core.Helpers.right(_this13.options,"height",height);var page_1=_core.Helpers.right(_this13.options,"page",page);var pageSize_1=_core.Helpers.right(_this13.options,"pageSize",pageSize);var rtlTable_1=_core.Helpers.right(_this13.options,"rtlTable",rtlTable);var scrollLeftStartPosition_1=_core.Helpers.right(_this13.options,"scrollLeftStartPosition",scrollLeftStartPosition);var showRowNumber_1=_core.Helpers.right(_this13.options,"showRowNumber",showRowNumber);var sort_1=_core.Helpers.right(_this13.options,"sort",sort);var sortAscending_1=_core.Helpers.right(_this13.options,"sortAscending",sortAscending);var sortColumn_1=_core.Helpers.right(_this13.options,"sortColumn",sortColumn);var startPage_1=_core.Helpers.right(_this13.options,"startPage",startPage);var width_1=_core.Helpers.right(_this13.options,"width",width);return new _options.TableOptions(allowHtml_1,alternatingRowStyle_1,_this13.options.cssClassName,firstRowNumber_1,height_1,page_1,pageSize_1,rtlTable_1,scrollLeftStartPosition_1,showRowNumber_1,sort_1,sortAscending_1,sortColumn_1,startPage_1,width_1);}();return new Table(this.data,this.typeName,newOptions);}},{key:"cssClassName",value:function cssClassName(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){var o=this.options.cssClassName;var newNested=new _options.CssClassNames(_core.Helpers.right(o,"headerRow",headerRow),_core.Helpers.right(o,"tableRow",tableRow),_core.Helpers.right(o,"oddTableRow",oddTableRow),_core.Helpers.right(o,"selectedTableRow",selectedTableRow),_core.Helpers.right(o,"hoverTableRow",hoverTableRow),_core.Helpers.right(o,"headerCell",headerCell),_core.Helpers.right(o,"tableCell",tableCell),_core.Helpers.right(o,"rowNumberCell",rowNumberCell));var options=new _options.TableOptions(this.options.allowHtml,this.options.alternatingRowStyle,newNested,this.options.firstRowNumber,this.options.height,this.options.page,this.options.pageSize,this.options.rtlTable,this.options.scrollLeftStartPosition,this.options.showRowNumber,this.options.sort,this.options.sortAscending,this.options.sortColumn,this.options.startPage,this.options.width);return new Table(this.data,this.typeName,options);}}]);return Table;}();_fableCore.Util.setInterfaces(Table.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Table");var Timeline=exports.Timeline=function(){function Timeline(data,typeName,options){_classCallCheck(this,Timeline);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Timeline,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(avoidOverlappingGridLines,backgroundColor,colors,enableInteractivity,forceIFrame,height,width){var _this14=this;var newOptions=function(){var avoidOverlappingGridLines_1=_core.Helpers.right(_this14.options,"avoidOverlappingGridLines",avoidOverlappingGridLines);var backgroundColor_1=_core.Helpers.right(_this14.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this14.options,"colors",function(){var $var38=colors;if($var38!=null){return function(source){return Array.from(source);}($var38);}else{return $var38;}}());var enableInteractivity_1=_core.Helpers.right(_this14.options,"enableInteractivity",enableInteractivity);var forceIFrame_1=_core.Helpers.right(_this14.options,"forceIFrame",forceIFrame);var height_1=_core.Helpers.right(_this14.options,"height",height);var width_1=_core.Helpers.right(_this14.options,"width",width);return new _options.TimelineOptions(avoidOverlappingGridLines_1,backgroundColor_1,colors_1,enableInteractivity_1,forceIFrame_1,height_1,_this14.options.timeline,width_1);}();return new Timeline(this.data,this.typeName,newOptions);}},{key:"timeline",value:function timeline(colorByRowLabel,groupByRowLabel,showRowLabels,singleColor){var o=this.options.timeline;var newNested=function(){var colorByRowLabel_1=_core.Helpers.right(o,"colorByRowLabel",colorByRowLabel);var groupByRowLabel_1=_core.Helpers.right(o,"groupByRowLabel",groupByRowLabel);var showRowLabels_1=_core.Helpers.right(o,"showRowLabels",showRowLabels);var singleColor_1=_core.Helpers.right(o,"singleColor",singleColor);return new _options.TimelineTimeline(_core.Helpers.copy(o,"barLabelStyle"),colorByRowLabel_1,groupByRowLabel_1,_core.Helpers.copy(o,"rowLabelStyle"),showRowLabels_1,singleColor_1);}();var options=new _options.TimelineOptions(this.options.avoidOverlappingGridLines,this.options.backgroundColor,this.options.colors,this.options.enableInteractivity,this.options.forceIFrame,this.options.height,newNested,this.options.width);return new Timeline(this.data,this.typeName,options);}}]);return Timeline;}();_fableCore.Util.setInterfaces(Timeline.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Timeline");var Candlestick=exports.Candlestick=function(){function Candlestick(data,typeName,options){_classCallCheck(this,Candlestick);this.data=data;this.typeName=typeName;this.options=options;}_createClass(Candlestick,[{key:"show",value:function show(outputId){_core.Helpers.showChart(this,outputId);}},{key:"set",value:function set(aggregationTarget,axisTitlesPosition,backgroundColor,colors,enableInteractivity,focusTarget,fontSize,fontName,height,orientation,reverseCategories,selectionMode,series,theme,title,titlePosition,vAxes,width){var _this15=this;var newOptions=function(){var aggregationTarget_1=_core.Helpers.right(_this15.options,"aggregationTarget",aggregationTarget);var axisTitlesPosition_1=_core.Helpers.right(_this15.options,"axisTitlesPosition",axisTitlesPosition);var backgroundColor_1=_core.Helpers.right(_this15.options,"backgroundColor",backgroundColor);var colors_1=_core.Helpers.right(_this15.options,"colors",function(){var $var39=colors;if($var39!=null){return function(source){return Array.from(source);}($var39);}else{return $var39;}}());var enableInteractivity_1=_core.Helpers.right(_this15.options,"enableInteractivity",enableInteractivity);var focusTarget_1=_core.Helpers.right(_this15.options,"focusTarget",focusTarget);var fontSize_1=_core.Helpers.right(_this15.options,"fontSize",fontSize);var fontName_1=_core.Helpers.right(_this15.options,"fontName",fontName);var height_1=_core.Helpers.right(_this15.options,"height",height);var orientation_1=_core.Helpers.right(_this15.options,"orientation",orientation);var reverseCategories_1=_core.Helpers.right(_this15.options,"reverseCategories",reverseCategories);var selectionMode_1=_core.Helpers.right(_this15.options,"selectionMode",selectionMode);var series_1=_core.Helpers.right(_this15.options,"series",series);var theme_1=_core.Helpers.right(_this15.options,"theme",theme);var title_1=_core.Helpers.right(_this15.options,"title",title);var titlePosition_1=_core.Helpers.right(_this15.options,"titlePosition",titlePosition);var vAxes_1=_core.Helpers.right(_this15.options,"vAxes",vAxes);var width_1=_core.Helpers.right(_this15.options,"width",width);return new _options.CandlestickChartOptions(aggregationTarget_1,_this15.options.animation,axisTitlesPosition_1,backgroundColor_1,_this15.options.bar,_this15.options.candlestick,_this15.options.chartArea,colors_1,enableInteractivity_1,focusTarget_1,fontSize_1,fontName_1,_this15.options.hAxis,height_1,_this15.options.legend,orientation_1,reverseCategories_1,selectionMode_1,series_1,theme_1,title_1,titlePosition_1,_this15.options.titleTextStyle,_this15.options.tooltip,vAxes_1,_this15.options.vAxis,width_1);}();return new Candlestick(this.data,this.typeName,newOptions);}},{key:"animation",value:function animation(duration,easing){var o=this.options.animation;var newNested=new _options.TransitionAnimation(_core.Helpers.right(o,"duration",duration),_core.Helpers.right(o,"easing",easing));var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,newNested,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"bar",value:function bar(groupWidth){var o=this.options.bar;var newNested=new _options.GroupWidth(_core.Helpers.right(o,"groupWidth",groupWidth));var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,newNested,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"candlestick",value:function candlestick(hollowIsRising){var o=this.options.candlestick;var newNested=new _options.CandlestickCandlestick(_core.Helpers.right(o,"hollowIsRising",hollowIsRising),_core.Helpers.copy(o,"fallingColor"),_core.Helpers.copy(o,"risingColor"));var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,newNested,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"chartArea",value:function chartArea(top,left,width,height){var o=this.options.chartArea;var newNested=new _options.ChartArea(_core.Helpers.right(o,"top",top),_core.Helpers.right(o,"left",left),_core.Helpers.right(o,"width",width),_core.Helpers.right(o,"height",height));var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,newNested,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"hAxis",value:function hAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.hAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var40=ticks;if($var40!=null){return function(source){return Array.from(source);}($var40);}else{return $var40;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,newNested,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"legend",value:function legend(alignment,maxLines,position,numberFormat){var o=this.options.legend;var newNested=function(){var alignment_1=_core.Helpers.right(o,"alignment",alignment);var maxLines_1=_core.Helpers.right(o,"maxLines",maxLines);var position_1=_core.Helpers.right(o,"position",position);var numberFormat_1=_core.Helpers.right(o,"numberFormat",numberFormat);return new _options.ChartLegend(alignment_1,maxLines_1,position_1,_core.Helpers.copy(o,"textStyle"),numberFormat_1);}();var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,newNested,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"titleTextStyle",value:function titleTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){var o=this.options.titleTextStyle;var newNested=new _options.ChartTextStyle(_core.Helpers.right(o,"fontName",fontName),_core.Helpers.right(o,"fontSize",fontSize),_core.Helpers.right(o,"bold",bold),_core.Helpers.right(o,"italic",italic),_core.Helpers.right(o,"color",color),_core.Helpers.right(o,"auraColor",auraColor),_core.Helpers.right(o,"opacity",opacity));var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,newNested,this.options.tooltip,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"tooltip",value:function tooltip(isHtml,showColorCode,trigger){var o=this.options.tooltip;var newNested=function(){var isHtml_1=_core.Helpers.right(o,"isHtml",isHtml);var showColorCode_1=_core.Helpers.right(o,"showColorCode",showColorCode);var trigger_1=_core.Helpers.right(o,"trigger",trigger);return new _options.ChartTooltip(isHtml_1,showColorCode_1,_core.Helpers.copy(o,"textStyle"),trigger_1);}();var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,newNested,this.options.vAxes,this.options.vAxis,this.options.width);return new Candlestick(this.data,this.typeName,options);}},{key:"vAxis",value:function vAxis(baseline,baselineColor,direction,format,logScale,textPosition,ticks,title,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode){var o=this.options.vAxis;var newNested=function(){var baseline_1=_core.Helpers.right(o,"baseline",baseline);var baselineColor_1=_core.Helpers.right(o,"baselineColor",baselineColor);var direction_1=_core.Helpers.right(o,"direction",direction);var format_1=_core.Helpers.right(o,"format",format);var logScale_1=_core.Helpers.right(o,"logScale",logScale);var textPosition_1=_core.Helpers.right(o,"textPosition",textPosition);var ticks_1=_core.Helpers.right(o,"ticks",function(){var $var41=ticks;if($var41!=null){return function(source){return Array.from(source);}($var41);}else{return $var41;}}());var title_1=_core.Helpers.right(o,"title",title);var allowContainerBoundaryTextCufoff_1=_core.Helpers.right(o,"allowContainerBoundaryTextCufoff",allowContainerBoundaryTextCufoff);var slantedText_1=_core.Helpers.right(o,"slantedText",slantedText);var slantedTextAngle_1=_core.Helpers.right(o,"slantedTextAngle",slantedTextAngle);var maxAlternation_1=_core.Helpers.right(o,"maxAlternation",maxAlternation);var maxTextLines_1=_core.Helpers.right(o,"maxTextLines",maxTextLines);var minTextSpacing_1=_core.Helpers.right(o,"minTextSpacing",minTextSpacing);var showTextEvery_1=_core.Helpers.right(o,"showTextEvery",showTextEvery);var maxValue_1=_core.Helpers.right(o,"maxValue",maxValue);var minValue_1=_core.Helpers.right(o,"minValue",minValue);var viewWindowMode_1=_core.Helpers.right(o,"viewWindowMode",viewWindowMode);return new _options.ChartAxis(baseline_1,baselineColor_1,direction_1,format_1,_core.Helpers.copy(o,"gridlines"),_core.Helpers.copy(o,"minorGridlines"),logScale_1,textPosition_1,_core.Helpers.copy(o,"textStyle"),ticks_1,title_1,_core.Helpers.copy(o,"titleTextStyle"),allowContainerBoundaryTextCufoff_1,slantedText_1,slantedTextAngle_1,maxAlternation_1,maxTextLines_1,minTextSpacing_1,showTextEvery_1,maxValue_1,minValue_1,viewWindowMode_1,_core.Helpers.copy(o,"viewWindow"));}();var options=new _options.CandlestickChartOptions(this.options.aggregationTarget,this.options.animation,this.options.axisTitlesPosition,this.options.backgroundColor,this.options.bar,this.options.candlestick,this.options.chartArea,this.options.colors,this.options.enableInteractivity,this.options.focusTarget,this.options.fontSize,this.options.fontName,this.options.hAxis,this.options.height,this.options.legend,this.options.orientation,this.options.reverseCategories,this.options.selectionMode,this.options.series,this.options.theme,this.options.title,this.options.titlePosition,this.options.titleTextStyle,this.options.tooltip,this.options.vAxes,newNested,this.options.width);return new Candlestick(this.data,this.typeName,options);}}]);return Candlestick;}();_fableCore.Util.setInterfaces(Candlestick.prototype,["FSharpRecord","TheGamma.GoogleCharts.Chart"],"TheGamma.GoogleCharts.Extensions.Candlestick");function GeoChartOptions_get_empty_Static(){return new _options.GeoChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.GeoChartOptions$2Eget_empty$2EStatic=GeoChartOptions_get_empty_Static;function ScatterChartOptions_get_empty_Static(){return new _options.ScatterChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ScatterChartOptions$2Eget_empty$2EStatic=ScatterChartOptions_get_empty_Static;function ColumnChartOptions_get_empty_Static(){return new _options.ColumnChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.ColumnChartOptions$2Eget_empty$2EStatic=ColumnChartOptions_get_empty_Static;function LineChartOptions_get_empty_Static(){return new _options.LineChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.LineChartOptions$2Eget_empty$2EStatic=LineChartOptions_get_empty_Static;function BarChartOptions_get_empty_Static(){return new _options.BarChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BarChartOptions$2Eget_empty$2EStatic=BarChartOptions_get_empty_Static;function HistogramOptions_get_empty_Static(){return new _options.HistogramOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.HistogramOptions$2Eget_empty$2EStatic=HistogramOptions_get_empty_Static;function AreaChartOptions_get_empty_Static(){return new _options.AreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AreaChartOptions$2Eget_empty$2EStatic=AreaChartOptions_get_empty_Static;function AnnotationChartOptions_get_empty_Static(){return new _options.AnnotationChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.AnnotationChartOptions$2Eget_empty$2EStatic=AnnotationChartOptions_get_empty_Static;function SteppedAreaChartOptions_get_empty_Static(){return new _options.SteppedAreaChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.SteppedAreaChartOptions$2Eget_empty$2EStatic=SteppedAreaChartOptions_get_empty_Static;function PieChartOptions_get_empty_Static(){return new _options.PieChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.PieChartOptions$2Eget_empty$2EStatic=PieChartOptions_get_empty_Static;function BubbleChartOptions_get_empty_Static(){return new _options.BubbleChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.BubbleChartOptions$2Eget_empty$2EStatic=BubbleChartOptions_get_empty_Static;function TreeMapOptions_get_empty_Static(){return new _options.TreeMapOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TreeMapOptions$2Eget_empty$2EStatic=TreeMapOptions_get_empty_Static;function TableOptions_get_empty_Static(){return new _options.TableOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TableOptions$2Eget_empty$2EStatic=TableOptions_get_empty_Static;function TimelineOptions_get_empty_Static(){return new _options.TimelineOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.TimelineOptions$2Eget_empty$2EStatic=TimelineOptions_get_empty_Static;function CandlestickChartOptions_get_empty_Static(){return new _options.CandlestickChartOptions(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined);}exports.CandlestickChartOptions$2Eget_empty$2EStatic=CandlestickChartOptions_get_empty_Static;var options=function(){function options(){_classCallCheck(this,options);}_createClass(options,null,[{key:"chartSizeAxis",value:function chartSizeAxis(maxSize,maxValue,minSize,minValue){return new _options.ChartSizeAxis(_core.Helpers.orDefault(maxSize),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minSize),_core.Helpers.orDefault(minValue));}},{key:"chartTextStyle",value:function chartTextStyle(fontName,fontSize,bold,italic,color,auraColor,opacity){return new _options.ChartTextStyle(_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize),_core.Helpers.orDefault(bold),_core.Helpers.orDefault(italic),_core.Helpers.orDefault(color),_core.Helpers.orDefault(auraColor),_core.Helpers.orDefault(opacity));}},{key:"chartTooltip",value:function chartTooltip(isHtml,showColorCode,textStyle,trigger){return new _options.ChartTooltip(_core.Helpers.orDefault(isHtml),_core.Helpers.orDefault(showColorCode),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(trigger));}},{key:"chartLegend",value:function chartLegend(alignment,maxLines,position,textStyle,numberFormat){return new _options.ChartLegend(_core.Helpers.orDefault(alignment),_core.Helpers.orDefault(maxLines),_core.Helpers.orDefault(position),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(numberFormat));}},{key:"chartColorAxis",value:function chartColorAxis(minValue,maxValue,values,colors,legend){return new _options.ChartColorAxis(_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(function(){var $var42=values;if($var42!=null){return function(source){return Float64Array.from(source);}($var42);}else{return $var42;}}()),_core.Helpers.orDefault(function(){var $var43=colors;if($var43!=null){return function(source){return Array.from(source);}($var43);}else{return $var43;}}()),_core.Helpers.orDefault(legend));}},{key:"geoChartMagnifyingGlass",value:function geoChartMagnifyingGlass(enable,zoomFactor){return new _options.GeoChartMagnifyingGlass(_core.Helpers.orDefault(enable),_core.Helpers.orDefault(zoomFactor));}},{key:"chartBoxStyleGradient",value:function chartBoxStyleGradient(color1,color2,x1,y1,x2,y2,useObjectBoundingBoxUnits){return new _options.ChartBoxStyleGradient(_core.Helpers.orDefault(color1),_core.Helpers.orDefault(color2),_core.Helpers.orDefault(x1),_core.Helpers.orDefault(y1),_core.Helpers.orDefault(x2),_core.Helpers.orDefault(y2),_core.Helpers.orDefault(useObjectBoundingBoxUnits));}},{key:"chartBoxStyle",value:function chartBoxStyle(stroke,strokeWidth,rx,ry,gradient){return new _options.ChartBoxStyle(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(rx),_core.Helpers.orDefault(ry),_core.Helpers.orDefault(gradient));}},{key:"chartAnnotations",value:function chartAnnotations(boxStyle,textStyle){return new _options.ChartAnnotations(_core.Helpers.orDefault(boxStyle),_core.Helpers.orDefault(textStyle));}},{key:"chartCrosshairFocused",value:function chartCrosshairFocused(color,opacity){return new _options.ChartCrosshairFocused(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshairSelected",value:function chartCrosshairSelected(color,opacity){return new _options.ChartCrosshairSelected(_core.Helpers.orDefault(color),_core.Helpers.orDefault(opacity));}},{key:"chartCrosshair",value:function chartCrosshair(color,focused,opacity,orientation,selected,trigger){return new _options.ChartCrosshair(_core.Helpers.orDefault(color),_core.Helpers.orDefault(focused),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(orientation),_core.Helpers.orDefault(selected),_core.Helpers.orDefault(trigger));}},{key:"chartExplorer",value:function chartExplorer(actions,axis,keepInBounds,maxZoomIn,maxZoomOut,zoomDelta){return new _options.ChartExplorer(_core.Helpers.orDefault(function(){var $var44=actions;if($var44!=null){return function(source){return Array.from(source);}($var44);}else{return $var44;}}()),_core.Helpers.orDefault(axis),_core.Helpers.orDefault(keepInBounds),_core.Helpers.orDefault(maxZoomIn),_core.Helpers.orDefault(maxZoomOut),_core.Helpers.orDefault(zoomDelta));}},{key:"chartStroke",value:function chartStroke(stroke,strokeWidth,fill){return new _options.ChartStroke(_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(strokeWidth),_core.Helpers.orDefault(fill));}},{key:"chartArea",value:function chartArea(top,left,width,height){return new _options.ChartArea(_core.Helpers.orDefault(top),_core.Helpers.orDefault(left),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"transitionAnimation",value:function transitionAnimation(duration,easing){return new _options.TransitionAnimation(_core.Helpers.orDefault(duration),_core.Helpers.orDefault(easing));}},{key:"chartGridlines",value:function chartGridlines(color,count){return new _options.ChartGridlines(_core.Helpers.orDefault(color),_core.Helpers.orDefault(count));}},{key:"chartViewWindow",value:function chartViewWindow(max,min){return new _options.ChartViewWindow(_core.Helpers.orDefault(max),_core.Helpers.orDefault(min));}},{key:"chartAxis",value:function chartAxis(baseline,baselineColor,direction,format,gridlines,minorGridlines,logScale,textPosition,textStyle,ticks,title,titleTextStyle,allowContainerBoundaryTextCufoff,slantedText,slantedTextAngle,maxAlternation,maxTextLines,minTextSpacing,showTextEvery,maxValue,minValue,viewWindowMode,viewWindow){return new _options.ChartAxis(_core.Helpers.orDefault(baseline),_core.Helpers.orDefault(baselineColor),_core.Helpers.orDefault(direction),_core.Helpers.orDefault(format),_core.Helpers.orDefault(gridlines),_core.Helpers.orDefault(minorGridlines),_core.Helpers.orDefault(logScale),_core.Helpers.orDefault(textPosition),_core.Helpers.orDefault(textStyle),_core.Helpers.orDefault(function(){var $var45=ticks;if($var45!=null){return function(source){return Array.from(source);}($var45);}else{return $var45;}}()),_core.Helpers.orDefault(title),_core.Helpers.orDefault(titleTextStyle),_core.Helpers.orDefault(allowContainerBoundaryTextCufoff),_core.Helpers.orDefault(slantedText),_core.Helpers.orDefault(slantedTextAngle),_core.Helpers.orDefault(maxAlternation),_core.Helpers.orDefault(maxTextLines),_core.Helpers.orDefault(minTextSpacing),_core.Helpers.orDefault(showTextEvery),_core.Helpers.orDefault(maxValue),_core.Helpers.orDefault(minValue),_core.Helpers.orDefault(viewWindowMode),_core.Helpers.orDefault(viewWindow));}},{key:"chartBoundingBox",value:function chartBoundingBox(left,top,width,height){return new _options.ChartBoundingBox(_core.Helpers.orDefault(left),_core.Helpers.orDefault(top),_core.Helpers.orDefault(width),_core.Helpers.orDefault(height));}},{key:"groupWidth",value:function groupWidth(_groupWidth){return new _options.GroupWidth(_core.Helpers.orDefault(_groupWidth));}},{key:"trendline",value:function trendline(color,lineWidth,labelInLegend,opacity,pointSize,pointsVisible,showR2,type,visibleInLegend){return new _options.Trendline(_core.Helpers.orDefault(color),_core.Helpers.orDefault(lineWidth),_core.Helpers.orDefault(labelInLegend),_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(pointSize),_core.Helpers.orDefault(pointsVisible),_core.Helpers.orDefault(showR2),_core.Helpers.orDefault(type),_core.Helpers.orDefault(visibleInLegend));}},{key:"histogramHistogram",value:function histogramHistogram(bucketSize,hideBucketItems,lastBucketPercentile){return new _options.HistogramHistogram(_core.Helpers.orDefault(bucketSize),_core.Helpers.orDefault(hideBucketItems),_core.Helpers.orDefault(lastBucketPercentile));}},{key:"chartBubble",value:function chartBubble(opacity,stroke,textStyle){return new _options.ChartBubble(_core.Helpers.orDefault(opacity),_core.Helpers.orDefault(stroke),_core.Helpers.orDefault(textStyle));}},{key:"cssClassNames",value:function cssClassNames(headerRow,tableRow,oddTableRow,selectedTableRow,hoverTableRow,headerCell,tableCell,rowNumberCell){return new _options.CssClassNames(_core.Helpers.orDefault(headerRow),_core.Helpers.orDefault(tableRow),_core.Helpers.orDefault(oddTableRow),_core.Helpers.orDefault(selectedTableRow),_core.Helpers.orDefault(hoverTableRow),_core.Helpers.orDefault(headerCell),_core.Helpers.orDefault(tableCell),_core.Helpers.orDefault(rowNumberCell));}},{key:"labelStyle",value:function labelStyle(color,fontName,fontSize){return new _options.LabelStyle(_core.Helpers.orDefault(color),_core.Helpers.orDefault(fontName),_core.Helpers.orDefault(fontSize));}},{key:"timelineTimeline",value:function timelineTimeline(barLabelStyle,colorByRowLabel,groupByRowLabel,rowLabelStyle,showRowLabels,singleColor){return new _options.TimelineTimeline(_core.Helpers.orDefault(barLabelStyle),_core.Helpers.orDefault(colorByRowLabel),_core.Helpers.orDefault(groupByRowLabel),_core.Helpers.orDefault(rowLabelStyle),_core.Helpers.orDefault(showRowLabels),_core.Helpers.orDefault(singleColor));}},{key:"candlestickCandlestick",value:function candlestickCandlestick(hollowIsRising,fallingColor,risingColor){return new _options.CandlestickCandlestick(_core.Helpers.orDefault(hollowIsRising),_core.Helpers.orDefault(fallingColor),_core.Helpers.orDefault(risingColor));}}]);return options;}();exports.options=options;_fableCore.Util.setInterfaces(options.prototype,[],"TheGamma.GoogleCharts.Extensions.options");});
 
 
 /***/ },
@@ -14392,17 +13779,11 @@
 	    };
 	
 	    var orDefault = $exports.orDefault = function orDefault(newValue) {
-	      return newValue != null ? function () {
-	        var a = newValue;
-	        return a;
-	      }() : undefined;
+	      return newValue != null ? newValue : undefined;
 	    };
 	
 	    var right = $exports.right = function right(o, prop, newValue) {
-	      return newValue != null ? function () {
-	        var a = newValue;
-	        return a;
-	      }() : o == null ? undefined : o[prop];
+	      return newValue != null ? newValue : o == null ? undefined : o[prop];
 	    };
 	
 	    var showChart = $exports.showChart = function showChart(chart, outputId) {
@@ -14413,13 +13794,11 @@
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.TryWith(builder_.Delay(function (unitVar_1) {
 	              return builder_.Bind(chart["data"].data, function (_arg1) {
-	                var dt = _arg1;
-	                cont([chart, dt, outputId]);
+	                cont([chart, _arg1, outputId]);
 	                return builder_.Zero();
 	              });
 	            }), function (_arg2) {
-	              var e = _arg2;
-	              window.alert("SOmething went wrong: " + e);
+	              window.alert("SOmething went wrong: " + _arg2);
 	              return builder_.Zero();
 	            });
 	          });
@@ -14434,17 +13813,11 @@
 	    var collect = $exports.collect = function collect(f, l) {
 	      return function (builder_) {
 	        return builder_.Delay(function (unitVar) {
-	          return l.tail == null ? builder_.Return(new _fableCore.List()) : function () {
-	            var xs = l.tail;
-	            var x = l.head;
-	            return builder_.Bind(f(x), function (_arg1) {
-	              var y = _arg1;
-	              return builder_.Bind(collect(f, xs), function (_arg2) {
-	                var ys = _arg2;
-	                return builder_.Return(_fableCore.List.append(y, ys));
-	              });
+	          return l.tail == null ? builder_.Return(new _fableCore.List()) : builder_.Bind(f(l.head), function (_arg1) {
+	            return builder_.Bind(collect(f, l.tail), function (_arg2) {
+	              return builder_.Return(_fableCore.List.append(_arg1, _arg2));
 	            });
-	          }();
+	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder);
 	    };
@@ -14460,11 +13833,9 @@
 	              return [k, v_1];
 	            };
 	          }).data, function (_arg1) {
-	            var vals = _arg1;
-	
 	            (function (arg00) {
 	              data.addRows(arg00);
-	            })(vals.map(function (tuple) {
+	            })(_arg1.map(function (tuple) {
 	              return tuple[1];
 	            }));
 	
@@ -14483,16 +13854,12 @@
 	          data.addColumn("number", v.seriesName);
 	          return builder_.Bind(v.mapPairs(function (k) {
 	            return function (tupledArg) {
-	              var v1 = tupledArg[0];
-	              var v2 = tupledArg[1];
-	              return [k, v1, v2];
+	              return [k, tupledArg[0], tupledArg[1]];
 	            };
 	          }).data, function (_arg1) {
-	            var vals = _arg1;
-	
 	            (function (arg00) {
 	              data.addRows(arg00);
-	            })(vals.map(function (tuple) {
+	            })(_arg1.map(function (tuple) {
 	              return tuple[1];
 	            }));
 	
@@ -14513,44 +13880,30 @@
 	            role: "style"
 	          });
 	          return builder_.Bind(collect(function (tupledArg) {
-	            var v = tupledArg[0];
-	            var clr = tupledArg[1];
 	            return function (builder__1) {
 	              return builder__1.Delay(function (unitVar_1) {
-	                return builder__1.Bind(v.mapPairs(function (k) {
-	                  return function (v_1) {
-	                    return [k, v_1, clr];
+	                return builder__1.Bind(tupledArg[0].mapPairs(function (k) {
+	                  return function (v) {
+	                    return [k, v, tupledArg[1]];
 	                  };
 	                }).data, function (_arg1) {
-	                  var res = _arg1;
-	                  return builder__1.Return(_fableCore.List.ofArray(res.map(function (tuple) {
+	                  return builder__1.Return(_fableCore.List.ofArray(_arg1.map(function (tuple) {
 	                    return tuple[1];
 	                  })));
 	                });
 	              });
 	            }(_fableCore.defaultAsyncBuilder);
 	          }, _fableCore.List.ofArray(Array.from(_fableCore.Seq.zip(vs, colors)))), function (_arg2) {
-	            var all = _arg2;
-	
 	            (function (arg00) {
 	              data.addRows(arg00);
 	            })(Array.from(_fableCore.Seq.toList(_fableCore.Seq.sortWith(function (x, y) {
 	              return -_fableCore.Util.compare(function (tupledArg) {
-	                var _arg1 = tupledArg[0];
-	                var v = tupledArg[1];
-	                var _arg2_1 = tupledArg[2];
-	                return v;
+	                return tupledArg[1];
 	              }(x), function (tupledArg) {
-	                var _arg1 = tupledArg[0];
-	                var v = tupledArg[1];
-	                var _arg2_1 = tupledArg[2];
-	                return v;
+	                return tupledArg[1];
 	              }(y));
-	            }, all))).map(function (tupledArg) {
-	              var k = tupledArg[0];
-	              var v = tupledArg[1];
-	              var c = tupledArg[2];
-	              return [k, v, c];
+	            }, _arg2))).map(function (tupledArg) {
+	              return [tupledArg[0], tupledArg[1], tupledArg[2]];
 	            }));
 	
 	            return builder_.Return(data);
@@ -14564,59 +13917,50 @@
 	        return builder_.Delay(function (unitVar) {
 	          var data = new google.visualization.DataTable();
 	          return builder_.Bind(v.data, function (_arg1) {
-	            var v_1 = _arg1;
-	            var v_2 = v_1.map(function (tuple) {
+	            var v_1 = _arg1.map(function (tuple) {
 	              return tuple[1];
 	            });
-	            data.addColumn(keyType, v_2[0].keyName);
-	            return builder_.Combine(builder_.For(_fableCore.Seq.range(0, v_2.length - 1), function (_arg2) {
-	              var i = _arg2;
-	              data.addColumn("number", v_2[i].seriesName);
+	
+	            data.addColumn(keyType, v_1[0].keyName);
+	            return builder_.Combine(builder_.For(_fableCore.Seq.range(0, v_1.length - 1), function (_arg2) {
+	              data.addColumn("number", v_1[_arg2].seriesName);
 	              return builder_.Zero();
 	            }), builder_.Delay(function (unitVar_1) {
-	              var head = v_2[0].map(function (v_3) {
-	                return _fableCore.Map.create(_fableCore.List.ofArray([[0, v_3]]), new _fableCore.GenericComparer(function (x, y) {
+	              var head = v_1[0].map(function (v_2) {
+	                return _fableCore.Map.create(_fableCore.List.ofArray([[0, v_2]]), new _fableCore.GenericComparer(function (x, y) {
 	                  return x < y ? -1 : x > y ? 1 : 0;
 	                }));
 	              });
-	              var tail = Array.from(_fableCore.Seq.mapIndexed(function (i, v_3) {
-	                return [i + 1, v_3];
-	              }, _series.SeriesInternals.slice(1, v_2.length - 1, v_2)));
+	              var tail = Array.from(_fableCore.Seq.mapIndexed(function (i, v_2) {
+	                return [i + 1, v_2];
+	              }, _series.SeriesInternals.slice(1, v_1.length - 1, v_1)));
 	
 	              var all = _fableCore.Seq.fold(function (s1, tupledArg) {
-	                var i = tupledArg[0];
-	                var s2 = tupledArg[1];
-	                return s1.joinOuter(s2).map(function (tupledArg_1) {
-	                  var l = tupledArg_1[0];
-	                  var r = tupledArg_1[1];
-	                  var matchValue = [l != null ? l : _fableCore.Map.create(null, new _fableCore.GenericComparer(function (x, y) {
+	                return s1.joinOuter(tupledArg[1]).map(function (tupledArg_1) {
+	                  var matchValue = [tupledArg_1[0] != null ? tupledArg_1[0] : _fableCore.Map.create(null, new _fableCore.GenericComparer(function (x, y) {
 	                    return x < y ? -1 : x > y ? 1 : 0;
-	                  })), r];
+	                  })), tupledArg_1[1]];
 	
 	                  if (matchValue[1] == null) {
-	                    var lm = matchValue[0];
-	                    return lm;
+	                    return matchValue[0];
 	                  } else {
-	                    var r_1 = matchValue[1];
-	                    var lm = matchValue[0];
-	                    return _fableCore.Map.add(i, r_1, lm);
+	                    var r = matchValue[1];
+	                    return _fableCore.Map.add(tupledArg[0], r, matchValue[0]);
 	                  }
 	                });
 	              }, head, tail);
 	
 	              return builder_.Bind(all.mapPairs(function (k) {
 	                return function (vals) {
-	                  var data_1 = Array.from(_fableCore.Seq.initialize(v_2.length, function (i) {
+	                  var data_1 = Array.from(_fableCore.Seq.initialize(v_1.length, function (i) {
 	                    return _fableCore.Map.tryFind(i, vals) != null ? _fableCore.Map.tryFind(i, vals) : undefined;
 	                  }));
 	                  return Array.from(_fableCore.Seq.append([k], data_1));
 	                };
 	              }).data, function (_arg3) {
-	                var vals = _arg3;
-	
 	                (function (arg00) {
 	                  data.addRows(arg00);
-	                })(vals.map(function (tuple) {
+	                })(_arg3.map(function (tuple) {
 	                  return tuple[1];
 	                }));
 	
@@ -14635,15 +13979,11 @@
 	          data.addColumn("number", v1.seriesName);
 	          data.addColumn("number", v2.seriesName);
 	          return builder_.Bind(v1.joinInner(v2).map(function (tupledArg) {
-	            var v1_1 = tupledArg[0];
-	            var v2_1 = tupledArg[1];
-	            return [v1_1, v2_1];
+	            return [tupledArg[0], tupledArg[1]];
 	          }).data, function (_arg1) {
-	            var vals = _arg1;
-	
 	            (function (arg00) {
 	              data.addRows(arg00);
-	            })(vals.map(function (tuple) {
+	            })(_arg1.map(function (tuple) {
 	              return tuple[1];
 	            }));
 	
@@ -16143,6 +15483,12 @@
 	  });
 	  exports.empty = exports.table = exports.html = exports.TableHelpers = undefined;
 	
+	  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+	    return typeof obj;
+	  } : function (obj) {
+	    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+	  };
+	
 	  function _classCallCheck(instance, Constructor) {
 	    if (!(instance instanceof Constructor)) {
 	      throw new TypeError("Cannot call a class as a function");
@@ -16206,9 +15552,7 @@
 	      key: "set",
 	      value: function set(title, showKey) {
 	        var data = this.data.set(this.data.data, null, null, title != null ? title : this.data.seriesName);
-	        var hiddenColumns = this.hiddenColumns;
-	        var addedColumns = this.addedColumns;
-	        return new table(data, showKey != null ? showKey : this.showKey, hiddenColumns, addedColumns);
+	        return new table(data, showKey != null ? showKey : this.showKey, this.hiddenColumns, this.addedColumns);
 	      }
 	    }, {
 	      key: "hideColumns",
@@ -16231,7 +15575,7 @@
 	      value: function show(outputId) {
 	        var _this = this;
 	
-	        var row = function (el) {
+	        var row = function row(el) {
 	          return function (k) {
 	            return function (things) {
 	              return function (arg0) {
@@ -16257,11 +15601,11 @@
 	          };
 	        };
 	
-	        var render = function (nd) {
+	        var render = function render(nd) {
 	          (0, _html.renderTo)(document.getElementById(outputId), nd);
 	        };
 	
-	        var makeTable = function (k) {
+	        var makeTable = function makeTable(k) {
 	          return function (header) {
 	            return function (body) {
 	              return function (arg0) {
@@ -16291,7 +15635,7 @@
 	          };
 	        };
 	
-	        var formatAdded = function (o) {
+	        var formatAdded = function formatAdded(o) {
 	          var isSeries = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
 	            return _fableCore.Seq.map(function (kv) {
 	              return kv.key;
@@ -16334,9 +15678,7 @@
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.TryWith(builder_.Delay(function (unitVar_1) {
 	              return builder_.Bind(_this.data.data, function (_arg25) {
-	                var vs = _arg25;
-	
-	                var filteredProperties = function (o) {
+	                var filteredProperties = function filteredProperties(o) {
 	                  return function (o) {
 	                    return Object.keys(o).map(function (k) {
 	                      return {
@@ -16349,17 +15691,14 @@
 	                  });
 	                };
 	
-	                var patternInput = _fableCore.Seq.head(vs);
-	
-	                var first = patternInput[1];
+	                var patternInput = _fableCore.Seq.head(_arg25);
 	
 	                var headers = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_2) {
-	                  return _fableCore.Seq.append(typeof first == 'object' ? _fableCore.Seq.map(function (kv) {
+	                  return _fableCore.Seq.append(_typeof(patternInput[1]) == 'object' ? _fableCore.Seq.map(function (kv) {
 	                    return (0, _html.text)(kv.key);
-	                  }, filteredProperties(first)) : _fableCore.Seq.singleton((0, _html.text)(_this.data.valueName)), _fableCore.Seq.delay(function (unitVar_3) {
+	                  }, filteredProperties(patternInput[1])) : _fableCore.Seq.singleton((0, _html.text)(_this.data.valueName)), _fableCore.Seq.delay(function (unitVar_3) {
 	                    return _fableCore.Seq.collect(function (matchValue) {
-	                      var k = matchValue[0];
-	                      return _fableCore.Seq.singleton((0, _html.text)(k));
+	                      return _fableCore.Seq.singleton((0, _html.text)(matchValue[0]));
 	                    }, _this.addedColumns);
 	                  }));
 	                }));
@@ -16374,16 +15713,13 @@
 	                  };
 	                }(_this.data.keyName)(headers)(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_2) {
 	                  return _fableCore.Seq.collect(function (matchValue) {
-	                    var v = matchValue[1];
-	                    var k = matchValue[0];
 	                    return _fableCore.Seq.singleton(function () {
 	                      var formattedVals = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {
-	                        return _fableCore.Seq.append(typeof v == 'object' ? _fableCore.Seq.map(function (kv) {
+	                        return _fableCore.Seq.append(_typeof(matchValue[1]) == 'object' ? _fableCore.Seq.map(function (kv) {
 	                          return (0, _html.text)(kv.value);
-	                        }, filteredProperties(v)) : !(typeof v == 'number') ? _fableCore.Seq.singleton((0, _html.text)(_fableCore.Util.toString(v))) : isNaN(v) ? _fableCore.Seq.singleton((0, _html.text)("")) : _fableCore.Seq.singleton(v), _fableCore.Seq.delay(function (unitVar_4) {
+	                        }, filteredProperties(matchValue[1])) : !(typeof matchValue[1] == 'number') ? _fableCore.Seq.singleton((0, _html.text)(_fableCore.Util.toString(matchValue[1]))) : isNaN(matchValue[1]) ? _fableCore.Seq.singleton((0, _html.text)("")) : _fableCore.Seq.singleton(matchValue[1]), _fableCore.Seq.delay(function (unitVar_4) {
 	                          return _fableCore.Seq.collect(function (matchValue_1) {
-	                            var f = matchValue_1[1];
-	                            return _fableCore.Seq.singleton(formatAdded(f(v)));
+	                            return _fableCore.Seq.singleton(formatAdded(matchValue_1[1](matchValue[1])));
 	                          }, _this.addedColumns);
 	                        }));
 	                      }));
@@ -16396,15 +15732,14 @@
 	                            return clo2(arg20);
 	                          };
 	                        };
-	                      }("td")(k)(formattedVals);
+	                      }("td")(matchValue[0])(formattedVals);
 	                    }());
-	                  }, vs);
+	                  }, _arg25);
 	                }))));
 	                return builder_.Zero();
 	              });
 	            }), function (_arg26) {
-	              var e = _arg26;
-	              console.log("Getting data for table failed: %O", e);
+	              console.log("Getting data for table failed: %O", _arg26);
 	              return builder_.Zero();
 	            });
 	          });
@@ -16432,10 +15767,23 @@
 	      _classCallCheck(this, empty);
 	    }
 	
-	    _createClass(empty, null, [{
+	    _createClass(empty, [{
 	      key: "show",
 	      value: function show(outputId) {
-	        document.getElementById(outputId).innerHTML = "<div class=\"loading\"><p>No output produced.</p></div>";
+	        (0, _html.renderTo)(document.getElementById(outputId), function (arg0) {
+	          return function (arg1) {
+	            return _html.El.op_Dynamic(arg0, arg1);
+	          };
+	        }(_html.h)("div")(_fableCore.List.ofArray([(0, _html.op_EqualsGreater)("class", "loading")]))(_fableCore.List.ofArray([function (arg0) {
+	          return function (arg1) {
+	            return _html.El.op_Dynamic(arg0, arg1);
+	          };
+	        }(_html.h)("p")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)("No output produced.")]))])));
+	      }
+	    }], [{
+	      key: "create",
+	      value: function create() {
+	        return new empty();
 	      }
 	    }]);
 
@@ -16518,21 +15866,13 @@
 	      key: "Request",
 	      value: function Request(meth, url, data, cookies) {
 	        return _fableCore.Async.fromContinuations(function (tupledArg) {
-	          var cont = tupledArg[0];
-	          var _arg2 = tupledArg[1];
-	          var _arg3 = tupledArg[2];
-	          var matchValue = _arg2;
-	          var matchValue_1 = _arg3;
-	          var xhr = new XMLHttpRequest(null);
+	          var xhr = new XMLHttpRequest();
 	          xhr.open(meth, url, true);
 	          {
-	            var $target1 = function () {};
+	            var $target1 = function $target1() {};
 	
 	            if (cookies != null) {
-	              if (function () {
-	                var cookies_1 = cookies;
-	                return cookies_1 !== "";
-	              }()) {
+	              if (cookies !== "") {
 	                var cookies_1 = cookies;
 	                xhr.setRequestHeader("X-Cookie", cookies_1);
 	              } else {
@@ -16545,7 +15885,7 @@
 	
 	          xhr.onreadystatechange = function (_arg1) {
 	            if (xhr.readyState > 3 ? xhr.status === 200 : false) {
-	              cont(xhr.responseText);
+	              tupledArg[0](xhr.responseText);
 	            }
 	
 	            return {};
@@ -16564,12 +15904,7 @@
 	  var AsyncHelpers = exports.AsyncHelpers = function ($exports) {
 	    var Async_AwaitFuture_Static = $exports["Async.AwaitFuture.Static"] = function Async_AwaitFuture_Static(f) {
 	      return _fableCore.Async.fromContinuations(function (tupledArg) {
-	        var cont = tupledArg[0];
-	        var _arg4 = tupledArg[1];
-	        var _arg5 = tupledArg[2];
-	        var matchValue = _arg4;
-	        var matchValue_1 = _arg5;
-	        f.Then(cont);
+	        f.Then(tupledArg[0]);
 	      });
 	    };
 	
@@ -16580,7 +15915,7 @@
 	      var handlers = new _fableCore.List();
 	      var running = false;
 	
-	      var trigger = function (h) {
+	      var trigger = function trigger(h) {
 	        if (res.Case === "Choice2Of3") {
 	          var v = res.Fields[0];
 	          h(v);
@@ -16594,7 +15929,7 @@
 	        }
 	      };
 	
-	      var ensureStarted = function (unitVar0) {
+	      var ensureStarted = function ensureStarted(unitVar0) {
 	        if (!running) {
 	          running = true;
 	
@@ -16604,18 +15939,15 @@
 	            return builder_.Delay(function (unitVar) {
 	              return builder_.Combine(builder_.TryWith(builder_.Delay(function (unitVar_1) {
 	                return builder_.Bind(op, function (_arg1) {
-	                  var r = _arg1;
-	                  res = new _fableCore.Choice("Choice2Of3", [r]);
+	                  res = new _fableCore.Choice("Choice2Of3", [_arg1]);
 	                  return builder_.Zero();
 	                });
 	              }), function (_arg2) {
-	                var e = _arg2;
-	                res = new _fableCore.Choice("Choice3Of3", [e]);
+	                res = new _fableCore.Choice("Choice3Of3", [_arg2]);
 	                return builder_.Zero();
 	              }), builder_.Delay(function (unitVar_1) {
 	                return builder_.For(handlers, function (_arg3) {
-	                  var h = _arg3;
-	                  trigger(h);
+	                  trigger(_arg3);
 	                  return builder_.Zero();
 	                });
 	              }));
@@ -16628,7 +15960,7 @@
 	        ensureStarted();
 	      }
 	
-	      return _ref = {}, _defineProperty(_ref, _fableCore.Symbol.interfaces, ["TheGamma.Maps.Future"]), _defineProperty(_ref, "Then", function (f) {
+	      return _ref = {}, _defineProperty(_ref, _fableCore.Symbol.interfaces, ["TheGamma.Maps.Future"]), _defineProperty(_ref, "Then", function Then(f) {
 	        ensureStarted();
 	        trigger(f);
 	      }), _ref;
@@ -16766,9 +16098,7 @@
 	    }("locations")(function (builder_) {
 	      return builder_.Delay(function (unitVar) {
 	        return builder_.Bind(Http.Request("GET", "/data/locations.json"), function (_arg1) {
-	          var json = _arg1;
-	
-	          var lookup = _fableCore.Map.create(JSON.parse(json).map(function (l) {
+	          var lookup = _fableCore.Map.create(JSON.parse(_arg1).map(function (l) {
 	            return [l.country, l.coordinates];
 	          }), new _fableCore.GenericComparer(function (x, y) {
 	            return x < y ? -1 : x > y ? 1 : 0;
@@ -16793,8 +16123,7 @@
 	        return function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(AsyncHelpers["Async.AwaitFuture.Static"](GeoGlobals.locations), function (_arg1) {
-	              var locs = _arg1;
-	              return builder_.Return(_fableCore.Map.tryFind(country, locs) != null ? _fableCore.Map.tryFind(country, locs) : new Float64Array([0, 0]));
+	              return builder_.Return(_fableCore.Map.tryFind(country, _arg1) != null ? _fableCore.Map.tryFind(country, _arg1) : new Float64Array([0, 0]));
 	            });
 	          });
 	        }(_fableCore.defaultAsyncBuilder);
@@ -16824,10 +16153,7 @@
 	    }, {
 	      key: "log",
 	      value: function log(f, b) {
-	        return b != null ? function () {
-	          var b_1 = b;
-	          return Math.log(f, b_1);
-	        }() : Math.log(f);
+	        return b != null ? Math.log(f, b) : Math.log(f);
 	      }
 	    }, {
 	      key: "min",
@@ -16890,10 +16216,7 @@
 	        var defaultFill = fill != null ? fill : this.defaultFill;
 	        var titleTemplate = title != null ? title : this.titleTemplate;
 	        var delay_1 = delay != null ? delay : this.delay;
-	        var detailsSelector = details != null ? function () {
-	          var d = details;
-	          return d;
-	        }() : this.detailsSelector;
+	        var detailsSelector = details != null ? details : this.detailsSelector;
 	        var overflowDelay_1 = overflowDelay != null ? overflowDelay : this.overflowDelay;
 	        return new timeline(this.data, colors_1, titleTemplate, defaultFill, delay_1, overflowDelay_1, this.infoSelector, this.locSelector, this.sizeSelector, detailsSelector, this.timeSelector);
 	      }
@@ -16957,39 +16280,26 @@
 	        }, this.colors));
 	        var map = new Datamap(new DatamapConfig(document.getElementById(id), "world", new GeographyConfig(false, false), _fableCore.Util.createObj(_fableCore.List.ofArray([["defaultFill", this.defaultFill]], _fableCore.List.ofArray(fills))), {}));
 	
-	        var objects = function (data) {
+	        var objects = function objects(data) {
 	          return function (infos) {
 	            return function (time) {
 	              var res = [];
 	
 	              for (var i = 0; i <= data.length - 1; i++) {
 	                var patternInput = data[i];
-	                var v = patternInput[2];
-	                var loc = patternInput[1];
-	                var ct = patternInput[3];
-	                var color = patternInput[0];
 	
-	                if (_fableCore.Util.equals(ct, time)) {
+	                if (_fableCore.Util.equals(patternInput[3], time)) {
 	                  (function (arg00) {
 	                    res.push(arg00);
-	                  })(_fableCore.Util.createObj(_fableCore.List.append(function () {
-	                    var matchValue = _this.detailsSelector;
-	
-	                    if (matchValue != null) {
-	                      var os = matchValue;
-	                      return _fableCore.List.ofArray([["details", _fableCore.String.concat("", _fableCore.Seq.map(function (value) {
-	                        return _fableCore.Util.toString(value);
-	                      }, os(v)))]]);
-	                    } else {
-	                      return new _fableCore.List();
-	                    }
-	                  }(), _fableCore.List.ofArray([["radius", _this.sizeSelector(v)], ["borderWidth", "1px"], ["fillKey", _fableCore.String.fsFormat("item%d")(function (x) {
+	                  })(_fableCore.Util.createObj(_fableCore.List.append(_this.detailsSelector != null ? _fableCore.List.ofArray([["details", _fableCore.String.join("", _fableCore.Seq.map(function (value) {
+	                    return _fableCore.Util.toString(value);
+	                  }, _this.detailsSelector(patternInput[2])))]]) : new _fableCore.List(), _fableCore.List.ofArray([["radius", _this.sizeSelector(patternInput[2])], ["borderWidth", "1px"], ["fillKey", _fableCore.String.fsFormat("item%d")(function (x) {
 	                    return x;
-	                  })(color % fills.length)], ["info", _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
+	                  })(patternInput[0] % fills.length)], ["info", _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
 	                    return x;
-	                  })(loc[0])(loc[1]), infos) != null ? _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
+	                  })(patternInput[1][0])(patternInput[1][1]), infos) != null ? _fableCore.Map.tryFind(_fableCore.String.fsFormat("%O, %O")(function (x) {
 	                    return x;
-	                  })(loc[0])(loc[1]), infos) : ""], ["latitude", loc[0]], ["longitude", loc[1]]]))));
+	                  })(patternInput[1][0])(patternInput[1][1]), infos) : ""], ["latitude", patternInput[1][0]], ["longitude", patternInput[1][1]]]))));
 	                }
 	              }
 	
@@ -17003,13 +16313,10 @@
 	        })(function (builder_) {
 	          return builder_.Delay(function (unitVar) {
 	            return builder_.Bind(_this.data.data, function (_arg25) {
-	              var data = _arg25;
-	              var locs = new Array(data.length);
-	              return builder_.Combine(builder_.For(_fableCore.Seq.range(0, data.length - 1), function (_arg26) {
-	                var i = _arg26;
-	                return builder_.Bind(_this.locSelector(data[i][1]), function (_arg27) {
-	                  var loc = _arg27;
-	                  locs[i] = loc;
+	              var locs = new Array(_arg25.length);
+	              return builder_.Combine(builder_.For(_fableCore.Seq.range(0, _arg25.length - 1), function (_arg26) {
+	                return builder_.Bind(_this.locSelector(_arg25[_arg26][1]), function (_arg27) {
+	                  locs[_arg26] = _arg27;
 	                  return builder_.Zero();
 	                });
 	              }), builder_.Delay(function (unitVar_1) {
@@ -17019,54 +16326,32 @@
 	                  return x.CompareTo(y);
 	                }));
 	
-	                var data_1 = Array.from(_fableCore.Seq.map2(function ($var8, $var9) {
-	                  return function (tupledArg) {
-	                    var _arg5 = tupledArg[0];
-	                    var v = tupledArg[1];
-	                    return function (locs_1) {
-	                      return [colorLookup.get(_fableCore.List.ofArray(locs_1)), locs_1, v, _this.timeSelector(v)];
-	                    };
-	                  }($var8)($var9);
-	                }, data, locs));
+	                var data = Array.from(_fableCore.Seq.map2(function (tupledArg, locs_1) {
+	                  return [colorLookup.get(_fableCore.List.ofArray(locs_1)), locs_1, tupledArg[1], _this.timeSelector(tupledArg[1])];
+	                }, _arg25, locs));
 	
 	                var infosLookup = _fableCore.Map.create(_fableCore.Seq.map(function (tupledArg) {
-	                  var loc = tupledArg[0];
-	                  var vals = tupledArg[1];
-	                  return [loc, _fableCore.String.concat("<br />", _fableCore.Seq.distinct(_fableCore.Seq.map(function (tupledArg_1) {
-	                    var _arg9 = tupledArg_1[0];
-	                    var _arg10 = tupledArg_1[1];
-	                    var v = tupledArg_1[2];
-	                    var _arg11 = tupledArg_1[3];
-	                    return _this.infoSelector(v);
-	                  }, vals)))];
+	                  return [tupledArg[0], _fableCore.String.join("<br />", _fableCore.Seq.distinct(_fableCore.Seq.map(function (tupledArg_1) {
+	                    return _this.infoSelector(tupledArg_1[2]);
+	                  }, tupledArg[1])))];
 	                }, _fableCore.Seq.groupBy(function (tupledArg) {
-	                  var _arg6 = tupledArg[0];
-	                  var loc = tupledArg[1];
-	                  var _arg7 = tupledArg[2];
-	                  var _arg8 = tupledArg[3];
 	                  return _fableCore.String.fsFormat("%O, %O")(function (x) {
 	                    return x;
-	                  })(loc[0])(loc[1]);
-	                }, data_1)), new _fableCore.GenericComparer(function (x, y) {
+	                  })(tupledArg[1][0])(tupledArg[1][1]);
+	                }, data)), new _fableCore.GenericComparer(function (x, y) {
 	                  return x < y ? -1 : x > y ? 1 : 0;
 	                }));
 	
 	                var times = Int32Array.from(_fableCore.Seq.sortWith(function (x, y) {
 	                  return _fableCore.Util.compare(x, y);
 	                }, _fableCore.Seq.distinct(Int32Array.from(_fableCore.Seq.map(function (tupledArg) {
-	                  var _arg12 = tupledArg[0];
-	                  var _arg13 = tupledArg[1];
-	                  var _arg14 = tupledArg[2];
-	                  var t = tupledArg[3];
-	                  return t;
-	                }, data_1)))));
+	                  return tupledArg[3];
+	                }, data)))));
 	                var patternInput = [_fableCore.Seq.reduce(function (x, y) {
 	                  return Math.min(x, y);
 	                }, times), _fableCore.Seq.reduce(function (x, y) {
 	                  return Math.max(x, y);
 	                }, times)];
-	                var lo = patternInput[0];
-	                var hi = patternInput[1];
 	                var player = document.getElementById(id + "_player");
 	                var btn = document.getElementById(id + "_btn");
 	                return builder_.Combine(times.length === 1 ? function () {
@@ -17078,9 +16363,9 @@
 	                  player.value = String(0);
 	                  player.max = String(times.length - 1);
 	
-	                  var render = function (unitVar0) {
+	                  var render = function render(unitVar0) {
 	                    var y = times[Number.parseInt(player.value)];
-	                    var o = objects(data_1)(infosLookup)(y);
+	                    var o = objects(data)(infosLookup)(y);
 	                    (0, _html.renderTo)(document.getElementById(id + "_title"), function (arg0) {
 	                      return function (arg1) {
 	                        return _html.El.op_Dynamic(arg0, arg1);
@@ -17088,22 +16373,16 @@
 	                    }(_html.h)("h2")(new _fableCore.List())(_fableCore.List.ofArray([(0, _html.text)(_fableCore.String.replace(_this.titleTemplate, "%title", String(y)))])));
 	
 	                    var config = function () {
-	                      var key = function (data_2) {
-	                        return JSON.stringify([data_2["latitude"], data_2["longitude"]]);
+	                      var key = function key(data_1) {
+	                        return JSON.stringify([data_1["latitude"], data_1["longitude"]]);
 	                      };
 	
-	                      return new BubblesConfig(function (geo_1, data_2) {
-	                        var matchValue = _this.detailsSelector;
-	
-	                        if (matchValue != null) {
-	                          return _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'><strong>%s</strong><br /> %s </div>")(function (x) {
-	                            return x;
-	                          })(data_2["info"])(data_2["details"]);
-	                        } else {
-	                          return _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'>%s</div>")(function (x) {
-	                            return x;
-	                          })(data_2["info"]);
-	                        }
+	                      return new BubblesConfig(function (geo_1, data_1) {
+	                        return _this.detailsSelector != null ? _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'><strong>%s</strong><br /> %s </div>")(function (x) {
+	                          return x;
+	                        })(data_1["info"])(data_1["details"]) : _fableCore.String.fsFormat("<div style='pointer-events:none' class='hoverinfo'>%s</div>")(function (x) {
+	                          return x;
+	                        })(data_1["info"]);
 	                      }, key);
 	                    }();
 	
@@ -17112,7 +16391,7 @@
 	
 	                  var autoPlay = true;
 	
-	                  var startPlay = function (unitVar0) {
+	                  var startPlay = function startPlay(unitVar0) {
 	                    (function (arg00) {
 	                      _fableCore.Async.startImmediate(arg00);
 	                    })(function (builder__1) {
@@ -17183,15 +16462,15 @@
 	        var overflowDelay = 2000;
 	        var titleTemplate = "%title";
 	
-	        var infoSelector = function (_arg1) {
+	        var infoSelector = function infoSelector(_arg1) {
 	          return "";
 	        };
 	
-	        var timeSelector = function (_arg2) {
+	        var timeSelector = function timeSelector(_arg2) {
 	          return 0;
 	        };
 	
-	        var sizeSelector = function (_arg3) {
+	        var sizeSelector = function sizeSelector(_arg3) {
 	          return 10;
 	        };
 	
@@ -17236,6 +16515,17 @@
 	  exports.setupMonacoServices = setupMonacoServices;
 	  exports.createMonacoEditor = createMonacoEditor;
 	
+	  function _defineEnumerableProperties(obj, descs) {
+	    for (var key in descs) {
+	      var desc = descs[key];
+	      desc.configurable = desc.enumerable = true;
+	      if ("value" in desc) desc.writable = true;
+	      Object.defineProperty(obj, key, desc);
+	    }
+	
+	    return obj;
+	  }
+	
 	  var _noState, _tokensProvider;
 	
 	  function _defineProperty(obj, key, value) {
@@ -17254,18 +16544,18 @@
 	  }
 	
 	  _monaco = monaco;
-	  var noState = exports.noState = (_noState = {}, _defineProperty(_noState, _fableCore.Symbol.interfaces, ["Fable.Import.monaco.languages.IState"]), _defineProperty(_noState, "clone", function () {
+	  var noState = exports.noState = (_noState = {}, _defineProperty(_noState, _fableCore.Symbol.interfaces, ["Fable.Import.monaco.languages.IState"]), _defineProperty(_noState, "clone", function clone() {
 	    return this;
-	  }), _defineProperty(_noState, "equals", function (other) {
+	  }), _defineProperty(_noState, "equals", function equals(other) {
 	    return true;
 	  }), _noState);
 	
 	  function getColorClass(_arg1) {
-	    var $target1 = function () {
+	    var $target1 = function $target1() {
 	      return "ident";
 	    };
 	
-	    var $target3 = function () {
+	    var $target3 = function $target3() {
 	      return "keyword";
 	    };
 	
@@ -17316,18 +16606,17 @@
 	    }
 	  }
 	
-	  var tokensProvider = exports.tokensProvider = (_tokensProvider = {}, _defineProperty(_tokensProvider, _fableCore.Symbol.interfaces, ["Fable.Import.monaco.languages.TokensProvider"]), _defineProperty(_tokensProvider, "tokenize", function (line, state) {
+	  var tokensProvider = exports.tokensProvider = (_tokensProvider = {}, _defineProperty(_tokensProvider, _fableCore.Symbol.interfaces, ["Fable.Import.monaco.languages.TokensProvider"]), _defineProperty(_tokensProvider, "tokenize", function tokenize(line, state) {
 	    var tokens = {};
 	    tokens.endState = noState;
 	    tokens.tokens = [];
 	    var patternInput = (0, _typechecker.tokenize)(line);
-	    var tokenized = patternInput[1];
 	    var _iteratorNormalCompletion = true;
 	    var _didIteratorError = false;
 	    var _iteratorError = undefined;
 	
 	    try {
-	      for (var _iterator = tokenized[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      for (var _iterator = patternInput[1][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	        var t = _step.value;
 	        var tok = {};
 	        tok.startIndex = t.Range.Start;
@@ -17350,14 +16639,16 @@
 	    }
 	
 	    return tokens;
-	  }), _defineProperty(_tokensProvider, "getInitialState", function () {
+	  }), _defineProperty(_tokensProvider, "getInitialState", function getInitialState() {
 	    return noState;
 	  }), _tokensProvider);
 	
 	  function createCompletionProvider(globals) {
-	    var _Object$definePropert;
+	    var _triggerCharacters, _ref, _mutatorMap;
 	
-	    return Object.defineProperties((_Object$definePropert = {}, _defineProperty(_Object$definePropert, _fableCore.Symbol.interfaces, ["Fable.Import.monaco.languages.CompletionItemProvider"]), _defineProperty(_Object$definePropert, "provideCompletionItems", function (model, position, token) {
+	    return _ref = {}, _defineProperty(_ref, _fableCore.Symbol.interfaces, ["Fable.Import.monaco.languages.CompletionItemProvider"]), _triggerCharacters = "triggerCharacters", _mutatorMap = {}, _mutatorMap[_triggerCharacters] = _mutatorMap[_triggerCharacters] || {}, _mutatorMap[_triggerCharacters].get = function () {
+	      return Array.from(_fableCore.List.ofArray(["."]));
+	    }, _defineProperty(_ref, "provideCompletionItems", function provideCompletionItems(model, position, token) {
 	      return function (arg00) {
 	        return _fableCore.Async.startAsPromise(arg00);
 	      }(function (builder_) {
@@ -17372,16 +16663,11 @@
 	
 	            var lines = input.split("\n");
 	            return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(globals), function (_arg1) {
-	              var globals_1 = _arg1;
-	              return builder_.Bind((0, _typechecker.typeCheck)(globals_1, input), function (_arg2) {
-	                var ty = _arg2[1];
-	                var errs = _arg2[0];
+	              return builder_.Bind((0, _typechecker.typeCheck)(_arg1, input), function (_arg2) {
 	                return builder_.Bind((0, _typechecker.collectProgramInfo)(function () {
 	                  var Completions = new _fableCore.List();
 	                  return new _typechecker.EditorInfo(input, Completions);
-	                }(), ty), function (_arg3) {
-	                  var info = _arg3;
-	
+	                }(), _arg2[1]), function (_arg3) {
 	                  var absPosition = Math.floor(position.column) - 1 + _fableCore.Seq.fold(function (x, y) {
 	                    return x + y;
 	                  }, 0, _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_2) {
@@ -17392,42 +16678,26 @@
 	
 	                  var optMembers = _fableCore.Seq.tryHead(_fableCore.Seq.toList(_fableCore.Seq.sortWith(function (x, y) {
 	                    return _fableCore.Util.compare(function (tupledArg) {
-	                      var rng = tupledArg[0];
-	                      var _arg3_1 = tupledArg[1];
-	                      var _arg4 = tupledArg[2];
-	                      return -rng.Start;
+	                      return -tupledArg[0].Start;
 	                    }(x), function (tupledArg) {
-	                      var rng = tupledArg[0];
-	                      var _arg3_1 = tupledArg[1];
-	                      var _arg4 = tupledArg[2];
-	                      return -rng.Start;
+	                      return -tupledArg[0].Start;
 	                    }(y));
 	                  }, _fableCore.List.filter(function (tupledArg) {
-	                    var rng = tupledArg[0];
-	                    var _arg1_1 = tupledArg[1];
-	                    var _arg2_1 = tupledArg[2];
-	
-	                    if (absPosition >= rng.Start) {
-	                      return absPosition <= rng.End;
-	                    } else {
-	                      return false;
-	                    }
-	                  }, info.Completions))));
+	                    return absPosition >= tupledArg[0].Start ? absPosition <= tupledArg[0].End : false;
+	                  }, _arg3.Completions))));
 	
 	                  var log = Array.from(_fableCore.Seq.delay(function (unitVar_2) {
 	                    return _fableCore.Seq.collect(function (matchValue) {
-	                      var r = matchValue[0];
-	                      var c = matchValue[2];
 	                      return _fableCore.Seq.singleton(function () {
-	                        var opts = _fableCore.String.concat(", ", _fableCore.Seq.map(function (m) {
+	                        var opts = _fableCore.String.join(", ", _fableCore.Seq.map(function (m) {
 	                          return m.Name;
-	                        }, _fableCore.Seq.truncate(3, c)));
+	                        }, _fableCore.Seq.truncate(3, matchValue[2])));
 	
 	                        return _fableCore.String.fsFormat("%d - %d: %s...")(function (x) {
 	                          return x;
-	                        })(r.Start)(r.End)(opts);
+	                        })(matchValue[0].Start)(matchValue[0].End)(opts);
 	                      }());
-	                    }, info.Completions);
+	                    }, _arg3.Completions);
 	                  }));
 	
 	                  _extensions.Log.trace("completions", "requested at: %O", position);
@@ -17440,7 +16710,7 @@
 	                    }, array));
 	                  }(lines));
 	
-	                  var convertRange = function (rng) {
+	                  var convertRange = function convertRange(rng) {
 	                    var s = (0, _codegen.offsetToLocation)(1, rng.Start, lengths);
 	                    var e = (0, _codegen.offsetToLocation)(1, rng.End, lengths);
 	                    var res = {};
@@ -17459,61 +16729,43 @@
 	                    var completion = _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_2) {
 	                      return _fableCore.Seq.map(function (m) {
 	                        var ci = {};
-	                        var patternInput = m.Case === "Property" ? function () {
-	                          var n = m.Fields[0];
-	                          return [n, 9];
-	                        }() : function () {
-	                          var n = m.Fields[0];
-	                          return [n, 1];
-	                        }();
-	                        var n = patternInput[0];
-	                        var k = patternInput[1];
-	                        ci.kind = k;
-	                        ci.label = n;
-	                        ci.insertText = (0, _typechecker.needsEscaping)(n) ? "'" + n + "'" : n;
-	                        ci.filterText = n;
+	                        var patternInput = m.Case === "Property" ? [m.Fields[0], 9] : [m.Fields[0], 1];
+	                        ci.kind = patternInput[1];
+	                        ci.label = patternInput[0];
+	                        ci.insertText = (0, _typechecker.needsEscaping)(patternInput[0]) ? "'" + patternInput[0] + "'" : patternInput[0];
+	                        ci.filterText = patternInput[0];
 	
 	                        if (m.Case === "Method") {
-	                          var args = m.Fields[2];
-	
 	                          var patternInput_1 = function () {
-	                            var folder = function (tupledArg) {
-	                              var acc = tupledArg[0];
-	                              var l = tupledArg[1];
+	                            var folder = function folder(tupledArg) {
 	                              return function (s) {
-	                                return l.length > 100 ? [_fableCore.List.ofArray([l], acc), s] : [acc, l === "" ? s : l + "," + s];
+	                                return tupledArg[1].length > 100 ? [_fableCore.List.ofArray([tupledArg[1]], tupledArg[0]), s] : [tupledArg[0], tupledArg[1] === "" ? s : tupledArg[1] + "," + s];
 	                              };
 	                            };
 	
 	                            var arg = [new _fableCore.List(), ""];
 	                            return function (source) {
-	                              return _fableCore.Seq.fold(function ($var42, $var43) {
-	                                return folder($var42)($var43);
+	                              return _fableCore.Seq.fold(function ($var22, $var23) {
+	                                return folder($var22)($var23);
 	                              }, [arg[0], arg[1]], source);
 	                            };
 	                          }()(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_3) {
 	                            return _fableCore.Seq.collect(function (matchValue) {
-	                              var t = matchValue[2];
-	                              var opt = matchValue[1];
-	                              var n_1 = matchValue[0];
-	                              return _fableCore.Seq.singleton((opt ? "?" : "") + n_1);
-	                            }, args);
+	                              return _fableCore.Seq.singleton((matchValue[1] ? "?" : "") + matchValue[0]);
+	                            }, m.Fields[2]);
 	                          })));
 	
-	                          var l = patternInput_1[1];
-	                          var acc = patternInput_1[0];
+	                          var args = _fableCore.String.join(",\n", _fableCore.List.reverse(_fableCore.List.ofArray([patternInput_1[1]], patternInput_1[0])));
 	
-	                          var args_1 = _fableCore.String.concat(",\n", _fableCore.List.reverse(_fableCore.List.ofArray([l], acc)));
-	
-	                          ci.documentation = "(" + args_1 + ")";
+	                          ci.documentation = "(" + args + ")";
 	                        }
 	
 	                        var eo = {};
 	
-	                        if ((0, _typechecker.needsEscaping)(n)) {
-	                          eo.text = "'" + n + "'";
+	                        if ((0, _typechecker.needsEscaping)(patternInput[0])) {
+	                          eo.text = "'" + patternInput[0] + "'";
 	                        } else {
-	                          eo.text = n;
+	                          eo.text = patternInput[0];
 	                        }
 	
 	                        eo.range = nameRange_1;
@@ -17534,25 +16786,15 @@
 	              });
 	            });
 	          }), function (_arg4) {
-	            var e = _arg4;
-	
-	            _extensions.Log.exn("completions", "type checking failed %O", e);
+	            _extensions.Log.exn("completions", "type checking failed %O", _arg4);
 	
 	            return builder_.Return(Array.from(new _fableCore.List()));
 	          });
 	        });
 	      }(_fableCore.defaultAsyncBuilder));
-	    }), _defineProperty(_Object$definePropert, "resolveCompletionItem", function (item, token) {
+	    }), _defineProperty(_ref, "resolveCompletionItem", function resolveCompletionItem(item, token) {
 	      return item;
-	    }), _Object$definePropert), {
-	      triggerCharacters: {
-	        get: function () {
-	          return Array.from(_fableCore.List.ofArray(["."]));
-	        },
-	        configurable: true,
-	        enumerable: true
-	      }
-	    });
+	    }), _defineEnumerableProperties(_ref, _mutatorMap), _ref;
 	  }
 	
 	  function setupMonacoServices(globals) {
@@ -17666,20 +16908,12 @@
 	    _fableCore.Util.setInterfaces(CompilationContext.prototype, ["FSharpRecord", "System.IEquatable", "System.IComparable"], "TheGamma.CodeGenerator.CompilationContext");
 	
 	    function offsetToLocation(lines, offs, lengths) {
-	        var $target1 = function () {
-	            return lengths.tail == null ? new _babelast.Position(lines, offs) : function () {
-	                var lengths_1 = lengths.tail;
-	                var l = lengths.head;
-	                return offsetToLocation(lines + 1, offs - l - 1, lengths_1);
-	            }();
+	        var $target1 = function $target1() {
+	            return lengths.tail == null ? new _babelast.Position(lines, offs) : offsetToLocation(lines + 1, offs - lengths.head - 1, lengths.tail);
 	        };
 	
 	        if (lengths.tail != null) {
-	            if (function () {
-	                var lengths_1 = lengths.tail;
-	                var l = lengths.head;
-	                return offs <= l;
-	            }()) {
+	            if (offs <= lengths.head) {
 	                var l = lengths.head;
 	                var lengths_1 = lengths.tail;
 	                return new _babelast.Position(lines, offs);
@@ -17698,46 +16932,31 @@
 	    function getEmitter(name, typ) {
 	        return function (builder_) {
 	            return builder_.Delay(function (unitVar) {
-	                return typ.Case === "Object" ? function () {
-	                    var o = typ.Fields[0];
-	                    return builder_.Return(_fableCore.Seq.pick(function (_arg1) {
-	                        var $target0 = function (e, n) {
-	                            return e;
-	                        };
+	                return typ.Case === "Object" ? builder_.Return(_fableCore.Seq.pick(function (_arg1) {
+	                    var $target0 = function $target0(e, n) {
+	                        return e;
+	                    };
 	
-	                        var $target1 = function () {
-	                            return null;
-	                        };
+	                    var $target1 = function $target1() {
+	                        return null;
+	                    };
 	
-	                        if (_arg1.Case === "Property") {
-	                            if (function () {
-	                                var n = _arg1.Fields[0];
-	                                var e = _arg1.Fields[4];
-	                                return n === name;
-	                            }()) {
-	                                return $target0(_arg1.Fields[4], _arg1.Fields[0]);
-	                            } else {
-	                                return $target1();
-	                            }
+	                    if (_arg1.Case === "Property") {
+	                        if (_arg1.Fields[0] === name) {
+	                            return $target0(_arg1.Fields[4], _arg1.Fields[0]);
 	                        } else {
-	                            if (function () {
-	                                var n = _arg1.Fields[0];
-	                                var e = _arg1.Fields[5];
-	                                return n === name;
-	                            }()) {
-	                                return $target0(_arg1.Fields[5], _arg1.Fields[0]);
-	                            } else {
-	                                return $target1();
-	                            }
+	                            return $target1();
 	                        }
-	                    }, o.Members));
-	                }() : typ.Case === "Delayed" ? function () {
-	                    var f = typ.Fields[1];
-	                    return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(f), function (_arg2) {
-	                        var typ_1 = _arg2;
-	                        return builder_.ReturnFrom(getEmitter(name, typ_1));
-	                    });
-	                }() : builder_.Return(function () {
+	                    } else {
+	                        if (_arg1.Fields[0] === name) {
+	                            return $target0(_arg1.Fields[5], _arg1.Fields[0]);
+	                        } else {
+	                            return $target1();
+	                        }
+	                    }
+	                }, typ.Fields[0].Members)) : typ.Case === "Delayed" ? builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(typ.Fields[1]), function (_arg2) {
+	                    return builder_.ReturnFrom(getEmitter(name, _arg2));
+	                }) : builder_.Return(function () {
 	                    throw "getEmitter: Not an object";
 	                }());
 	            });
@@ -17747,49 +16966,40 @@
 	    function compileExpression(ctx, expr) {
 	        return function (builder_) {
 	            return builder_.Delay(function (unitVar) {
-	                var matchValue = expr.Expr;
-	
-	                var $target7 = function () {
-	                    var $target3 = function () {
+	                var $target7 = function $target7() {
+	                    var $target3 = function $target3() {
 	                        console.log("compileExpression: %O", expr.Expr);
 	                        return builder_.Return(function () {
 	                            throw "!";
 	                        }());
 	                    };
 	
-	                    if (matchValue.Case === "Variable") {
-	                        var n = matchValue.Fields[0];
-	                        return builder_.Return(new _babelast.Expression("IdentifierExpression", [n.Name, rangeToLoc(ctx, n.Range)]));
+	                    if (expr.Expr.Case === "Variable") {
+	                        return builder_.Return(new _babelast.Expression("IdentifierExpression", [expr.Expr.Fields[0].Name, rangeToLoc(ctx, expr.Expr.Fields[0].Range)]));
 	                    } else {
-	                        if (matchValue.Case === "List") {
-	                            var es = matchValue.Fields[0];
+	                        if (expr.Expr.Case === "List") {
 	                            return builder_.Bind(_extensions.Async.map(function (expr_1) {
 	                                return compileExpression(ctx, expr_1);
-	                            }, es), function (_arg7) {
-	                                var es_1 = _arg7;
-	                                return builder_.Return(new _babelast.Expression("ArrayExpression", [es_1, rangeToLoc(ctx, expr.Range)]));
+	                            }, expr.Expr.Fields[0]), function (_arg7) {
+	                                return builder_.Return(new _babelast.Expression("ArrayExpression", [_arg7, rangeToLoc(ctx, expr.Range)]));
 	                            });
 	                        } else {
-	                            if (matchValue.Case === "Function") {
-	                                var n = matchValue.Fields[0];
-	                                var e = matchValue.Fields[1];
-	
-	                                var _var = new _babelast.Expression("IdentifierExpression", [n.Name, rangeToLoc(ctx, n.Range)]);
+	                            if (expr.Expr.Case === "Function") {
+	                                var _var = new _babelast.Expression("IdentifierExpression", [expr.Expr.Fields[0].Name, rangeToLoc(ctx, expr.Expr.Fields[0].Range)]);
 	
 	                                return builder_.Bind(compileExpression(function () {
-	                                    var Globals = _fableCore.Map.add(n.Name, _var, ctx.Globals);
+	                                    var Globals = _fableCore.Map.add(expr.Expr.Fields[0].Name, _var, ctx.Globals);
 	
 	                                    return new CompilationContext(ctx.LineLengths, Globals);
-	                                }(), e), function (_arg8) {
-	                                    var ce = _arg8;
-	                                    var body = new _babelast.Statement("BlockStatement", [_fableCore.List.ofArray([new _babelast.Statement("ReturnStatement", [ce, rangeToLoc(ctx, e.Range)])]), rangeToLoc(ctx, e.Range)]);
-	                                    return builder_.Return(new _babelast.Expression("FunctionExpression", [null, _fableCore.List.ofArray([new _babelast.Pattern("IdentifierPattern", [n.Name, rangeToLoc(ctx, n.Range)])]), body, false, false, rangeToLoc(ctx, expr.Range)]));
+	                                }(), expr.Expr.Fields[1]), function (_arg8) {
+	                                    var body = new _babelast.Statement("BlockStatement", [_fableCore.List.ofArray([new _babelast.Statement("ReturnStatement", [_arg8, rangeToLoc(ctx, expr.Expr.Fields[1].Range)])]), rangeToLoc(ctx, expr.Expr.Fields[1].Range)]);
+	                                    return builder_.Return(new _babelast.Expression("FunctionExpression", [null, _fableCore.List.ofArray([new _babelast.Pattern("IdentifierPattern", [expr.Expr.Fields[0].Name, rangeToLoc(ctx, expr.Expr.Fields[0].Range)])]), body, false, false, rangeToLoc(ctx, expr.Range)]));
 	                                });
 	                            } else {
-	                                if (matchValue.Case === "Unit") {
+	                                if (expr.Expr.Case === "Unit") {
 	                                    return $target3();
 	                                } else {
-	                                    if (matchValue.Case === "Empty") {
+	                                    if (expr.Expr.Case === "Empty") {
 	                                        return $target3();
 	                                    } else {
 	                                        throw ["c:\\tomas\\public\\thegamma\\thegamma-script\\src\\thegamma\\codegen.fs", 36, 8];
@@ -17800,71 +17010,53 @@
 	                    }
 	                };
 	
-	                if (matchValue.Case === "Call") {
-	                    var args = matchValue.Fields[2];
-	                    var inst = matchValue.Fields[0];
-	                    var n = matchValue.Fields[1];
+	                if (expr.Expr.Case === "Call") {
+	                    var args = expr.Expr.Fields[2];
+	                    var inst = expr.Expr.Fields[0];
+	                    var n = expr.Expr.Fields[1];
 	                    return builder_.Bind(getEmitter(n.Name, inst.Type), function (_arg1) {
-	                        var emitter = _arg1;
 	                        return builder_.Bind(compileExpression(ctx, inst), function (_arg2) {
-	                            var inst_1 = _arg2;
 	                            return builder_.Bind(_extensions.Async.map(function (a) {
 	                                return function (builder__1) {
 	                                    return builder__1.Delay(function (unitVar_1) {
 	                                        return builder__1.Bind(compileExpression(ctx, a.Value), function (_arg3) {
-	                                            var r = _arg3;
-	                                            return builder__1.Return([function () {
-	                                                var matchValue_1 = a.Name;
-	
-	                                                if (matchValue_1 != null) {
-	                                                    var n_1 = matchValue_1;
-	                                                    return n_1.Name;
-	                                                } else {
-	                                                    return "";
-	                                                }
-	                                            }(), r]);
+	                                            return builder__1.Return([a.Name != null ? a.Name.Name : "", _arg3]);
 	                                        });
 	                                    });
 	                                }(_fableCore.defaultAsyncBuilder);
 	                            }, args), function (_arg4) {
-	                                var args_1 = _arg4;
-	                                return builder_.Return(emitter.Emit([inst_1, args_1]));
+	                                return builder_.Return(_arg1.Emit([_arg2, _arg4]));
 	                            });
 	                        });
 	                    });
 	                } else {
-	                    if (matchValue.Case === "Property") {
-	                        var inst = matchValue.Fields[0];
-	                        var n = matchValue.Fields[1];
+	                    if (expr.Expr.Case === "Property") {
+	                        var inst = expr.Expr.Fields[0];
+	                        var n = expr.Expr.Fields[1];
 	                        return builder_.Bind(getEmitter(n.Name, inst.Type), function (_arg5) {
-	                            var emitter = _arg5;
 	                            return builder_.Bind(compileExpression(ctx, inst), function (_arg6) {
-	                                var inst_1 = _arg6;
-	                                return builder_.Return(emitter.Emit([inst_1, new _fableCore.List()]));
+	                                return builder_.Return(_arg5.Emit([_arg6, new _fableCore.List()]));
 	                            });
 	                        });
 	                    } else {
-	                        if (matchValue.Case === "Null") {
+	                        if (expr.Expr.Case === "Null") {
 	                            return builder_.Return(new _babelast.Expression("NullLiteral", [rangeToLoc(ctx, expr.Range)]));
 	                        } else {
-	                            if (matchValue.Case === "Number") {
-	                                var n = matchValue.Fields[0];
+	                            if (expr.Expr.Case === "Number") {
+	                                var n = expr.Expr.Fields[0];
 	                                return builder_.Return(new _babelast.Expression("NumericLiteral", [n, rangeToLoc(ctx, expr.Range)]));
 	                            } else {
-	                                if (matchValue.Case === "String") {
-	                                    var s = matchValue.Fields[0];
+	                                if (expr.Expr.Case === "String") {
+	                                    var s = expr.Expr.Fields[0];
 	                                    return builder_.Return(new _babelast.Expression("StringLiteral", [s, rangeToLoc(ctx, expr.Range)]));
 	                                } else {
-	                                    if (matchValue.Case === "Boolean") {
-	                                        var b = matchValue.Fields[0];
+	                                    if (expr.Expr.Case === "Boolean") {
+	                                        var b = expr.Expr.Fields[0];
 	                                        return builder_.Return(new _babelast.Expression("BooleanLiteral", [b, rangeToLoc(ctx, expr.Range)]));
 	                                    } else {
-	                                        if (matchValue.Case === "Variable") {
-	                                            if (function () {
-	                                                var n = matchValue.Fields[0];
-	                                                return ctx.Globals.has(n.Name);
-	                                            }()) {
-	                                                var n = matchValue.Fields[0];
+	                                        if (expr.Expr.Case === "Variable") {
+	                                            if (ctx.Globals.has(expr.Expr.Fields[0].Name)) {
+	                                                var n = expr.Expr.Fields[0];
 	                                                return builder_.Return(ctx.Globals.get(n.Name));
 	                                            } else {
 	                                                return $target7();
@@ -17885,24 +17077,13 @@
 	    function compileCommand(ctx, cmd) {
 	        return function (builder_) {
 	            return builder_.Delay(function (unitVar) {
-	                var matchValue = cmd.Command;
-	
-	                if (matchValue.Case === "Expr") {
-	                    var e = matchValue.Fields[0];
-	                    return builder_.Bind(compileExpression(ctx, e), function (_arg2) {
-	                        var e_1 = _arg2;
-	                        return builder_.Return(new _babelast.Statement("ExpressionStatement", [e_1, rangeToLoc(ctx, cmd.Range)]));
-	                    });
-	                } else {
-	                    var n = matchValue.Fields[0];
-	                    var e = matchValue.Fields[1];
-	                    return builder_.Bind(compileExpression(ctx, e), function (_arg1) {
-	                        var e_1 = _arg1;
-	                        var name = new _babelast.Pattern("IdentifierPattern", [n.Name, rangeToLoc(ctx, n.Range)]);
-	                        var decl = new _babelast.VariableDeclarator("VariableDeclarator", [name, e_1, rangeToLoc(ctx, cmd.Range)]);
-	                        return builder_.Return(new _babelast.Statement("VariableDeclaration", [new _babelast.VariableDeclarationKind("Var", []), _fableCore.List.ofArray([decl]), rangeToLoc(ctx, cmd.Range)]));
-	                    });
-	                }
+	                return cmd.Command.Case === "Expr" ? builder_.Bind(compileExpression(ctx, cmd.Command.Fields[0]), function (_arg2) {
+	                    return builder_.Return(new _babelast.Statement("ExpressionStatement", [_arg2, rangeToLoc(ctx, cmd.Range)]));
+	                }) : builder_.Bind(compileExpression(ctx, cmd.Command.Fields[1]), function (_arg1) {
+	                    var name = new _babelast.Pattern("IdentifierPattern", [cmd.Command.Fields[0].Name, rangeToLoc(ctx, cmd.Command.Fields[0].Range)]);
+	                    var decl = new _babelast.VariableDeclarator("VariableDeclarator", [name, _arg1, rangeToLoc(ctx, cmd.Range)]);
+	                    return builder_.Return(new _babelast.Statement("VariableDeclaration", [new _babelast.VariableDeclarationKind("Var", []), _fableCore.List.ofArray([decl]), rangeToLoc(ctx, cmd.Range)]));
+	                });
 	            });
 	        }(_fableCore.defaultAsyncBuilder);
 	    }
@@ -17913,8 +17094,7 @@
 	                return builder_.Bind(_extensions.Async.map(function (cmd) {
 	                    return compileCommand(ctx, cmd);
 	                }, prog.Body), function (_arg1) {
-	                    var body = _arg1;
-	                    return builder_.Return(new _babelast.Program(rangeToLoc(ctx, prog.Range), body));
+	                    return builder_.Return(new _babelast.Program(rangeToLoc(ctx, prog.Range), _arg1));
 	                });
 	            });
 	        }(_fableCore.defaultAsyncBuilder);
@@ -17973,15 +17153,13 @@
 	            return builder_.Delay(function (unitVar) {
 	                return builder_.TryWith(builder_.Delay(function (unitVar_1) {
 	                    return builder_.Bind((0, _extensions.Async$2EAwaitFuture$2EStatic)(globals), function (_arg1) {
-	                        var globals_1 = _arg1;
 	                        var ctx = new CompilationContext(_fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar_2) {
 	                            return _fableCore.Seq.map(function (l) {
 	                                return l.length;
 	                            }, text.split("\n"));
-	                        })), globals_1);
+	                        })), _arg1);
 	                        return builder_.Bind(compileProgram(ctx, prog), function (_arg2) {
-	                            var res = _arg2;
-	                            var code = Babel.transformFromAst(_babelast.Serializer.serializeProgram(res), text, new BabelOptions(["es2015"]));
+	                            var code = Babel.transformFromAst(_babelast.Serializer.serializeProgram(_arg2), text, new BabelOptions(["es2015"]));
 	
 	                            _extensions.Log.trace("codegen", "Evaluating: %O", code);
 	
@@ -17989,9 +17167,7 @@
 	                        });
 	                    });
 	                }), function (_arg3) {
-	                    var e = _arg3;
-	
-	                    _extensions.Log.exn("codegen", "Evaluating code failed: %O", e);
+	                    _extensions.Log.exn("codegen", "Evaluating code failed: %O", _arg3);
 	
 	                    return builder_.Return("");
 	                });
