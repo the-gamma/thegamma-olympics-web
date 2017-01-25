@@ -131,7 +131,9 @@ type Snippet =
     author : string
     twitter : string
     compiled : string
-    code : string }
+    code : string 
+    source : string
+    hidden : bool }
 
 let serializer = JsonSerializer.Create()
 
