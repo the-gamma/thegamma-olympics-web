@@ -388,8 +388,7 @@ footer .btn-success:hover, footer .btn-success:focus,
 body {
   font-family:'Roboto',verdana,sans-serif;
   font-size:13pt;
-  background-color:white; 
-  zzz:#F2F1ED;
+  background-color:#F2F1ED;
   overflow-x:hidden;
   overflow-y:scroll;
 }

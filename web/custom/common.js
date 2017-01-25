@@ -107,7 +107,8 @@ function saveAndShare()
   // Send data using AJAX to the server
   var data = {
     "title": title, "author": author, "twitter": twitter,
-    "description": info, "code": sharedCode, "compiled": sharedCompiled
+    "description": info, "code": sharedCode, "compiled": sharedCompiled,
+    "source" : "olympics", "hidden" : false
   };
   
   $.ajax({
